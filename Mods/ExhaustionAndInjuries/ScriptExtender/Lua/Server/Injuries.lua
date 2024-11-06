@@ -1,19 +1,35 @@
--- Injury tables for different damage types
-local InjuriesByDamageType = {
-    Bludgeoning = {"Goon_Concussion", "Goon_Broken_Bone", "Goon_Crushed_Ribs"},
-    Piercing = {"Goon_Pierced_Lung", "Goon_Ruptured_Intestine", "Goon_Severed_Tendon"},
-    Slashing = {"Goon_Flesh_Wound", "Goon_Severed_Tendon", "Goon_Ruptured_Intestine"},
-    Cold = {"Goon_Hypothermia", "Goon_Severed_Tendon"},
-    Fire = {"Goon_1st_Degree_Burn", "Goon_2nd_Degree_Burn", "Goon_3rd_Degree_Burn"},
-    Lightning = {"Goon_Nerve_Damage", "Goon_Fried_Synapses"},
-    Thunder = {"Goon_Crushed_Ribs", "Goon_Ruptured_EarDrums", "Goon_Concussion", "Goon_Broken_Bone"},
-    Acid = {"Goon_Bubbled_Brow", "Goon_Flesh_Wound"},
-    Poison = {"Goon_Poisoning", "Goon_Ruptured_Intestine"},
-    Radiant = {"Goon_1st_Degree_Burn", "Goon_2nd_Degree_Burn", "Goon_3rd_Degree_Burn"},
-    Necrotic = {"Goon_Tissue_Death", "Goon_Flesh_Wound"},
-    Force = {"Goon_Crushed_Ribs", "Goon_Ruptured_EarDrums", "Goon_Concussion", "Goon_Broken_Bone"},
-    Psychic = {"Goon_Psychic_Psychosis","Goon_Fried_Synapses"}
+-- Group by Injury to make it easier for humans to see how injuries are applied
+local DamageTypeByInjury = {
+    Goon_Concussion = { "Bludgeoning", "Thunder", "Force" },
+    Goon_Broken_Bone = { "Bludgeoning", "Thunder", "Force" },
+    Goon_Crushed_Ribs = { "Bludgeoning", "Thunder", "Force" },
+    Goon_Ruptured_EarDrums = { "Thunder", "Force" },
+    Goon_Severed_Tendon = { "Piercing", "Slashing", "Cold" },
+    Goon_Ruptured_Intestine = { "Piercing", "Poison", "Slashing" },
+    Goon_Pierced_Lung = { "Piercing" },
+    Goon_Flesh_Wound = { "Slashing", "Acid", "Necrotic" },
+    Goon_Hypothermia = { "Cold" },
+    Goon_1st_Degree_Burn = { "Fire", "Radiant" },
+    Goon_2nd_Degree_Burn = { "Fire", "Radiant" },
+    Goon_3rd_Degree_Burn = { "Fire", "Radiant" },
+    Goon_Nerve_Damage = { "Lightning" },
+    Goon_Fried_Synapses = { "Lightning", "Psychic" },
+    Goon_Bubbled_Brow = { "Acid" },
+    Goon_Poisoning = { "Poison" },
+    Goon_Tissue_Death = { "Necrotic" },
+    Goon_Psychic_Psychosis = { "Psychic" }
 }
+
+-- Mirror table to map damage types to their corresponding injuries to make it easier to code against
+local InjuriesByDamageType = {}
+
+for injury, damageTypes in pairs(DamageTypeByInjury) do
+    for _, damageType in ipairs(damageTypes) do
+        InjuriesByDamageType[damageType] = InjuriesByDamageType[damageType] or {}
+        table.insert(InjuriesByDamageType[damageType], injury)
+    end
+end
+
 
 -- MAIN INJURY CODE
 -- Table to track the most recent damage type and attacker for each character
@@ -23,10 +39,10 @@ local RecentDamageInfo = {}
 Ext.Osiris.RegisterListener("AttackedBy", 7, "after", function(defender, attackerOwner, attacker2, damageType, damageAmount, damageCause, storyActionID)
     if IsCharacter(defender) == 1 then
         local damageType = damageType or "Unknown Damage Type"
-        
+
         -- Initialize the table for the defender if it doesn't exist
         RecentDamageInfo[defender] = RecentDamageInfo[defender] or {}
-        
+
         -- Store the damage type and attacker for the defender (character)
         RecentDamageInfo[defender] = {
             damageType = damageType,
@@ -53,11 +69,11 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
             -- Apply injury based on damage type if no injury is already applied
             if damageType and InjuriesByDamageType[damageType] then
                 local availableInjuries = InjuriesByDamageType[damageType]
-                
+
                 -- Get the current active statuses of the character
                 local characterStatusManager = Ext.Entity.Get(object).ServerCharacter.StatusManager
                 local activeStatuses = {}
-                
+
                 -- Loop through statuses to avoid double application
                 for _, esvStatus in pairs(characterStatusManager.Statuses) do
                     activeStatuses[esvStatus.StatusId] = true
@@ -168,5 +184,3 @@ Ext.Osiris.RegisterListener("ShortRested", 1, "after", function(character)
         print("No injuries found to remove for character: " .. character)
     end
 end)
-
-  

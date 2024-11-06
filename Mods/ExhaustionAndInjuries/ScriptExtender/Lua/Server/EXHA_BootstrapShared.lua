@@ -14,13 +14,14 @@ local passives = {
 }
 
 local function EXHA_CharIsHero(char)
-    return char ~= nil and string.find(char.Passives, "WeaponThrow") and string.find(char.Passives, "CombatStartAttack") and string.find(char.Passives, "ShortResting") and string.find(char.Passives, "NonLethal")
+    return char ~= nil and string.find(char.Passives, "WeaponThrow") and string.find(char.Passives, "CombatStartAttack") and string.find(char.Passives, "ShortResting") and
+    string.find(char.Passives, "NonLethal")
 end
 
-local function EXHA_TEMPLATE_StatsLoaded()
+Ext.Events.StatsLoaded:Subscribe(function()
     for _, name in pairs(Ext.Stats.GetStats("Character")) do
         local char = Ext.Stats.Get(name)
-        
+
         if EXHA_CharIsHero(char) then
             for _, passive in ipairs(passives) do
                 if not string.find(char.Passives, passive) then
@@ -29,6 +30,4 @@ local function EXHA_TEMPLATE_StatsLoaded()
             end
         end
     end
-end
-
-Ext.Events.StatsLoaded:Subscribe(EXHA_TEMPLATE_StatsLoaded)
+end)
