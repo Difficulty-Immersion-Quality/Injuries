@@ -1,0 +1,6 @@
+new entry "BOOST_REMOVE_COMBAT_COUNTER_FOR_CAPPED"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Instant" "Yes"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+data "OnApplyFunctors" "RemoveStatus(IN_COMBAT_TURN_1);RemoveStatus(IN_COMBAT_TURN_2);RemoveStatus(IN_COMBAT_TURN_3);RemoveStatus(IN_COMBAT_TURN_4);RemoveStatus(IN_COMBAT_TURN_5);RemoveStatus(IN_COMBAT_TURN_6);RemoveStatus(IN_COMBAT_TURN_7);RemoveStatus(IN_COMBAT_TURN_8);RemoveStatus(IN_COMBAT_TURN_9);RemoveStatus(IN_COMBAT_TURN_10);"

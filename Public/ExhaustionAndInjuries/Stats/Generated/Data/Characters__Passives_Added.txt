@@ -1,0 +1,9 @@
+new entry "_Hero"
+type "Character"
+using "_Hero"
+data "Passives" "PASSIVE_SHORT_REST_MODIFIERS;PASSIVE_LONG_REST_MODIFIERS;ShortResting;NonLethal;WeaponThrow;Perform;AttackOfOpportunity;DarknessRules;CombatStartAttack"
+
+new entry "ORIGIN_Karlach"
+type "Character"
+using "ORIGIN_Karlach"
+data "Passives" "PASSIVE_SHORT_REST_MODIFIERS;PASSIVE_LONG_REST_MODIFIERS;ShortResting;NonLethal;WeaponThrow;Perform;AttackOfOpportunity;DarknessRules;CombatStartAttack;ORI_Karlach_SweatImmune"
