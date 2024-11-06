@@ -50,4 +50,11 @@
 	<content contentuid="hc17b14eage6384a0g225f2c4955edg445e1f" version="1">Exhaustion from statuses</content>
 	<content contentuid="hc17b14eage6384a0g225f2c4955edg445e20" version="1">Exhaustion saving throw(DnD)</content>
 	<content contentuid="hc17b14eage6384a0g225f2c4955edg445e21" version="1">Exhaustion saving throw(Custom)</content>
+    <content contentuid="h48114efb7ced449bbb25a5f3f336b50af25f" version="1">General</content>
+    <content contentuid="h5d55ed7112d647a29ec04f0a6abb6e32bc0b" version="1">General settings</content>
+    <content contentuid="h80a1c01dc37c47609ae90e962edb40261db9" version="1">General Mod Behavior</content>
+    <content contentuid="h5483f83a22da46f5a975281e1827b988acae" version="1">Enable Mod</content>
+    <content contentuid="h5b58ff1d4f354c3d88d6db2a213a6fc0a95d" version="1">Enables or disables the mod</content>
+    <content contentuid="h91ffd7b8ad96495b8073dcf355cbd4372617" version="1">Log level</content>
+    <content contentuid="hfc82d5049a6f4084a89c8440b153edbafeab" version="1">0 = Off, 1 = Error, 2 = Warn, 3 = Info, 4 = Debug, 5 = Trace (Anything higher than Info will only be logged to the log.txt, not the SE console)</content>
 </contentList>
