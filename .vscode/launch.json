@@ -11,7 +11,7 @@
 			"internalConsoleOptions": "openOnSessionStart",
 			"type": "bg3lua",
 			"request": "launch",
-			"program": ".\\BG3EDebugAdapter\\LuaDebugger.exe",
+			"program": "${workspaceFolder}\\BG3EDebugAdapter\\LuaDebugger.exe",
 			"backendHost": "127.0.0.1",
 			"backendPort": 9998,
 			"dbgOptions": {
