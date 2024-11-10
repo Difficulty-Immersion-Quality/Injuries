@@ -4,7 +4,7 @@ InjuryMenu:RegisterTab(function(tabBar)
 
 	local damageTable = damageTab:AddTable("ApplyOnStatus", 4)
 	damageTable.BordersOuter = true
-	
+
 	local headerRow = damageTable:AddRow()
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("# Total Rounds In One Combat")
@@ -15,7 +15,8 @@ InjuryMenu:RegisterTab(function(tabBar)
 	statusInput.Hint = "Case-insensitive - use * to wildcard"
 	statusInput.AutoSelectAll = true
 	statusInput.EscapeClearsAll = true
-	
+	-- statusInput.EnterReturnsTrue = true
+
 	local statusInputButton = damageTab:AddButton("Register Status")
 
 	local errorText = damageTab:AddText("Error: Search returned no results")
@@ -44,14 +45,22 @@ InjuryMenu:RegisterTab(function(tabBar)
 
 		if #statuses > 0 then
 			for _, status in pairs(statuses) do
-				if status.TooltipDamage ~= "" then
+				if string.upper(status.StatusType) == "BOOST" then
 					local row = damageTable:AddRow()
 
 					local statusName = row:AddCell():AddText(status.Name)
 					local nameTooltip = statusName:Tooltip()
-					nameTooltip:AddText(status.TooltipDamage)
+
+					if status.TooltipDamage ~= "" then
+						nameTooltip:AddText("Damage: " .. status.TooltipDamage)
+					end
+
 					if status.TooltipSave ~= "" then
 						nameTooltip:AddText("Save: " .. status.TooltipSave)
+					end
+
+					if status.TickType ~= "" then
+						nameTooltip:AddText("TickType: " .. status.TickType)
 					end
 
 					local totalRounds = row:AddCell():AddSliderInt("")
@@ -74,7 +83,7 @@ InjuryMenu:RegisterTab(function(tabBar)
 		end
 	end
 
-	statusInput.OnChange = function()
+	statusInput.OnChange = function(inputElement, text, third)
 		if errorText then
 			errorText.Visible = false
 		end
