@@ -1,14 +1,13 @@
 --- @param tabBar ExtuiTabBar
 InjuryMenu:RegisterTab(function(tabBar)
-	local statusTab = tabBar:AddTabItem("Apply On Status")
+	local statusTab = tabBar:AddTabItem("Remove On Status")
 
-	local statusTable = statusTab:AddTable("ApplyOnStatus", 4)
+	local statusTable = statusTab:AddTable("RemoveOnStatus", 3)
 	statusTable.BordersInnerH = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow:AddCell():AddText("Status Name")
-	headerRow:AddCell():AddText("# Total Rounds In One Combat")
-	headerRow:AddCell():AddText("Always Apply On Critical Hit")
+	headerRow:AddCell():AddText("Save Conditions")
 
 	statusTab:AddText("Add New Row")
 	local statusInput = statusTab:AddInputText("")
@@ -48,11 +47,16 @@ InjuryMenu:RegisterTab(function(tabBar)
 				if string.upper(status.StatusType) == "BOOST" then
 					local row = statusTable:AddRow()
 
+					--#region Status Name
 					local statusName = row:AddCell():AddText(status.Name)
 					local nameTooltip = statusName:Tooltip()
 
 					if status.TooltipDamage ~= "" then
 						nameTooltip:AddText("Damage: " .. status.TooltipDamage)
+					end
+
+					if status.HealValue ~= "" then
+						nameTooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
 					end
 
 					if status.TooltipSave ~= "" then
@@ -62,15 +66,32 @@ InjuryMenu:RegisterTab(function(tabBar)
 					if status.TickType ~= "" then
 						nameTooltip:AddText("TickType: " .. status.TickType)
 					end
+					--#endregion
 
-					local totalRounds = row:AddCell():AddSliderInt("")
-					totalRounds.Min = { 1, 1, 1, 1 }
-					totalRounds.Max = { 10, 10, 10, 10 }
+					--#region Save Options
+					local saveOptions = {}
+					for _, ability in ipairs(Ext.Enums.AbilityId) do
+						table.insert(saveOptions, tostring(ability))
+					end
+					table.sort(saveOptions)
+					table.insert(saveOptions, 1, "No Save")
 
-					local roundsTooltip = totalRounds:Tooltip()
-					roundsTooltip:AddText("How many total rounds within a single combat this status needs to be applied\non a given character before the injury is applied")
+					local saveRow = row:AddCell()
+					local saveCombo = saveRow:AddCombo("")
+					saveCombo.Options = saveOptions
+					saveCombo.SelectedIndex = 0
 
-					local onCritCheckbox = row:AddCell():AddCheckbox("Always On Critical Fail?", true)
+					local saveSlider = saveRow:AddSliderInt("")
+					saveSlider.Min = { 1, 1, 1, 1 }
+					saveSlider.Max = { 30, 30, 30, 30 }
+					saveSlider.Value = {15, 15, 15, 15}
+					saveSlider.Visible = false
+
+					saveCombo.OnChange = function(combo, selectedIndex)
+						saveSlider.Visible = selectedIndex ~= 0
+					end
+					--#endregion
+
 					local deleteRowButton = row:AddCell():AddButton("Delete")
 
 					deleteRowButton.OnClick = function()
@@ -84,6 +105,6 @@ InjuryMenu:RegisterTab(function(tabBar)
 	end
 
 	statusInput.OnChange = function(inputElement, text)
-			errorText.Visible = false
+		errorText.Visible = false
 	end
 end)

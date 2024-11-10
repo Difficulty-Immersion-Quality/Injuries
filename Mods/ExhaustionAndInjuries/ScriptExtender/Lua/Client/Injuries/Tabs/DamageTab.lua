@@ -3,6 +3,8 @@ InjuryMenu:RegisterTab(function(tabBar)
 	local damageTab = tabBar:AddTabItem("Damage")
 
 	local damageTable = damageTab:AddTable("DamageTypes", 5)
+	damageTable.BordersInnerH = true
+
 	local headerRow = damageTable:AddRow()
 	headerRow:AddCell():AddText("Damage Type")
 	headerRow:AddCell():AddText("% of Total Health In One Combat") -- TODO: Add tooltip explaining more
@@ -42,6 +44,4 @@ InjuryMenu:RegisterTab(function(tabBar)
 			row:Destroy()
 		end
 	end
-
-	damageTable.BordersOuter = true
 end)
