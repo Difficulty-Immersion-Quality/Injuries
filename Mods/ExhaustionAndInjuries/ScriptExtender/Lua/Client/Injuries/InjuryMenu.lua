@@ -1,3 +1,13 @@
+InjuryMenu = {}
+InjuryMenu.Tabs = { ["Generators"] = {} }
+
+function InjuryMenu:RegisterTab(tabGenerator)
+	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
+end
+
+Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
+Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
+
 local InjuryTable = {}
 
 Ext.Events.SessionLoaded:Subscribe(function()
@@ -22,31 +32,16 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			injuryCombobox.Options = displayNames
 			injuryCombobox.SelectedIndex = 0
 
-			local damageTab = tabHeader:AddSeparatorText("Damage")
-			local damageTypeCombo = tabHeader:AddCombo("")
-			-- damageTypeCombo:AddGroup("DamageTypes")
-			local damageTypes = {}
-			for _, damageType in ipairs(Ext.Enums.DamageType) do
-				table.insert(damageTypes, tostring(damageType))
-			end
-			damageTypeCombo.Options = damageTypes
-			damageTypeCombo.SelectedIndex = 0
+			local newTabBar = tabHeader:AddTabBar("TabBar")
+			
+			for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
+				local success, error = pcall(function()
+					tabGenerator(newTabBar)
+				end)
 
-			local damageTypeThreshold = tabHeader:AddSliderInt("")
-			damageTypeThreshold.Min = {1, 1, 1, 1}
-			damageTypeThreshold.Max = {100, 100, 100, 100}
-
-			local onCritCheckbox = tabHeader:AddCheckbox("Always On Crit?", true)
-			onCritCheckbox.SameLine = true
-
-			-- damageTypeThreshold:AddGroup("DamageTypes")
-
-			damageTypeCombo.OnChange = function()
-				damageTypeThreshold.Value = damageTypeThreshold.Min
-			end
-			injuryCombobox.OnChange = function(comboBox, newIndex)
-				damageTypeCombo.SelectedIndex = 0
-				damageTypeCombo.OnChange()
+				if not success then
+					Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+				end
 			end
 		end)
 end)
