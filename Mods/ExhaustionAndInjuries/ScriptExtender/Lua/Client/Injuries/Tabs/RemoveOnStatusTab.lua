@@ -6,6 +6,7 @@ InjuryMenu:RegisterTab(function(tabBar)
 	statusTable.BordersInnerH = true
 
 	local headerRow = statusTable:AddRow()
+	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("Save Conditions")
 

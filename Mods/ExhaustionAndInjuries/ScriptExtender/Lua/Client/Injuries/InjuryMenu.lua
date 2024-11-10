@@ -9,16 +9,20 @@ Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
 Ext.Require("Client/Injuries/Tabs/RemoveOnStatusTab.lua")
 
-local InjuryTable = {}
+local injuryDisplayNames = {}
+local injuriesDisplayMap = {}
 
 Ext.Events.SessionLoaded:Subscribe(function()
 	for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
 		if string.find(name, "Goon_Injury_") then
 			local displayName = string.sub(name, string.len("Goon_Injury_") + 1)
 			displayName = string.gsub(displayName, "_", " ")
-			InjuryTable[displayName] = name
+			table.insert(injuryDisplayNames, displayName)
+			injuriesDisplayMap[displayName] = name
 		end
 	end
+
+	table.sort(injuryDisplayNames)
 
 	Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--- @param tabHeader ExtuiTreeParent
@@ -75,25 +79,46 @@ Ext.Events.SessionLoaded:Subscribe(function()
 
 			--#region Injury-Specific Options
 			tabHeader:AddSeparatorText("Injury-Specific Options")
-			local injuryCombobox = tabHeader:AddCombo("Injuries")
 
-			local displayNames = {}
-			for displayName, _ in pairs(InjuryTable) do
-				table.insert(displayNames, displayName)
-			end
-			table.sort(displayNames)
-			injuryCombobox.Options = displayNames
-			injuryCombobox.SelectedIndex = 0
+			local injuryTable = tabHeader:AddTable("InjuryTable", 3)
+			injuryTable.BordersInnerH = true
+			injuryTable.PreciseWidths = true
 
-			local newTabBar = tabHeader:AddTabBar("TabBar")
 
-			for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
-				local success, error = pcall(function()
-					tabGenerator(newTabBar)
-				end)
+			local headerRow = injuryTable:AddRow()
+			headerRow.Headers = true
+			headerRow:AddCell():AddText("Injury")
+			headerRow:AddCell():AddText("Severity")
+			headerRow:AddCell():AddText("Actions")
 
-				if not success then
-					Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+			for _, displayName in pairs(injuryDisplayNames) do
+				local newRow = injuryTable:AddRow()
+
+				newRow:AddCell():AddText(displayName)
+				local severityCombo = newRow:AddCell():AddCombo("")
+				severityCombo.Options = {
+					"Low",
+					"Medium",
+					"High"
+				}
+				severityCombo.SelectedIndex = 1
+
+				local customizeButton = newRow:AddCell():AddButton("Customize")
+				customizeButton.OnClick = function()
+					local injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
+					injuryPopup.Closeable = true
+					injuryPopup.HorizontalScrollbar = true
+
+					local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
+					for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
+						local success, error = pcall(function()
+							tabGenerator(newTabBar)
+						end)
+
+						if not success then
+							Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+						end
+					end
 				end
 			end
 			--#endregion
