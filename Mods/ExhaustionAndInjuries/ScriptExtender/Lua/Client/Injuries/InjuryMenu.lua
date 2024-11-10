@@ -62,17 +62,74 @@ Ext.Events.SessionLoaded:Subscribe(function()
 
 			--#region Damage Counter
 			tabHeader:AddSeparator()
-			tabHeader:AddText("When does the damage counter reset? Each")
+			tabHeader:AddText("When does the damage/status tick counter reset? Each")
 			local cumulationCombo = tabHeader:AddCombo("")
 			cumulationCombo.SameLine = true
 			cumulationCombo.Options = {
-				"Attack",
+				"Attack/Tick",
 				"Round",
 				"Combat",
 				"Short Rest",
 				"Long Rest"
 			}
-			cumulationCombo.SelectedIndex = 1
+			cumulationCombo.SelectedIndex = 0
+
+			local healingCheckbox = tabHeader:AddCheckbox("Healing Subtracts From Damage Counter", true)
+			local healingText = tabHeader:AddText(
+				"Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage")
+			local healingOffsetCombo = tabHeader:AddCombo("")
+			healingOffsetCombo.Options = {
+				"50%",
+				"100%",
+				"150%",
+				"200%"
+			}
+			healingOffsetCombo.SelectedIndex = 1
+
+			healingCheckbox.OnChange = function(combo, value)
+				healingText.Visible = value
+				healingOffsetCombo.Visible = value
+			end
+
+			healingCheckbox.Visible = false
+			healingText.Visible = false
+			healingOffsetCombo.Visible = false
+
+			cumulationCombo.OnChange = function(combo, selectedIndex)
+				healingCheckbox.Visible = selectedIndex ~= 0
+				healingText.Visible = selectedIndex ~= 0
+				healingOffsetCombo.Visible = selectedIndex ~= 0
+			end
+			--#endregion
+
+			--#region Severity
+			tabHeader:AddSeparatorText("Severity")
+			tabHeader:AddText("When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character")
+			tabHeader:AddCheckbox("Downed", true)
+			tabHeader:AddCheckbox("Suffered a Critical Hit", true).SameLine = true
+
+			tabHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
+			tabHeader:AddText("Low")
+			local lowSeverity = tabHeader:AddSliderInt("", 25, 0, 100)
+			lowSeverity.SameLine = true
+
+			tabHeader:AddText("Medium")
+			local mediumSeverity = tabHeader:AddSliderInt("", 50, 0, 100)
+			mediumSeverity.SameLine = true
+
+			tabHeader:AddText("High")
+			local highSeverity = tabHeader:AddSliderInt("", 25, 0, 100)
+			highSeverity.SameLine = true
+
+			local severityErrorText = tabHeader:AddText("Error: Values must add up to 100%!")
+			severityErrorText.Visible = false
+			local ensureAdditionFunction = function()
+				severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
+			end
+			lowSeverity.OnChange = ensureAdditionFunction
+			mediumSeverity.OnChange = ensureAdditionFunction
+			highSeverity.OnChange = ensureAdditionFunction
+
 			--#endregion
 
 			--#endregion

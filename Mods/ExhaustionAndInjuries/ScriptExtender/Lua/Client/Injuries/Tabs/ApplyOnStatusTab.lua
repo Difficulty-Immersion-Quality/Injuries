@@ -8,8 +8,7 @@ InjuryMenu:RegisterTab(function(tabBar)
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name")
-	headerRow:AddCell():AddText("# Total Rounds In One Combat")
-	headerRow:AddCell():AddText("Always Apply On Critical Hit")
+	headerRow:AddCell():AddText("# Total Rounds")
 
 	statusTab:AddText("Add New Row")
 	local statusInput = statusTab:AddInputText("")
@@ -71,7 +70,6 @@ InjuryMenu:RegisterTab(function(tabBar)
 					local roundsTooltip = totalRounds:Tooltip()
 					roundsTooltip:AddText("How many total rounds within a single combat this status needs to be applied\non a given character before the injury is applied")
 
-					local onCritCheckbox = row:AddCell():AddCheckbox("Always On Critical Fail?", true)
 					local deleteRowButton = row:AddCell():AddButton("Delete")
 
 					deleteRowButton.OnClick = function()
