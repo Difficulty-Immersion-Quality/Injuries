@@ -23,6 +23,58 @@ Ext.Events.SessionLoaded:Subscribe(function()
 	Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--- @param tabHeader ExtuiTreeParent
 		function(tabHeader)
+			--#region Universal Options
+			tabHeader:AddSeparatorText("Universal Options")
+
+			--#region Who Can Receive Injuries
+			tabHeader:AddText("Who Can Receive Injuries?")
+			local partyCheckbox = tabHeader:AddCheckbox("Party Members", true)
+
+			local allyCheckbox = tabHeader:AddCheckbox("Allies", true)
+			allyCheckbox.SameLine = true
+
+			local enemyCheckbox = tabHeader:AddCheckbox("Enemies", true)
+			enemyCheckbox.SameLine = true
+			--#endregion
+
+			--#region Injury Removal
+			tabHeader:AddSeparator()
+			tabHeader:AddText("How Many Different Injuries Can Be Removed At Once?")
+			tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
+			local oneRadio = tabHeader:AddRadioButton("One", true)
+			local allRadio = tabHeader:AddRadioButton("All", false)
+			allRadio.SameLine = true
+
+			oneRadio.OnActivate = function()
+				oneRadio.Active = not oneRadio.Active
+				allRadio.Active = oneRadio.Active
+			end
+
+			allRadio.OnActivate = function()
+				allRadio.Active = not allRadio.Active
+				oneRadio.Active = allRadio.Active
+			end
+			--#endregion
+
+			--#region Damage Counter
+			tabHeader:AddSeparator()
+			tabHeader:AddText("When does the damage counter reset? Each")
+			local cumulationCombo = tabHeader:AddCombo("")
+			cumulationCombo.SameLine = true
+			cumulationCombo.Options = {
+				"Attack",
+				"Round",
+				"Combat",
+				"Short Rest",
+				"Long Rest"
+			}
+			cumulationCombo.SelectedIndex = 1
+			--#endregion
+
+			--#endregion
+
+			--#region Injury-Specific Options
+			tabHeader:AddSeparatorText("Injury-Specific Options")
 			local injuryCombobox = tabHeader:AddCombo("Injuries")
 
 			local displayNames = {}
@@ -34,7 +86,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			injuryCombobox.SelectedIndex = 0
 
 			local newTabBar = tabHeader:AddTabBar("TabBar")
-			
+
 			for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
 				local success, error = pcall(function()
 					tabGenerator(newTabBar)
@@ -44,5 +96,6 @@ Ext.Events.SessionLoaded:Subscribe(function()
 					Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
 				end
 			end
+			--#endregion
 		end)
 end)
