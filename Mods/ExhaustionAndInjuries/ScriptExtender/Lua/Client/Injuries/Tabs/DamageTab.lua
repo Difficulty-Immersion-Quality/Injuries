@@ -2,7 +2,12 @@
 InjuryMenu:RegisterTab(function(tabBar)
 	local damageTab = tabBar:AddTabItem("Damage")
 
-	local damageTable = damageTab:AddTable("DamageTypes", 4)
+	local damageTable = damageTab:AddTable("DamageTypes", 5)
+	local headerRow = damageTable:AddRow()
+	headerRow:AddCell():AddText("Damage Type")
+	headerRow:AddCell():AddText("% of Total Health In One Combat") -- TODO: Add tooltip explaining more
+	headerRow:AddCell():AddText("Healing Subtracts From Injury Damage")
+	headerRow:AddCell():AddText("Always Apply On Critical Hit")
 
 	damageTab:AddText("Add New Row")
 	local damageTypeCombo = damageTab:AddCombo("")
@@ -26,8 +31,11 @@ InjuryMenu:RegisterTab(function(tabBar)
 		local damageTypeThreshold = row:AddCell():AddSliderInt("")
 		damageTypeThreshold.Min = { 1, 1, 1, 1 }
 		damageTypeThreshold.Max = { 100, 100, 100, 100 }
+		-- local thresholdTooltip = damageTypeThreshold:Tooltip()
+		-- thresholdTooltip:AddText("Percentage of total health that needs to be dealt in a single hit to apply this injury")
 
-		local onCritCheckbox = row:AddCell():AddCheckbox("Always On Crit?", true)
+		local healingSubtractsCheckbox = row:AddCell():AddCheckbox("", true)
+		local onCritCheckbox = row:AddCell():AddCheckbox("", true)
 		local deleteRowButton = row:AddCell():AddButton("Delete")
 
 		deleteRowButton.OnClick = function()
