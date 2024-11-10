@@ -49,14 +49,30 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			local allRadio = tabHeader:AddRadioButton("All", false)
 			allRadio.SameLine = true
 
+			local prioritizeSeverityText = tabHeader:AddText("What Severity Should Be Prioritized?")
+			prioritizeSeverityText.Visible = false
+			local prioritizeSeverityCombo = tabHeader:AddCombo("")
+			prioritizeSeverityCombo.Visible = false
+			prioritizeSeverityCombo.Options = {
+				"Random",
+				"Most Severe"
+			}
+			prioritizeSeverityCombo.SelectedIndex = 0
+
 			oneRadio.OnActivate = function()
-				oneRadio.Active = not oneRadio.Active
 				allRadio.Active = oneRadio.Active
+				oneRadio.Active = not oneRadio.Active
+
+				prioritizeSeverityText.Visible = oneRadio.Active
+				prioritizeSeverityCombo.Visible = oneRadio.Active
 			end
 
 			allRadio.OnActivate = function()
-				allRadio.Active = not allRadio.Active
 				oneRadio.Active = allRadio.Active
+				allRadio.Active = not allRadio.Active
+
+				prioritizeSeverityText.Visible = oneRadio.Active
+				prioritizeSeverityCombo.Visible = oneRadio.Active
 			end
 			--#endregion
 
