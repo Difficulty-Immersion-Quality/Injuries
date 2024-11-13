@@ -70,7 +70,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			}
 			prioritizeSeverityCombo.SelectedIndex = 1
 			prioritizeSeverityCombo.OnChange = function(_, selectedIndex)
-				InjuryMenu.ConfigurationSlice.universal.injury_removal_severity_priority = prioritizeSeverityCombo.Options[selectedIndex]
+				InjuryMenu.ConfigurationSlice.universal.injury_removal_severity_priority = prioritizeSeverityCombo.Options[selectedIndex + 1]
 			end
 
 			oneRadio.OnActivate = function()
@@ -125,7 +125,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			}
 			healingOffsetCombo.SelectedIndex = 2
 			healingOffsetCombo.OnChange = function(_, selectedIndex)
-				InjuryMenu.ConfigurationSlice.universal.healing_subtracts_injury_counter_modifier = healingOffsetCombo.Options[selectedIndex]
+				InjuryMenu.ConfigurationSlice.universal.healing_subtracts_injury_counter_modifier = healingOffsetCombo.Options[selectedIndex + 1]
 			end
 
 			healingCheckbox.OnChange = function(combo, value)
@@ -142,7 +142,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 				healingText.Visible = selectedIndex ~= 0
 				healingOffsetCombo.Visible = selectedIndex ~= 0
 
-				InjuryMenu.ConfigurationSlice.universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex]
+				InjuryMenu.ConfigurationSlice.universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex + 1]
 			end
 			--#endregion
 
@@ -200,7 +200,6 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			injuryTable.BordersInnerH = true
 			injuryTable.PreciseWidths = true
 
-
 			local headerRow = injuryTable:AddRow()
 			headerRow.Headers = true
 			headerRow:AddCell():AddText("Injury")
@@ -208,6 +207,8 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			headerRow:AddCell():AddText("Actions")
 
 			for _, displayName in pairs(injuryDisplayNames) do
+				InjuryMenu.ConfigurationSlice.injury_specific[displayName] = {}
+
 				local newRow = injuryTable:AddRow()
 
 				newRow:AddCell():AddText(displayName)
@@ -218,6 +219,9 @@ Ext.Events.SessionLoaded:Subscribe(function()
 					"High"
 				}
 				severityCombo.SelectedIndex = 1
+				severityCombo.OnChange = function(_, selectedIndex)
+					InjuryMenu.ConfigurationSlice.injury_specific[displayName].severity = severityCombo.Options[selectedIndex]
+				end
 
 				local customizeButton = newRow:AddCell():AddButton("Customize")
 				customizeButton.OnClick = function()
@@ -228,7 +232,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 					local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
 					for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
 						local success, error = pcall(function()
-							tabGenerator(newTabBar)
+							tabGenerator(newTabBar, injuriesDisplayMap[displayName])
 						end)
 
 						if not success then

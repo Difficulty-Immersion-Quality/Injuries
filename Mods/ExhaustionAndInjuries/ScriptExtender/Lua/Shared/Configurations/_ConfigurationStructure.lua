@@ -1,7 +1,7 @@
 local real_config_table = {}
 
 local initialized = false
--- This allows us to react to any changes made to non-table fields at any level in the structure and send a NetMessage
+-- This allows us to react to any changes made to fields at any level in the structure and send a NetMessage
 -- just by defining the base table, ConfigurationStructure. Client/* implementations can now
 -- reference any slice of this table and allow their IMGUI elements to modify the table without
 -- any additional logic for letting the server know there were changes. Only works for this implementation -
@@ -82,6 +82,23 @@ ConfigurationStructure.injuries.universal.random_injury_severity_weights = {
 
 --#region Injury-Specific Options
 
+---@class Injury
+local injury_class = {}
+
+---@alias severity "Low"|"Medium"|"High"
+---@type severity
+injury_class.severity = "Medium"
+
+---@class InjuryDamage
+local injury_damage_class = {
+	["health_threshold"] = 10
+}
+
+---@type { [string] : InjuryDamage }
+injury_class.damage = {}
+
+---@type { [string] : Injury }
+ConfigurationStructure.injuries.injury_specific = {}
 --#endregion
 
 --#endregion

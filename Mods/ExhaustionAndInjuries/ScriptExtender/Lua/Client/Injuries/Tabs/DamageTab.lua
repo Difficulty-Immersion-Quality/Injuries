@@ -1,5 +1,5 @@
 --- @param tabBar ExtuiTabBar
-InjuryMenu:RegisterTab(function(tabBar)
+InjuryMenu:RegisterTab(function(tabBar, injury)
 	local damageTab = tabBar:AddTabItem("Damage")
 
 	local damageTable = damageTab:AddTable("DamageTypes", 3)
@@ -27,13 +27,16 @@ InjuryMenu:RegisterTab(function(tabBar)
 	damageTypeCombo.OnChange = function(combo, selectedIndex)
 		local row = damageTable:AddRow()
 
-		row:AddCell():AddText(combo.Options[selectedIndex + 1])
+		local damageType = combo.Options[selectedIndex + 1]
+		InjuryMenu.ConfigurationSlice.injury_specific[injury].damage[damageType] = {}
 
-		local damageTypeThreshold = row:AddCell():AddSliderInt("")
-		damageTypeThreshold.Min = { 1, 1, 1, 1 }
-		damageTypeThreshold.Max = { 100, 100, 100, 100 }
-		-- local thresholdTooltip = damageTypeThreshold:Tooltip()
-		-- thresholdTooltip:AddText("Percentage of total health that needs to be dealt in a single hit to apply this injury")
+		row:AddCell():AddText(damageType)
+
+		local damageTypeThreshold = row:AddCell():AddSliderInt("", 10, 1, 100)
+
+		damageTypeThreshold.OnChange = function ()
+			InjuryMenu.ConfigurationSlice.injury_specific[injury].damage[damageType]["health_threshold"] = damageTypeThreshold.Value[1]
+		end
 
 		local deleteRowButton = row:AddCell():AddButton("Delete")
 
