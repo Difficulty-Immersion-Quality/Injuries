@@ -238,8 +238,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				for index, option in pairs(severityCombo.Options) do
 					if option == injury_config.severity then
 						severityCombo.SelectedIndex = index - 1
+						break
 					end
 				end
+			else
+				injury_config.severity = "Medium"
 			end
 
 			severityCombo.OnChange = function(_, selectedIndex)
