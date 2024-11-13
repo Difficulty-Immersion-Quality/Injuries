@@ -1,7 +1,7 @@
 InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 
-InjuryMenu.ConfigurationSlice = ConfigurationStructure.injuries
+InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
 
 function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
@@ -24,6 +24,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 		end
 	end
 
+	-- This is why we need a list and a map - too lazy to write a sort myself
 	table.sort(injuryDisplayNames)
 
 	Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
@@ -131,6 +132,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			healingCheckbox.OnChange = function(combo, value)
 				healingText.Visible = value
 				healingOffsetCombo.Visible = value
+				InjuryMenu.ConfigurationSlice.universal.healing_subtracts_injury_counter = healingCheckbox.Checked
 			end
 
 			healingCheckbox.Visible = false
@@ -178,11 +180,11 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			local ensureAdditionFunction = function()
 				severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
 				if not severityErrorText.Visible then
-					InjuryMenu.ConfigurationSlice.universal.random_injury_severity_weights = {
-						["Low"] = lowSeverity.Value[1],
-						["Medium"] = mediumSeverity.Value[1],
-						["High"] = highSeverity.Value[1],
-					}
+					-- Bit of a hack due to metatable shenanigans - can't replace the whole table at once
+					local weights = InjuryMenu.ConfigurationSlice.universal.random_injury_severity_weights
+					weights["Low"] = lowSeverity.Value[1]
+					weights["Medium"] = mediumSeverity.Value[1]
+					weights["High"] = highSeverity.Value[1]
 				end
 			end
 			lowSeverity.OnChange = ensureAdditionFunction
@@ -207,7 +209,8 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			headerRow:AddCell():AddText("Actions")
 
 			for _, displayName in pairs(injuryDisplayNames) do
-				InjuryMenu.ConfigurationSlice.injury_specific[displayName] = {}
+				local injuryName = injuriesDisplayMap[displayName]
+				InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = {}
 
 				local newRow = injuryTable:AddRow()
 
@@ -220,7 +223,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 				}
 				severityCombo.SelectedIndex = 1
 				severityCombo.OnChange = function(_, selectedIndex)
-					InjuryMenu.ConfigurationSlice.injury_specific[displayName].severity = severityCombo.Options[selectedIndex]
+					InjuryMenu.ConfigurationSlice.injury_specific[injuryName].severity = severityCombo.Options[selectedIndex]
 				end
 
 				local customizeButton = newRow:AddCell():AddButton("Customize")
@@ -232,7 +235,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 					local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
 					for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
 						local success, error = pcall(function()
-							tabGenerator(newTabBar, injuriesDisplayMap[displayName])
+							tabGenerator(newTabBar, injuryName)
 						end)
 
 						if not success then

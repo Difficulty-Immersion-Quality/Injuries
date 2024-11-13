@@ -1,5 +1,11 @@
 --- @param tabBar ExtuiTabBar
 InjuryMenu:RegisterTab(function(tabBar, injury)
+	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
+	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].damage then
+		InjuryMenu.ConfigurationSlice.injury_specific[injury].damage = {}
+	end
+	local damageConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].damage
+
 	local damageTab = tabBar:AddTabItem("Damage")
 
 	local damageTable = damageTab:AddTable("DamageTypes", 3)
@@ -28,19 +34,31 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local row = damageTable:AddRow()
 
 		local damageType = combo.Options[selectedIndex + 1]
-		InjuryMenu.ConfigurationSlice.injury_specific[injury].damage[damageType] = {}
+
+		if not damageConfig[damageType] then
+			damageConfig[damageType] = {}
+		end
 
 		row:AddCell():AddText(damageType)
 
-		local damageTypeThreshold = row:AddCell():AddSliderInt("", 10, 1, 100)
+		local damageThresholdDefault = 10
+		local configThresholdValue = damageConfig[damageType]["health_threshold"]
+		if configThresholdValue then
+			damageThresholdDefault = configThresholdValue
+		else
+			damageConfig[damageType]["health_threshold"] = damageThresholdDefault
+		end
+		local damageTypeThreshold = row:AddCell():AddSliderInt("", damageThresholdDefault, 1, 100)
 
-		damageTypeThreshold.OnChange = function ()
-			InjuryMenu.ConfigurationSlice.injury_specific[injury].damage[damageType]["health_threshold"] = damageTypeThreshold.Value[1]
+		damageTypeThreshold.OnChange = function()
+			damageConfig[damageType]["health_threshold"] = damageTypeThreshold.Value[1]
 		end
 
 		local deleteRowButton = row:AddCell():AddButton("Delete")
 
 		deleteRowButton.OnClick = function()
+			damageConfig[damageType] = nil
+			ConfigurationStructure:SignalConfigDeletion()
 			row:Destroy()
 		end
 	end
