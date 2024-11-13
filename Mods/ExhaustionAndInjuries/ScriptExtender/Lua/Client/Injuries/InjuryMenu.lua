@@ -1,6 +1,8 @@
 InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 
+InjuryMenu.ConfigurationSlice = ConfigurationStructure.injuries
+
 function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
 end
@@ -33,12 +35,21 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			--#region Who Can Receive Injuries
 			tabHeader:AddText("Who Can Receive Injuries?")
 			local partyCheckbox = tabHeader:AddCheckbox("Party Members", true)
+			partyCheckbox.OnChange = function()
+				InjuryMenu.ConfigurationSlice.universal.who_can_receive_injuries["Party Members"] = partyCheckbox.Checked
+			end
 
 			local allyCheckbox = tabHeader:AddCheckbox("Allies", true)
 			allyCheckbox.SameLine = true
+			allyCheckbox.OnChange = function()
+				InjuryMenu.ConfigurationSlice.universal.who_can_receive_injuries["Allies"] = allyCheckbox.Checked
+			end
 
 			local enemyCheckbox = tabHeader:AddCheckbox("Enemies", true)
 			enemyCheckbox.SameLine = true
+			enemyCheckbox.OnChange = function()
+				InjuryMenu.ConfigurationSlice.universal.who_can_receive_injuries["Enemies"] = enemyCheckbox.Checked
+			end
 			--#endregion
 
 			--#region Injury Removal
@@ -57,11 +68,18 @@ Ext.Events.SessionLoaded:Subscribe(function()
 				"Random",
 				"Most Severe"
 			}
-			prioritizeSeverityCombo.SelectedIndex = 0
+			prioritizeSeverityCombo.SelectedIndex = 1
+			prioritizeSeverityCombo.OnChange = function(_, selectedIndex)
+				InjuryMenu.ConfigurationSlice.universal.injury_removal_severity_priority = prioritizeSeverityCombo.Options[selectedIndex]
+			end
 
 			oneRadio.OnActivate = function()
 				allRadio.Active = oneRadio.Active
 				oneRadio.Active = not oneRadio.Active
+
+				if oneRadio.Active then
+					InjuryMenu.ConfigurationSlice.universal.how_many_injuries_can_be_removed_at_once = oneRadio.Label
+				end
 
 				prioritizeSeverityText.Visible = oneRadio.Active
 				prioritizeSeverityCombo.Visible = oneRadio.Active
@@ -70,6 +88,10 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			allRadio.OnActivate = function()
 				oneRadio.Active = allRadio.Active
 				allRadio.Active = not allRadio.Active
+
+				if allRadio.Active then
+					InjuryMenu.ConfigurationSlice.universal.how_many_injuries_can_be_removed_at_once = allRadio.Label
+				end
 
 				prioritizeSeverityText.Visible = oneRadio.Active
 				prioritizeSeverityCombo.Visible = oneRadio.Active
@@ -95,12 +117,16 @@ Ext.Events.SessionLoaded:Subscribe(function()
 				"Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage")
 			local healingOffsetCombo = tabHeader:AddCombo("")
 			healingOffsetCombo.Options = {
+				"25%",
 				"50%",
 				"100%",
 				"150%",
 				"200%"
 			}
-			healingOffsetCombo.SelectedIndex = 1
+			healingOffsetCombo.SelectedIndex = 2
+			healingOffsetCombo.OnChange = function(_, selectedIndex)
+				InjuryMenu.ConfigurationSlice.universal.healing_subtracts_injury_counter_modifier = healingOffsetCombo.Options[selectedIndex]
+			end
 
 			healingCheckbox.OnChange = function(combo, value)
 				healingText.Visible = value
@@ -115,14 +141,24 @@ Ext.Events.SessionLoaded:Subscribe(function()
 				healingCheckbox.Visible = selectedIndex ~= 0
 				healingText.Visible = selectedIndex ~= 0
 				healingOffsetCombo.Visible = selectedIndex ~= 0
+
+				InjuryMenu.ConfigurationSlice.universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex]
 			end
 			--#endregion
 
 			--#region Severity
 			tabHeader:AddSeparatorText("Severity")
 			tabHeader:AddText("When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character")
-			tabHeader:AddCheckbox("Downed", true)
-			tabHeader:AddCheckbox("Suffered a Critical Hit", true).SameLine = true
+			local downedCheckbox = tabHeader:AddCheckbox("Downed", true)
+			downedCheckbox.OnChange = function()
+				InjuryMenu.ConfigurationSlice.universal.random_injury_conditional["Downed"] = downedCheckbox.Checked
+			end
+
+			local critCheckbox = tabHeader:AddCheckbox("Suffered a Critical Hit", true)
+			critCheckbox.SameLine = true
+			critCheckbox.OnChange = function()
+				InjuryMenu.ConfigurationSlice.universal.random_injury_conditional["Suffered a Critical Hit"] = critCheckbox.Checked
+			end
 
 			tabHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
 			tabHeader:AddText("Low")
@@ -141,6 +177,13 @@ Ext.Events.SessionLoaded:Subscribe(function()
 			severityErrorText.Visible = false
 			local ensureAdditionFunction = function()
 				severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
+				if not severityErrorText.Visible then
+					InjuryMenu.ConfigurationSlice.universal.random_injury_severity_weights = {
+						["Low"] = lowSeverity.Value[1],
+						["Medium"] = mediumSeverity.Value[1],
+						["High"] = highSeverity.Value[1],
+					}
+				end
 			end
 			lowSeverity.OnChange = ensureAdditionFunction
 			mediumSeverity.OnChange = ensureAdditionFunction
