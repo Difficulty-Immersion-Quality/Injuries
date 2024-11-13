@@ -220,7 +220,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		for _, displayName in pairs(injuryDisplayNames) do
 			local injuryName = injuriesDisplayMap[displayName]
 			if not InjuryMenu.ConfigurationSlice.injury_specific[injuryName] then
-				InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = {}
+				InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
 			end
 			local injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
 
@@ -233,16 +233,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				"Medium",
 				"High"
 			}
-			severityCombo.SelectedIndex = 1
-			if injury_config.severity then
-				for index, option in pairs(severityCombo.Options) do
-					if option == injury_config.severity then
-						severityCombo.SelectedIndex = index - 1
-						break
-					end
+			for index, option in pairs(severityCombo.Options) do
+				if option == injury_config.severity then
+					severityCombo.SelectedIndex = index - 1
+					break
 				end
-			else
-				injury_config.severity = "Medium"
 			end
 
 			severityCombo.OnChange = function(_, selectedIndex)

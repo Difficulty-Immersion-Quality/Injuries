@@ -9,7 +9,7 @@ local updateTimer
 -- just by defining the base table, ConfigurationStructure.config. Client/* implementations can now
 -- reference any slice of this table and allow their IMGUI elements to modify the table without
 -- any additional logic for letting the server know there were changes. Only works for this implementation -
--- too fragile for general use (e.g. doesn't account for the value being a table containing a table) - TODO: Fix?
+-- too fragile for general use
 local function generate_recursive_metatable(proxy_table, real_table)
 	return setmetatable(proxy_table, {
 		__index = function(this_table, key)
@@ -23,7 +23,11 @@ local function generate_recursive_metatable(proxy_table, real_table)
 				real_table[key] = value
 
 				if type(value) == "table" then
-					rawset(proxy_table, key, generate_recursive_metatable({_parent_key = key, _parent_table = real_table}, real_table[key]))
+					rawset(proxy_table, key, generate_recursive_metatable({ _parent_key = key, _parent_table = real_table }, real_table[key]))
+					-- Accounting for setting a table that has tables in one assignment operation
+					for child_key, child_value in pairs(value) do
+						proxy_table[key][child_key] = child_value
+					end
 				end
 			end
 
@@ -40,16 +44,6 @@ local function generate_recursive_metatable(proxy_table, real_table)
 			end
 		end
 	})
-end
-
---- Can't use metamethods to track key removal from a table, so this is a minor hack given that this doesn't happen much
-function ConfigurationStructure:SignalConfigDeletion()
-	Logger:BasicDebug("A config was deleted - sending updated config to server")
-	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
-end
-
-function ConfigurationStructure:GetRealConfig()
-	return TableUtils:MakeImmutableTableCopy(real_config_table)
 end
 
 ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
@@ -105,20 +99,31 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 
 --#region Injury-Specific Options
 
+ConfigurationStructure.DynamicClassDefinitions = {}
 ---@class Injury
-local injury_class = {}
+ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
 ---@alias severity "Low"|"Medium"|"High"
 ---@type severity
-injury_class.severity = "Medium"
+ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 
 ---@class InjuryDamage
-local injury_damage_class = {
+ConfigurationStructure.DynamicClassDefinitions.injury_damage_class = {
 	["health_threshold"] = 10
 }
 
 ---@type { [string] : InjuryDamage }
-injury_class.damage = {}
+ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {}
+
+---@class InjuryRemoval
+ConfigurationStructure.DynamicClassDefinitions.injury_removal_class = {
+	---@type AbilityId|"No Save"
+	["ability"] = "No Save",
+	["difficulty_class"] = 15
+}
+
+---@type { [string] : InjuryRemoval }
+ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {}
 
 ---@type { [string] : Injury }
 ConfigurationStructure.config.injuries.injury_specific = {}
@@ -130,27 +135,27 @@ local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	for key, value in pairs(table_from_file) do
 		local default_value = proxy_table[key]
 		-- if default_value then
-			if type(value) == "table" then
-				if not default_value then
-					proxy_table[key] = {}
-					default_value = proxy_table[key]
-				end
-				-- if type(default_value) == "table" then
-					CopyConfigsIntoReal(value, default_value)
-				-- else
-				-- 	Logger:BasicWarning("Config property %s with value %s was loaded from the server and is a table, but the Config definition isn't a table - ignoring.",
-				-- 		key,
-				-- 		type(value) == "table" and Ext.Json.Stringify(value) or value)
-				-- end
-			else
-				-- if type(default_value) ~= table then
-					proxy_table[key] = value
-				-- else
-				-- 	Logger:BasicWarning("Config property %s with value %s was loaded from the server and is not a table, but the Config definition is a table - ignoring.",
-				-- 		key,
-				-- 		type(value) == "table" and Ext.Json.Stringify(value) or value)
-				-- end
+		if type(value) == "table" then
+			if not default_value then
+				proxy_table[key] = {}
+				default_value = proxy_table[key]
 			end
+			-- if type(default_value) == "table" then
+			CopyConfigsIntoReal(value, default_value)
+			-- else
+			-- 	Logger:BasicWarning("Config property %s with value %s was loaded from the server and is a table, but the Config definition isn't a table - ignoring.",
+			-- 		key,
+			-- 		type(value) == "table" and Ext.Json.Stringify(value) or value)
+			-- end
+		else
+			-- if type(default_value) ~= table then
+			proxy_table[key] = value
+			-- else
+			-- 	Logger:BasicWarning("Config property %s with value %s was loaded from the server and is not a table, but the Config definition is a table - ignoring.",
+			-- 		key,
+			-- 		type(value) == "table" and Ext.Json.Stringify(value) or value)
+			-- end
+		end
 		-- else
 		-- 	Logger:BasicWarning("Config property %s with value %s was loaded from the server, but it's not in the Config definition - ignoring.",
 		-- 		key,
@@ -159,11 +164,21 @@ local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	end
 end
 
+--- Can't use metamethods to track key removal from a table, so this is a minor hack given that this doesn't happen much
+function ConfigurationStructure:SignalConfigDeletion()
+	Logger:BasicDebug("A config was deleted - sending updated config to server")
+	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
+end
+
+function ConfigurationStructure:GetRealConfigCopy()
+	return TableUtils:MakeImmutableTableCopy(real_config_table)
+end
+
 function ConfigurationStructure:InitializeConfig()
 	local config = FileUtils:LoadTableFile("config.json")
 
 	if not config then
-		config = ConfigurationStructure:GetRealConfig()
+		config = real_config_table
 		FileUtils:SaveTableToFile("config.json", config)
 	else
 		CopyConfigsIntoReal(config, ConfigurationStructure.config)
@@ -179,4 +194,3 @@ function ConfigurationStructure:UpdateConfigForServer(config)
 	FileUtils:SaveTableToFile("config.json", real_config_table)
 	Logger:BasicDebug("Successfully updated config on server side!")
 end
-

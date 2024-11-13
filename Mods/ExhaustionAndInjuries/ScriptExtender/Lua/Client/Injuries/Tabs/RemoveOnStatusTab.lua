@@ -1,5 +1,11 @@
 --- @param tabBar ExtuiTabBar
-InjuryMenu:RegisterTab(function(tabBar)
+InjuryMenu:RegisterTab(function(tabBar, injury)
+	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
+	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status then
+		InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status = {}
+	end
+	local saveConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status
+
 	local statusTab = tabBar:AddTabItem("Remove On Status")
 
 	local statusTable = statusTab:AddTable("RemoveOnStatus", 3)
@@ -46,7 +52,10 @@ InjuryMenu:RegisterTab(function(tabBar)
 		if #statuses > 0 then
 			for _, status in pairs(statuses) do
 				if string.upper(status.StatusType) == "BOOST" then
+					local statusName = status.Name
 					local row = statusTable:AddRow()
+					saveConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_removal_class)
+					local statusConfig = saveConfig[statusName]
 
 					--#region Status Name
 					local statusName = row:AddCell():AddText(status.Name)
@@ -80,22 +89,34 @@ InjuryMenu:RegisterTab(function(tabBar)
 					local saveRow = row:AddCell()
 					local saveCombo = saveRow:AddCombo("")
 					saveCombo.Options = saveOptions
-					saveCombo.SelectedIndex = 0
+					for index, option in pairs(saveCombo.Options) do
+						if option == statusConfig["ability"] then
+							saveCombo.SelectedIndex = index - 1
+							break
+						end
+					end
 
-					local saveSlider = saveRow:AddSliderInt("")
-					saveSlider.Min = { 1, 1, 1, 1 }
-					saveSlider.Max = { 30, 30, 30, 30 }
-					saveSlider.Value = {15, 15, 15, 15}
-					saveSlider.Visible = false
+					local saveSlider = saveRow:AddSliderInt("",
+						statusConfig["difficulty_class"],
+						1,
+						30)
+
+					saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+					saveSlider.OnChange = function()
+						statusConfig["difficulty_class"] = saveSlider.Value[1]
+					end
 
 					saveCombo.OnChange = function(combo, selectedIndex)
 						saveSlider.Visible = selectedIndex ~= 0
+						statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
 					end
 					--#endregion
 
 					local deleteRowButton = row:AddCell():AddButton("Delete")
 
 					deleteRowButton.OnClick = function()
+						-- hack to allow us to monitor table deletion
+						statusConfig.delete = true
 						row:Destroy()
 					end
 				end

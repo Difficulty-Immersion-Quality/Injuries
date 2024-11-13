@@ -33,8 +33,8 @@ local function copy(obj, seen, makeImmutable)
 end
 
 --- If obj is a table, returns a deep clone of that table, otherwise return obj
----@param obj T
----@return T
+---@param obj table
+---@return table
 function TableUtils:DeeplyCopyTable(obj)
 	return copy(obj, nil, false)
 end

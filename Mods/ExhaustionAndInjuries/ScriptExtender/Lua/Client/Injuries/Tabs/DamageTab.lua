@@ -24,6 +24,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	for _, damageType in ipairs(Ext.Enums.DamageType) do
 		table.insert(damageTypes, tostring(damageType))
 	end
+	table.sort(damageTypes)
+
 	damageTypeCombo.Options = damageTypes
 	damageTypeCombo.SelectedIndex = 0
 	damageTypeCombo.WidthFitPreview = true
@@ -36,19 +38,12 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local damageType = combo.Options[selectedIndex + 1]
 
 		if not damageConfig[damageType] then
-			damageConfig[damageType] = {}
+			damageConfig[damageType] = ConfigurationStructure.DynamicClassDefinitions.injury_damage_class
 		end
 
 		row:AddCell():AddText(damageType)
 
-		local damageThresholdDefault = 10
-		local configThresholdValue = damageConfig[damageType]["health_threshold"]
-		if configThresholdValue then
-			damageThresholdDefault = configThresholdValue
-		else
-			damageConfig[damageType]["health_threshold"] = damageThresholdDefault
-		end
-		local damageTypeThreshold = row:AddCell():AddSliderInt("", damageThresholdDefault, 1, 100)
+		local damageTypeThreshold = row:AddCell():AddSliderInt("", damageConfig[damageType]["health_threshold"], 1, 100)
 
 		damageTypeThreshold.OnChange = function()
 			damageConfig[damageType]["health_threshold"] = damageTypeThreshold.Value[1]
