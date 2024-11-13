@@ -57,8 +57,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local deleteRowButton = row:AddCell():AddButton("Delete")
 
 		deleteRowButton.OnClick = function()
-			damageConfig[damageType] = nil
-			ConfigurationStructure:SignalConfigDeletion()
+			-- hack to allow us to monitor table deletion
+			damageConfig[damageType].delete = true
 			row:Destroy()
 		end
 	end

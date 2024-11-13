@@ -16,11 +16,17 @@ local function generate_recursive_metatable(proxy_table, real_table)
 			return real_table[key]
 		end,
 		__newindex = function(this_table, key, value)
-			real_table[key] = value
+			if key == "delete" then
+				rawset(proxy_table, this_table._parent_key, nil)
+				this_table._parent_table[this_table._parent_key] = nil
+			else
+				real_table[key] = value
 
-			if type(value) == "table" then
-				rawset(proxy_table, key, generate_recursive_metatable({}, real_table[key]))
+				if type(value) == "table" then
+					rawset(proxy_table, key, generate_recursive_metatable({_parent_key = key, _parent_table = real_table}, real_table[key]))
+				end
 			end
+
 
 			if initialized then
 				if updateTimer then
