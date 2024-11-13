@@ -160,7 +160,6 @@ local function CopyConfigsIntoReal(table_from_file, proxy_table)
 end
 
 function ConfigurationStructure:InitializeConfig()
-	
 	local config = FileUtils:LoadTableFile("config.json")
 
 	if not config then
@@ -172,13 +171,12 @@ function ConfigurationStructure:InitializeConfig()
 
 	initialized = true
 	Logger:BasicInfo("Successfully loaded the config!")
+	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
 end
 
--- Need to make sure the server's copy of the config is up-to-date since that's where the actual functionality is
--- Might as well use that as the place to update the config too
-Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, payload, _)
-	CopyConfigsIntoReal(Ext.Json.Parse(payload), ConfigurationStructure.config)
+function ConfigurationStructure:UpdateConfigForServer(config)
+	real_config_table = config
 	FileUtils:SaveTableToFile("config.json", real_config_table)
 	Logger:BasicDebug("Successfully updated config on server side!")
-end)
+end
 
