@@ -3,6 +3,8 @@ ConfigurationStructure = {}
 local real_config_table = {}
 
 local initialized = false
+local updateTimer
+
 -- This allows us to react to any changes made to fields at any level in the structure and send a NetMessage
 -- just by defining the base table, ConfigurationStructure.config. Client/* implementations can now
 -- reference any slice of this table and allow their IMGUI elements to modify the table without
@@ -21,11 +23,14 @@ local function generate_recursive_metatable(proxy_table, real_table)
 			end
 
 			if initialized then
-				Logger:BasicDebug("%s was updated to %s - sending updated config to server",
-					key,
-					type(value) == "table" and Ext.Json.Stringify(value) or value)
+				if updateTimer then
+					Ext.Timer.Cancel(updateTimer)
+				end
+				updateTimer = Ext.Timer.WaitFor(500, function()
+					Logger:BasicDebug("Configuration updates made - sending updated table to server")
 
-				Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
+					Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
+				end)
 			end
 		end
 	})

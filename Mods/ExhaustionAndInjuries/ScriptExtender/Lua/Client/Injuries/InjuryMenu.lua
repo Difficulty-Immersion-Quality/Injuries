@@ -223,7 +223,7 @@ Ext.Events.SessionLoaded:Subscribe(function()
 				}
 				severityCombo.SelectedIndex = 1
 				severityCombo.OnChange = function(_, selectedIndex)
-					InjuryMenu.ConfigurationSlice.injury_specific[injuryName].severity = severityCombo.Options[selectedIndex]
+					InjuryMenu.ConfigurationSlice.injury_specific[injuryName].severity = severityCombo.Options[selectedIndex + 1]
 				end
 
 				local customizeButton = newRow:AddCell():AddButton("Customize")
