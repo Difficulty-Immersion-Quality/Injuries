@@ -42,6 +42,10 @@ function ConfigurationStructure:SignalConfigDeletion()
 	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
 end
 
+function ConfigurationStructure:GetRealConfig()
+	return TableUtils:MakeImmutableTableCopy(real_config_table)
+end
+
 ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
 
 --#region Injuries
@@ -115,4 +119,38 @@ ConfigurationStructure.config.injuries.injury_specific = {}
 --#endregion
 
 --#endregion
-initialized = true
+
+local function CopyConfigsIntoReal(table_from_file, proxy_table)
+	for key, value in pairs(table_from_file) do
+		local default_value = proxy_table[key]
+		if default_value then
+			if type(value) == "table" then
+				if type(default_value) == "table" then
+					CopyConfigsIntoReal(value, default_value)
+				else
+					Logger:BasicWarning("Config property %s with value %s was loaded from the server and is a table, but the Config definition isn't a table - ignoring.",
+						key,
+						type(value) == "table" and Ext.Json.Stringify(value) or value)
+				end
+			else
+				if type(default_value) ~= table then
+					proxy_table[key] = value
+				else
+					Logger:BasicWarning("Config property %s with value %s was loaded from the server and is not a table, but the Config definition is a table - ignoring.",
+						key,
+						type(value) == "table" and Ext.Json.Stringify(value) or value)
+				end
+			end
+		else
+			Logger:BasicWarning("Config property %s with value %s was loaded from the server, but it's not in the Config definition - ignoring.",
+				key,
+				type(value) == "table" and Ext.Json.Stringify(value) or value)
+		end
+	end
+end
+
+function ConfigurationStructure:InitializeConfig(config)
+	CopyConfigsIntoReal(config, ConfigurationStructure.config)
+	initialized = true
+	Logger:BasicInfo("Successfully loaded the config!")
+end
