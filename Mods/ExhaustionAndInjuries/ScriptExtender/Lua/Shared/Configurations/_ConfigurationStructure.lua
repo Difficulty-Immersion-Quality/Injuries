@@ -17,16 +17,24 @@ local function generate_recursive_metatable(proxy_table, real_table)
 		end,
 		__newindex = function(this_table, key, value)
 			if key == "delete" then
-				rawset(proxy_table, this_table._parent_key, nil)
+				rawset(this_table._parent_proxy, this_table._parent_key, nil)
 				this_table._parent_table[this_table._parent_key] = nil
 			else
 				real_table[key] = value
 
 				if type(value) == "table" then
-					rawset(proxy_table, key, generate_recursive_metatable({ _parent_key = key, _parent_table = real_table }, real_table[key]))
+					rawset(proxy_table, key, generate_recursive_metatable(
+						{
+							_parent_key = key,
+							_parent_table = real_table,
+							_parent_proxy = proxy_table
+						},
+						real_table[key]))
 					-- Accounting for setting a table that has tables in one assignment operation
 					for child_key, child_value in pairs(value) do
-						proxy_table[key][child_key] = child_value
+						if type(child_value) == "table" then
+							proxy_table[key][child_key] = child_value
+						end
 					end
 				end
 			end
@@ -36,100 +44,24 @@ local function generate_recursive_metatable(proxy_table, real_table)
 				if updateTimer then
 					Ext.Timer.Cancel(updateTimer)
 				end
-				updateTimer = Ext.Timer.WaitFor(500, function()
+				updateTimer = Ext.Timer.WaitFor(100, function()
+					-- Don't wanna deal with complex merge logic, and the payload size can get pretty massive,
+					-- so instead of serializing and sending it via NetMessages we'll just have the client handle
+					-- the file updates and let the server know when to read from it
+					FileUtils:SaveTableToFile("config.json", real_config_table)
 					Logger:BasicDebug("Configuration updates made - sending updated table to server")
 
-					Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
+					Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", "")
 				end)
 			end
 		end
 	})
 end
 
-ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
-
---#region Injuries
-ConfigurationStructure.config.injuries = {}
-
---#region Universal
-ConfigurationStructure.config.injuries.universal = {}
-
-ConfigurationStructure.config.injuries.universal.who_can_receive_injuries = {
-	["Allies"] = true,
-	["Party Members"] = true,
-	["Enemies"] = true
-}
-
--- #region Injury Removal
---- @alias how_many_injuries_can_be_removed_at_once "One"|"All"
---- @type how_many_injuries_can_be_removed_at_once
-ConfigurationStructure.config.injuries.universal.how_many_injuries_can_be_removed_at_once = "One"
-
----@alias injury_removal_severity_priority "Random"|"Most Severe"
----@type injury_removal_severity_priority
-ConfigurationStructure.config.injuries.universal.injury_removal_severity_priority = "Most Severe"
---#endregion
-
---#region Damage Counter
---- @alias injury_counter_reset "Attack/Tick"|"Round"|"Combat"|"Short Rest"|"Long Rest"
---- @type injury_counter_reset
-ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Attack/Tick"
-
-ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_counter = true
-
---- @alias healing_subtracts_injury_counter_modifier "25%"|"50%"|"100%"|"150%"|"200%"
---- @type healing_subtracts_injury_counter_modifier
-ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_counter_modifier = "100%"
---#endregion
-
---#region Severity
-ConfigurationStructure.config.injuries.universal.random_injury_conditional = {
-	["Downed"] = true,
-	["Suffered a Critical Hit"] = true
-}
-
-ConfigurationStructure.config.injuries.universal.random_injury_severity_weights = {
-	["Low"] = 25,
-	["Medium"] = 50,
-	["High"] = 25
-}
---#endregion
-
---#endregion
-
---#region Injury-Specific Options
-
 ConfigurationStructure.DynamicClassDefinitions = {}
----@class Injury
-ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
+ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
+Ext.Require("Shared/Configurations/_InjuryConfig.lua")
 
----@alias severity "Low"|"Medium"|"High"
----@type severity
-ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
-
----@class InjuryDamage
-ConfigurationStructure.DynamicClassDefinitions.injury_damage_class = {
-	["health_threshold"] = 10
-}
-
----@type { [string] : InjuryDamage }
-ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {}
-
----@class InjuryRemoval
-ConfigurationStructure.DynamicClassDefinitions.injury_removal_class = {
-	---@type AbilityId|"No Save"
-	["ability"] = "No Save",
-	["difficulty_class"] = 15
-}
-
----@type { [string] : InjuryRemoval }
-ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {}
-
----@type { [string] : Injury }
-ConfigurationStructure.config.injuries.injury_specific = {}
---#endregion
-
---#endregion
 
 local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	for key, value in pairs(table_from_file) do
@@ -164,12 +96,6 @@ local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	end
 end
 
---- Can't use metamethods to track key removal from a table, so this is a minor hack given that this doesn't happen much
-function ConfigurationStructure:SignalConfigDeletion()
-	Logger:BasicDebug("A config was deleted - sending updated config to server")
-	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
-end
-
 function ConfigurationStructure:GetRealConfigCopy()
 	return TableUtils:MakeImmutableTableCopy(real_config_table)
 end
@@ -189,8 +115,10 @@ function ConfigurationStructure:InitializeConfig()
 	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
 end
 
-function ConfigurationStructure:UpdateConfigForServer(config)
-	real_config_table = config
-	FileUtils:SaveTableToFile("config.json", real_config_table)
-	Logger:BasicDebug("Successfully updated config on server side!")
+function ConfigurationStructure:UpdateConfigForServer()
+	local config = FileUtils:LoadTableFile("config.json")
+	if config then
+		real_config_table = config
+		Logger:BasicDebug("Successfully updated config on server side!")
+	end
 end

@@ -51,74 +51,74 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 		if #statuses > 0 then
 			for _, status in pairs(statuses) do
-				if string.upper(status.StatusType) == "BOOST" then
-					local statusName = status.Name
-					local row = statusTable:AddRow()
-					saveConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_removal_class)
-					local statusConfig = saveConfig[statusName]
+				local statusName = status.Name
+				local row = statusTable:AddRow()
+				saveConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class)
+				local statusConfig = saveConfig[statusName]
 
-					--#region Status Name
-					local statusName = row:AddCell():AddText(status.Name)
-					local nameTooltip = statusName:Tooltip()
+				--#region Status Name
+				local statusName = row:AddCell():AddText(status.Name)
+				local nameTooltip = statusName:Tooltip()
 
-					if status.TooltipDamage ~= "" then
-						nameTooltip:AddText("Damage: " .. status.TooltipDamage)
+				nameTooltip:AddText("StatusType: " .. status.StatusType)
+
+				if status.TooltipDamage ~= "" then
+					nameTooltip:AddText("Damage: " .. status.TooltipDamage)
+				end
+
+				if status.HealValue ~= "" then
+					nameTooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
+				end
+
+				if status.TooltipSave ~= "" then
+					nameTooltip:AddText("Save: " .. status.TooltipSave)
+				end
+
+				if status.TickType ~= "" then
+					nameTooltip:AddText("TickType: " .. status.TickType)
+				end
+				--#endregion
+
+				--#region Save Options
+				local saveOptions = {}
+				for _, ability in ipairs(Ext.Enums.AbilityId) do
+					table.insert(saveOptions, tostring(ability))
+				end
+				table.sort(saveOptions)
+				table.insert(saveOptions, 1, "No Save")
+
+				local saveRow = row:AddCell()
+				local saveCombo = saveRow:AddCombo("")
+				saveCombo.Options = saveOptions
+				for index, option in pairs(saveCombo.Options) do
+					if option == statusConfig["ability"] then
+						saveCombo.SelectedIndex = index - 1
+						break
 					end
+				end
 
-					if status.HealValue ~= "" then
-						nameTooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
-					end
+				local saveSlider = saveRow:AddSliderInt("",
+					statusConfig["difficulty_class"],
+					1,
+					30)
 
-					if status.TooltipSave ~= "" then
-						nameTooltip:AddText("Save: " .. status.TooltipSave)
-					end
+				saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+				saveSlider.OnChange = function()
+					statusConfig["difficulty_class"] = saveSlider.Value[1]
+				end
 
-					if status.TickType ~= "" then
-						nameTooltip:AddText("TickType: " .. status.TickType)
-					end
-					--#endregion
+				saveCombo.OnChange = function(combo, selectedIndex)
+					saveSlider.Visible = selectedIndex ~= 0
+					statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+				end
+				--#endregion
 
-					--#region Save Options
-					local saveOptions = {}
-					for _, ability in ipairs(Ext.Enums.AbilityId) do
-						table.insert(saveOptions, tostring(ability))
-					end
-					table.sort(saveOptions)
-					table.insert(saveOptions, 1, "No Save")
+				local deleteRowButton = row:AddCell():AddButton("Delete")
 
-					local saveRow = row:AddCell()
-					local saveCombo = saveRow:AddCombo("")
-					saveCombo.Options = saveOptions
-					for index, option in pairs(saveCombo.Options) do
-						if option == statusConfig["ability"] then
-							saveCombo.SelectedIndex = index - 1
-							break
-						end
-					end
-
-					local saveSlider = saveRow:AddSliderInt("",
-						statusConfig["difficulty_class"],
-						1,
-						30)
-
-					saveSlider.Visible = saveCombo.SelectedIndex ~= 0
-					saveSlider.OnChange = function()
-						statusConfig["difficulty_class"] = saveSlider.Value[1]
-					end
-
-					saveCombo.OnChange = function(combo, selectedIndex)
-						saveSlider.Visible = selectedIndex ~= 0
-						statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
-					end
-					--#endregion
-
-					local deleteRowButton = row:AddCell():AddButton("Delete")
-
-					deleteRowButton.OnClick = function()
-						-- hack to allow us to monitor table deletion
-						statusConfig.delete = true
-						row:Destroy()
-					end
+				deleteRowButton.OnClick = function()
+					-- hack to allow us to monitor table deletion
+					statusConfig.delete = true
+					row:Destroy()
 				end
 			end
 		else

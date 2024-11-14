@@ -1,5 +1,10 @@
 --- @param tabBar ExtuiTabBar
-InjuryMenu:RegisterTab(function(tabBar)
+InjuryMenu:RegisterTab(function(tabBar, injury)
+	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
+	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].apply_on_status then
+		InjuryMenu.ConfigurationSlice.injury_specific[injury].apply_on_status = {}
+	end
+	local applyOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].apply_on_status
 	local statusTab = tabBar:AddTabItem("Apply On Status")
 
 	local statusTable = statusTab:AddTable("ApplyOnStatus", 4)
@@ -45,36 +50,38 @@ InjuryMenu:RegisterTab(function(tabBar)
 
 		if #statuses > 0 then
 			for _, status in pairs(statuses) do
-				if string.upper(status.StatusType) == "BOOST" then
-					local row = statusTable:AddRow()
+				local statusName = status.Name
+				applyOnConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class)
+				local statusConfig = applyOnConfig[statusName]
 
-					local statusName = row:AddCell():AddText(status.Name)
-					local nameTooltip = statusName:Tooltip()
+				local row = statusTable:AddRow()
 
-					if status.TooltipDamage ~= "" then
-						nameTooltip:AddText("Damage: " .. status.TooltipDamage)
-					end
+				local statusName = row:AddCell():AddText(status.Name)
+				local nameTooltip = statusName:Tooltip()
 
-					if status.TooltipSave ~= "" then
-						nameTooltip:AddText("Save: " .. status.TooltipSave)
-					end
+				nameTooltip:AddText("StatusType: " .. status.StatusType)
 
-					if status.TickType ~= "" then
-						nameTooltip:AddText("TickType: " .. status.TickType)
-					end
+				if status.TooltipDamage ~= "" then
+					nameTooltip:AddText("Damage: " .. status.TooltipDamage)
+				end
 
-					local totalRounds = row:AddCell():AddSliderInt("")
-					totalRounds.Min = { 1, 1, 1, 1 }
-					totalRounds.Max = { 10, 10, 10, 10 }
+				if status.TooltipSave ~= "" then
+					nameTooltip:AddText("Save: " .. status.TooltipSave)
+				end
 
-					local roundsTooltip = totalRounds:Tooltip()
-					roundsTooltip:AddText("How many total rounds within a single combat this status needs to be applied\non a given character before the injury is applied")
+				if status.TickType ~= "" then
+					nameTooltip:AddText("TickType: " .. status.TickType)
+				end
 
-					local deleteRowButton = row:AddCell():AddButton("Delete")
+				local totalRounds = row:AddCell():AddSliderInt("", 0, 0, 10)
+				totalRounds.OnChange = function()
+					statusConfig["number_of_rounds"] = totalRounds.Value[1]
+				end
 
-					deleteRowButton.OnClick = function()
-						row:Destroy()
-					end
+				local deleteRowButton = row:AddCell():AddButton("Delete")
+				deleteRowButton.OnClick = function()
+					statusConfig.delete = true
+					row:Destroy()
 				end
 			end
 		else
@@ -83,6 +90,6 @@ InjuryMenu:RegisterTab(function(tabBar)
 	end
 
 	statusInput.OnChange = function(inputElement, text)
-			errorText.Visible = false
+		errorText.Visible = false
 	end
 end)
