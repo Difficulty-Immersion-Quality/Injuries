@@ -12,6 +12,10 @@ local updateTimer
 -- too fragile for general use
 local function generate_recursive_metatable(proxy_table, real_table)
 	return setmetatable(proxy_table, {
+		-- don't use the proxy table during pairs() so we don't have to exclude any proxy fields
+		__pairs = function(this_table)
+			return next, real_table, nil
+		end,
 		__index = function(this_table, key)
 			return real_table[key]
 		end,
@@ -44,7 +48,7 @@ local function generate_recursive_metatable(proxy_table, real_table)
 				if updateTimer then
 					Ext.Timer.Cancel(updateTimer)
 				end
-				updateTimer = Ext.Timer.WaitFor(100, function()
+				updateTimer = Ext.Timer.WaitFor(250, function()
 					-- Don't wanna deal with complex merge logic, and the payload size can get pretty massive,
 					-- so instead of serializing and sending it via NetMessages we'll just have the client handle
 					-- the file updates and let the server know when to read from it
