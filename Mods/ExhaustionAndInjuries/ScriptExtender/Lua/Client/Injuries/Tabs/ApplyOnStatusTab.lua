@@ -73,9 +73,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 					nameTooltip:AddText("TickType: " .. status.TickType)
 				end
 
-				local totalRounds = row:AddCell():AddSliderInt("", 0, 0, 10)
-				totalRounds.OnChange = function()
-					statusConfig["number_of_rounds"] = totalRounds.Value[1]
+				local totalRounds = row:AddCell():AddSliderInt("", 1, 1, 10)
+				totalRounds.OnChange = function(slider)
+					statusConfig["number_of_rounds"] = slider.Value[1]
 				end
 
 				local deleteRowButton = row:AddCell():AddButton("Delete")
