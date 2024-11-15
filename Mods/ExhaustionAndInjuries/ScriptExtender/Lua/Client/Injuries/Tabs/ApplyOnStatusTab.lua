@@ -1,6 +1,10 @@
-local function BuildRows(statusTable, statuses, applyOnConfig, ignoreExistingStatus)
-	for _, status in pairs(statuses) do
+---@param statusTable ExtuiTable
+---@param status string[]
+---@param applyOnConfig { [string] : InjuryApplyOnStatus }
+---@param ignoreExistingStatus boolean?
+local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatus)
 		local statusName = status.Name
+		
 		if not applyOnConfig[statusName] then
 			applyOnConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class)
 		elseif ignoreExistingStatus then
@@ -11,21 +15,8 @@ local function BuildRows(statusTable, statuses, applyOnConfig, ignoreExistingSta
 		local row = statusTable:AddRow()
 
 		local statusNameText = row:AddCell():AddText(status.Name)
-		local nameTooltip = statusNameText:Tooltip()
 
-		nameTooltip:AddText("StatusType: " .. status.StatusType)
-
-		if status.TooltipDamage ~= "" then
-			nameTooltip:AddText("Damage: " .. status.TooltipDamage)
-		end
-
-		if status.TooltipSave ~= "" then
-			nameTooltip:AddText("Save: " .. status.TooltipSave)
-		end
-
-		if status.TickType ~= "" then
-			nameTooltip:AddText("TickType: " .. status.TickType)
-		end
+		StatusHelper:BuildTooltip(statusNameText:Tooltip(), status)
 
 		local totalRounds = row:AddCell():AddSliderInt("", statusConfig["number_of_rounds"], 1, 10)
 		totalRounds.OnChange = function(slider)
@@ -38,7 +29,6 @@ local function BuildRows(statusTable, statuses, applyOnConfig, ignoreExistingSta
 			row:Destroy()
 		end
 		::continue::
-	end
 end
 
 --- @param tabBar ExtuiTabBar
@@ -58,55 +48,13 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("# Total Rounds")
 
-	statusTab:AddText("Add New Row")
-	local statusInput = statusTab:AddInputText("")
-	statusInput.Hint = "Case-insensitive - use * to wildcard"
-	statusInput.AutoSelectAll = true
-	statusInput.EscapeClearsAll = true
-	-- statusInput.EnterReturnsTrue = true
-
-	local statusInputButton = statusTab:AddButton("Register Status")
-
-	local errorText = statusTab:AddText("Error: Search returned no results")
-	errorText.Visible = false
+	StatusHelper:BuildSearch(statusTab, function(status)
+		BuildRows(statusTable, status, applyOnConfig, true)
+	end)
 
 	if next(applyOnConfig) then
-		local statuses = {}
 		for status, _ in pairs(applyOnConfig) do
-			table.insert(statuses, Ext.Stats.Get(status))
+			BuildRows(statusTable, Ext.Stats.Get(status), applyOnConfig)
 		end
-		BuildRows(statusTable, statuses, applyOnConfig)
-	end
-
-	statusInputButton.OnClick = function()
-		local statuses = {}
-		local inputText = string.upper(statusInput.Text)
-		local isWildcard = false
-		if string.find(inputText, "*") then
-			inputText = string.gsub(inputText, "*", "")
-			isWildcard = true
-		end
-
-		for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
-			name = string.upper(name)
-			if isWildcard then
-				if string.find(name, inputText) then
-					table.insert(statuses, Ext.Stats.Get(name))
-				end
-			elseif name == inputText then
-				table.insert(statuses, Ext.Stats.Get(name))
-				break
-			end
-		end
-
-		if #statuses > 0 then
-			BuildRows(statusTable, statuses, applyOnConfig, true)
-		else
-			errorText.Visible = true
-		end
-	end
-
-	statusInput.OnChange = function(inputElement, text)
-		errorText.Visible = false
 	end
 end)

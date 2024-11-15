@@ -48,6 +48,7 @@ local function generate_recursive_metatable(proxy_table, real_table)
 				if updateTimer then
 					Ext.Timer.Cancel(updateTimer)
 				end
+				-- This triggers each time a slider moves, so need to wait for changes to be complete before updating
 				updateTimer = Ext.Timer.WaitFor(250, function()
 					-- Don't wanna deal with complex merge logic, and the payload size can get pretty massive,
 					-- so instead of serializing and sending it via NetMessages we'll just have the client handle
@@ -55,7 +56,11 @@ local function generate_recursive_metatable(proxy_table, real_table)
 					FileUtils:SaveTableToFile("config.json", real_config_table)
 					Logger:BasicDebug("Configuration updates made - sending updated table to server")
 
-					Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", "")
+					if Ext.ClientNet.IsHost() then
+						Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", "")
+					else
+						Logger:BasicWarning("You're not the host of this session, so not updating the server configs - your local config is still updated")
+					end
 				end)
 			end
 		end
