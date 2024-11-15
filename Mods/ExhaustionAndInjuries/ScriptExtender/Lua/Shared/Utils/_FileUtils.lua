@@ -30,7 +30,9 @@ end
 ---@treturn boolean true if the operation succeeded, false otherwise
 function FileUtils:SaveTableToFile(filepath, content)
 	local jsonSuccess, response = pcall(function()
-		return Ext.Json.Stringify(content)
+		return Ext.Json.Stringify(content, {
+			Beautify = false
+		})
 	end)
 
 	if not jsonSuccess then
