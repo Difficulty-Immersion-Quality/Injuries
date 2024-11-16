@@ -1,6 +1,6 @@
 ---@param statusTable ExtuiTable
 ---@param status FixedString[]
----@param removeOnConfig { [string] : InjuryRemoveOnStatus }
+---@param removeOnConfig InjuryRemoveOnStatusClass
 ---@param ignoreExistingStatus boolean?
 local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStatus)
 	local statusName = status.Name

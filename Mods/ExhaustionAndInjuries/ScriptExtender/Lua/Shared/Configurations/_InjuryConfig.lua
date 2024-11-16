@@ -50,7 +50,6 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 --#endregion
 
 --#region Injury-Specific Options
-
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
@@ -63,7 +62,8 @@ ConfigurationStructure.DynamicClassDefinitions.injury_damage_class = {
 	["health_threshold"] = 10
 }
 
----@type { [string] : InjuryDamage }
+---@alias InjuryDamageClass { [DamageType] : InjuryDamage }
+---@type InjuryDamageClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {}
 
 ---@class InjuryRemoveOnStatus
@@ -73,17 +73,21 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	["difficulty_class"] = 15
 }
 
----@type { [string] : InjuryRemoveOnStatus }
+---@alias StatusName string
+---@alias InjuryRemoveOnStatusClass { [StatusName] : InjuryRemoveOnStatus }
+---@type InjuryRemoveOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {}
 
 ---@class InjuryApplyOnStatus
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
 	["number_of_rounds"] = 1
 }
----@type { [string] : InjuryApplyOnStatus }
+---@alias ApplyOnStatusClass { [StatusName] : InjuryApplyOnStatus }
+---@type ApplyOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {}
 
----@type { [string] : Injury }
+---@alias InjuryName string
+---@type { [InjuryName] : Injury }
 ConfigurationStructure.config.injuries.injury_specific = {}
 --#endregion
 

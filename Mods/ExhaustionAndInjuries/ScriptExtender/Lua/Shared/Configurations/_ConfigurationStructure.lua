@@ -68,6 +68,8 @@ local function generate_recursive_metatable(proxy_table, real_table)
 end
 
 ConfigurationStructure.DynamicClassDefinitions = {}
+
+--- @class Configuration
 ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
 Ext.Require("Shared/Configurations/_InjuryConfig.lua")
 
@@ -105,6 +107,7 @@ local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	end
 end
 
+---@return Configuration
 function ConfigurationStructure:GetRealConfigCopy()
 	return TableUtils:MakeImmutableTableCopy(real_config_table)
 end

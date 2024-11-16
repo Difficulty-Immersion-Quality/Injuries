@@ -1,6 +1,6 @@
 ---@param statusTable ExtuiTable
 ---@param status string[]
----@param applyOnConfig { [string] : InjuryApplyOnStatus }
+---@param applyOnConfig ApplyOnStatusClass
 ---@param ignoreExistingStatus boolean?
 local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatus)
 		local statusName = status.Name
@@ -32,6 +32,7 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 end
 
 --- @param tabBar ExtuiTabBar
+--- @param injury InjuryName
 InjuryMenu:RegisterTab(function(tabBar, injury)
 	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
 	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].apply_on_status then

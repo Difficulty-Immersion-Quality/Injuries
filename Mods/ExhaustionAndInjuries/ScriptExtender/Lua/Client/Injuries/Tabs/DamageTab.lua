@@ -41,6 +41,7 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 end
 
 --- @param tabBar ExtuiTabBar
+--- @param injury InjuryName
 InjuryMenu:RegisterTab(function(tabBar, injury)
 	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
 	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].damage then
