@@ -3,7 +3,7 @@ ConfigManager = {}
 ConfigManager.ConfigCopy = ConfigurationStructure:GetRealConfigCopy()
 
 -- Need to make sure the server's copy of the config is up-to-date since that's where the actual functionality is
-Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
+Ext.RegisterNetListener("Injuries_UpdateConfiguration", function(_, _, _)
 	ConfigurationStructure:UpdateConfigForServer()
 	ConfigManager.ConfigCopy = ConfigurationStructure:GetRealConfigCopy()
 
@@ -21,7 +21,6 @@ Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
 
 	for injury, config in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
 		for damageType, damageConfig in pairs(config.damage) do
-			damageType = string.upper(damageType)
 			if not ConfigManager.Injuries.Damage[damageType] then
 				ConfigManager.Injuries.Damage[damageType] = {}
 			end

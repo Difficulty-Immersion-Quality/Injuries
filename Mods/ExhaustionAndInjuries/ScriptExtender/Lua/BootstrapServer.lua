@@ -9,3 +9,7 @@ Ext.Require("Server/_ConfigManager.lua")
 Ext.Require("Server/ECSPrinter.lua")
 
 Ext.Require("Server/Injuries/_Main.lua")
+
+-- Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
+-- 	Server = true, Client = true, WriteableOnClient = true, WriteableOnServer = true, SyncToServer = true, SyncToClient = true
+-- })

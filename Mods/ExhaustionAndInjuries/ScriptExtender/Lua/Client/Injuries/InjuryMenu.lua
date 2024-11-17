@@ -2,6 +2,8 @@ InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
 
+-- Ext.Require("Client/Injuries/InjuryReport.lua")
+
 function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
 end
@@ -206,6 +208,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		--#region Injury-Specific Options
 		tabHeader:AddSeparatorText("Injury-Specific Options")
+
+		local reportButton =tabHeader:AddButton("Open Injury Report")
+		reportButton.OnClick = function ()
+			InjuryReport:BuildReportWindow()
+		end
 
 		local injuryTable = tabHeader:AddTable("InjuryTable", 3)
 		injuryTable.BordersInnerH = true

@@ -1,53 +1,106 @@
-local printer = ChangePrinter:New()
+-- Synced to Client/Injuries/InjuryReport
+Ext.Vars.RegisterUserVariable("Injuries_Damage", {
+	Server = true,
+	Client = true,
+	SyncToClient = true
+})
 
--- Weapon attacks are spells too - i.e. https://bg3.norbyte.dev/search?q=type%3Aspell+Ranged+%26+Attack#result-eda1854279be71702cf949e192e8b08a2839b809
--- AttackedBy event triggers after Sneaking is removed, so we can't use that
--- EventCoordinator:RegisterEventProcessor("CastSpell", function(caster, _, _, _, _)
--- 	if Osi.IsPartyMember(caster, 0) == 1 then
--- 		printer:Start()
--- 	end
--- end)
+local defender
 
-Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, spellType, spellElement, storyActionID)
-	if Osi.IsPartyMember(caster, 0) == 1 then
-		-- printer:Start()
-	end
-end)
+---@param event EsvLuaBeforeDealDamageEvent
+local function ProcessDamageEvent(event)
+	---@type EntityHandle
+	local defenderEntity = Ext.Entity.Get(defender)
 
-Ext.Osiris.RegisterListener("HitpointsChanged", 2, "before", function(entity, percentage)
-	if Osi.IsPartyMember(entity, 0) == 1 then
-	end
-end)
+	-- Damage numbers don't account for TempHp - need to recreate that reduction
+	--- @type { [DamageType] : integer }
+	local tempHpReductionTable = {}
+	if defenderEntity.Health.TemporaryHp > 0 then
+		local tempHp = defenderEntity.Health.TemporaryHp
+		-- DamageList contains the damageTypes in the order they're applied it looks like - whereas FinalDamagePerType is arbitrarily ordered
+		for _, damagePair in pairs(event.Hit.DamageList) do
+			local finalDamageAmount = event.Hit.Damage.FinalDamagePerType[damagePair.DamageType]
 
-
-EventCoordinator:RegisterEventProcessor("AttackedBy", function(defender, attackerOwner, attacker2, damageType, damageAmount, damageCause, storyActionID)
-	-- printer:Stop()
-	-- Don't wanna global this since ConfigManager replaces the whole table instead of merging in the new table. Might wanna fix at some point
-	local injuryConfig = ConfigManager.ConfigCopy.injuries
-
-	local damageConfig = ConfigManager.Injuries.Damage[string.upper(damageType)]
-	if not damageConfig then
-		Logger:BasicDebug("No injuries are configured to trigger on damageType %s, skipping processing", damageType)
-		return
-	end
-
-	local eligibleGroups = injuryConfig.universal.who_can_receive_injuries
-	if eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), defender) == 1
-		or eligibleGroups["Party Members"] and Osi.IsPartyMember(defender, 1) == 1
-		or eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), defender) == 1
-	then
-		local defenderEntity = Ext.Entity.Get(defender)
-		local healthRemoved = damageAmount
-		if defenderEntity.TemporaryHP >= damageAmount then
-			Logger:BasicDebug("%s has %s TemporaryHP, which is >= to the damageAmount of %s, so skipping",
-				defender,
-				defenderEntity.TemporaryHP,
-				damageAmount)
-
-			return
-		else
-			healthRemoved = healthRemoved - defenderEntity.TemporaryHP
+			if finalDamageAmount == tempHp then
+				tempHpReductionTable[damagePair.DamageType] = finalDamageAmount
+				break
+			elseif finalDamageAmount > tempHp then
+				tempHpReductionTable[damagePair.DamageType] = finalDamageAmount - tempHp
+				break
+			elseif finalDamageAmount < tempHp then
+				tempHp = tempHp - finalDamageAmount
+				tempHpReductionTable[damagePair.DamageType] = finalDamageAmount
+			end
 		end
-		local healthPercentageRemoved = Osi.GetTotalHit
+		Logger:BasicTrace("Reduced the following damagePairs as %s has %d tempHp:\n%s",
+			defender,
+			defenderEntity.Health.TemporaryHp,
+			Ext.Json.Stringify(tempHpReductionTable)
+		)
+	end
+
+	--- @type { [DamageType] : { [string] : number } }
+	local preexistingInjuryDamage = defenderEntity.Vars.Injuries_Damage or {}
+	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
+	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
+		local damageConfig = ConfigManager.Injuries.Damage[damageType]
+		if damageConfig then
+			if tempHpReductionTable[damageType] then
+				finalDamageAmount = finalDamageAmount - tempHpReductionTable[damageType]
+				Logger:BasicTrace("Reduced %s final damage to %d due to tempHp math", damageType, finalDamageAmount)
+			end
+
+			if finalDamageAmount > 0 then
+				if preexistingInjuryDamage[damageType] then
+					finalDamageAmount = finalDamageAmount + preexistingInjuryDamage[damageType]["flat"]
+				else
+					preexistingInjuryDamage[damageType] = {}
+				end
+				
+				local totalHpPercentageRemoved = (finalDamageAmount / defenderEntity.Health.MaxHp) * 100
+				
+				preexistingInjuryDamage[damageType]["percentage"] = totalHpPercentageRemoved
+				preexistingInjuryDamage[damageType]["flat"] = finalDamageAmount
+
+				for injury, injuryDamageConfig in pairs(damageConfig) do
+					if totalHpPercentageRemoved >= injuryDamageConfig["health_threshold"] then
+						Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",
+							injury,
+							defender,
+							totalHpPercentageRemoved,
+							injuryDamageConfig["health_threshold"])
+
+						Osi.ApplyStatus(defender, injury, -1)
+					end
+				end
+			end
+		else
+			Logger:BasicDebug("No Injuries are configured to trigger on damageType %s - skipping this entry", damageType)
+		end
+	end
+
+	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Attack/Tick" then
+		defenderEntity.Vars.Injuries_Damage = {}
+	else
+		defenderEntity.Vars.Injuries_Damage = preexistingInjuryDamage
+	end
+end
+
+--- Event sequence is DealDamge -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
+--- DealDamage doesn't contain any damage or damageType information - just who's attacking and being attacked
+--- BeforeDealDamage contains damage and damageType information and who's attacking, but not who's being attacked
+---@param event EsvLuaDealDamageEvent
+Ext.Events.DealDamage:Subscribe(function(event)
+	-- Candles constantly taking burn damage lol
+	if not event.Target.IsItem then
+		defender = event.Target.Uuid.EntityUuid
+
+		local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
+		if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), defender) == 1)
+			or (eligibleGroups["Party Members"] and Osi.IsPartyMember(defender, 1) == 1)
+			or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), defender) == 1)
+		then
+			Ext.Events.BeforeDealDamage:Subscribe(ProcessDamageEvent, { Once = true })
+		end
 	end
 end)

@@ -124,7 +124,7 @@ function ConfigurationStructure:InitializeConfig()
 
 	initialized = true
 	Logger:BasicInfo("Successfully loaded the config!")
-	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
+	Ext.ClientNet.PostMessageToServer("Injuries_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
 end
 
 function ConfigurationStructure:UpdateConfigForServer()
