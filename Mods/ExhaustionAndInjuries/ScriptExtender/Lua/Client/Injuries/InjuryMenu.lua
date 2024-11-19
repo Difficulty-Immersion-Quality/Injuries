@@ -2,7 +2,7 @@ InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
 
--- Ext.Require("Client/Injuries/InjuryReport.lua")
+Ext.Require("Client/Injuries/InjuryReport.lua")
 
 function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)

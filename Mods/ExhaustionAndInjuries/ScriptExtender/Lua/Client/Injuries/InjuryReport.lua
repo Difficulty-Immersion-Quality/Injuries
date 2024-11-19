@@ -4,11 +4,14 @@ Ext.Vars.RegisterUserVariable("Injuries_Damage", {
 	SyncToClient = true
 })
 
--- Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
--- 	Server = false,
--- 	Client = true,
--- 	WriteableOnClient = true
--- })
+Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
+	Server = true,
+	Client = true,
+	WriteableOnServer = true,
+	WriteableOnClient = true,
+	SyncToClient = true,
+	SyncToServer = true
+})
 
 InjuryReport = {}
 
@@ -22,7 +25,6 @@ local function BuildReport()
 	if partySection then
 		for _, child in pairs(partySection.Children) do
 			partySection:RemoveChild(child)
-			child:Destroy()
 		end
 
 		for entityUuid, existingInjuryDamage in pairs(entityInjuriesDamageReport) do
@@ -45,14 +47,10 @@ local function BuildReport()
 	end
 end
 
----@param entity EntityHandle
----@param vars table<string, any>
----@param frig_if_i_know any
----@diagnostic disable-next-line: param-type-mismatch
-Ext.Entity.OnChange("Health", function(entity, vars, frig_if_i_know)
-	-- if not entityInjuriesDamageReport then
-	-- 	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
-	-- end
+Ext.RegisterNetListener(ModuleUUID .. "_Injury_Damage_Updated", function(channel, entity, user)
+	entity = Ext.Entity.Get(entity)
+
+	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
 
 	if entity.Vars.Injuries_Damage then
 		entityInjuriesDamageReport[entity.Uuid.EntityUuid] = entity.Vars.Injuries_Damage
@@ -62,10 +60,11 @@ Ext.Entity.OnChange("Health", function(entity, vars, frig_if_i_know)
 
 	table.sort(entityInjuriesDamageReport)
 
-	-- Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesDamageReport
+	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesDamageReport
 
 	BuildReport()
 end)
+
 
 function InjuryReport:BuildReportWindow()
 	local reportPopup = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
@@ -80,6 +79,8 @@ function InjuryReport:BuildReportWindow()
 		partySection:Destroy()
 		partySection = nil
 	end
+
+	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
 
 	BuildReport()
 end

@@ -124,7 +124,6 @@ function ConfigurationStructure:InitializeConfig()
 
 	initialized = true
 	Logger:BasicInfo("Successfully loaded the config!")
-	Ext.ClientNet.PostMessageToServer("Injuries_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
 end
 
 function ConfigurationStructure:UpdateConfigForServer()
@@ -133,4 +132,10 @@ function ConfigurationStructure:UpdateConfigForServer()
 		real_config_table = config
 		Logger:BasicDebug("Successfully updated config on server side!")
 	end
+end
+
+if Ext.IsClient() then
+	Ext.Events.SessionLoaded:Subscribe(function()
+		Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", "")
+	end)
 end

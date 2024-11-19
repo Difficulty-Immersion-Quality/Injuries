@@ -57,7 +57,8 @@ local function ProcessDamageEvent(event)
 					preexistingInjuryDamage[damageType] = {}
 				end
 				
-				local totalHpPercentageRemoved = (finalDamageAmount / defenderEntity.Health.MaxHp) * 100
+				-- This is apparently how you round to 2 decimal places? Thanks ChatGPT
+				local totalHpPercentageRemoved = math.floor((finalDamageAmount / defenderEntity.Health.MaxHp) * 100 * 100) / 100
 				
 				preexistingInjuryDamage[damageType]["percentage"] = totalHpPercentageRemoved
 				preexistingInjuryDamage[damageType]["flat"] = finalDamageAmount
@@ -84,6 +85,9 @@ local function ProcessDamageEvent(event)
 	else
 		defenderEntity.Vars.Injuries_Damage = preexistingInjuryDamage
 	end
+
+	Ext.Vars.SyncUserVariables()
+	Ext.ServerNet.BroadcastMessage(ModuleUUID .. "_Injury_Damage_Updated", defender)
 end
 
 --- Event sequence is DealDamge -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
