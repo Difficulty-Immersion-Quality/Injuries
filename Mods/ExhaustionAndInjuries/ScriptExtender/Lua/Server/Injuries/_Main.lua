@@ -56,22 +56,24 @@ local function ProcessDamageEvent(event)
 				else
 					preexistingInjuryDamage[damageType] = {}
 				end
-				
+
 				-- This is apparently how you round to 2 decimal places? Thanks ChatGPT
 				local totalHpPercentageRemoved = math.floor((finalDamageAmount / defenderEntity.Health.MaxHp) * 100 * 100) / 100
-				
+
 				preexistingInjuryDamage[damageType]["percentage"] = totalHpPercentageRemoved
 				preexistingInjuryDamage[damageType]["flat"] = finalDamageAmount
 
 				for injury, injuryDamageConfig in pairs(damageConfig) do
-					if totalHpPercentageRemoved >= injuryDamageConfig["health_threshold"] then
-						Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",
-							injury,
-							defender,
-							totalHpPercentageRemoved,
-							injuryDamageConfig["health_threshold"])
+					if Osi.HasActiveStatus(defender, injury) == 0 then
+						if totalHpPercentageRemoved >= injuryDamageConfig["health_threshold"] then
+							Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",
+								injury,
+								defender,
+								totalHpPercentageRemoved,
+								injuryDamageConfig["health_threshold"])
 
-						Osi.ApplyStatus(defender, injury, -1)
+							Osi.ApplyStatus(defender, injury, -1)
+						end
 					end
 				end
 			end
