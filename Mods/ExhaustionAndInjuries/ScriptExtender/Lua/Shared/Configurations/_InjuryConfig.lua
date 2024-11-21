@@ -57,14 +57,17 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 
----@class InjuryDamage
-ConfigurationStructure.DynamicClassDefinitions.injury_damage_class = {
-	["health_threshold"] = 10
+---@class InjuryDamageTypeClass
+ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class = {
+	["multiplier"] = 1
 }
 
----@alias InjuryDamageClass { [DamageType] : InjuryDamage }
----@type InjuryDamageClass
-ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {}
+--- @class InjuryDamageClass
+ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
+	["threshold"] = 10,
+	---@type { [DamageType] : InjuryDamageTypeClass }
+	["damage_types"] = {}
+}
 
 ---@class InjuryRemoveOnStatus
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {

@@ -1,16 +1,22 @@
+---@param damageTable ExtuiTable
+---@param damageType DamageType
+---@param damageConfig InjuryDamageClass
+---@param damageCombo ExtuiCombo
 local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 	local row = damageTable:AddRow()
 
-	if not damageConfig[damageType] then
-		damageConfig[damageType] = ConfigurationStructure.DynamicClassDefinitions.injury_damage_class
+	if not damageConfig["damage_types"][damageType] then
+		damageConfig["damage_types"][damageType] = ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class
 	end
+	local damageTypeConfig = damageConfig["damage_types"][damageType]
 
 	row:AddCell():AddText(damageType)
 
-	local damageTypeThreshold = row:AddCell():AddSliderInt("", damageConfig[damageType]["health_threshold"], 1, 100)
+	local damageTypeThreshold = row:AddCell():AddSliderInt("", damageTypeConfig["multiplier"] * 100, 1, 500)
 
 	damageTypeThreshold.OnChange = function()
-		damageConfig[damageType]["health_threshold"] = damageTypeThreshold.Value[1]
+		-- Rounding, according to ChatGPT
+		damageTypeConfig["multiplier"] = math.floor(damageTypeThreshold.Value[1] * 100 + 0.5) / 10000
 	end
 
 	local deleteRowButton = row:AddCell():AddButton("Delete")
@@ -26,7 +32,7 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 
 	deleteRowButton.OnClick = function()
 		-- hack to allow us to monitor table deletion
-		damageConfig[damageType].delete = true
+		damageConfig["damage_types"][damageType].delete = true
 
 		local newOptions = {}
 		for _, option in pairs(damageCombo.Options) do
@@ -51,13 +57,18 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local damageTab = tabBar:AddTabItem("Damage")
 
+	damageTab:AddText("Applied after losing the following % of Health:")
+	local damageThreshold = damageTab:AddSliderInt("", damageConfig["threshold"], 0, 100)
+	damageThreshold.SameLine = true
+
+
 	local damageTable = damageTab:AddTable("DamageTypes", 3)
 	damageTable.BordersInnerH = true
 
 	local headerRow = damageTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Damage Type")
-	headerRow:AddCell():AddText("% of Total Health")
+	headerRow:AddCell():AddText("Multiplier %")
 
 	damageTab:AddText("Add New Row")
 	local damageTypeCombo = damageTab:AddCombo("")
@@ -80,7 +91,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 
 	if next(damageConfig) then
-		for damageType, _ in pairs(damageConfig) do
+		for damageType, _ in pairs(damageConfig["damage_types"]) do
 			BuildRow(damageTable, damageType, damageConfig, damageTypeCombo)
 		end
 	end

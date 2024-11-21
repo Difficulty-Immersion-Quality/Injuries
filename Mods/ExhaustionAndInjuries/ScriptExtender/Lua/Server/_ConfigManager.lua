@@ -10,7 +10,7 @@ Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
 	-- Making the config more code-friendly so we don't have to loop through irrelevant injuries during events
 	-- Resetting the table to prevent any removed entries from persisting
 	ConfigManager.Injuries = {}
-	--- @type { [DamageType] : { [InjuryName] : InjuryDamage } }
+	--- @type { [DamageType] : { [InjuryName] : InjuryDamageTypeClass } }
 	ConfigManager.Injuries.Damage = {}
 
 	--- @type { [StatusName] : { [InjuryName] : InjuryApplyOnStatus } }
@@ -20,7 +20,7 @@ Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
 	ConfigManager.Injuries.RemoveOnStatus = {}
 
 	for injury, config in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
-		for damageType, damageConfig in pairs(config.damage) do
+		for damageType, damageConfig in pairs(config.damage["damage_types"]) do
 			if not ConfigManager.Injuries.Damage[damageType] then
 				ConfigManager.Injuries.Damage[damageType] = {}
 			end
