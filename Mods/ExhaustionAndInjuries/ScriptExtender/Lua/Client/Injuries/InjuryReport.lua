@@ -43,7 +43,7 @@ local function BuildReport()
 						local foundDamage = false
 						for damageType, damageTypeConfig in pairs(damageConfig.damage["damage_types"]) do
 							local damageTable = existingInjuryDamage[damageType]
-							if next(damageTable) then
+							if damageTable and next(damageTable) then
 								local flatWithMultiplier = damageTable["flat"] * damageTypeConfig["multiplier"]
 								-- Rounding to 2 digits
 								local healthPercentage = (flatWithMultiplier / entity.Health.MaxHp) * 100

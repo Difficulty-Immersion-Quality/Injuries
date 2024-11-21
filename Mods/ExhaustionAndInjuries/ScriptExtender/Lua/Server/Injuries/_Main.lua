@@ -63,7 +63,7 @@ local function ProcessDamageEvent(event)
 					if Osi.HasActiveStatus(defender, injury) == 0 then
 						local finalDamageWithInjuryMultiplier = finalDamageAmount * injuryDamageConfig["multiplier"]
 						-- This is apparently how you round to 2 decimal places? Thanks ChatGPT
-						local totalHpPercentageRemoved = math.floor((finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100 * 100) / 100
+						local totalHpPercentageRemoved = math.floor((finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 10000) / 100
 
 						if totalHpPercentageRemoved >= ConfigManager.ConfigCopy.injuries.injury_specific[injury].damage["threshold"] then
 							Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",

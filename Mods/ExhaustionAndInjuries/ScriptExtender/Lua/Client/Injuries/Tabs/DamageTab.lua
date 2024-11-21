@@ -60,7 +60,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	damageTab:AddText("Applied after losing the following % of Health:")
 	local damageThreshold = damageTab:AddSliderInt("", damageConfig["threshold"], 0, 100)
 	damageThreshold.SameLine = true
-
+	damageThreshold.OnChange = function ()
+		damageConfig["threshold"] = damageThreshold.Value[1]
+	end
 
 	local damageTable = damageTab:AddTable("DamageTypes", 3)
 	damageTable.BordersInnerH = true
