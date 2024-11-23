@@ -21,4 +21,5 @@ Ext.Require("Server/ECSPrinter.lua")
 
 Ext.Require("Server/Injuries/_Damage.lua")
 Ext.Require("Server/Injuries/_Healing.lua")
+Ext.Require("Server/Injuries/_ApplyOnStatus.lua")
 

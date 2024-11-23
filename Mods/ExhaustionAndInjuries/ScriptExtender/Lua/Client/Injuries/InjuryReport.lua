@@ -4,6 +4,12 @@ Ext.Vars.RegisterUserVariable("Injuries_Damage", {
 	SyncToClient = true
 })
 
+Ext.Vars.RegisterUserVariable("Injuries_ApplyOnStatus", {
+	Server = true,
+	Client = true,
+	SyncToClient = true
+})
+
 Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
 	Server = true,
 	Client = true,
@@ -91,6 +97,7 @@ Ext.Entity.Subscribe("Health", function(entity, healthComp, _)
 
 	BuildReport()
 end)
+
 
 Ext.RegisterNetListener("Injuries_Cleared_Damage", function (channel, payload, user)
 	entityInjuriesDamageReport[payload] = nil

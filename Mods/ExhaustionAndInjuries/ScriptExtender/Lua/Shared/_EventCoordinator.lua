@@ -5,12 +5,12 @@ local events = {
 	["RollResult"] = {},
 	["StatusApplied"] = {},
 	["CombatStarted"] = {},
+	["CombatRoundStarted"] = {},
+	["LeftCombat"] = {},
 	["CastSpell"] = {},
 }
 
 --- API method to register functions that operate under the same event, for performance reasons
----@param moduleName string the name of the module - must be unique
----@param moduleFunc function that accepts the combatUUID and the GUIDSTRING of the party member/summon and returns a tuple of lists containing pre- and post- EnterCombat functions to execute, which take in the same GUIDSTRING (to allow summons to copy their summoners if enabled)
 function EventCoordinator:RegisterEventProcessor(eventName, eventFunc)
 	table.insert(events[eventName], eventFunc)
 end
@@ -65,6 +65,34 @@ Ext.Osiris.RegisterListener("CombatStarted", 1, "before", function(combatGuid)
 
 			if not success then
 				Logger:BasicError("Received error while processing event CombatStarted: \n%s", error)
+			end
+		end
+	end
+end)
+
+Ext.Osiris.RegisterListener("LeftCombat", 2, "after", function (object, combatGuid)
+	if MCM.Get("enabled") then
+		for _, func in pairs(events["LeftCombat"]) do
+			local success, error = pcall(function()
+				func(object, combatGuid)
+			end)
+
+			if not success then
+				Logger:BasicError("Received error while processing event LeftCombat: \n%s", error)
+			end
+		end
+	end
+end)
+
+Ext.Osiris.RegisterListener("CombatRoundStarted", 2, "before", function(combatGuid, round)
+	if MCM.Get("enabled") then
+		for _, func in pairs(events["CombatRoundStarted"]) do
+			local success, error = pcall(function()
+				func(combatGuid, round)
+			end)
+
+			if not success then
+				Logger:BasicError("Received error while processing event CombatRoundStarted: \n%s", error)
 			end
 		end
 	end

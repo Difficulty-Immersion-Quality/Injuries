@@ -132,14 +132,14 @@ Ext.Events.DealDamage:Subscribe(function(event)
 	end
 end)
 
-Ext.Osiris.RegisterListener("LeftCombat", 2, "after", function(object, combatGuid)
+EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
 	if Ext.Entity.Get(object).Vars.Injuries_Damage and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
 		Ext.Entity.Get(object).Vars.Injuries_Damage = nil
 		Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", object)
 	end
 end)
 
-Ext.Osiris.RegisterListener("CombatRoundStarted", 2, "after", function(combatGuid, round)
+EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
 	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
 		for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
 			local entity = Ext.Entity.Get(combatParticipant[1])
