@@ -40,7 +40,7 @@ local function ProcessDamageEvent(event)
 		)
 	end
 
-	--- @type { [DamageType] : { [string] : number } }
+	--- @type { [DamageType] :  number } 
 	local preexistingInjuryDamage = defenderEntity.Vars.Injuries_Damage or {}
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
@@ -53,12 +53,10 @@ local function ProcessDamageEvent(event)
 
 			if finalDamageAmount > 0 then
 				if preexistingInjuryDamage[damageType] then
-					finalDamageAmount = finalDamageAmount + preexistingInjuryDamage[damageType]["flat"]
+					finalDamageAmount = finalDamageAmount + preexistingInjuryDamage[damageType]
 				else
-					preexistingInjuryDamage[damageType] = {}
+					preexistingInjuryDamage[damageType] = finalDamageAmount
 				end
-
-				preexistingInjuryDamage[damageType]["flat"] = finalDamageAmount
 
 				for injury, injuryDamageConfig in pairs(damageConfig) do
 					if Osi.HasActiveStatus(defender, injury) == 0 then
@@ -67,7 +65,7 @@ local function ProcessDamageEvent(event)
 						local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 						for otherDamageType, otherDamageConfig in pairs(injuryConfig.damage["damage_types"]) do
 							if damageType ~= otherDamageType and preexistingInjuryDamage[otherDamageType] then
-								local existingInjuryDamage = preexistingInjuryDamage[otherDamageType]["flat"] * otherDamageConfig["multiplier"]
+								local existingInjuryDamage = preexistingInjuryDamage[otherDamageType] * otherDamageConfig["multiplier"]
 								Logger:BasicTrace("Adding %d damage due to preexisting damageType %s for Injury %s on %s",
 									existingInjuryDamage,
 									otherDamageType,
@@ -113,7 +111,7 @@ local function ProcessDamageEvent(event)
 	end
 end
 
---- Event sequence is DealDamge -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
+--- Event sequence is DealDamage -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
 --- DealDamage doesn't contain any damage or damageType information - just who's attacking and being attacked
 --- BeforeDealDamage contains damage and damageType information and who's attacking, but not who's being attacked
 ---@param event EsvLuaDealDamageEvent

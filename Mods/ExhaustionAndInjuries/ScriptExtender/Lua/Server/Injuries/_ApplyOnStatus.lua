@@ -6,10 +6,16 @@ Ext.Vars.RegisterUserVariable("Injuries_ApplyOnStatus", {
 })
 
 local function processInjuries(character, statusConfig, numberOfRounds)
-	for injury, injuryStatusConfig in pairs(statusConfig) do
-		if Osi.HasActiveStatus(character, injury) == 0 then
-			if injuryStatusConfig["number_of_rounds"] == numberOfRounds then
-				Osi.ApplyStatus(character, injury, -1)
+	local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
+	if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1)
+		or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)
+		or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), character) == 1)
+	then
+		for injury, injuryStatusConfig in pairs(statusConfig) do
+			if Osi.HasActiveStatus(character, injury) == 0 then
+				if injuryStatusConfig["number_of_rounds"] == numberOfRounds then
+					Osi.ApplyStatus(character, injury, -1)
+				end
 			end
 		end
 	end

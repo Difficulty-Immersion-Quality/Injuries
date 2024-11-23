@@ -21,8 +21,16 @@ Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
 
 InjuryReport = {}
 
----@type { [GUIDSTRING] : { [DamageType] : { [string] : number } } }
-local entityInjuriesDamageReport = {}
+---@class InjuryReport
+local injuryReport = {
+	---@type {[StatusName] : integer}
+	["status"] = {},
+	---@type {[DamageType] : number}
+	["damage"] = {}
+}
+
+---@type { [GUIDSTRING] : InjuryReport }
+local entityInjuriesReport = {}
 
 --- @type ExtuiCollapsingHeader|nil
 local partySection
@@ -33,10 +41,10 @@ local function BuildReport()
 			partySection:RemoveChild(child)
 		end
 
-		if not entityInjuriesDamageReport then
+		if not entityInjuriesReport then
 			return
 		end
-		for entityUuid, existingInjuryDamage in pairs(entityInjuriesDamageReport) do
+		for entityUuid, existingInjuryDamage in pairs(entityInjuriesReport) do
 			if not existingInjuryDamage or not next(existingInjuryDamage) then
 				goto continue
 			end
@@ -83,26 +91,26 @@ end
 
 ---@diagnostic disable-next-line: param-type-mismatch
 Ext.Entity.Subscribe("Health", function(entity, healthComp, _)
-	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
+	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
 
 	if entity.Vars.Injuries_Damage then
-		entityInjuriesDamageReport[entity.Uuid.EntityUuid] = entity.Vars.Injuries_Damage
+		entityInjuriesReport[entity.Uuid.EntityUuid] = entity.Vars.Injuries_Damage
 	else
-		entityInjuriesDamageReport[entity.Uuid.EntityUuid] = nil
+		entityInjuriesReport[entity.Uuid.EntityUuid] = nil
 	end
 
-	table.sort(entityInjuriesDamageReport)
+	table.sort(entityInjuriesReport)
 
-	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesDamageReport
+	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
 
 	BuildReport()
 end)
 
 
 Ext.RegisterNetListener("Injuries_Cleared_Damage", function (channel, payload, user)
-	entityInjuriesDamageReport[payload] = nil
+	entityInjuriesReport[payload] = nil
 
-	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesDamageReport
+	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
 	BuildReport()
 end)
 
@@ -120,7 +128,7 @@ function InjuryReport:BuildReportWindow()
 		partySection = nil
 	end
 
-	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
+	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
 
 	BuildReport()
 end
