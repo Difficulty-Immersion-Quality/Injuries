@@ -27,11 +27,9 @@ ConfigurationStructure.config.injuries.universal.injury_removal_severity_priorit
 --- @type injury_counter_reset
 ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Attack/Tick"
 
-ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_counter = true
+ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage = true
 
---- @alias healing_subtracts_injury_counter_modifier "25%"|"50%"|"100%"|"150%"|"200%"
---- @type healing_subtracts_injury_counter_modifier
-ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_counter_modifier = "100%"
+ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
 --#endregion
 
 --#region Severity

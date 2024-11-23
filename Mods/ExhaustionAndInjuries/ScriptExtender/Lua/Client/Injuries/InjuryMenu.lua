@@ -119,41 +119,31 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			end
 		end
 
-		local healingCheckbox = tabHeader:AddCheckbox("Healing Subtracts From Damage Counter", universal.healing_subtracts_injury_counter)
+		local healingCheckbox = tabHeader:AddCheckbox("Healing Subtracts From Damage Counter", universal.healing_subtracts_injury_damage)
 		local healingText = tabHeader:AddText(
 			"Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage")
-		local healingOffsetCombo = tabHeader:AddCombo("")
-		healingOffsetCombo.Options = {
-			"25%",
-			"50%",
-			"100%",
-			"150%",
-			"200%"
-		}
-		for index, option in pairs(cumulationCombo.Options) do
-			if option == universal.healing_subtracts_injury_counter_modifier then
-				healingOffsetCombo.SelectedIndex = index - 1
-			end
-		end
+		local healingMultiplierSlider = tabHeader:AddSliderInt("", universal.healing_subtracts_injury_damage_modifier * 100, 0, 200)
 
-		healingOffsetCombo.OnChange = function(_, selectedIndex)
-			universal.healing_subtracts_injury_counter_modifier = healingOffsetCombo.Options[selectedIndex + 1]
+		healingMultiplierSlider.OnChange = function(_)
+			universal.healing_subtracts_injury_damage_modifier = healingMultiplierSlider.Value[1] / 100
 		end
 
 		healingCheckbox.OnChange = function(combo, value)
 			healingText.Visible = value
-			healingOffsetCombo.Visible = value
-			universal.healing_subtracts_injury_counter = healingCheckbox.Checked
+			healingMultiplierSlider.Visible = value
+			universal.healing_subtracts_injury_damage = healingCheckbox.Checked
 		end
 
-		healingCheckbox.Visible = false
-		healingText.Visible = false
-		healingOffsetCombo.Visible = false
+		if cumulationCombo.SelectedIndex == 0 then
+			healingCheckbox.Visible = false
+			healingText.Visible = false
+			healingMultiplierSlider.Visible = false
+		end
 
 		cumulationCombo.OnChange = function(combo, selectedIndex)
 			healingCheckbox.Visible = selectedIndex ~= 0
 			healingText.Visible = selectedIndex ~= 0
-			healingOffsetCombo.Visible = selectedIndex ~= 0
+			healingMultiplierSlider.Visible = selectedIndex ~= 0
 
 			universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex + 1]
 		end
@@ -209,8 +199,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#region Injury-Specific Options
 		tabHeader:AddSeparatorText("Injury-Specific Options")
 
-		local reportButton =tabHeader:AddButton("Open Injury Report")
-		reportButton.OnClick = function ()
+		local reportButton = tabHeader:AddButton("Open Injury Report")
+		reportButton.OnClick = function()
 			InjuryReport:BuildReportWindow()
 		end
 

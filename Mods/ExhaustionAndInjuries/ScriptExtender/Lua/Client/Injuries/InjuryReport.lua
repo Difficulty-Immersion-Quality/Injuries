@@ -43,7 +43,6 @@ local function BuildReport()
 					if next(damageConfig.damage["damage_types"]) then
 						local seperator = partyHeader:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 						local thresholdText = partyHeader:AddText("Health Threshold: " .. damageConfig.damage["threshold"] .. "%")
-						local foundDamage = false
 
 						local totalDamage = 0
 
@@ -58,12 +57,10 @@ local function BuildReport()
 									damageTypeConfig["multiplier"] * 100,
 									damageTable["flat"],
 									flatWithMultiplier))
-
-								foundDamage = true
 							end
 						end
 
-						if not foundDamage then
+						if totalDamage == 0 then
 							seperator:Destroy()
 							thresholdText:Destroy()
 						else

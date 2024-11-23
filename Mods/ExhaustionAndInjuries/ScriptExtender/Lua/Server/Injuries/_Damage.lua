@@ -3,7 +3,7 @@ Ext.Vars.RegisterUserVariable("Injuries_Damage", {
 	Server = true,
 	Client = true,
 	SyncToClient = true,
-	SyncOnWrite = true
+	SyncOnWrite = true -- if this is false, the injuryReport lags by 1 calculation
 })
 
 local defender
