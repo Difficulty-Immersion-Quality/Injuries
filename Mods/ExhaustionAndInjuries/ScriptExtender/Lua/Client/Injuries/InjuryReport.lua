@@ -92,6 +92,12 @@ Ext.Entity.Subscribe("Health", function(entity, healthComp, _)
 	BuildReport()
 end)
 
+Ext.RegisterNetListener("Injuries_Cleared_Damage", function (channel, payload, user)
+	entityInjuriesDamageReport[payload] = nil
+
+	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesDamageReport
+	BuildReport()
+end)
 
 function InjuryReport:BuildReportWindow()
 	local reportPopup = Ext.IMGUI.NewWindow("Viewing Live Injury Report")

@@ -98,10 +98,18 @@ local function ProcessDamageEvent(event)
 		end
 	end
 
-	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Attack/Tick" then
-		defenderEntity.Vars.Injuries_Damage = {}
+	local counter_reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
+	if counter_reset == "Attack/Tick" then
+		defenderEntity.Vars.Injuries_Damage = nil
+		Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", defender)
 	else
 		defenderEntity.Vars.Injuries_Damage = preexistingInjuryDamage
+		if counter_reset == "Round" and Osi.IsInCombat(defender) == 0 then
+			Ext.Timer.WaitFor(6000, function()
+				defenderEntity.Vars.Injuries_Damage = nil
+				Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", defender)
+			end)
+		end
 	end
 end
 
@@ -124,16 +132,21 @@ Ext.Events.DealDamage:Subscribe(function(event)
 	end
 end)
 
-Ext.Events.AfterExecuteFunctor:Subscribe(function(event)
-	if not event.Target.IsItem then
-		defender = event.Target.Uuid.EntityUuid
+Ext.Osiris.RegisterListener("LeftCombat", 2, "after", function(object, combatGuid)
+	if Ext.Entity.Get(object).Vars.Injuries_Damage and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
+		Ext.Entity.Get(object).Vars.Injuries_Damage = nil
+		Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", object)
+	end
+end)
 
-		-- local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
-		-- if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), defender) == 1)
-		-- 	or (eligibleGroups["Party Members"] and Osi.IsPartyMember(defender, 1) == 1)
-		-- 	or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), defender) == 1)
-		-- then
-		-- 	Ext.Events.BeforeDealDamage:Subscribe(ProcessDamageEvent, { Once = true })
-		-- end
+Ext.Osiris.RegisterListener("CombatRoundStarted", 2, "after", function(combatGuid, round)
+	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
+		for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
+			local entity = Ext.Entity.Get(combatParticipant[1])
+			if entity.Vars.Injuries_Damage then
+				entity.Vars.Injuries_Damage = nil
+				Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", combatParticipant[1])
+			end
+		end
 	end
 end)
