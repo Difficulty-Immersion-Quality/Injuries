@@ -27,8 +27,11 @@ local function BuildReport()
 			partySection:RemoveChild(child)
 		end
 
+		if not entityInjuriesDamageReport then
+			return
+		end
 		for entityUuid, existingInjuryDamage in pairs(entityInjuriesDamageReport) do
-			if not next(existingInjuryDamage) then
+			if not existingInjuryDamage or not next(existingInjuryDamage) then
 				goto continue
 			end
 
@@ -41,17 +44,20 @@ local function BuildReport()
 						local seperator = partyHeader:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 						local thresholdText = partyHeader:AddText("Health Threshold: " .. damageConfig.damage["threshold"] .. "%")
 						local foundDamage = false
+
+						local totalDamage = 0
+
 						for damageType, damageTypeConfig in pairs(damageConfig.damage["damage_types"]) do
 							local damageTable = existingInjuryDamage[damageType]
 							if damageTable and next(damageTable) then
 								local flatWithMultiplier = damageTable["flat"] * damageTypeConfig["multiplier"]
 								-- Rounding to 2 digits
-								local healthPercentage = (flatWithMultiplier / entity.Health.MaxHp) * 100
-								partyHeader:AddText(string.format("%s: Multiplier: %d%% | Flat Damage Before Multiplier: %s | Damage in %% of Total Health After Multiplier: %.2f%%",
+								totalDamage = totalDamage + flatWithMultiplier
+								partyHeader:AddText(string.format("%s: Multiplier: %d%% | Flat Damage Before Multiplier: %s | Flat Damage After Multiplier: %s",
 									damageType,
 									damageTypeConfig["multiplier"] * 100,
 									damageTable["flat"],
-									healthPercentage))
+									flatWithMultiplier))
 
 								foundDamage = true
 							end
@@ -60,6 +66,9 @@ local function BuildReport()
 						if not foundDamage then
 							seperator:Destroy()
 							thresholdText:Destroy()
+						else
+							partyHeader:AddText(string.format("Total Injury Damge in %% of Health: %.2f%%",
+								((totalDamage / entity.Health.MaxHp) * 100)))
 						end
 					end
 				end
@@ -69,10 +78,9 @@ local function BuildReport()
 	end
 end
 
-Ext.RegisterNetListener(ModuleUUID .. "_Injury_Damage_Updated", function(channel, entity, user)
-	entity = Ext.Entity.Get(entity)
-
-	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
+---@diagnostic disable-next-line: param-type-mismatch
+Ext.Entity.Subscribe("Health", function(entity, healthComp, _)
+	entityInjuriesDamageReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
 
 	if entity.Vars.Injuries_Damage then
 		entityInjuriesDamageReport[entity.Uuid.EntityUuid] = entity.Vars.Injuries_Damage

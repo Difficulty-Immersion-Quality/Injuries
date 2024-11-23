@@ -2,7 +2,8 @@
 Ext.Vars.RegisterUserVariable("Injuries_Damage", {
 	Server = true,
 	Client = true,
-	SyncToClient = true
+	SyncToClient = true,
+	SyncOnWrite = true
 })
 
 local defender
@@ -62,15 +63,30 @@ local function ProcessDamageEvent(event)
 				for injury, injuryDamageConfig in pairs(damageConfig) do
 					if Osi.HasActiveStatus(defender, injury) == 0 then
 						local finalDamageWithInjuryMultiplier = finalDamageAmount * injuryDamageConfig["multiplier"]
+
+						local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
+						for otherDamageType, otherDamageConfig in pairs(injuryConfig.damage["damage_types"]) do
+							if damageType ~= otherDamageType and preexistingInjuryDamage[otherDamageType] then
+								local existingInjuryDamage = preexistingInjuryDamage[otherDamageType]["flat"] * otherDamageConfig["multiplier"]
+								Logger:BasicTrace("Adding %d damage due to preexisting damageType %s for Injury %s on %s",
+									existingInjuryDamage,
+									otherDamageType,
+									injury,
+									defender)
+
+								finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier + existingInjuryDamage
+							end
+						end
+
 						-- This is apparently how you round to 2 decimal places? Thanks ChatGPT
 						local totalHpPercentageRemoved = math.floor((finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 10000) / 100
 
-						if totalHpPercentageRemoved >= ConfigManager.ConfigCopy.injuries.injury_specific[injury].damage["threshold"] then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
 							Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",
 								injury,
 								defender,
 								totalHpPercentageRemoved,
-								injuryDamageConfig["multiplier"])
+								injuryConfig.damage["threshold"])
 
 							Osi.ApplyStatus(defender, injury, -1)
 						end
@@ -87,9 +103,6 @@ local function ProcessDamageEvent(event)
 	else
 		defenderEntity.Vars.Injuries_Damage = preexistingInjuryDamage
 	end
-
-	Ext.Vars.SyncUserVariables()
-	Ext.ServerNet.BroadcastMessage(ModuleUUID .. "_Injury_Damage_Updated", defender)
 end
 
 --- Event sequence is DealDamge -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
@@ -108,5 +121,19 @@ Ext.Events.DealDamage:Subscribe(function(event)
 		then
 			Ext.Events.BeforeDealDamage:Subscribe(ProcessDamageEvent, { Once = true })
 		end
+	end
+end)
+
+Ext.Events.AfterExecuteFunctor:Subscribe(function(event)
+	if not event.Target.IsItem then
+		defender = event.Target.Uuid.EntityUuid
+
+		-- local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
+		-- if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), defender) == 1)
+		-- 	or (eligibleGroups["Party Members"] and Osi.IsPartyMember(defender, 1) == 1)
+		-- 	or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), defender) == 1)
+		-- then
+		-- 	Ext.Events.BeforeDealDamage:Subscribe(ProcessDamageEvent, { Once = true })
+		-- end
 	end
 end)
