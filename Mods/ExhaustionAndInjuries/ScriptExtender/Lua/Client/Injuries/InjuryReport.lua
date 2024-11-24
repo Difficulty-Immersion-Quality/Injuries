@@ -1,3 +1,5 @@
+InjuryReport = {}
+
 Ext.Vars.RegisterUserVariable("Injuries_Damage", {
 	Server = true,
 	Client = true,
@@ -19,12 +21,10 @@ Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
 	SyncToServer = true
 })
 
-InjuryReport = {}
-
 ---@class InjuryReport
-local injuryReport = {
+local injuryReportClass = {
 	---@type {[StatusName] : integer}
-	["status"] = {},
+	["applyOnStatus"] = {},
 	---@type {[DamageType] : number}
 	["damage"] = {}
 }
@@ -32,103 +32,148 @@ local injuryReport = {
 ---@type { [GUIDSTRING] : InjuryReport }
 local entityInjuriesReport = {}
 
---- @type ExtuiCollapsingHeader|nil
-local partySection
+--- @type ExtuiWindow
+local reportWindow
 
+---@param character GUIDSTRING
 local function BuildReport()
-	if partySection then
-		for _, child in pairs(partySection.Children) do
-			partySection:RemoveChild(child)
+	if reportWindow then
+		for _, child in pairs(reportWindow.Children) do
+			if child.UserData and not entityInjuriesReport[child.UserData] then
+				child:Destroy()
+			end
 		end
 
-		if not entityInjuriesReport then
-			return
-		end
-		for entityUuid, existingInjuryDamage in pairs(entityInjuriesReport) do
-			if not existingInjuryDamage or not next(existingInjuryDamage) then
-				goto continue
+		for character, injuryReport in pairs(entityInjuriesReport) do
+			---@type EntityHandle
+			local entity = Ext.Entity.Get(character)
+
+			local charReport
+			for _, child in pairs(reportWindow.Children) do
+				if character == child.UserData then
+					charReport = child
+					break
+				end
 			end
 
-			---@type EntityHandle
-			local entity = Ext.Entity.Get(entityUuid)
-			if entity.PartyMember then
-				local partyHeader = partySection:AddCollapsingHeader(entity.CustomName.Name)
-				for injury, damageConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
-					if next(damageConfig.damage["damage_types"]) then
-						local seperator = partyHeader:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
-						local thresholdText = partyHeader:AddText("Health Threshold: " .. damageConfig.damage["threshold"] .. "%")
+			if not charReport then
+				charReport = reportWindow:AddCollapsingHeader(entity.CustomName and entity.CustomName.Name or entity.DisplayName.NameKey:Get())
+				charReport.UserData = character
+			end
+
+			for _, child in pairs(charReport.Children) do
+				child:Destroy()
+			end
+
+			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
+				local injuryReportGroup = charReport:AddGroup(injury)
+				injuryReportGroup:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
+
+				local keepGroup = false
+
+				--#region Damage Report
+				local damageGroup = injuryReportGroup:AddGroup("Damage")
+				if next(injuryReport["damage"]) then
+					if next(injuryConfig.damage["damage_types"]) then
+						damageGroup:AddText("Damage Report")
+						damageGroup:AddText("Health Threshold: " .. injuryConfig.damage["threshold"] .. "%")
 
 						local totalDamage = 0
-
-						for damageType, damageTypeConfig in pairs(damageConfig.damage["damage_types"]) do
-							local damageTable = existingInjuryDamage[damageType]
-							if damageTable and next(damageTable) then
-								local flatWithMultiplier = damageTable["flat"] * damageTypeConfig["multiplier"]
+						for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
+							local damageAmount = injuryReport["damage"][damageType]
+							if damageAmount then
+								local flatWithMultiplier = damageAmount * damageTypeConfig["multiplier"]
 								-- Rounding to 2 digits
 								totalDamage = totalDamage + flatWithMultiplier
-								partyHeader:AddText(string.format("%s: Multiplier: %d%% | Flat Damage Before Multiplier: %s | Flat Damage After Multiplier: %s",
+								damageGroup:AddText(string.format("%s: Multiplier: %d%% | Flat Damage Before Multiplier: %s | Flat Damage After Multiplier: %s",
 									damageType,
 									damageTypeConfig["multiplier"] * 100,
-									damageTable["flat"],
+									damageAmount,
 									flatWithMultiplier))
 							end
 						end
 
 						if totalDamage == 0 then
-							seperator:Destroy()
-							thresholdText:Destroy()
+							damageGroup:Destroy()
 						else
-							partyHeader:AddText(string.format("Total Injury Damge in %% of Health: %.2f%%",
+							damageGroup:AddText(string.format("Total Injury Damge in %% of Health: %.2f%%",
 								((totalDamage / entity.Health.MaxHp) * 100)))
+							keepGroup = true
 						end
 					end
 				end
+				--#endregion
+
+				--#region ApplyOnStatus report
+				if next(injuryReport["applyOnStatus"]) then
+					if next(injuryConfig.apply_on_status) then
+						local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
+						if keepGroup then
+							statusGroup:AddNewLine()
+						end
+						statusGroup:AddText("Apply On Status Report")
+
+						local statusesFound = false
+
+						for status, statusConfig in pairs(injuryConfig.apply_on_status) do
+							local numRoundsApplied = injuryReport["applyOnStatus"][status]
+							if numRoundsApplied then
+								statusesFound = true
+								statusGroup:AddText(string.format("%s: Number of (Non-Consecutive) Rounds Applied: %s | Number Of Rounds Required: %s",
+									status,
+									numRoundsApplied,
+									statusConfig["number_of_rounds"]))
+							end
+						end
+
+						if not statusesFound then
+							statusGroup:Destroy()
+						else
+							keepGroup = true
+						end
+					end
+				end
+				--#endregion
+
+				if not keepGroup then
+					injuryReportGroup:Destroy()
+				else
+					injuryReportGroup:AddNewLine()
+				end
 			end
-			::continue::
 		end
 	end
 end
 
----@diagnostic disable-next-line: param-type-mismatch
-Ext.Entity.Subscribe("Health", function(entity, healthComp, _)
+-- Temporary until we can listen to specific UserVars, probably in SE 22
+Ext.RegisterNetListener("Injuries_Update_Report", function(channel, character, user)
+	--- @type EntityHandle
+	local entity = Ext.Entity.Get(character)
+	character = entity.Uuid.EntityUuid
+	local entityVars = entity.Vars
+
 	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
 
-	if entity.Vars.Injuries_Damage then
-		entityInjuriesReport[entity.Uuid.EntityUuid] = entity.Vars.Injuries_Damage
+	if not entityVars.Injuries_Damage and not entityVars.Injuries_ApplyOnStatus then
+		entityInjuriesReport[character] = nil
 	else
-		entityInjuriesReport[entity.Uuid.EntityUuid] = nil
+		entityInjuriesReport[character] = TableUtils:DeeplyCopyTable(injuryReportClass)
+		entityInjuriesReport[character]["damage"] = entityVars.Injuries_Damage or {}
+		entityInjuriesReport[character]["applyOnStatus"] = entityVars.Injuries_ApplyOnStatus or {}
 	end
-
-	table.sort(entityInjuriesReport)
-
-	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
-
-	BuildReport()
-end)
-
-
-Ext.RegisterNetListener("Injuries_Cleared_Damage", function (channel, payload, user)
-	entityInjuriesReport[payload] = nil
 
 	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
 	BuildReport()
 end)
 
 function InjuryReport:BuildReportWindow()
-	local reportPopup = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
-	reportPopup.Closeable = true
-	reportPopup.HorizontalScrollbar = true
+	reportWindow = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
+	reportWindow.Closeable = true
+	reportWindow.HorizontalScrollbar = true
 	-- reportPopup.AlwaysAutoResize = true
 
-	partySection = reportPopup:AddCollapsingHeader("Party Members")
-	partySection.DefaultOpen = true
-
-	reportPopup.OnClose = function()
-		partySection:Destroy()
-		partySection = nil
-	end
-
-	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report
+	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
+	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
 
 	BuildReport()
 end

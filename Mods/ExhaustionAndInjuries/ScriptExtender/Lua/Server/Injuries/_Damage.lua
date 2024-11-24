@@ -40,7 +40,7 @@ local function ProcessDamageEvent(event)
 		)
 	end
 
-	--- @type { [DamageType] :  number } 
+	--- @type { [DamageType] :  number }
 	local preexistingInjuryDamage = defenderEntity.Vars.Injuries_Damage or {}
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
@@ -54,9 +54,9 @@ local function ProcessDamageEvent(event)
 			if finalDamageAmount > 0 then
 				if preexistingInjuryDamage[damageType] then
 					finalDamageAmount = finalDamageAmount + preexistingInjuryDamage[damageType]
-				else
-					preexistingInjuryDamage[damageType] = finalDamageAmount
 				end
+				
+				preexistingInjuryDamage[damageType] = finalDamageAmount
 
 				for injury, injuryDamageConfig in pairs(damageConfig) do
 					if Osi.HasActiveStatus(defender, injury) == 0 then
@@ -99,16 +99,17 @@ local function ProcessDamageEvent(event)
 	local counter_reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 	if counter_reset == "Attack/Tick" then
 		defenderEntity.Vars.Injuries_Damage = nil
-		Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", defender)
 	else
 		defenderEntity.Vars.Injuries_Damage = preexistingInjuryDamage
+
 		if counter_reset == "Round" and Osi.IsInCombat(defender) == 0 then
 			Ext.Timer.WaitFor(6000, function()
 				defenderEntity.Vars.Injuries_Damage = nil
-				Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", defender)
+				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", defender)
 			end)
 		end
 	end
+	Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", defender)
 end
 
 --- Event sequence is DealDamage -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
@@ -133,7 +134,7 @@ end)
 EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
 	if Ext.Entity.Get(object).Vars.Injuries_Damage and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
 		Ext.Entity.Get(object).Vars.Injuries_Damage = nil
-		Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", object)
+		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", object)
 	end
 end)
 
@@ -143,7 +144,7 @@ EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGui
 			local entity = Ext.Entity.Get(combatParticipant[1])
 			if entity.Vars.Injuries_Damage then
 				entity.Vars.Injuries_Damage = nil
-				Ext.ServerNet.BroadcastMessage("Injuries_Cleared_Damage", combatParticipant[1])
+				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", combatParticipant[1])
 			end
 		end
 	end

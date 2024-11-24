@@ -24,16 +24,17 @@ Ext.Entity.Subscribe("Health", function(entity, _, _)
 			---@type { [DamageType] : { [string] : number } }
 			local existingInjuryDamage = entity.Vars.Injuries_Damage
 			for damageType, damageTable in pairs(existingInjuryDamage) do
-				local flatAfterHealing = damageTable["flat"] - healingDone
+				local flatAfterHealing = damageTable - healingDone
 
 				if flatAfterHealing <= 0 then
 					existingInjuryDamage[damageType] = nil
 				else
-					existingInjuryDamage[damageType]["flat"] = flatAfterHealing
+					existingInjuryDamage[damageType] = flatAfterHealing
 				end
 			end
 
 			entity.Vars.Injuries_Damage = existingInjuryDamage
+			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", entity.Uuid.EntityUuid)
 		end
 
 		entity.Vars.Injuries_Healing = healthComp.Hp
