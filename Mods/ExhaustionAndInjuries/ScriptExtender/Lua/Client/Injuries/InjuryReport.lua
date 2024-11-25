@@ -106,7 +106,7 @@ local function BuildReport()
 
 				--#region ApplyOnStatus report
 				if next(injuryReport["applyOnStatus"]) then
-					if next(injuryConfig.apply_on_status) then
+					if next(injuryConfig.apply_on_status["applicable_statuses"]) then
 						local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
 						if keepGroup then
 							statusGroup:AddNewLine()
@@ -115,20 +115,21 @@ local function BuildReport()
 
 						local statusesFound = false
 
-						for status, statusConfig in pairs(injuryConfig.apply_on_status) do
+						for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 							local numRoundsApplied = injuryReport["applyOnStatus"][status]
 							if numRoundsApplied then
 								statusesFound = true
-								statusGroup:AddText(string.format("%s: Number of (Non-Consecutive) Rounds Applied: %s | Number Of Rounds Required: %s",
+								statusGroup:AddText(string.format("%s: Multiplier: %s | Number of (Non-Consecutive) Rounds Applied After Multiplier: %s",
 									status,
-									numRoundsApplied,
-									statusConfig["number_of_rounds"]))
+									statusConfig["multiplier"],
+									numRoundsApplied * statusConfig["multiplier"]))
 							end
 						end
 
 						if not statusesFound then
 							statusGroup:Destroy()
 						else
+							statusGroup:AddText(string.format("Total Number of Non-Consecutive Rounds for all Statuses Required: %s", injuryConfig.apply_on_status["number_of_rounds"]))
 							keepGroup = true
 						end
 					end

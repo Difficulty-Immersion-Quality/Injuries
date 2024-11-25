@@ -5,7 +5,13 @@ Ext.Vars.RegisterUserVariable("Injuries_ApplyOnStatus", {
 	SyncOnWrite = true -- if this is false, the injuryReport lags by 1 calculation
 })
 
-local function processInjuries(character, statusConfig, numberOfRounds)
+---@param entity EntityHandle
+---@param status StatusName
+---@param statusConfig {[StatusName] : InjuryApplyOnStatusModifierClass }
+---@param statusVar {[StatusName] : number}
+local function processInjuries(entity, status, statusConfig, statusVar)
+	local character = entity.Uuid.EntityUuid
+
 	local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
 	if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1)
 		or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)
@@ -13,7 +19,17 @@ local function processInjuries(character, statusConfig, numberOfRounds)
 	then
 		for injury, injuryStatusConfig in pairs(statusConfig) do
 			if Osi.HasActiveStatus(character, injury) == 0 then
-				if injuryStatusConfig["number_of_rounds"] == numberOfRounds then
+				local mainInjuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].apply_on_status
+
+				local roundsWithMultiplier = statusVar[status] * injuryStatusConfig["multiplier"]
+
+				for otherStatus, otherStatusConfig in pairs(mainInjuryConfig["applicable_statuses"]) do
+					local otherStatusRounds = statusVar[otherStatus]
+					if otherStatus ~= status and otherStatusRounds then
+						roundsWithMultiplier = roundsWithMultiplier + (otherStatusRounds * otherStatusConfig["multiplier"])
+					end
+				end
+				if mainInjuryConfig["number_of_rounds"] <= roundsWithMultiplier then
 					Osi.ApplyStatus(character, injury, -1)
 				end
 			end
@@ -29,12 +45,14 @@ local function CheckStatusOnTickOrApplication(status, character)
 		local statusVar = entity.Vars.Injuries_ApplyOnStatus or {}
 		statusVar[status] = (statusVar[status] or 0) + 1
 
-		processInjuries(character, statusConfig, statusVar[status])
+		processInjuries(entity, status, statusConfig, statusVar)
 
-		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset ~= "Attack/Tick" then
+		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Attack/Tick" then
+			entity.Vars.Injuries_ApplyOnStatus = nil
+		else
 			entity.Vars.Injuries_ApplyOnStatus = statusVar
 
-			if Osi.IsInCombat(character) == 0 then
+			if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
 				-- 5.9 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
 				-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
 				Ext.Timer.WaitFor(5900, function()
@@ -42,15 +60,14 @@ local function CheckStatusOnTickOrApplication(status, character)
 						entity.Vars.Injuries_ApplyOnStatus = nil
 						Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 					else
-						if Osi.HasActiveStatus(character, status) == 1 then
+						if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
 							-- Make sure we're tracking ticks when not in combat, since there's no event for that
+							-- TODO: Check to see if there's any injuries left to apply for this status, so this isn't running unnecessarily
 							CheckStatusOnTickOrApplication(status, character)
 						end
 					end
 				end)
 			end
-		else
-			entity.Vars.Injuries_ApplyOnStatus = nil
 		end
 
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
@@ -74,7 +91,7 @@ EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGui
 						numberOfRounds = numberOfRounds + 1
 						applyOnStatus[status] = numberOfRounds
 
-						processInjuries(combatParticipant[1], ConfigManager.Injuries.ApplyOnStatus[status], numberOfRounds)
+						processInjuries(combatParticipant[1], status, ConfigManager.Injuries.ApplyOnStatus[status], numberOfRounds)
 					end
 				end
 				entity.Vars.Injuries_ApplyOnStatus = applyOnStatus

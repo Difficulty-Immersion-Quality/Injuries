@@ -79,13 +79,16 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 ---@type InjuryRemoveOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {}
 
----@class InjuryApplyOnStatus
+---@class InjuryApplyOnStatusModifierClass
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
-	["number_of_rounds"] = 1
+	["multiplier"] = 1
 }
----@alias ApplyOnStatusClass { [StatusName] : InjuryApplyOnStatus }
----@type ApplyOnStatusClass
-ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {}
+---@class InjuryApplyOnStatusClass
+ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
+	["number_of_rounds"] = 3,
+	---@type { [StatusName] : InjuryApplyOnStatusModifierClass }
+	["applicable_statuses"] = {}
+}
 
 ---@alias InjuryName string
 ---@type { [InjuryName] : Injury }

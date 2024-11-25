@@ -13,7 +13,7 @@ Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
 	--- @type { [DamageType] : { [InjuryName] : InjuryDamageTypeClass } }
 	ConfigManager.Injuries.Damage = {}
 
-	--- @type { [StatusName] : { [InjuryName] : InjuryApplyOnStatus } }
+	--- @type { [StatusName] : { [InjuryName] : InjuryApplyOnStatusModifierClass } }
 	ConfigManager.Injuries.ApplyOnStatus = {}
 
 	--- @type { [StatusName] : { [InjuryName] : InjuryRemoveOnStatus } }
@@ -27,7 +27,7 @@ Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
 			ConfigManager.Injuries.Damage[damageType][injury] = damageConfig
 		end
 
-		for applyOnStatusName, statusConfig in pairs(config.apply_on_status) do
+		for applyOnStatusName, statusConfig in pairs(config.apply_on_status["applicable_statuses"]) do
 			if not ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName] then
 				ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName] = {}
 			end
