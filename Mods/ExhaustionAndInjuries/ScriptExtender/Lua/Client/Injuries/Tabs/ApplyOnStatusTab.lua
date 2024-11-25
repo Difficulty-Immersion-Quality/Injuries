@@ -55,7 +55,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name")
-	headerRow:AddCell():AddText("# Total Rounds")
+	headerRow:AddCell():AddText("Round # Multiplier")
 
 	StatusHelper:BuildSearch(statusTab, function(status)
 		BuildRows(statusTable, status, applyOnConfig["applicable_statuses"], true)
