@@ -16,13 +16,14 @@ Logger:ClearLogFile()
 
 -- Ext.Require("Server/ECSPrinter.lua")
 
+Ext.Require("Server/_DifficultyClassMap.lua")
 Ext.Require("Server/_EventCoordinator.lua")
 
 Ext.Require("Shared/Configurations/_ConfigurationStructure.lua")
 Ext.Require("Server/_ConfigManager.lua")
-Ext.Require("Server/_DifficultyClassMapper.lua")
 
 Ext.Require("Server/Injuries/_ConfigHelper.lua")
 Ext.Require("Server/Injuries/_Damage.lua")
 Ext.Require("Server/Injuries/_Healing.lua")
 Ext.Require("Server/Injuries/_ApplyOnStatus.lua")
+Ext.Require("Server/Injuries/_RemoveOnStatus.lua")

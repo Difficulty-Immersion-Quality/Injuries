@@ -54,6 +54,7 @@ local function BuildReport()
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)
 				injuryReportGroup:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
+				injuryReportGroup:AddText("Severity: " .. injuryConfig.severity)
 
 				local keepGroup = false
 

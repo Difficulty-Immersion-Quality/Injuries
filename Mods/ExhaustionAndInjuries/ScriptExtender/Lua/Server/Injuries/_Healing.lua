@@ -25,16 +25,18 @@ Ext.Entity.Subscribe("Health", function(entity, _, _)
 
 			for damageType, injuryDamage in pairs(damageVar) do
 				for injury, damage in pairs(injuryDamage) do
-					local flatAfterHealing = damage - healingDone
+					if Osi.HasActiveStatus(entity.Uuid.EntityUuid, injury) == 0 then
+						local flatAfterHealing = damage - healingDone
 
-					if flatAfterHealing <= 0 then
-						injuryDamage[injury] = nil
-					else
-						injuryDamage[injury] = flatAfterHealing
+						if flatAfterHealing <= 0 then
+							injuryDamage[injury] = nil
+						else
+							injuryDamage[injury] = flatAfterHealing
+						end
 					end
-				end
-				if not next(injuryDamage) then
-					damageVar[damageType] = nil
+					if not next(injuryDamage) then
+						damageVar[damageType] = nil
+					end
 				end
 			end
 
