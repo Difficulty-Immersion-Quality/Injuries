@@ -20,6 +20,7 @@ Ext.Require("Server/_EventCoordinator.lua")
 
 Ext.Require("Shared/Configurations/_ConfigurationStructure.lua")
 Ext.Require("Server/_ConfigManager.lua")
+Ext.Require("Server/_DifficultyClassMapper.lua")
 
 Ext.Require("Server/Injuries/_ConfigHelper.lua")
 Ext.Require("Server/Injuries/_Damage.lua")

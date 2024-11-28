@@ -16,7 +16,7 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function (character, st
 				if injuryConfig["ability"] == "No Save" or injuryConfig["ability"] == "None" then
 					Osi.RemoveStatus(character, injuryToRemove)
 				else
-
+					Osi.RequestPassiveRoll(character, character, "SavingThrowRoll", )
 				end
 			end
 		end

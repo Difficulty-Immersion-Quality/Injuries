@@ -47,10 +47,10 @@ local function ProcessDamageEvent(event)
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
 						if not injuryVar["damage"][damageType] then
-							injuryVar["damage"][damageType] = { [injury] = 0}
+							injuryVar["damage"][damageType] = { [injury] = 0 }
 						end
 						local preexistingDamage = injuryVar["damage"][damageType]
-						
+
 						if preexistingDamage[injury] then
 							finalDamageWithPreviousDamage = finalDamageAmount + preexistingDamage[injury]
 						end
