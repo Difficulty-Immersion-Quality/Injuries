@@ -6,7 +6,9 @@ Ext.Vars.RegisterUserVariable("Injuries_Healing", {
 ---@param entity EntityHandle
 ---@diagnostic disable-next-line: param-type-mismatch
 Ext.Entity.Subscribe("Health", function(entity, _, _)
-	if entity.Vars.Injuries_Damage and ConfigManager.ConfigCopy.injuries.universal.healing_subtracts_injury_damage then
+	local _, injuryVar = InjuryConfigHelper:GetUserVar(entity.Uuid.EntityUuid)
+	local damageVar = injuryVar["damage"]
+	if next(damageVar) and ConfigManager.ConfigCopy.injuries.universal.healing_subtracts_injury_damage then
 		---@type HealthComponent
 		local healthComp = entity.Health
 
@@ -21,20 +23,22 @@ Ext.Entity.Subscribe("Health", function(entity, _, _)
 			local healingDone = (healthComp.Hp - lastKnownHealth) * ConfigManager.ConfigCopy.injuries.universal.healing_subtracts_injury_damage_modifier
 			Logger:BasicDebug("%s will heal for %s points of injury damage", entity.Uuid.EntityUuid, healingDone)
 
-			---@type { [DamageType] : { [string] : number } }
-			local existingInjuryDamage = entity.Vars.Injuries_Damage
-			for damageType, damageTable in pairs(existingInjuryDamage) do
-				local flatAfterHealing = damageTable - healingDone
+			for damageType, injuryDamage in pairs(damageVar) do
+				for injury, damage in pairs(injuryDamage) do
+					local flatAfterHealing = damage - healingDone
 
-				if flatAfterHealing <= 0 then
-					existingInjuryDamage[damageType] = nil
-				else
-					existingInjuryDamage[damageType] = flatAfterHealing
+					if flatAfterHealing <= 0 then
+						injuryDamage[injury] = nil
+					else
+						injuryDamage[injury] = flatAfterHealing
+					end
+				end
+				if not next(injuryDamage) then
+					damageVar[damageType] = nil
 				end
 			end
 
-			entity.Vars.Injuries_Damage = existingInjuryDamage
-			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", entity.Uuid.EntityUuid)
+			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 		end
 
 		entity.Vars.Injuries_Healing = healthComp.Hp

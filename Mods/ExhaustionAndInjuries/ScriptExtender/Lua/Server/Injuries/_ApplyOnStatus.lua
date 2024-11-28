@@ -1,109 +1,78 @@
-Ext.Vars.RegisterUserVariable("Injuries_ApplyOnStatus", {
-	Server = true,
-	Client = true,
-	SyncToClient = true,
-	SyncOnWrite = true -- if this is false, the injuryReport lags by 1 calculation
-})
-
 ---@param entity EntityHandle
 ---@param status StatusName
 ---@param statusConfig {[StatusName] : InjuryApplyOnStatusModifierClass }
----@param statusVar {[StatusName] : number}
-local function processInjuries(entity, status, statusConfig, statusVar)
+---@param injuryVar InjuryVar
+local function processInjuries(entity, status, statusConfig, injuryVar)
+	local statusVar = injuryVar["applyOnStatus"]
 	local character = entity.Uuid.EntityUuid
 
-	local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
-	if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1)
-		or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)
-		or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), character) == 1)
-	then
-		for injury, injuryStatusConfig in pairs(statusConfig) do
-			if Osi.HasActiveStatus(character, injury) == 0 then
-				local mainInjuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].apply_on_status
+	for injury, injuryStatusConfig in pairs(statusConfig) do
+		if Osi.HasActiveStatus(character, injury) == 0 then
+			local mainInjuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].apply_on_status
 
-				local roundsWithMultiplier = statusVar[status] * injuryStatusConfig["multiplier"]
+			if not statusVar[status] then
+				statusVar[status] = { [injury] = 0 }
+			end
+			statusVar[status][injury] = (statusVar[status][injury] or 0) + 1
 
-				for otherStatus, otherStatusConfig in pairs(mainInjuryConfig["applicable_statuses"]) do
-					local otherStatusRounds = statusVar[otherStatus]
-					if otherStatus ~= status and otherStatusRounds then
-						roundsWithMultiplier = roundsWithMultiplier + (otherStatusRounds * otherStatusConfig["multiplier"])
-					end
+			local roundsWithMultiplier = statusVar[status][injury] * injuryStatusConfig["multiplier"]
+
+			for otherStatus, otherStatusConfig in pairs(mainInjuryConfig["applicable_statuses"]) do
+				local injuryOtherExistingStatus = statusVar[otherStatus]
+				if otherStatus ~= status and (injuryOtherExistingStatus and injuryOtherExistingStatus[injury]) then
+					roundsWithMultiplier = roundsWithMultiplier + (injuryOtherExistingStatus * otherStatusConfig["multiplier"])
 				end
-				if mainInjuryConfig["number_of_rounds"] <= roundsWithMultiplier then
-					Osi.ApplyStatus(character, injury, -1)
-				end
+			end
+
+			if mainInjuryConfig["number_of_rounds"] <= roundsWithMultiplier then
+				Osi.ApplyStatus(character, injury, -1)
 			end
 		end
 	end
+	InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 end
 
 local function CheckStatusOnTickOrApplication(status, character)
 	local statusConfig = ConfigManager.Injuries.ApplyOnStatus[status]
 	if statusConfig then
-		local entity = Ext.Entity.Get(character)
+		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
 
-		local statusVar = entity.Vars.Injuries_ApplyOnStatus or {}
-		statusVar[status] = (statusVar[status] or 0) + 1
+		processInjuries(entity, status, statusConfig, injuryVar)
 
-		processInjuries(entity, status, statusConfig, statusVar)
-
-		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Attack/Tick" then
-			entity.Vars.Injuries_ApplyOnStatus = nil
-		else
-			entity.Vars.Injuries_ApplyOnStatus = statusVar
-
-			if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
-				-- 5.9 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
-				-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
-				Ext.Timer.WaitFor(5900, function()
-					if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
-						entity.Vars.Injuries_ApplyOnStatus = nil
-						Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
-					else
-						if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
-							-- Make sure we're tracking ticks when not in combat, since there's no event for that
-							-- TODO: Check to see if there's any injuries left to apply for this status, so this isn't running unnecessarily
-							CheckStatusOnTickOrApplication(status, character)
-						end
-					end
-				end)
-			end
+		if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
+			-- 5.9 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
+			-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
+			Ext.Timer.WaitFor(5900, function()
+				if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
+					-- Make sure we're tracking ticks when not in combat, since there's no event for that
+					-- TODO: Check to see if there's any injuries left to apply for this status, so this isn't running unnecessarily
+					CheckStatusOnTickOrApplication(status, character)
+				end
+			end)
 		end
-
-		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 	end
 end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
-	CheckStatusOnTickOrApplication(status, character)
-end)
-
-EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
-	for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
-		local entity = Ext.Entity.Get(combatParticipant[1])
-		if entity.Vars.Injuries_ApplyOnStatus then
-			if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
-				entity.Vars.Injuries_ApplyOnStatus = nil
-			else
-				local applyOnStatus = entity.Vars.Injuries_ApplyOnStatus
-				for status, numberOfRounds in pairs(applyOnStatus) do
-					if Osi.HasActiveStatus(combatParticipant[1], status) == 1 then
-						numberOfRounds = numberOfRounds + 1
-						applyOnStatus[status] = numberOfRounds
-
-						processInjuries(combatParticipant[1], status, ConfigManager.Injuries.ApplyOnStatus[status], numberOfRounds)
-					end
-				end
-				entity.Vars.Injuries_ApplyOnStatus = applyOnStatus
-			end
-			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", combatParticipant[1])
-		end
+	if InjuryConfigHelper:IsEligible(character) then
+		CheckStatusOnTickOrApplication(status, character)
 	end
 end)
 
-EventCoordinator:RegisterEventProcessor("LeftCombat", function(char, guid)
-	if Ext.Entity.Get(char).Vars.Injuries_ApplyOnStatus and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
-		Ext.Entity.Get(char).Vars.Injuries_ApplyOnStatus = nil
-		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", char)
+EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
+	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset ~= "Round" then
+		for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
+			if InjuryConfigHelper:IsEligible(combatParticipant[1]) then
+				local entity, injuryVar = InjuryConfigHelper:GetUserVar(combatParticipant[1])
+
+				-- InjuryConfigHelper handles resetting vars each round
+				local applyOnStatus = injuryVar["applyOnStatus"]
+				for status, _ in pairs(applyOnStatus) do
+					if Osi.HasActiveStatus(combatParticipant[1], status) == 1 then
+						processInjuries(entity, status, ConfigManager.Injuries.ApplyOnStatus[status], applyOnStatus)
+					end
+				end
+			end
+		end
 	end
 end)
