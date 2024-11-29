@@ -24,6 +24,7 @@ Ext.Require("Server/_ConfigManager.lua")
 
 Ext.Require("Server/Injuries/_ConfigHelper.lua")
 Ext.Require("Server/Injuries/_Damage.lua")
+Ext.Require("Server/Injuries/_RandomInjuryOnCondition.lua")
 Ext.Require("Server/Injuries/_Healing.lua")
 Ext.Require("Server/Injuries/_ApplyOnStatus.lua")
 Ext.Require("Server/Injuries/_RemoveOnStatus.lua")

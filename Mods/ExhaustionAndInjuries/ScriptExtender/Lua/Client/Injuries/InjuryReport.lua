@@ -140,7 +140,11 @@ Ext.RegisterNetListener("Injuries_Update_Report", function(channel, character, u
 	if not entityVars.Goon_Injuries then
 		entityInjuriesReport[character] = nil
 	else
-		entityInjuriesReport[character] = entityVars.Goon_Injuries
+		if not next(entityVars.Goon_Injuries["damage"]) and not next(entityVars.Goon_Injuries["applyOnStatus"]) then
+			entityInjuriesReport[character] = nil
+		else
+			entityInjuriesReport[character] = entityVars.Goon_Injuries
+		end
 	end
 
 	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
@@ -153,7 +157,7 @@ function InjuryReport:BuildReportWindow()
 	reportWindow.HorizontalScrollbar = true
 	-- reportPopup.AlwaysAutoResize = true
 
-	reportWindow.OnClose = function ()
+	reportWindow.OnClose = function()
 		reportWindow = nil
 	end
 

@@ -20,7 +20,12 @@ local function removeInjury(character, injury, injuryConfig)
 		Osi.RemoveStatus(character, injury)
 		clearInjuryVar(character, injury)
 	else
-		Osi.RequestPassiveRoll(character, character, "SavingThrowRoll", injuryConfig["ability"], DifficultyClassMap[injuryConfig["difficulty_class"]], 0,
+		Osi.RequestPassiveRoll(character,
+			character,
+			"SavingThrowRoll",
+			injuryConfig["ability"],
+			DifficultyClassMap[injuryConfig["difficulty_class"]],
+			0,
 			"Goon_Injuries_Remove_Injury_" .. injury)
 	end
 end

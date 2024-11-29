@@ -32,6 +32,8 @@ local function ProcessDamageEvent(event)
 		)
 	end
 
+	local randomlyAppliedInjuries = RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
+
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
 		local damageConfig = ConfigManager.Injuries.Damage[damageType]
@@ -43,7 +45,7 @@ local function ProcessDamageEvent(event)
 
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
-					if Osi.HasActiveStatus(defender, injury) == 0 then
+					if Osi.HasActiveStatus(defender, injury) == 0 and not randomlyAppliedInjuries[injury] then
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
 						if not injuryVar["damage"][damageType] then
@@ -103,7 +105,7 @@ end
 ---@param event EsvLuaDealDamageEvent
 Ext.Events.DealDamage:Subscribe(function(event)
 	-- Candles constantly taking burn damage lol
-	if not event.Target.IsItem then
+	if MCM.Get("enabled") and not event.Target.IsItem then
 		defender = event.Target.Uuid.EntityUuid
 
 		if InjuryConfigHelper:IsEligible(defender) then
