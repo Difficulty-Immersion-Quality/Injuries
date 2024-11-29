@@ -82,7 +82,7 @@ local function BuildReport()
 					if totalDamage == 0 then
 						damageGroup:Destroy()
 					else
-						damageGroup:AddText(string.format("Total Injury Damge in %% of Health: %.2f%%",
+						damageGroup:AddText(string.format("Total Injury Damage in %% of Health: %.2f%%",
 							((totalDamage / entity.Health.MaxHp) * 100)))
 						keepGroup = true
 					end
