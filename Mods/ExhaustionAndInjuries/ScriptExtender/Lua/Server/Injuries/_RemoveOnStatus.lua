@@ -9,6 +9,8 @@ local function clearInjuryVar(character, injuryName)
 		injuryTable[injuryName] = nil
 	end
 
+	injuryVar["injuryAppliedReason"][injuryName] = nil
+
 	InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 end
 

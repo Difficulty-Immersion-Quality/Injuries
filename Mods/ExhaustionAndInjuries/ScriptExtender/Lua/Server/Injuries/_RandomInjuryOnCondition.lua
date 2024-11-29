@@ -55,6 +55,9 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 
 			local chosenInjury = eligibleInjuries[Osi.Random(#eligibleInjuries) + 1]
 			Osi.ApplyStatus(defender, chosenInjury, -1)
+			local _, injuryVar = InjuryConfigHelper:GetUserVar(defender)
+			injuryVar["injuryAppliedReason"][chosenInjury] = "Critical Hit"
+
 			appliedInjuries[chosenInjury] = true
 		end
 	end
@@ -88,7 +91,7 @@ end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
 	if status == "DOWNED" then
-		local entity = Ext.Entity.Get(character)
+		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
 
 		if entity.Vars.Injury_Downed_Tracker then
 			local damageType = entity.Vars.Injury_Downed_Tracker
@@ -114,6 +117,8 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 
 				local chosenInjury = eligibleInjuries[Osi.Random(#eligibleInjuries) + 1]
 				Osi.ApplyStatus(character, chosenInjury, -1)
+				injuryVar["injuryAppliedReason"][chosenInjury] = "Downed"
+				InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 			end
 
 			entity.Vars.Injury_Downed_Tracker = nil

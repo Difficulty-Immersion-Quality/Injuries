@@ -87,6 +87,7 @@ local function ProcessDamageEvent(event)
 								injuryConfig.damage["threshold"])
 
 							Osi.ApplyStatus(defender, injury, -1)
+							injuryVar["injuryAppliedReason"][injury] = "Damage"
 						end
 					end
 				end

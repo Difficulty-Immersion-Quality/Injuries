@@ -26,6 +26,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 
 			if mainInjuryConfig["number_of_rounds"] <= roundsWithMultiplier then
 				Osi.ApplyStatus(character, injury, -1)
+				injuryVar["injuryAppliedReason"][injury] = "Status"
 			end
 		end
 	end

@@ -13,7 +13,9 @@ local injuryVar = {
 	---@type {[DamageType] : {[InjuryName] : number }}
 	["damage"] = {},
 	---@type {[StatusName] : {[InjuryName] : number }}
-	["applyOnStatus"] = {}
+	["applyOnStatus"] = {},
+	---@type {[InjuryName] : string}
+	["injuryAppliedReason"] = {}
 }
 
 InjuryConfigHelper = {}
@@ -64,14 +66,6 @@ function InjuryConfigHelper:UpdateUserVar(character, injuryVar)
 	Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 end
 
-
-EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
-	if Ext.Entity.Get(object).Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
-		Ext.Entity.Get(object).Vars.Goon_Injuries = nil
-		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", object)
-	end
-end)
-
 EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
 	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
 		for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
@@ -81,5 +75,31 @@ EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGui
 				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", combatParticipant[1])
 			end
 		end
+	end
+end)
+
+EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
+	if Ext.Entity.Get(object).Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
+		Ext.Entity.Get(object).Vars.Goon_Injuries = nil
+		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", object)
+	end
+end)
+
+EventCoordinator:RegisterEventProcessor("StatusApplied", function (character, status, causee, storyActionID)
+	local counterReset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
+	if (status == "SHORT_REST" and counterReset == "Short Rest") or (status == "LONG_REST" and counterReset == "Long Rest") then
+		local entity = Ext.Entity.Get(character)
+		if entity.Vars.Goon_Injuries then
+			Ext.Entity.Get(character).Vars.Goon_Injuries = nil
+			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
+		end
+	end
+end)
+
+Ext.Osiris.RegisterListener("KilledBy", 4, "before", function (character, _, _, _)
+	local entity = Ext.Entity.Get(character)
+	if entity.Vars.Goon_Injuries then
+		entity.Vars.Goon_Injuries = nil
+		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 	end
 end)

@@ -15,8 +15,7 @@ Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
 	SyncToServer = true
 })
 
-
----@type { [GUIDSTRING] : InjuryVar }
+---@type { [CHARACTER] : InjuryVar }
 local entityInjuriesReport = {}
 
 --- @type ExtuiWindow?
@@ -43,7 +42,11 @@ local function BuildReport()
 			end
 
 			if not charReport then
-				charReport = reportWindow:AddCollapsingHeader(entity.CustomName and entity.CustomName.Name or entity.DisplayName.NameKey:Get())
+				charReport = reportWindow:AddCollapsingHeader(string.format("%s (%s)",
+					entity.CustomName and entity.CustomName.Name or entity.DisplayName.NameKey:Get(),
+					entity.Uuid.EntityUuid))
+
+				charReport.DefaultOpen = false
 				charReport.UserData = character
 			end
 
@@ -51,10 +54,22 @@ local function BuildReport()
 				child:Destroy()
 			end
 
+			charReport:AddButton("Clear Report").OnClick = function()
+				entityInjuriesReport[character] = nil
+				BuildReport()
+			end
+
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)
 				injuryReportGroup:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
+
+				if injuryReport["injuryAppliedReason"][injury] then
+					injuryReportGroup:AddText("Injury Applied Due To: " .. injuryReport["injuryAppliedReason"][injury])
+					injuryReportGroup:AddNewLine()
+				end
+
 				injuryReportGroup:AddText("Severity: " .. injuryConfig.severity)
+				injuryReportGroup:AddNewLine()
 
 				local keepGroup = false
 
@@ -133,6 +148,8 @@ end
 
 -- Temporary until we can listen to specific UserVars, probably in SE 22
 Ext.RegisterNetListener("Injuries_Update_Report", function(channel, character, user)
+	character = Ext.Entity.Get(character).Uuid.EntityUuid
+
 	local entityVars = Ext.Entity.Get(character).Vars
 
 	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
