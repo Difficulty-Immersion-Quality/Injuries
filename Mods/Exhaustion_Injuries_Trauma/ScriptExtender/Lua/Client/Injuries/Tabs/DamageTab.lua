@@ -29,6 +29,7 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 	end
 	table.sort(newOptions)
 	damageCombo.Options = newOptions
+	damageCombo.SelectedIndex = -1
 
 	deleteRowButton.OnClick = function()
 		-- hack to allow us to monitor table deletion
@@ -41,6 +42,8 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 		table.insert(newOptions, damageType)
 		table.sort(newOptions)
 		damageCombo.Options = newOptions
+
+		damageCombo.SelectedIndex = -1
 
 		row:Destroy()
 	end
@@ -83,7 +86,6 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	table.sort(damageTypes)
 
 	damageTypeCombo.Options = damageTypes
-	damageTypeCombo.SelectedIndex = 0
 	damageTypeCombo.WidthFitPreview = true
 
 	--- @param combo ExtuiCombo
