@@ -42,7 +42,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local statusTab = tabBar:AddTabItem("Apply On Status")
 
 	statusTab:AddText("How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?")
-	local statusRounds = statusTab:AddSliderInt("", applyOnConfig["number_of_rounds"], 0, 10)
+	local statusRounds = statusTab:AddSliderInt("", applyOnConfig["number_of_rounds"], 1, 30)
 	statusRounds.OnChange = function()
 		applyOnConfig["number_of_rounds"] = statusRounds.Value[1]
 	end

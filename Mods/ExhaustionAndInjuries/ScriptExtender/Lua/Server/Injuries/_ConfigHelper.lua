@@ -23,6 +23,10 @@ InjuryConfigHelper = {}
 ---@param character GUIDSTRING
 ---@return boolean
 function InjuryConfigHelper:IsEligible(character)
+	if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" and Osi.IsInCombat(character) == 0 then
+		return false
+	end
+
 	local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
 	if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1)
 		or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)

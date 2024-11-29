@@ -1,3 +1,26 @@
+---@param configToCount table
+---@return number
+local function countInjuryConfig(configToCount)
+	local count = 0
+
+	if next(configToCount) then
+		for _, _ in pairs(configToCount) do
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
+---@param displayTooltip ExtuiTooltip
+---@param injury_config Injury
+local function generateInjuryCountTooltip(displayTooltip, injury_config)
+	displayTooltip:AddText(string.format("ApplyOnStatus Settings: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
+	displayTooltip:AddText(string.format("Damage Settings: %d", countInjuryConfig(injury_config.damage["damage_types"])))
+	displayTooltip:AddText(string.format("RemoveOnStatus Settings: %d", countInjuryConfig(injury_config.remove_on_status)))
+end
+
+
 InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
@@ -20,6 +43,9 @@ for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
 	if string.find(name, "Goon_Injury_") then
 		local displayName = string.sub(name, string.len("Goon_Injury_") + 1)
 		displayName = string.gsub(displayName, "_", " ")
+
+		displayName = Ext.Loca.GetTranslatedString(Ext.Stats.Get(name).DisplayName, displayName)
+
 		table.insert(injuryDisplayNames, displayName)
 		injuriesDisplayMap[displayName] = name
 	end
@@ -64,9 +90,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		allRadio.SameLine = true
 
 		local prioritizeSeverityText = tabHeader:AddText("What Severity Should Be Prioritized?")
-		prioritizeSeverityText.Visible = false
+		prioritizeSeverityText.Visible = oneRadio.Active
 		local prioritizeSeverityCombo = tabHeader:AddCombo("")
-		prioritizeSeverityCombo.Visible = false
+		prioritizeSeverityCombo.Visible = oneRadio.Active
 		prioritizeSeverityCombo.Options = {
 			"Random",
 			"Most Severe"
@@ -103,9 +129,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		--#region Damage Counter
 		tabHeader:AddSeparator()
-		tabHeader:AddText("When does the damage/status tick counter reset? Each")
+		tabHeader:AddText(
+		"When does the damage/status tick counter reset? If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")
 		local cumulationCombo = tabHeader:AddCombo("")
-		cumulationCombo.SameLine = true
 		cumulationCombo.Options = {
 			"Attack/Tick",
 			"Round",
@@ -223,7 +249,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			local newRow = injuryTable:AddRow()
 
-			newRow:AddCell():AddText(displayName)
+			local displayCell = newRow:AddCell()
+			displayCell:AddText(displayName)
+			local displayTooltip = displayCell:Tooltip()
+			generateInjuryCountTooltip(displayTooltip, injury_config)
+
 			local severityCombo = newRow:AddCell():AddCombo("")
 			severityCombo.Options = {
 				"Low",
