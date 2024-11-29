@@ -6,8 +6,8 @@
 		{
 			"label": "bg3Continue",
 			"type": "shell",
-			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Mods\ExhaustionAndInjuries" "D:\Mods\BG3 Modder MultiTool\Injuries\Mods\ExhaustionAndInjuries"
-			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Public\ExhaustionAndInjuries" "D:\Mods\BG3 Modder MultiTool\Injuries\Public\ExhaustionAndInjuries"
+			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Mods\Exhaustion_Injuries_Trauma" "D:\Mods\BG3 Modder MultiTool\Injuries\Mods\Exhaustion_Injuries_Trauma"
+			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Public\Exhaustion_Injuries_Trauma" "D:\Mods\BG3 Modder MultiTool\Injuries\Public\Exhaustion_Injuries_Trauma"
 			"windows": {
 				"command": "Start-Process",
 				"args": [
