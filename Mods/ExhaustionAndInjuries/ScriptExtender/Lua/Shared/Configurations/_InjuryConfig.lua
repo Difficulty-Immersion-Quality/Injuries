@@ -27,11 +27,9 @@ ConfigurationStructure.config.injuries.universal.injury_removal_severity_priorit
 --- @type injury_counter_reset
 ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Attack/Tick"
 
-ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_counter = true
+ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage = true
 
---- @alias healing_subtracts_injury_counter_modifier "25%"|"50%"|"100%"|"150%"|"200%"
---- @type healing_subtracts_injury_counter_modifier
-ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_counter_modifier = "100%"
+ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
 --#endregion
 
 --#region Severity
@@ -50,7 +48,6 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 --#endregion
 
 --#region Injury-Specific Options
-
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
@@ -58,13 +55,17 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 
----@class InjuryDamage
-ConfigurationStructure.DynamicClassDefinitions.injury_damage_class = {
-	["health_threshold"] = 10
+---@class InjuryDamageTypeClass
+ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class = {
+	["multiplier"] = 1
 }
 
----@type { [string] : InjuryDamage }
-ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {}
+--- @class InjuryDamageClass
+ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
+	["threshold"] = 10,
+	---@type { [DamageType] : InjuryDamageTypeClass }
+	["damage_types"] = {}
+}
 
 ---@class InjuryRemoveOnStatus
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
@@ -73,17 +74,24 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	["difficulty_class"] = 15
 }
 
----@type { [string] : InjuryRemoveOnStatus }
+---@alias StatusName string
+---@alias InjuryRemoveOnStatusClass { [StatusName] : InjuryRemoveOnStatus }
+---@type InjuryRemoveOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {}
 
----@class InjuryApplyOnStatus
+---@class InjuryApplyOnStatusModifierClass
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
-	["number_of_rounds"] = 1
+	["multiplier"] = 1
 }
----@type { [string] : InjuryApplyOnStatus }
-ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {}
+---@class InjuryApplyOnStatusClass
+ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
+	["number_of_rounds"] = 3,
+	---@type { [StatusName] : InjuryApplyOnStatusModifierClass }
+	["applicable_statuses"] = {}
+}
 
----@type { [string] : Injury }
+---@alias InjuryName string
+---@type { [InjuryName] : Injury }
 ConfigurationStructure.config.injuries.injury_specific = {}
 --#endregion
 

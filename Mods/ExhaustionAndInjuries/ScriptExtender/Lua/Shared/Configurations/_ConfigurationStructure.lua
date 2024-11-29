@@ -68,6 +68,8 @@ local function generate_recursive_metatable(proxy_table, real_table)
 end
 
 ConfigurationStructure.DynamicClassDefinitions = {}
+
+--- @class Configuration
 ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
 Ext.Require("Shared/Configurations/_InjuryConfig.lua")
 
@@ -105,8 +107,9 @@ local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	end
 end
 
+---@return Configuration
 function ConfigurationStructure:GetRealConfigCopy()
-	return TableUtils:MakeImmutableTableCopy(real_config_table)
+	return TableUtils:DeeplyCopyTable(real_config_table)
 end
 
 function ConfigurationStructure:InitializeConfig()
@@ -121,7 +124,6 @@ function ConfigurationStructure:InitializeConfig()
 
 	initialized = true
 	Logger:BasicInfo("Successfully loaded the config!")
-	Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", Ext.Json.Stringify(real_config_table))
 end
 
 function ConfigurationStructure:UpdateConfigForServer()
@@ -130,4 +132,10 @@ function ConfigurationStructure:UpdateConfigForServer()
 		real_config_table = config
 		Logger:BasicDebug("Successfully updated config on server side!")
 	end
+end
+
+if Ext.IsClient() then
+	Ext.Events.SessionLoaded:Subscribe(function()
+		Ext.ClientNet.PostMessageToServer(ModuleUUID .. "_UpdateConfiguration", "")
+	end)
 end

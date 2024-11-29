@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentList>
+	<content contentuid="h082fef79gf59cg4c14g8b7bge90cc0712a83" version="1">Concussion</content>
+	<content contentuid="hc3f64af4g4244g4670g951ag94cfcbc1e304" version="1">Your ringing head and blurry vision give you &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and reduce the range of attacks and spells to [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h0e5a8c86g54aag4e4ega29bga1f8a3dae72f" version="1">Broken Bone</content>
+	<content contentuid="h3f89b239ga195g4842g9b7dg54b793950cdc" version="1">Your broken bone has left reduces your &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; by [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="hed0a9feagddeag41fbg8922gcd0d94db23d5" version="1">Ruptured Intestine</content>
+	<content contentuid="h2b07fd3dgbddfg41c2gb2eag9adc9621f7b5" version="1">Your ruptured intestine reduces your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; by [1] and renders you &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Poison damage.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="ha49cc7ccg2b7ag4be5g8de4g70564f9712c4" version="1">Pierced Lung</content>
+	<content contentuid="h9754c9d8ga464g41c6ga1d4g42d7e898b945" version="1">The sharp pain experienced on every breath gives you &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and reduces your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h003c6736gffa1g42afgad7dg40f98fc591a0" version="1">Flesh Wound</content>
+	<content contentuid="hd13f3adbgd493g46fag84a6g223295e589b3" version="1">The exposed layers of your flesh reduces your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; by [1] and renders you &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Necrotic damage.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="hf0a12179g591bg41feg9c67g6ba7b2341311" version="1">Severed Tendon</content>
+	<content contentuid="hfa39a1b4gff87g44aagb41bgf6a4ef8ed6a6" version="1">The severed connective tissues give you &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="hce4d4301g5257g4d4eg9430g22fd9c8f8b36" version="1">Hypothermia</content>
+	<content contentuid="hbab47454g4bb3g4b8bgbfb8gcfd7a2727983" version="1">The excrutiating cold you feel reduces your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1] and renders you &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Cold damage.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h3b974ebbg7689g4721gad47g129257efa819" version="1">First Degree Burn</content>
+	<content contentuid="hac166a73g3b45g4602gbcddg51609a7f8d79" version="1">Previously protected layers of your flesh are exposed reducing your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; by [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="hd5e56cb7g3706g40feg9b4dgb011827baf16" version="1">Second Degree Burn</content>
+	<content contentuid="h3b501914g161dg408cga447gb79d18bdf8a4" version="1">Previously protected layers of your flesh are exposed reducing your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; by [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h0759b883gfc22g4417gb062gf74280ef243b" version="1">Third Degree Burn</content>
+	<content contentuid="h2991eb18g0126g4f8ag9876g3ef516096a1c" version="1">Previously protected layers of your flesh are exposed reducing your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; by [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h7fb67391g1898g4ee0gae0dg3a112703c8d9" version="1">Nerve Damage</content>
+	<content contentuid="hdedce489ga779g4af0g9c0cg7b12eb1b2537" version="1">Pains shooting up and down your body cause you to be jittery, your ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; are reduced by [1] and you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="hd3f4379bgf03ag456dg94b2g136e4bb3362a" version="1">Ruptured EarDrum</content>
+	<content contentuid="h60b2af99gb626g46ebg84ceg4ecb37199859" version="1">The sharp pain and high pitched tone in your makes you clumsy giving you &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Stealth"&gt;Stealth&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and reduces your &lt;LSTag Tooltip="ArmourClass"&gt;Armour Class&lt;/LSTag&gt; by [1].
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h8719d873g70abg471agbf32g71bc260728f8" version="1">Bubbled Brow</content>
+	<content contentuid="h3242057fg5bf4g4218ga5a9g50f2364139e8" version="1">The Acid splashed in your face hinders your vision reducing the range of attacks and spells to [1] and renders you &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Fire damage.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h66b1335bg4006g44f5g80f6g0cd1a67a305a" version="1">Nausea</content>
+	<content contentuid="hff59e36dg690ag48d1gbb2dga580e79f9c92" version="1">Your stomach is throbbing giving you &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt; and increasing your </content>
+	<content contentuid="h0f3ff7dcgfc51g4330g8dabgccd5e685b7dc" version="1">Tissue Death</content>
+	<content contentuid="hfb3e5e56g6151g4239g87e8gd6e1fa6b7fa7" version="1">The patch of slimy and pale flesh on your body gives you &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and renders you &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Necrotic damage.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="he6f23e62g4a4bg45b2g9602g0bb3dd3a826b" version="1">Crushed Ribs</content>
+	<content contentuid="h0ee47067gbf88g4498gae5cgc891d6b72178" version="1">Your chest is collapsing on itself removing your ability to use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; and you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Athletics"&gt;Athletics&lt;/LSTag&gt; and &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h719729bfg9bcag4dfcgb0d5g4a5fa65e040e" version="1">Psychic Psychosis</content>
+	<content contentuid="he0c3eb0dgbe93g4ba1g8077g9acde575a8fe" version="1">Your grip on reality is slipping you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+	<content contentuid="h5550c488gad91g45ebgbf6dg218c7c4468b7" version="1">Fried Synapses</content>
+	<content contentuid="h6bd6ff42gaf6dg44a9gbdb9g85b6006f0a49" version="1">The abundance of electrical activity in your brain leaves you with &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+</contentList>
