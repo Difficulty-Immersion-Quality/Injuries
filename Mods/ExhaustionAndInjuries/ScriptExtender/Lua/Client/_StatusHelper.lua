@@ -12,7 +12,7 @@ local function BuildStatusesForInput(input, callback)
 	for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
 		name = string.upper(name)
 		if isWildcard then
-			if string.find(name, inputText) then
+			if string.find(name, inputText) and Ext.Stats.Get(name) then
 				statusCount = statusCount + 1
 				callback(Ext.Stats.Get(name))
 			end

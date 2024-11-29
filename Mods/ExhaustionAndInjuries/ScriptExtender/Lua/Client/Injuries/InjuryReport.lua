@@ -53,8 +53,10 @@ local function BuildReport()
 			for _, child in pairs(charReport.Children) do
 				child:Destroy()
 			end
-
-			charReport:AddButton("Clear Report").OnClick = function()
+			
+			local clearButton = charReport:AddButton("Clear Report")
+			clearButton:Tooltip():AddText("This does not clear the underlying tracker, so if the character triggers some injury condition again, this will reappear. Only really useful for clearing NPCs that survive combat")
+			clearButton.OnClick = function()
 				entityInjuriesReport[character] = nil
 				BuildReport()
 			end

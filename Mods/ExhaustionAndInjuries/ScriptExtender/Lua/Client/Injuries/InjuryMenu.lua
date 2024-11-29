@@ -15,6 +15,10 @@ end
 ---@param displayTooltip ExtuiTooltip
 ---@param injury_config Injury
 local function generateInjuryCountTooltip(displayTooltip, injury_config)
+	for _, child in pairs(displayTooltip.Children) do
+		child:Destroy()
+	end
+
 	displayTooltip:AddText(string.format("ApplyOnStatus Settings: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
 	displayTooltip:AddText(string.format("Damage Settings: %d", countInjuryConfig(injury_config.damage["damage_types"])))
 	displayTooltip:AddText(string.format("RemoveOnStatus Settings: %d", countInjuryConfig(injury_config.remove_on_status)))
@@ -130,7 +134,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#region Damage Counter
 		tabHeader:AddSeparator()
 		tabHeader:AddText(
-		"When does the damage/status tick counter reset? If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")
+			"When does the damage/status tick counter reset? If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")
 		local cumulationCombo = tabHeader:AddCombo("")
 		cumulationCombo.Options = {
 			"Attack/Tick",
@@ -248,11 +252,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
 
 			local newRow = injuryTable:AddRow()
-
 			local displayCell = newRow:AddCell()
 			displayCell:AddText(displayName)
 			local displayTooltip = displayCell:Tooltip()
-			generateInjuryCountTooltip(displayTooltip, injury_config)
+			displayCell.OnHoverEnter = function()
+				generateInjuryCountTooltip(displayTooltip, injury_config)
+			end
 
 			local severityCombo = newRow:AddCell():AddCombo("")
 			severityCombo.Options = {
@@ -271,9 +276,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				injury_config.severity = severityCombo.Options[selectedIndex + 1]
 			end
 
-			local customizeButton = newRow:AddCell():AddButton("Customize")
+			local buttonCell = newRow:AddCell()
+			local customizeButton = buttonCell:AddButton("Customize")
+			local injuryPopup
 			customizeButton.OnClick = function()
-				local injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
+				injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
 				injuryPopup.Closeable = true
 				injuryPopup.HorizontalScrollbar = true
 
@@ -287,6 +294,22 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
 					end
 				end
+			end
+
+			local resetButton = buttonCell:AddButton("Reset")
+			resetButton.SameLine = true
+
+			resetButton.OnClick = function()
+				if injuryPopup then
+					injuryPopup.Open = false
+				end
+
+				InjuryMenu.ConfigurationSlice.injury_specific[injuryName].delete = true
+				InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = nil
+				InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
+				injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
+
+				severityCombo.SelectedIndex = 1
 			end
 		end
 		--#endregion
