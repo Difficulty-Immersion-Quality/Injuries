@@ -311,6 +311,63 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 				severityCombo.SelectedIndex = 1
 			end
+
+			local copyButton = buttonCell:AddButton("Copy To")
+			copyButton.SameLine = true
+
+			copyButton.OnClick = function()
+				local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
+				copyPopup.Closeable = true
+				copyPopup.HorizontalScrollbar = true
+
+				copyPopup:AddText("Copying from: " .. displayName)
+				copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs (fix TBD)")
+
+				copyPopup:AddText("Which Configs Should Be Copied?")
+				local copyWhatGroup = copyPopup:AddGroup("CopyWhat")
+				copyWhatGroup:AddCheckbox("ApplyOnStatus", true).UserData = "apply_on_status"
+
+				local dmg = copyWhatGroup:AddCheckbox("Damage", true)
+				dmg.SameLine = true
+				dmg.UserData = "damage"
+
+				local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
+				removeStatus.SameLine = true
+				removeStatus.UserData = "remove_on_status"
+
+				copyPopup:AddText("What Injuries should these configs be copied to?")
+				local copyToGroup = copyPopup:AddGroup("CopyTo")
+				for _, otherDisplayName in pairs(injuryDisplayNames) do
+					if displayName ~= otherDisplayName then
+						copyToGroup:AddCheckbox(otherDisplayName, false).UserData = injuriesDisplayMap[otherDisplayName]
+					end
+				end
+
+				copyPopup:AddButton("Copy Configs").OnClick = function()
+					local configsToCopy = {}
+					for _, child in pairs(copyWhatGroup.Children) do
+						---@cast child ExtuiCheckbox
+						if child.Checked then
+							table.insert(configsToCopy, child.UserData)
+						end
+					end
+
+					-- Since we use Metatable proxies in ConfigStructure and TableUtils doesn't use pairs, we have to operate on the real table
+					local configCopy = ConfigurationStructure:GetRealConfigCopy().injuries.injury_specific[injuryName]
+					for _, child in pairs(copyToGroup.Children) do
+						---@cast child ExtuiCheckbox
+						if child.Checked then
+							local otherInjuryName = child.UserData
+							for _, configToCopy in pairs(configsToCopy) do
+								InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+								InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] = TableUtils:DeeplyCopyTable(configCopy[configToCopy])
+							end
+						end
+					end
+
+					copyPopup.Open = false
+				end
+			end
 		end
 		--#endregion
 	end)
