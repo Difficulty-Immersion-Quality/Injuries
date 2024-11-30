@@ -14,9 +14,12 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 
 	local row = statusTable:AddRow()
 
-	local statusNameText = row:AddCell():AddText(status.Name)
+	local statusNameRow = row:AddCell()
+	statusNameRow:AddImage(status.Icon, {30, 30}).AllowItemOverlap = false
+	local statusNameText = statusNameRow:AddText(status.Name)
+	statusNameText.SameLine = true
 
-	StatusHelper:BuildTooltip(statusNameText:Tooltip(), status)
+	StatusHelper:BuildTooltip(statusNameRow:Tooltip(), status)
 
 	local multiplier = row:AddCell():AddSliderInt("", statusConfig["multiplier"], 1, 10)
 	multiplier.OnChange = function(slider)
@@ -40,7 +43,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 	local applyOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].apply_on_status
 	local statusTab = tabBar:AddTabItem("Apply On Status")
-
+	
 	statusTab:AddText("How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?")
 	local statusRounds = statusTab:AddSliderInt("", applyOnConfig["number_of_rounds"], 1, 30)
 	statusRounds.OnChange = function()

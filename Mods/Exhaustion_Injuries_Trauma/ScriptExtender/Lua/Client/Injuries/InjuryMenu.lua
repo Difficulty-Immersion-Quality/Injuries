@@ -61,6 +61,8 @@ table.sort(injuryDisplayNames)
 Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 	--- @param tabHeader ExtuiTreeParent
 	function(tabHeader)
+		tabHeader.TextWrapPos = 0
+		
 		--#region Universal Options
 		tabHeader:AddSeparatorText("Universal Options")
 		local universal = InjuryMenu.ConfigurationSlice.universal
@@ -89,6 +91,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		tabHeader:AddSeparator()
 		tabHeader:AddText("How Many Different Injuries Can Be Removed At Once?")
 		tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
+
 		local oneRadio = tabHeader:AddRadioButton("One", universal.how_many_injuries_can_be_removed_at_once == "One")
 		local allRadio = tabHeader:AddRadioButton("All", universal.how_many_injuries_can_be_removed_at_once == "All")
 		allRadio.SameLine = true
@@ -253,7 +256,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			local newRow = injuryTable:AddRow()
 			local displayCell = newRow:AddCell()
-			displayCell:AddText(displayName)
+			displayCell:AddImage(Ext.Stats.Get(injuryName).Icon, {36, 36})
+			displayCell:AddText(displayName).SameLine = true
 			local displayTooltip = displayCell:Tooltip()
 			displayCell.OnHoverEnter = function()
 				generateInjuryCountTooltip(displayTooltip, injury_config)
@@ -281,10 +285,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local injuryPopup
 			customizeButton.OnClick = function()
 				injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
+				injuryPopup.TextWrapPos = 0
 				injuryPopup.Closeable = true
-				injuryPopup.HorizontalScrollbar = true
+				-- injuryPopup.HorizontalScrollbar = true
 
 				local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
+				newTabBar.TextWrapPos = 0
 				for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
 					local success, error = pcall(function()
 						tabGenerator(newTabBar, injuryName)
@@ -317,6 +323,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			copyButton.OnClick = function()
 				local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
+				copyPopup.TextWrapPos = 0
 				copyPopup.Closeable = true
 				copyPopup.HorizontalScrollbar = true
 

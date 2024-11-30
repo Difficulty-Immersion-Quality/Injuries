@@ -45,7 +45,7 @@ local function ProcessDamageEvent(event)
 
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
-					if Osi.HasActiveStatus(defender, injury) == 0 and not randomlyAppliedInjuries[injury] then
+					if Osi.HasActiveStatus(defender, injury) == 0 and not injuryVar["injuryAppliedReason"][injury] and not randomlyAppliedInjuries[injury] then
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
 						if not injuryVar["damage"][damageType] then
