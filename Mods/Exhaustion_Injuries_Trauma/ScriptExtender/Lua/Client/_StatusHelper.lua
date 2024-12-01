@@ -57,23 +57,22 @@ function StatusHelper:BuildTooltip(tooltip, status)
 	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
 	tooltip:AddText("StatusType: " .. status.StatusType)
 
-	
 	if status.TooltipDamage ~= "" then
 		tooltip:AddText("Damage: " .. status.TooltipDamage)
 	end
-	
+
 	if status.HealValue ~= "" then
 		tooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
 	end
-	
+
 	if status.TooltipSave ~= "" then
 		tooltip:AddText("Save: " .. status.TooltipSave)
 	end
-	
+
 	if status.TickType ~= "" then
 		tooltip:AddText("TickType: " .. status.TickType)
 	end
-	
+
 	local desc = tooltip:AddText("Description: " .. Ext.Loca.GetTranslatedString(status.Description, "N/A"))
 	desc.TextWrapPos = 600
 

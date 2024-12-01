@@ -10,7 +10,14 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 	end
 	local damageTypeConfig = damageConfig["damage_types"][damageType]
 
-	row:AddCell():AddText(damageType)
+	local damageCell = row:AddCell()
+	local damageTypeForImage = damageType
+	if damageTypeForImage == "Piercing" or damageTypeForImage == "Bludgeoning" or damageTypeForImage == "Slashing" then
+		damageTypeForImage = "Physical"
+	end
+
+	damageCell:AddImage("GenericIcon_DamageType_" .. damageTypeForImage, {36, 36})
+	damageCell:AddText(damageType).SameLine = true
 
 	local damageTypeThreshold = row:AddCell():AddSliderInt("", damageTypeConfig["multiplier"] * 100, 1, 500)
 
@@ -62,7 +69,6 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	damageTab:AddText("Applied after losing the following % of Health:")
 	local damageThreshold = damageTab:AddSliderInt("", damageConfig["threshold"], 0, 100)
-	damageThreshold.SameLine = true
 	damageThreshold.OnChange = function ()
 		damageConfig["threshold"] = damageThreshold.Value[1]
 	end
@@ -73,7 +79,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local headerRow = damageTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Damage Type")
-	headerRow:AddCell():AddText("Multiplier %")
+	headerRow:AddCell():AddText("Injury Damage Multiplier %")
 
 	damageTab:AddText("Add New Row")
 	local damageTypeCombo = damageTab:AddCombo("")

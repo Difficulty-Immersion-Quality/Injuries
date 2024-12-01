@@ -62,7 +62,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 	--- @param tabHeader ExtuiTreeParent
 	function(tabHeader)
 		tabHeader.TextWrapPos = 0
-		
+
 		--#region Universal Options
 		tabHeader:AddSeparatorText("Universal Options")
 		local universal = InjuryMenu.ConfigurationSlice.universal
@@ -256,7 +256,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			local newRow = injuryTable:AddRow()
 			local displayCell = newRow:AddCell()
-			displayCell:AddImage(Ext.Stats.Get(injuryName).Icon, {36, 36})
+			displayCell:AddImage(Ext.Stats.Get(injuryName).Icon, { 36, 36 })
 			displayCell:AddText(displayName).SameLine = true
 			local displayTooltip = displayCell:Tooltip()
 			displayCell.OnHoverEnter = function()
@@ -318,19 +318,18 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				severityCombo.SelectedIndex = 1
 			end
 
-			local copyButton = buttonCell:AddButton("Copy To")
+			local copyButton = buttonCell:AddButton("Copy")
 			copyButton.SameLine = true
 
 			copyButton.OnClick = function()
 				local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
-				copyPopup.TextWrapPos = 0
 				copyPopup.Closeable = true
-				copyPopup.HorizontalScrollbar = true
 
 				copyPopup:AddText("Copying from: " .. displayName)
-				copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs (fix TBD)")
+				copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs (fix TBD)").TextWrapPos = 0
+				copyPopup:AddNewLine()
 
-				copyPopup:AddText("Which Configs Should Be Copied?")
+				copyPopup:AddSeparatorText("Which Configs Should Be Copied?")
 				local copyWhatGroup = copyPopup:AddGroup("CopyWhat")
 				copyWhatGroup:AddCheckbox("ApplyOnStatus", true).UserData = "apply_on_status"
 
@@ -342,7 +341,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				removeStatus.SameLine = true
 				removeStatus.UserData = "remove_on_status"
 
-				copyPopup:AddText("What Injuries should these configs be copied to?")
+				copyPopup:AddNewLine()
+				copyPopup:AddSeparatorText("What Injuries should these configs be copied to?")
 				local copyToGroup = copyPopup:AddGroup("CopyTo")
 				for _, otherDisplayName in pairs(injuryDisplayNames) do
 					if displayName ~= otherDisplayName then
