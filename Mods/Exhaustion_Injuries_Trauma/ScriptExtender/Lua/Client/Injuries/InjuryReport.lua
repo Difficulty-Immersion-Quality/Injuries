@@ -24,7 +24,7 @@ local reportWindow
 local function BuildReport()
 	if reportWindow then
 		for _, child in pairs(reportWindow.Children) do
-			if child.UserData and not entityInjuriesReport[child.UserData] then
+			if child.UserData and (child.UserData ~= "keep" or not entityInjuriesReport[child.UserData]) then
 				child:Destroy()
 			end
 		end
@@ -173,8 +173,14 @@ end)
 function InjuryReport:BuildReportWindow()
 	reportWindow = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
 	reportWindow.Closeable = true
-	reportWindow.HorizontalScrollbar = true
-	-- reportPopup.AlwaysAutoResize = true
+
+	local moreInfo = reportWindow:AddImageButton("More Info", "GenericIcon_Intent_Utility", {30, 30})
+	local tooltip = moreInfo:Tooltip()
+	tooltip:AddText("Reports for each injury will stop updating once an injury is applied, but will remain for transparency.")
+	tooltip:AddText("Characters will be removed from the report when they die or all injury information is removed from them, such as when:").TextWrapPos = 0
+	tooltip:AddBulletText("The Counters are reset")
+	tooltip:AddBulletText("All Damage is Healed")
+	tooltip:AddBulletText("All applied injuries are removed")
 
 	reportWindow.OnClose = function()
 		reportWindow = nil
