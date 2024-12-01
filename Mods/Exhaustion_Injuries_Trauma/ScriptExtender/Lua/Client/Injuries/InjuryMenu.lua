@@ -197,17 +197,23 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		end
 
 		tabHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
-		tabHeader:AddText("Low")
-		local lowSeverity = tabHeader:AddSliderInt("", universal.random_injury_severity_weights["Low"], 0, 100)
-		lowSeverity.SameLine = true
+		local severityTable = tabHeader:AddTable("", 2)
+		severityTable.SizingFixedFit = true
+		-- I have NO idea what these numbers represent lmao
+		severityTable.ColumnDefs = { { Disabled = false, Width = 1 }, { Width = 10, Disabled = false } }
 
-		tabHeader:AddText("Medium")
-		local mediumSeverity = tabHeader:AddSliderInt("", universal.random_injury_severity_weights["Medium"], 0, 100)
-		mediumSeverity.SameLine = true
+		local lowRow = severityTable:AddRow()
+		local lowCell = lowRow:AddCell()
+		lowCell:AddText("Low")
+		local lowSeverity = lowRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["Low"], 0, 100)
 
-		tabHeader:AddText("High")
-		local highSeverity = tabHeader:AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
-		highSeverity.SameLine = true
+		local medRow = severityTable:AddRow()
+		medRow:AddCell():AddText("Medium")
+		local mediumSeverity = medRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["Medium"], 0, 100)
+
+		local highRow = severityTable:AddRow()
+		highRow:AddCell():AddText("High")
+		local highSeverity = highRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
 
 		local severityErrorText = tabHeader:AddText("Error: Values must add up to 100%!")
 		severityErrorText.Visible = false
