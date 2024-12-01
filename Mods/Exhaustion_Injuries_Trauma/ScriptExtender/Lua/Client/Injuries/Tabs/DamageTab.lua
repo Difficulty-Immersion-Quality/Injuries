@@ -29,7 +29,7 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 	damageTypeThreshold.OnChange = function()
 		-- Rounding, according to ChatGPT
 		damageTypeConfig["multiplier"] = math.floor(damageTypeThreshold.Value[1] * 100 + 0.5) / 10000
-		
+
 		tooltipText.Label = string.format("\t\t10 points of %s damage contributes %s points of Injury Damage",
 			damageType,
 			10 * damageTypeConfig["multiplier"])
@@ -99,7 +99,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local damageTypes = {}
 	for _, damageType in ipairs(Ext.Enums.DamageType) do
-		table.insert(damageTypes, tostring(damageType))
+		if tostring(damageType) ~= "Sentinel" then
+			table.insert(damageTypes, tostring(damageType))
+		end
 	end
 	table.sort(damageTypes)
 

@@ -88,9 +88,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#endregion
 
 		--#region Injury Removal
-		tabHeader:AddSeparator()
+		tabHeader:AddNewLine()
 		tabHeader:AddText("How Many Different Injuries Can Be Removed At Once?")
-		tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
+		tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."):SetStyle("Alpha", 0.90)
 
 		local oneRadio = tabHeader:AddRadioButton("One", universal.how_many_injuries_can_be_removed_at_once == "One")
 		local allRadio = tabHeader:AddRadioButton("All", universal.how_many_injuries_can_be_removed_at_once == "All")
@@ -135,9 +135,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#endregion
 
 		--#region Damage Counter
-		tabHeader:AddSeparator()
-		tabHeader:AddText(
-			"When does the damage/status tick counter reset? If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")
+		tabHeader:AddNewLine()
+		tabHeader:AddText("When Does the Damage/Status Tick Counter Reset?")
+		tabHeader:AddText("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."):SetStyle("Alpha", 0.90)
+
 		local cumulationCombo = tabHeader:AddCombo("")
 		cumulationCombo.Options = {
 			"Attack/Tick",
@@ -216,6 +217,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		local highSeverity = highRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
 
 		local severityErrorText = tabHeader:AddText("Error: Values must add up to 100%!")
+		severityErrorText:SetColor("Text", {1, 0.02, 0, 1})
 		severityErrorText.Visible = false
 		local ensureAdditionFunction = function()
 			severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
