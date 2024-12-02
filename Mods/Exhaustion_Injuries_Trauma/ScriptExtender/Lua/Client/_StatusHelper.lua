@@ -52,9 +52,9 @@ function StatusHelper:BuildSearch(tab, onClick)
 	end
 end
 
-
 ---@param tooltip ExtuiTooltip
 function StatusHelper:BuildTooltip(tooltip, status)
+	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
 	tooltip:AddText("StatusType: " .. status.StatusType)
 
 	if status.TooltipDamage ~= "" then
@@ -72,4 +72,14 @@ function StatusHelper:BuildTooltip(tooltip, status)
 	if status.TickType ~= "" then
 		tooltip:AddText("TickType: " .. status.TickType)
 	end
+
+	local desc = tooltip:AddText("Description: " .. Ext.Loca.GetTranslatedString(status.Description, "N/A"))
+	desc.TextWrapPos = 600
+
+	if status.DescriptionParams ~= "" then
+		tooltip:AddText("Description Params: " .. status.DescriptionParams)
+	end
+	-- if status.Boosts ~= "" then
+	-- 	tooltip:AddText("Boosts: " .. status.Boosts).TextWrapPos = 0
+	-- end
 end

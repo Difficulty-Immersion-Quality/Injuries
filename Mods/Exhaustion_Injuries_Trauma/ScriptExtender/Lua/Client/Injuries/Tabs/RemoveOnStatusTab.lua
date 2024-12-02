@@ -14,9 +14,12 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 	local row = statusTable:AddRow()
 
 	--#region Status Name
-	local statusNameText = row:AddCell():AddText(status.Name)
+	local statusNameRow = row:AddCell()
+	statusNameRow:AddImage(status.Icon, {36, 36})
+	local statusNameText = statusNameRow:AddText(status.Name)
+	statusNameText.SameLine = true
 
-	StatusHelper:BuildTooltip(statusNameText:Tooltip(), status)
+	StatusHelper:BuildTooltip(statusNameRow:Tooltip(), status)
 	--#endregion
 
 	--#region Save Options

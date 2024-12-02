@@ -61,6 +61,8 @@ table.sort(injuryDisplayNames)
 Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 	--- @param tabHeader ExtuiTreeParent
 	function(tabHeader)
+		tabHeader.TextWrapPos = 0
+
 		--#region Universal Options
 		tabHeader:AddSeparatorText("Universal Options")
 		local universal = InjuryMenu.ConfigurationSlice.universal
@@ -86,9 +88,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#endregion
 
 		--#region Injury Removal
-		tabHeader:AddSeparator()
+		tabHeader:AddNewLine()
 		tabHeader:AddText("How Many Different Injuries Can Be Removed At Once?")
-		tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
+		tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."):SetStyle("Alpha", 0.90)
+
 		local oneRadio = tabHeader:AddRadioButton("One", universal.how_many_injuries_can_be_removed_at_once == "One")
 		local allRadio = tabHeader:AddRadioButton("All", universal.how_many_injuries_can_be_removed_at_once == "All")
 		allRadio.SameLine = true
@@ -132,9 +135,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#endregion
 
 		--#region Damage Counter
-		tabHeader:AddSeparator()
-		tabHeader:AddText(
-			"When does the damage/status tick counter reset? If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")
+		tabHeader:AddNewLine()
+		tabHeader:AddText("When Does the Damage/Status Tick Counter Reset?")
+		tabHeader:AddText("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."):SetStyle("Alpha", 0.90)
+
 		local cumulationCombo = tabHeader:AddCombo("")
 		cumulationCombo.Options = {
 			"Attack/Tick",
@@ -194,19 +198,26 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		end
 
 		tabHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
-		tabHeader:AddText("Low")
-		local lowSeverity = tabHeader:AddSliderInt("", universal.random_injury_severity_weights["Low"], 0, 100)
-		lowSeverity.SameLine = true
+		local severityTable = tabHeader:AddTable("", 2)
+		severityTable.SizingFixedFit = true
+		-- I have NO idea what these numbers represent lmao
+		severityTable.ColumnDefs = { { Disabled = false, Width = 1 }, { Width = 10, Disabled = false } }
 
-		tabHeader:AddText("Medium")
-		local mediumSeverity = tabHeader:AddSliderInt("", universal.random_injury_severity_weights["Medium"], 0, 100)
-		mediumSeverity.SameLine = true
+		local lowRow = severityTable:AddRow()
+		local lowCell = lowRow:AddCell()
+		lowCell:AddText("Low")
+		local lowSeverity = lowRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["Low"], 0, 100)
 
-		tabHeader:AddText("High")
-		local highSeverity = tabHeader:AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
-		highSeverity.SameLine = true
+		local medRow = severityTable:AddRow()
+		medRow:AddCell():AddText("Medium")
+		local mediumSeverity = medRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["Medium"], 0, 100)
+
+		local highRow = severityTable:AddRow()
+		highRow:AddCell():AddText("High")
+		local highSeverity = highRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
 
 		local severityErrorText = tabHeader:AddText("Error: Values must add up to 100%!")
+		severityErrorText:SetColor("Text", {1, 0.02, 0, 1})
 		severityErrorText.Visible = false
 		local ensureAdditionFunction = function()
 			severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
@@ -253,7 +264,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			local newRow = injuryTable:AddRow()
 			local displayCell = newRow:AddCell()
-			displayCell:AddText(displayName)
+			displayCell:AddImage(Ext.Stats.Get(injuryName).Icon, { 36, 36 })
+			displayCell:AddText(displayName).SameLine = true
 			local displayTooltip = displayCell:Tooltip()
 			displayCell.OnHoverEnter = function()
 				generateInjuryCountTooltip(displayTooltip, injury_config)
@@ -281,10 +293,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local injuryPopup
 			customizeButton.OnClick = function()
 				injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
+				injuryPopup.TextWrapPos = 0
 				injuryPopup.Closeable = true
-				injuryPopup.HorizontalScrollbar = true
+				-- injuryPopup.HorizontalScrollbar = true
 
 				local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
+				newTabBar.TextWrapPos = 0
 				for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
 					local success, error = pcall(function()
 						tabGenerator(newTabBar, injuryName)
@@ -312,18 +326,18 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				severityCombo.SelectedIndex = 1
 			end
 
-			local copyButton = buttonCell:AddButton("Copy To")
+			local copyButton = buttonCell:AddButton("Copy")
 			copyButton.SameLine = true
 
 			copyButton.OnClick = function()
 				local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
 				copyPopup.Closeable = true
-				copyPopup.HorizontalScrollbar = true
 
 				copyPopup:AddText("Copying from: " .. displayName)
-				copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs (fix TBD)")
+				copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs (fix TBD)").TextWrapPos = 0
+				copyPopup:AddNewLine()
 
-				copyPopup:AddText("Which Configs Should Be Copied?")
+				copyPopup:AddSeparatorText("Which Configs Should Be Copied?")
 				local copyWhatGroup = copyPopup:AddGroup("CopyWhat")
 				copyWhatGroup:AddCheckbox("ApplyOnStatus", true).UserData = "apply_on_status"
 
@@ -335,7 +349,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				removeStatus.SameLine = true
 				removeStatus.UserData = "remove_on_status"
 
-				copyPopup:AddText("What Injuries should these configs be copied to?")
+				copyPopup:AddNewLine()
+				copyPopup:AddSeparatorText("What Injuries should these configs be copied to?")
 				local copyToGroup = copyPopup:AddGroup("CopyTo")
 				for _, otherDisplayName in pairs(injuryDisplayNames) do
 					if displayName ~= otherDisplayName then

@@ -10,14 +10,31 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 	end
 	local damageTypeConfig = damageConfig["damage_types"][damageType]
 
-	row:AddCell():AddText(damageType)
+	local damageCell = row:AddCell()
+	local damageTypeForImage = damageType
+	if damageTypeForImage == "Piercing" or damageTypeForImage == "Bludgeoning" or damageTypeForImage == "Slashing" then
+		damageTypeForImage = "Physical"
+	end
+
+	damageCell:AddImage("GenericIcon_DamageType_" .. damageTypeForImage, { 36, 36 })
+	damageCell:AddText(damageType).SameLine = true
 
 	local damageTypeThreshold = row:AddCell():AddSliderInt("", damageTypeConfig["multiplier"] * 100, 1, 500)
+
+	local thresholdTooltip = damageTypeThreshold:Tooltip()
+	local tooltipText = thresholdTooltip:AddText(string.format("\t\t10 points of %s damage contributes %s points of Injury Damage",
+		damageType,
+		10 * damageTypeConfig["multiplier"]))
 
 	damageTypeThreshold.OnChange = function()
 		-- Rounding, according to ChatGPT
 		damageTypeConfig["multiplier"] = math.floor(damageTypeThreshold.Value[1] * 100 + 0.5) / 10000
+
+		tooltipText.Label = string.format("\t\t10 points of %s damage contributes %s points of Injury Damage",
+			damageType,
+			10 * damageTypeConfig["multiplier"])
 	end
+
 
 	local deleteRowButton = row:AddCell():AddButton("Delete")
 
@@ -60,12 +77,13 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local damageTab = tabBar:AddTabItem("Damage")
 
-	damageTab:AddText("Applied after losing the following % of Health:")
+	damageTab:AddText("Applied after total damage from all configured DamageTypes is >= the following % of Health:")
 	local damageThreshold = damageTab:AddSliderInt("", damageConfig["threshold"], 0, 100)
-	damageThreshold.SameLine = true
-	damageThreshold.OnChange = function ()
+	damageThreshold.OnChange = function()
 		damageConfig["threshold"] = damageThreshold.Value[1]
 	end
+
+	damageTab:AddSeparatorText("What Damage Types Contribute to Injury Damage?")
 
 	local damageTable = damageTab:AddTable("DamageTypes", 3)
 	damageTable.BordersInnerH = true
@@ -73,7 +91,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local headerRow = damageTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Damage Type")
-	headerRow:AddCell():AddText("Multiplier %")
+	headerRow:AddCell():AddText("Injury Damage Multiplier %")
 
 	damageTab:AddText("Add New Row")
 	local damageTypeCombo = damageTab:AddCombo("")
@@ -81,7 +99,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local damageTypes = {}
 	for _, damageType in ipairs(Ext.Enums.DamageType) do
-		table.insert(damageTypes, tostring(damageType))
+		if tostring(damageType) ~= "Sentinel" then
+			table.insert(damageTypes, tostring(damageType))
+		end
 	end
 	table.sort(damageTypes)
 
