@@ -53,9 +53,8 @@ local function BuildReport()
 			for _, child in pairs(charReport.Children) do
 				child:Destroy()
 			end
-			
+
 			local clearButton = charReport:AddButton("Clear Report")
-			clearButton:Tooltip():AddText("This does not clear the underlying tracker, so if the character triggers some injury condition again, this will reappear. Only really useful for clearing NPCs that survive combat")
 			clearButton.OnClick = function()
 				entityInjuriesReport[character] = nil
 				BuildReport()
@@ -79,7 +78,6 @@ local function BuildReport()
 				local damageGroup = injuryReportGroup:AddGroup("Damage")
 				if next(injuryConfig.damage["damage_types"]) then
 					damageGroup:AddText("Damage Report")
-					damageGroup:AddText("Health Threshold: " .. injuryConfig.damage["threshold"] .. "%")
 
 					local totalDamage = 0
 					for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
@@ -99,8 +97,10 @@ local function BuildReport()
 					if totalDamage == 0 then
 						damageGroup:Destroy()
 					else
-						damageGroup:AddText(string.format("Total Injury Damage in %% of Health: %.2f%%",
-							((totalDamage / entity.Health.MaxHp) * 100)))
+						damageGroup:AddText(string.format("Total Injury Damage in %% of Health / Threshold %%: %.2f%%/%.2f%% ",
+							((totalDamage / entity.Health.MaxHp) * 100),
+							injuryConfig.damage["threshold"]))
+							
 						keepGroup = true
 					end
 				end
@@ -114,12 +114,12 @@ local function BuildReport()
 					end
 					statusGroup:AddText("Apply On Status Report")
 
-					local statusesFound = false
+					local totalRounds = 0
 
 					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 						local numRoundsApplied = injuryReport["applyOnStatus"][status]
 						if numRoundsApplied and numRoundsApplied[injury] then
-							statusesFound = true
+							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
 							statusGroup:AddText(string.format("%s: Multiplier: %s | Number of (Non-Consecutive) Rounds Applied After Multiplier: %s",
 								status,
 								statusConfig["multiplier"],
@@ -127,10 +127,11 @@ local function BuildReport()
 						end
 					end
 
-					if not statusesFound then
+					if totalRounds == 0 then
 						statusGroup:Destroy()
 					else
-						statusGroup:AddText(string.format("Total Number of Non-Consecutive Rounds for all Statuses Required: %s",
+						statusGroup:AddText(string.format("Total Rounds For All Multipliers / Threshold: %s/%s",
+							totalRounds,
 							injuryConfig.apply_on_status["number_of_rounds"]))
 						keepGroup = true
 					end
@@ -174,13 +175,16 @@ function InjuryReport:BuildReportWindow()
 	reportWindow = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
 	reportWindow.Closeable = true
 
-	local moreInfo = reportWindow:AddImageButton("More Info", "GenericIcon_Intent_Utility", {30, 30})
+	local moreInfo = reportWindow:AddImageButton("More Info", "GenericIcon_Intent_Utility", { 30, 30 })
 	local tooltip = moreInfo:Tooltip()
 	tooltip:AddText("Reports for each injury will stop updating once an injury is applied, but will remain for transparency.")
+	tooltip:AddSeparator()
 	tooltip:AddText("Characters will be removed from the report when they die or all injury information is removed from them, such as when:").TextWrapPos = 0
 	tooltip:AddBulletText("The Counters are reset")
 	tooltip:AddBulletText("All Damage is Healed")
 	tooltip:AddBulletText("All applied injuries are removed")
+	tooltip:AddSeparator()
+	tooltip:AddText("The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles.").TextWrapPos = 0
 
 	reportWindow.OnClose = function()
 		reportWindow = nil
