@@ -90,7 +90,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#region Injury Removal
 		universalOptions:AddNewLine()
 		universalOptions:AddText("How Many Different Injuries Can Be Removed At Once?")
-		universalOptions:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."):SetStyle("Alpha", 0.90)
+		universalOptions:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
+			:SetStyle("Alpha", 0.90)
 
 		local oneRadio = universalOptions:AddRadioButton("One", universal.how_many_injuries_can_be_removed_at_once == "One")
 		local allRadio = universalOptions:AddRadioButton("All", universal.how_many_injuries_can_be_removed_at_once == "All")
@@ -182,6 +183,45 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex + 1]
 		end
 
+		universalOptions:AddNewLine()
+		universalOptions:AddText("Customize Damage + Status Multipliers For Enemies")
+		local enemyDesc = universalOptions:AddText(
+			"These multipliers will apply after the ones set per-injury - enemy type determinations are made by their associated Experience Reward Category")
+		enemyDesc.TextWrapPos = 0
+		enemyDesc:SetStyle("Alpha", 0.9)
+
+		local enemyMultTable = universalOptions:AddTable("Enemy Multiplier Table", 2)
+		enemyMultTable.SizingStretchProp = true
+
+		local baseRow = enemyMultTable:AddRow()
+		baseRow:AddCell():AddText("Base")
+		baseRow:AddCell():AddSliderInt("", 100, 0, 500)
+
+		local addRowButton = universalOptions:AddButton("+")
+		local enemyPopop = universalOptions:AddPopup("")
+		local enemyTypes = { "Boss", "MiniBoss", "Elite", "Combatant", "Pack", "Zero" }
+
+		for i, enemyType in pairs(enemyTypes) do
+			local enemySelect = enemyPopop:AddSelectable(enemyType, "DontClosePopups")
+
+			enemySelect.OnActivate = function()
+				if enemySelect.UserData then
+					enemySelect.UserData:Destroy()
+					enemySelect.UserData = nil
+				else
+					local newRow = enemyMultTable:AddRow()
+					newRow:AddCell():AddText(enemyType)
+					newRow:AddCell():AddSliderInt("", 100, 0, 500)
+
+					enemySelect.UserData = newRow
+				end
+			end
+		end
+
+		addRowButton.OnClick = function()
+			enemyPopop:Open()
+		end
+
 		--#endregion
 
 		--#region Severity
@@ -216,7 +256,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		local highSeverity = highRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
 
 		local severityErrorText = severityHeader:AddText("Error: Values must add up to 100%!")
-		severityErrorText:SetColor("Text", {1, 0.02, 0, 1})
+		severityErrorText:SetColor("Text", { 1, 0.02, 0, 1 })
 		severityErrorText.Visible = false
 		local ensureAdditionFunction = function()
 			severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
