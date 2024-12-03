@@ -64,23 +64,23 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		tabHeader.TextWrapPos = 0
 
 		--#region Universal Options
-		tabHeader:AddSeparatorText("Universal Options")
+		local universalOptions = tabHeader:AddCollapsingHeader("Universal Options")
 		local universal = InjuryMenu.ConfigurationSlice.universal
 
 		--#region Who Can Receive Injuries
-		tabHeader:AddText("Who Can Receive Injuries?")
-		local partyCheckbox = tabHeader:AddCheckbox("Party Members", universal.who_can_receive_injuries["Party Members"])
+		universalOptions:AddText("Who Can Receive Injuries?")
+		local partyCheckbox = universalOptions:AddCheckbox("Party Members", universal.who_can_receive_injuries["Party Members"])
 		partyCheckbox.OnChange = function()
 			universal.who_can_receive_injuries["Party Members"] = partyCheckbox.Checked
 		end
 
-		local allyCheckbox = tabHeader:AddCheckbox("Allies", universal.who_can_receive_injuries["Allies"])
+		local allyCheckbox = universalOptions:AddCheckbox("Allies", universal.who_can_receive_injuries["Allies"])
 		allyCheckbox.SameLine = true
 		allyCheckbox.OnChange = function()
 			universal.who_can_receive_injuries["Allies"] = allyCheckbox.Checked
 		end
 
-		local enemyCheckbox = tabHeader:AddCheckbox("Enemies", universal.who_can_receive_injuries["Enemies"])
+		local enemyCheckbox = universalOptions:AddCheckbox("Enemies", universal.who_can_receive_injuries["Enemies"])
 		enemyCheckbox.SameLine = true
 		enemyCheckbox.OnChange = function()
 			universal.who_can_receive_injuries["Enemies"] = enemyCheckbox.Checked
@@ -88,17 +88,17 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#endregion
 
 		--#region Injury Removal
-		tabHeader:AddNewLine()
-		tabHeader:AddText("How Many Different Injuries Can Be Removed At Once?")
-		tabHeader:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."):SetStyle("Alpha", 0.90)
+		universalOptions:AddNewLine()
+		universalOptions:AddText("How Many Different Injuries Can Be Removed At Once?")
+		universalOptions:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."):SetStyle("Alpha", 0.90)
 
-		local oneRadio = tabHeader:AddRadioButton("One", universal.how_many_injuries_can_be_removed_at_once == "One")
-		local allRadio = tabHeader:AddRadioButton("All", universal.how_many_injuries_can_be_removed_at_once == "All")
+		local oneRadio = universalOptions:AddRadioButton("One", universal.how_many_injuries_can_be_removed_at_once == "One")
+		local allRadio = universalOptions:AddRadioButton("All", universal.how_many_injuries_can_be_removed_at_once == "All")
 		allRadio.SameLine = true
 
-		local prioritizeSeverityText = tabHeader:AddText("What Severity Should Be Prioritized?")
+		local prioritizeSeverityText = universalOptions:AddText("What Severity Should Be Prioritized?")
 		prioritizeSeverityText.Visible = oneRadio.Active
-		local prioritizeSeverityCombo = tabHeader:AddCombo("")
+		local prioritizeSeverityCombo = universalOptions:AddCombo("")
 		prioritizeSeverityCombo.Visible = oneRadio.Active
 		prioritizeSeverityCombo.Options = {
 			"Random",
@@ -135,11 +135,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#endregion
 
 		--#region Damage Counter
-		tabHeader:AddNewLine()
-		tabHeader:AddText("When Does the Damage/Status Tick Counter Reset?")
-		tabHeader:AddText("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."):SetStyle("Alpha", 0.90)
+		universalOptions:AddNewLine()
+		universalOptions:AddText("When Does the Damage/Status Tick Counter Reset?")
+		universalOptions:AddText("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."):SetStyle("Alpha", 0.90)
 
-		local cumulationCombo = tabHeader:AddCombo("")
+		local cumulationCombo = universalOptions:AddCombo("")
 		cumulationCombo.Options = {
 			"Attack/Tick",
 			"Round",
@@ -153,10 +153,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			end
 		end
 
-		local healingCheckbox = tabHeader:AddCheckbox("Healing Subtracts From Damage Counter", universal.healing_subtracts_injury_damage)
-		local healingText = tabHeader:AddText(
+		local healingCheckbox = universalOptions:AddCheckbox("Healing Subtracts From Damage Counter", universal.healing_subtracts_injury_damage)
+		local healingText = universalOptions:AddText(
 			"Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage")
-		local healingMultiplierSlider = tabHeader:AddSliderInt("", universal.healing_subtracts_injury_damage_modifier * 100, 0, 200)
+		local healingMultiplierSlider = universalOptions:AddSliderInt("", universal.healing_subtracts_injury_damage_modifier * 100, 0, 200)
 
 		healingMultiplierSlider.OnChange = function(_)
 			universal.healing_subtracts_injury_damage_modifier = healingMultiplierSlider.Value[1] / 100
@@ -181,24 +181,25 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex + 1]
 		end
+
 		--#endregion
 
 		--#region Severity
-		tabHeader:AddSeparatorText("Severity")
-		tabHeader:AddText("When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character")
-		local downedCheckbox = tabHeader:AddCheckbox("Downed", universal.random_injury_conditional["Downed"])
+		local severityHeader = tabHeader:AddCollapsingHeader("Severity")
+		severityHeader:AddText("When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character")
+		local downedCheckbox = severityHeader:AddCheckbox("Downed", universal.random_injury_conditional["Downed"])
 		downedCheckbox.OnChange = function()
 			universal.random_injury_conditional["Downed"] = downedCheckbox.Checked
 		end
 
-		local critCheckbox = tabHeader:AddCheckbox("Suffered a Critical Hit", universal.random_injury_conditional["Suffered a Critical Hit"])
+		local critCheckbox = severityHeader:AddCheckbox("Suffered a Critical Hit", universal.random_injury_conditional["Suffered a Critical Hit"])
 		critCheckbox.SameLine = true
 		critCheckbox.OnChange = function()
 			universal.random_injury_conditional["Suffered a Critical Hit"] = critCheckbox.Checked
 		end
 
-		tabHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
-		local severityTable = tabHeader:AddTable("", 2)
+		severityHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
+		local severityTable = severityHeader:AddTable("", 2)
 		severityTable.SizingStretchProp = true
 
 		local lowRow = severityTable:AddRow()
@@ -214,7 +215,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		highRow:AddCell():AddText("High")
 		local highSeverity = highRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
 
-		local severityErrorText = tabHeader:AddText("Error: Values must add up to 100%!")
+		local severityErrorText = severityHeader:AddText("Error: Values must add up to 100%!")
 		severityErrorText:SetColor("Text", {1, 0.02, 0, 1})
 		severityErrorText.Visible = false
 		local ensureAdditionFunction = function()
