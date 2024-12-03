@@ -199,9 +199,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		tabHeader:AddText("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%")
 		local severityTable = tabHeader:AddTable("", 2)
-		severityTable.SizingFixedFit = true
-		-- I have NO idea what these numbers represent lmao
-		severityTable.ColumnDefs = { { Disabled = false, Width = 1 }, { Width = 10, Disabled = false } }
+		severityTable.SizingStretchProp = true
 
 		local lowRow = severityTable:AddRow()
 		local lowCell = lowRow:AddCell()
