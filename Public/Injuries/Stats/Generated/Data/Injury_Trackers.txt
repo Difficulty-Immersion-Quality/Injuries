@@ -1,0 +1,9 @@
+new entry "Goon_Damage_Detect"
+type "PassiveData"
+using "DamageDealtRecently"
+data "StatsFunctors" "IF(IsDamageTypeAcid()):ApplyStatus(DAMAGE_DEALT_ACID,100,1);IF(IsDamageTypeCold()):ApplyStatus(DAMAGE_DEALT_COLD,100,1);IF(IsDamageTypeFire()):ApplyStatus(DAMAGE_DEALT_FIRE,100,1);IF(IsDamageTypeLightning()):ApplyStatus(DAMAGE_DEALT_LIGHTNING,100,1);IF(IsDamageTypeThunder()):ApplyStatus(DAMAGE_DEALT_THUNDER,100,1);IF(IsDamageTypeRadiant()):ApplyStatus(DAMAGE_DEALT_RADIANT,100,1);IF(IsDamageTypePoison()):ApplyStatus(DAMAGE_DEALT_POISON,100,1);IF(IsDamageTypePsychic()):ApplyStatus(DAMAGE_DEALT_PSYCHIC,100,1);IF(IsDamageTypeForce()):ApplyStatus(DAMAGE_DEALT_FORCE,100,1);IF(IsDamageTypeSlashing()):ApplyStatus(DAMAGE_DEALT_SLASHING,100,1);IF(IsDamageTypePiercing()):ApplyStatus(DAMAGE_DEALT_PIERCING,100,1);IF(IsDamageTypeBludgeoning()):ApplyStatus(DAMAGE_DEALT_BLUDGEONING,100,1);IF(IsDamageTypeNecrotic()):ApplyStatus(DAMAGE_DEALT_NECROTIC,100,1)"
+
+new entry "Goon_Attack_Detect"
+type "PassiveData"
+using "DamageDealtRecently"
+data "StatsFunctors" "IF(IsMeleeWeaponAttack()):ApplyStatus(GOON_ATTACKED_MELEE_WEAPON,100,1);IF(IsRangedWeaponAttack()):ApplyStatus(GOON_ATTACKED_RANGED_WEAPON,100,1);IF(IsMeleeUnarmedAttack()):ApplyStatus(GOON_ATTACKED_MELEE_UNARMED,100,1);IF(IsRangedUnarmedAttack()):ApplyStatus(GOON_ATTACKED_RANGED_UNARMED,100,1);IF(IsMeleeSpellAttack()):ApplyStatus(GOON_ATTACKED_MELEE_SPELL,100,1);IF(IsRangedSpellAttack()):ApplyStatus(GOON_ATTACKED_RANGED_SPELL,100,1);IF(NotMeleeSpellAttack() and not RangedSpellAttack() and is Spell()):ApplyStatus(GOON_ATTACKED_SPELL_SPELL,100,1)"
