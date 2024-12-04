@@ -30,6 +30,13 @@ ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Atta
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage = true
 
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
+
+--#region NPC Modifiers
+---@alias NPCCategories "Base"|"Boss"|"MiniBoss"|"Elite"|"Combatant"|"Pack"|"Zero"|"Civilian"
+---@type { [NPCCategories] : number}
+ConfigurationStructure.config.injuries.universal.npc_multipliers = {}
+--#endregion
+
 --#endregion
 
 --#region Severity

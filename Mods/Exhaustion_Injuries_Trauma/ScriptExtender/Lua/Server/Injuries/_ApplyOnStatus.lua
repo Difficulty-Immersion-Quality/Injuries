@@ -6,6 +6,8 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 	local statusVar = injuryVar["applyOnStatus"]
 	local character = entity.Uuid.EntityUuid
 
+	local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultiplier(entity)
+
 	for injury, injuryStatusConfig in pairs(statusConfig) do
 		if Osi.HasActiveStatus(character, injury) == 0 then
 			local mainInjuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].apply_on_status
@@ -15,12 +17,12 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 			end
 			statusVar[status][injury] = (statusVar[status][injury] or 0) + 1
 
-			local roundsWithMultiplier = statusVar[status][injury] * injuryStatusConfig["multiplier"]
+			local roundsWithMultiplier = (statusVar[status][injury] * injuryStatusConfig["multiplier"]) * characterMultiplier
 
 			for otherStatus, otherStatusConfig in pairs(mainInjuryConfig["applicable_statuses"]) do
 				local injuryOtherExistingStatus = statusVar[otherStatus]
 				if otherStatus ~= status and (injuryOtherExistingStatus and injuryOtherExistingStatus[injury]) then
-					roundsWithMultiplier = roundsWithMultiplier + (injuryOtherExistingStatus * otherStatusConfig["multiplier"])
+					roundsWithMultiplier = roundsWithMultiplier + ((injuryOtherExistingStatus[injury] * otherStatusConfig["multiplier"]) * characterMultiplier)
 				end
 			end
 
