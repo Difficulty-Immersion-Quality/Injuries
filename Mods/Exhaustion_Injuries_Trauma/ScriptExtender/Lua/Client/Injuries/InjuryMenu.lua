@@ -184,42 +184,59 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		end
 
 		universalOptions:AddNewLine()
-		universalOptions:AddText("Customize Damage + Status Multipliers For Enemies")
+		universalOptions:AddText("Customize Damage + Status Multipliers For NPCs")
 		local enemyDesc = universalOptions:AddText(
-			"These multipliers will apply after the ones set per-injury - enemy type determinations are made by their associated Experience Reward Category")
+			"These multipliers will apply after the ones set per-injury - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if added.")
 		enemyDesc.TextWrapPos = 0
 		enemyDesc:SetStyle("Alpha", 0.9)
 
 		local enemyMultTable = universalOptions:AddTable("Enemy Multiplier Table", 2)
 		enemyMultTable.SizingStretchProp = true
 
-		local baseRow = enemyMultTable:AddRow()
-		baseRow:AddCell():AddText("Base")
-		baseRow:AddCell():AddSliderInt("", 100, 0, 500)
+		local function buildNpcMultiSlider(npcType)
+			local newRow = enemyMultTable:AddRow()
+			newRow:AddCell():AddText(npcType)
+
+			if not universal.npc_multipliers[npcType] then
+				universal.npc_multipliers[npcType] = 1
+			end
+
+			local newSlider = newRow:AddCell():AddSliderInt("", universal.npc_multipliers[npcType] * 100, 0, 500)
+			newSlider.OnChange = function(slider)
+				---@cast slider ExtuiSliderInt
+				universal.npc_multipliers[npcType] = math.floor(slider.Value[1] * 100 + 0.5) / 10000
+			end
+
+			return newRow
+		end
+
+		buildNpcMultiSlider("Base")
 
 		local addRowButton = universalOptions:AddButton("+")
-		local enemyPopop = universalOptions:AddPopup("")
-		local enemyTypes = { "Boss", "MiniBoss", "Elite", "Combatant", "Pack", "Zero" }
+		local npcPopop = universalOptions:AddPopup("")
+		local npcTypes = { "Boss", "MiniBoss", "Elite", "Combatant", "Pack", "Zero", "Civilian" }
 
-		for i, enemyType in pairs(enemyTypes) do
-			local enemySelect = enemyPopop:AddSelectable(enemyType, "DontClosePopups")
+		for i, npcType in pairs(npcTypes) do
+			local enemySelect = npcPopop:AddSelectable(npcType, "DontClosePopups") --[[@type ExtuiSelectable]]
 
 			enemySelect.OnActivate = function()
 				if enemySelect.UserData then
 					enemySelect.UserData:Destroy()
 					enemySelect.UserData = nil
+					universal.npc_multipliers[npcType] = nil
 				else
-					local newRow = enemyMultTable:AddRow()
-					newRow:AddCell():AddText(enemyType)
-					newRow:AddCell():AddSliderInt("", 100, 0, 500)
-
-					enemySelect.UserData = newRow
+					enemySelect.UserData = buildNpcMultiSlider(npcType)
 				end
+			end
+
+			if universal.npc_multipliers[npcType] then
+				enemySelect.Selected = true
+				enemySelect:OnActivate()
 			end
 		end
 
 		addRowButton.OnClick = function()
-			enemyPopop:Open()
+			npcPopop:Open()
 		end
 
 		--#endregion
