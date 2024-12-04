@@ -2,7 +2,6 @@ local defender
 
 ---@param event EsvLuaBeforeDealDamageEvent
 local function ProcessDamageEvent(event)
-	---@type EntityHandle
 	local defenderEntity, injuryVar = InjuryConfigHelper:GetUserVar(defender)
 
 	-- Damage numbers don't account for TempHp - need to recreate that reduction
@@ -34,6 +33,8 @@ local function ProcessDamageEvent(event)
 
 	local randomlyAppliedInjuries = RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
+	local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultiplier(defenderEntity)
+
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
 		local damageConfig = ConfigManager.Injuries.Damage[damageType]
@@ -59,13 +60,14 @@ local function ProcessDamageEvent(event)
 
 						preexistingDamage[injury] = finalDamageWithPreviousDamage
 
-						local finalDamageWithInjuryMultiplier = finalDamageWithPreviousDamage * injuryDamageConfig["multiplier"]
+						local finalDamageWithInjuryMultiplier = (finalDamageWithPreviousDamage * injuryDamageConfig["multiplier"]) * characterMultiplier
 
 						local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 						for otherDamageType, otherDamageConfig in pairs(injuryConfig.damage["damage_types"]) do
 							local existingDamageForOtherDamageType = injuryVar["damage"][otherDamageType]
 							if damageType ~= otherDamageType and (existingDamageForOtherDamageType and existingDamageForOtherDamageType[injury]) then
-								local existingInjuryDamage = existingDamageForOtherDamageType[injury] * otherDamageConfig["multiplier"]
+								local existingInjuryDamage = (existingDamageForOtherDamageType[injury] * otherDamageConfig["multiplier"]) * characterMultiplier
+
 								Logger:BasicTrace("Adding %d damage due to preexisting damageType %s for Injury %s on %s",
 									existingInjuryDamage,
 									otherDamageType,

@@ -204,7 +204,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local newSlider = newRow:AddCell():AddSliderInt("", universal.npc_multipliers[npcType] * 100, 0, 500)
 			newSlider.OnChange = function(slider)
 				---@cast slider ExtuiSliderInt
-				universal.npc_multipliers[npcType] = math.floor(slider.Value[1] * 100 + 0.5) / 10000
+				universal.npc_multipliers[npcType] = tonumber(string.format("%.2f", slider.Value[1] / 100))
 			end
 
 			return newRow
@@ -217,7 +217,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		local npcTypes = { "Boss", "MiniBoss", "Elite", "Combatant", "Pack", "Zero", "Civilian" }
 
 		for i, npcType in pairs(npcTypes) do
-			local enemySelect = npcPopop:AddSelectable(npcType, "DontClosePopups") --[[@type ExtuiSelectable]]
+			---@type ExtuiSelectable
+			local enemySelect = npcPopop:AddSelectable(npcType, "DontClosePopups")
 
 			enemySelect.OnActivate = function()
 				if enemySelect.UserData then
