@@ -39,14 +39,17 @@ function InjuryConfigHelper:CalculateCharacterMultiplier(character)
 		end
 		config = config.injuries.universal
 
+		local lowerCat = string.lower(xpCategory)
 		for npcType, multiplier in pairs(config.npc_multipliers) do
+			npcType = string.lower(npcType)
+			
 			-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
-			if string.find(xpCategory, "^" .. npcType .. "$") or string.find(xpCategory, "_" .. npcType .. "$") then
-				return multiplier, npcType
+			if string.find(lowerCat, "^" .. npcType .. "$") or string.find(lowerCat, "_" .. npcType .. "$") then
+				return multiplier, xpCategory
 			end
 		end
 
-		return config.npc_multipliers["Base"], "Base"
+		return config.npc_multipliers["Base"], xpCategory .. " (Base Multiplier)"
 	end
 end
 
