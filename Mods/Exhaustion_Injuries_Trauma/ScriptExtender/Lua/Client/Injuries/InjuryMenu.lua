@@ -186,7 +186,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		universalOptions:AddNewLine()
 		universalOptions:AddText("Customize Damage + Status Multipliers For NPCs")
 		local enemyDesc = universalOptions:AddText(
-			"These multipliers will apply after the ones set per-injury - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if added.")
+			"These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
+		.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant")
 		enemyDesc.TextWrapPos = 0
 		enemyDesc:SetStyle("Alpha", 0.9)
 
