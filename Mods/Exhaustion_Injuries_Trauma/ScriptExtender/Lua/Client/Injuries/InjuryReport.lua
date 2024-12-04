@@ -120,11 +120,11 @@ local function BuildReport()
 					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 						local numRoundsApplied = injuryReport["applyOnStatus"][status]
 						if numRoundsApplied and numRoundsApplied[injury] then
-							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
+							totalRounds = totalRounds + ((numRoundsApplied[injury] * statusConfig["multiplier"]) * characterMultiplier)
 							statusGroup:AddText(string.format("%s: Multiplier: %s | Number of (Non-Consecutive) Rounds Applied After Multiplier: %s",
 								status,
 								statusConfig["multiplier"],
-								numRoundsApplied[injury] * statusConfig["multiplier"]))
+								(numRoundsApplied[injury] * statusConfig["multiplier"]) * characterMultiplier))
 						end
 					end
 
