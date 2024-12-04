@@ -1,10 +1,6 @@
-InjuryReport = {}
+Ext.Require("Shared/Injuries/_ConfigHelper.lua")
 
-Ext.Vars.RegisterUserVariable("Goon_Injuries", {
-	Server = true,
-	Client = true,
-	SyncToClient = true
-})
+InjuryReport = {}
 
 Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
 	Server = true,
@@ -60,6 +56,11 @@ local function BuildReport()
 				BuildReport()
 			end
 
+			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateCharacterMultiplier(entity)
+			if npcCategory then
+				charReport:AddText(string.format("NPC Category: %s | Multiplier: %s%%", npcCategory, characterMultiplier * 100))
+			end
+
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)
 				injuryReportGroup:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
@@ -83,7 +84,7 @@ local function BuildReport()
 					for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
 						local damageAmount = injuryReport["damage"][damageType]
 						if damageAmount and damageAmount[injury] then
-							local flatWithMultiplier = damageAmount[injury] * damageTypeConfig["multiplier"]
+							local flatWithMultiplier = (damageAmount[injury] * damageTypeConfig["multiplier"]) * characterMultiplier
 							-- Rounding to 2 digits
 							totalDamage = totalDamage + flatWithMultiplier
 							damageGroup:AddText(string.format("%s: Multiplier: %d%% | Flat Damage Before Multiplier: %s | Flat Damage After Multiplier: %s",
@@ -100,7 +101,7 @@ local function BuildReport()
 						damageGroup:AddText(string.format("Total Injury Damage in %% of Health / Threshold %%: %.2f%%/%.2f%% ",
 							((totalDamage / entity.Health.MaxHp) * 100),
 							injuryConfig.damage["threshold"]))
-							
+
 						keepGroup = true
 					end
 				end
@@ -119,11 +120,11 @@ local function BuildReport()
 					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 						local numRoundsApplied = injuryReport["applyOnStatus"][status]
 						if numRoundsApplied and numRoundsApplied[injury] then
-							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
+							totalRounds = totalRounds + ((numRoundsApplied[injury] * statusConfig["multiplier"]) * characterMultiplier)
 							statusGroup:AddText(string.format("%s: Multiplier: %s | Number of (Non-Consecutive) Rounds Applied After Multiplier: %s",
 								status,
 								statusConfig["multiplier"],
-								numRoundsApplied[injury] * statusConfig["multiplier"]))
+								(numRoundsApplied[injury] * statusConfig["multiplier"]) * characterMultiplier))
 						end
 					end
 

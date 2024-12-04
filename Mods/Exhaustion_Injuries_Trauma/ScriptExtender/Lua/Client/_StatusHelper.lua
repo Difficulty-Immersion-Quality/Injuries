@@ -73,7 +73,9 @@ function StatusHelper:BuildTooltip(tooltip, status)
 		tooltip:AddText("TickType: " .. status.TickType)
 	end
 
-	local desc = tooltip:AddText("Description: " .. Ext.Loca.GetTranslatedString(status.Description, "N/A"))
+	local description = Ext.Loca.GetTranslatedString(status.Description, "N/A")
+	description = string.gsub(description, "<.->", "")
+	local desc = tooltip:AddText("Description: " .. description)
 	desc.TextWrapPos = 600
 
 	if status.DescriptionParams ~= "" then
