@@ -1,8 +1,10 @@
 ---@param statusTable ExtuiTable
----@param status FixedString[]
+---@param status string
 ---@param removeOnConfig InjuryRemoveOnStatusClass
 ---@param ignoreExistingStatus boolean?
 local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStatus)
+	status = Ext.Stats.Get(status)
+
 	local statusName = status.Name
 	if not removeOnConfig[statusName] then
 		removeOnConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class)
@@ -15,11 +17,12 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 
 	--#region Status Name
 	local statusNameRow = row:AddCell()
-	statusNameRow:AddImage(status.Icon, {36, 36})
 	local statusNameText = statusNameRow:AddText(status.Name)
-	statusNameText.SameLine = true
+	if status.Icon ~= '' then
+		statusNameRow:AddImage(status.Icon, { 36, 36 }).SameLine = true
+	end
 
-	StatusHelper:BuildTooltip(statusNameRow:Tooltip(), status)
+	StatusHelper:BuildTooltip(statusNameText:Tooltip(), status)
 	--#endregion
 
 	--#region Save Options
@@ -69,7 +72,8 @@ end
 InjuryMenu:RegisterTab(function(tabBar, injury)
 	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
 	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status then
-		InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status = {}
+		InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status =
+			TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status)
 	end
 	local removeOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status
 
@@ -87,9 +91,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		BuildRows(statusTable, status, removeOnConfig, true)
 	end)
 
-	if next(removeOnConfig) then
-		for status, _ in pairs(removeOnConfig) do
-			BuildRows(statusTable, Ext.Stats.Get(status), removeOnConfig)
-		end
+	for status, _ in pairs(removeOnConfig) do
+		BuildRows(statusTable, status, removeOnConfig)
 	end
 end)

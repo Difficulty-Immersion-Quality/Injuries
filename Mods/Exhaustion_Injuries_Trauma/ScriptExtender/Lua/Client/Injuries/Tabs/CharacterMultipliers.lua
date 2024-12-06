@@ -1,4 +1,4 @@
--- #region O(fuck it)
+-- #region Friggen Lua relying on numbers for everything
 local raceNameToUUID = {}
 local sortedRaceList = {}
 for _, raceUUID in pairs(Ext.StaticData.GetAll("Race")) do
@@ -91,6 +91,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	addRowButton.OnClick = function()
 		racePopop:Open()
 	end
+	--#endregion
+
+	--#region Tags
 
 	--#endregion
 end)

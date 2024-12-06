@@ -10,15 +10,15 @@ local function BuildStatusesForInput(input, callback)
 
 	local statusCount = 0
 	for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
-		name = string.upper(name)
+		local upperName = string.upper(name)
 		if isWildcard then
-			if string.find(name, inputText) and Ext.Stats.Get(name) then
+			if string.find(upperName, inputText) then
 				statusCount = statusCount + 1
-				callback(Ext.Stats.Get(name))
+				callback(name)
 			end
-		elseif name == inputText then
+		elseif upperName == inputText then
 			statusCount = statusCount + 1
-			callback(Ext.Stats.Get(name))
+			callback(name)
 			break
 		end
 	end
@@ -36,9 +36,10 @@ function StatusHelper:BuildSearch(tab, onClick)
 	statusInput.AutoSelectAll = true
 	statusInput.EscapeClearsAll = true
 
-	local statusInputButton = tab:AddButton("Register Status")
+	local statusInputButton = tab:AddButton("Search")
 
 	local errorText = tab:AddText("Error: Search returned no results")
+	errorText:SetColor("Text", { 1, 0.02, 0, 1 })
 	errorText.Visible = false
 
 	statusInputButton.OnClick = function()
@@ -82,7 +83,5 @@ function StatusHelper:BuildTooltip(tooltip, status)
 	if status.DescriptionParams ~= "" then
 		tooltip:AddText("Description Params: " .. status.DescriptionParams)
 	end
-	-- if status.Boosts ~= "" then
-	-- 	tooltip:AddText("Boosts: " .. status.Boosts).TextWrapPos = 0
-	-- end
+
 end
