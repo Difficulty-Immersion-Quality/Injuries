@@ -97,6 +97,14 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
 	["applicable_statuses"] = {}
 }
 
+---@class InjuryCharacterMultiplierClass
+ConfigurationStructure.DynamicClassDefinitions.injury_class.character_multipliers = {
+	---@type {[TAG] : number}
+	["tags"] = {},
+	---@type {[GUIDSTRING] : number}
+	["races"] = {}
+}
+
 ---@alias InjuryName string
 ---@type { [InjuryName] : Injury }
 ConfigurationStructure.config.injuries.injury_specific = {}

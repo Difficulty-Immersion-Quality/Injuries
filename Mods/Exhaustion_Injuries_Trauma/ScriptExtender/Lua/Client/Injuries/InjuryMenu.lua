@@ -35,6 +35,7 @@ function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
 end
 
+Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
 Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
 Ext.Require("Client/Injuries/Tabs/RemoveOnStatusTab.lua")

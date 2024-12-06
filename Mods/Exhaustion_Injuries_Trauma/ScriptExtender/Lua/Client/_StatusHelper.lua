@@ -74,6 +74,7 @@ function StatusHelper:BuildTooltip(tooltip, status)
 	end
 
 	local description = Ext.Loca.GetTranslatedString(status.Description, "N/A")
+	-- Getting rid of all content contained in <>, like <LsTags../> and <br/>
 	description = string.gsub(description, "<.->", "")
 	local desc = tooltip:AddText("Description: " .. description)
 	desc.TextWrapPos = 600
