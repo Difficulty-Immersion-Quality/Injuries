@@ -404,6 +404,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				dmg.SameLine = true
 				dmg.UserData = "damage"
 
+				local charMultipliers = copyWhatGroup:AddCheckbox("Character Multipliers", true)
+				charMultipliers.SameLine = true
+				charMultipliers.UserData = "character_multipliers"
+				
 				local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
 				removeStatus.SameLine = true
 				removeStatus.UserData = "remove_on_status"
