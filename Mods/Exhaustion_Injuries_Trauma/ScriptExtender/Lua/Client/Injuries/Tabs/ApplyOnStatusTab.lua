@@ -18,10 +18,11 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 	local row = statusTable:AddRow()
 
 	local statusNameRow = row:AddCell()
-	local statusNameText = statusNameRow:AddText(statusObj.Name)
 	if statusObj.Icon ~= '' then
-		statusNameRow:AddImage(statusObj.Icon, { 30, 30 }).SameLine = true
+		statusNameRow:AddImage(statusObj.Icon, { 30, 30 })
 	end
+	local statusNameText = statusNameRow:AddText(statusObj.Name)
+	statusNameText.SameLine = true
 
 	DataSearchHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
 

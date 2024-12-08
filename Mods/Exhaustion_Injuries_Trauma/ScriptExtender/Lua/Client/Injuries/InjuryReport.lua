@@ -63,15 +63,63 @@ local function BuildReport()
 
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)
+
 				injuryReportGroup:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 
 				if injuryReport["injuryAppliedReason"][injury] then
 					injuryReportGroup:AddText("Injury Applied Due To: " .. injuryReport["injuryAppliedReason"][injury])
-					injuryReportGroup:AddNewLine()
+					injuryReportGroup:AddSeparator()
 				end
 
 				injuryReportGroup:AddText("Severity: " .. injuryConfig.severity)
-				injuryReportGroup:AddNewLine()
+				injuryReportGroup:AddSeparator()
+
+				---@type ResourceRace
+				local raceResource = Ext.StaticData.Get(entity.Race.Race, "Race")
+				local raceMulti = injuryConfig.character_multipliers["races"][raceResource.ResourceUUID]
+				injuryReportGroup:AddText(string.format("Race: %s (%s) | Multiplier: %s",
+					(raceResource.DisplayName:Get() or ("Can't Translate")),
+					string.sub(raceResource.ResourceUUID, -5),
+					raceMulti and ((raceMulti * 100) .. "%") or "N/A"))
+				injuryReportGroup:AddSeparator()
+
+				--#region Tags
+				local tagTotalMultiText = injuryReportGroup:AddText("Total Tag Multiplier: ")
+				local seeTagButton = injuryReportGroup:AddImageButton("AllTags", "Spell_Divination_SeeInvisibility", { 30, 30 })
+				seeTagButton.SameLine = true
+
+				local tagPopup = seeTagButton:Tooltip("Tags")
+
+				local tagTable = tagPopup:AddTable("TagTable", 2)
+				tagTable.SizingStretchProp = true
+				tagTable.BordersH = true
+				tagTable.RowBg = true
+
+				local foundTag = false
+				local totalTagMultiplier = 0
+				for _, tagUUID in pairs(entity.Tag.Tags) do
+					---@type ResourceTag
+					local tagData = Ext.StaticData.Get(tagUUID, "Tag")
+
+					local row = tagTable:AddRow()
+					row:AddCell():AddText(string.format("%s (%s - %s)",
+						tagData.Name,
+						tagData.DisplayName:Get() or "N/A",
+						string.sub(tagData.ResourceUUID, -5)
+					))
+
+					local tagMulti = injuryConfig.character_multipliers["tags"][tagUUID]
+					if tagMulti then
+						totalTagMultiplier = totalTagMultiplier + (tagMulti * 100)
+						row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
+						foundTag = true
+					else
+						row:AddCell():AddText("N/A")
+					end
+				end
+				tagTotalMultiText.Label = string.format(tagTotalMultiText.Label .. "%s",
+					foundTag and (totalTagMultiplier .. "%") or "N/A")
+				--#endregion
 
 				local keepGroup = false
 
@@ -176,9 +224,9 @@ function InjuryReport:BuildReportWindow()
 	reportWindow = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
 	reportWindow.Closeable = true
 
-	local moreInfo = reportWindow:AddImageButton("More Info", "GenericIcon_Intent_Utility", { 30, 30 })
+	local moreInfo = reportWindow:AddImageButton("More Info", "Action_Help", { 30, 30 })
 	local tooltip = moreInfo:Tooltip()
-	tooltip:AddText("Reports for each injury will stop updating once an injury is applied, but will remain for transparency.")
+	tooltip:AddText("Data for an injury will stop updating once that injury is applied, but will remain for transparency.")
 	tooltip:AddSeparator()
 	tooltip:AddText("Characters will be removed from the report when they die or all injury information is removed from them, such as when:").TextWrapPos = 0
 	tooltip:AddBulletText("The Counters are reset")

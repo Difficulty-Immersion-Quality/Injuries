@@ -34,6 +34,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local raceTable = raceHeader:AddTable("Races", 2)
 	raceTable.SizingStretchProp = true
+	raceTable.Resizable = true
+
 	local headerRow = raceTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Race")
@@ -94,10 +96,14 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	--#endregion
 
 	--#region Tags
+	multiplierTab:AddNewLine()
 	local tagsHeader = multiplierTab:AddCollapsingHeader("Tags")
 	tagsHeader.DefaultOpen = true
 
 	local tagTable = tagsHeader:AddTable("TagTable", 3)
+	tagTable.SizingStretchProp = true
+	tagTable.Resizable = true
+
 	local tagHeaderRow = tagTable:AddRow()
 	tagHeaderRow.Headers = true
 	tagHeaderRow:AddCell():AddText("Name (Display Name - ID)")
