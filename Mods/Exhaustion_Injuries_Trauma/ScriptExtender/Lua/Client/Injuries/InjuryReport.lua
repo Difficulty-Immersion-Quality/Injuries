@@ -125,6 +125,41 @@ local function AddMultiplierRows(reportTable, entity, injuryConfig, totalAmount,
 	return totalAmount
 end
 
+---@param group ExtuiGroup
+---@return ExtuiTable
+local function CreateReport(group)
+	local reportButton = group:AddImageButton(group.UserData .. "Report", "Spell_Divination_SeeInvisibility", { 30, 30 })
+	reportButton.SameLine = true
+	reportButton:Tooltip():AddText("Click to toggle the table")
+
+	local reportTable = group:AddTable(group.UserData .. "Report", 4)
+	reportTable.SizingStretchSame = true
+	reportTable.BordersInnerH = true
+	reportTable.Visible = false
+
+	local statusReportHeaders = reportTable:AddRow()
+	statusReportHeaders.Headers = true
+	statusReportHeaders:AddCell():AddText("")
+	statusReportHeaders:AddCell():AddText("Multiplier")
+	statusReportHeaders:AddCell():AddText("Before")
+	statusReportHeaders:AddCell():AddText("After")
+
+	reportTable.UserData = false
+	reportButton.OnHoverEnter = function()
+		reportTable.Visible = true
+	end
+
+	reportButton.OnClick = function()
+		reportTable.UserData = not reportTable.UserData
+	end
+
+	reportButton.OnHoverLeave = function()
+		reportTable.Visible = reportTable.UserData
+	end
+
+	return reportTable
+end
+
 local function BuildReport()
 	if reportWindow then
 		for _, child in pairs(reportWindow.Children) do
@@ -182,37 +217,10 @@ local function BuildReport()
 				--#region Damage Report
 				if next(injuryConfig.damage["damage_types"]) then
 					local damageGroup = injuryReportGroup:AddGroup("Damage")
+					damageGroup.UserData = "damage"
 
-					local damageResultText = damageGroup:AddText("Injury Damage / Threshold: ")
-
-					local damageReportButton = damageGroup:AddImageButton("DamageReport", "Spell_Divination_SeeInvisibility", { 30, 30 })
-					damageReportButton.SameLine = true
-					damageReportButton:Tooltip():AddText("Click to toggle the table")
-
-					local damageReportTable = damageGroup:AddTable("Damage Report", 4)
-					damageReportTable.SizingStretchSame = true
-					damageReportTable.BordersInnerH = true
-					damageReportTable.Visible = false
-
-					local damageReportHeaders = damageReportTable:AddRow()
-					damageReportHeaders.Headers = true
-					damageReportHeaders:AddCell():AddText("")
-					damageReportHeaders:AddCell():AddText("Multiplier")
-					damageReportHeaders:AddCell():AddText("Before")
-					damageReportHeaders:AddCell():AddText("After")
-
-					local wasClicked = false
-					damageReportButton.OnHoverEnter = function()
-						damageReportTable.Visible = true
-					end
-
-					damageReportButton.OnClick = function()
-						wasClicked = not wasClicked
-					end
-
-					damageReportButton.OnHoverLeave = function()
-						damageReportTable.Visible = wasClicked
-					end
+					local damageResultText = damageGroup:AddText("Injury Damage / Threshold")
+					local damageReportTable = CreateReport(damageGroup)
 
 					local totalDamage = 0
 					for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
@@ -253,36 +261,10 @@ local function BuildReport()
 				--#region ApplyOnStatus report
 				if next(injuryConfig.apply_on_status["applicable_statuses"]) then
 					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
+					statusGroup.UserData = "applyOnStatus"
 
-					local statusText = statusGroup:AddText("Cumulative Rounds / Threshold")
-					local statusReportButton = statusGroup:AddImageButton("StatusReport", "Spell_Divination_SeeInvisibility", { 30, 30 })
-					statusReportButton.SameLine = true
-					statusReportButton:Tooltip():AddText("Click to toggle the table")
-
-					local statusReportTable = statusGroup:AddTable("Status Report", 4)
-					statusReportTable.SizingStretchSame = true
-					statusReportTable.BordersInnerH = true
-					statusReportTable.Visible = false
-
-					local statusReportHeaders = statusReportTable:AddRow()
-					statusReportHeaders.Headers = true
-					statusReportHeaders:AddCell():AddText("")
-					statusReportHeaders:AddCell():AddText("Multiplier")
-					statusReportHeaders:AddCell():AddText("Before")
-					statusReportHeaders:AddCell():AddText("After")
-
-					local wasClicked = false
-					statusReportButton.OnHoverEnter = function()
-						statusReportTable.Visible = true
-					end
-
-					statusReportButton.OnClick = function()
-						wasClicked = not wasClicked
-					end
-
-					statusReportButton.OnHoverLeave = function()
-						statusReportTable.Visible = wasClicked
-					end
+					local statusText = statusGroup:AddText("Apply On Status: Cumulative Rounds / Threshold")
+					local statusReportTable = CreateReport(statusGroup)
 
 					local totalRounds = 0
 					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
