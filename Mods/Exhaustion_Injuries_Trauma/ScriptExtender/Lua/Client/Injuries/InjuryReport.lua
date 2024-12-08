@@ -84,6 +84,47 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 	return foundTag and totalTagMultiplier or nil
 end
 
+---@param reportTable ExtuiTable
+---@param entity EntityHandle
+---@param injuryConfig Injury
+---@param totalAmount number
+---@param npcCategory string?
+---@param characterMultiplier number
+---@return number
+local function AddMultiplierRows(reportTable, entity, injuryConfig, totalAmount, npcCategory, characterMultiplier)
+	local raceRow = reportTable:AddRow()
+	local raceMulti = AddRaceMultiplierText(raceRow:AddCell(), entity, injuryConfig)
+	raceRow:AddCell():AddText(raceMulti and ((raceMulti * 100) .. "%") or "N/A")
+	raceRow:AddCell():AddText("---")
+	totalAmount = totalAmount * (raceMulti or 1)
+	raceRow:AddCell():AddText(tostring(totalAmount))
+
+	local tagRow = reportTable:AddRow()
+	local tagDisplayCell = tagRow:AddCell()
+	tagDisplayCell:AddText("Tag")
+	local totalTagMultiplier = AddTagMultiplierText(tagDisplayCell, entity, injuryConfig)
+	tagRow:AddCell():AddText(totalTagMultiplier and ((totalTagMultiplier * 100) .. "%") or "N/A")
+	tagRow:AddCell():AddText("---")
+	totalAmount = totalAmount * (totalTagMultiplier or 1)
+	tagRow:AddCell():AddText(tostring(totalAmount))
+
+	if npcCategory then
+		local npcMulti = reportTable:AddRow()
+		local npcDisplay = npcMulti:AddCell()
+		npcDisplay:AddText("NPC Category")
+		local seeNpcButton = npcDisplay:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
+		seeNpcButton.SameLine = true
+		seeNpcButton:Tooltip():AddText("\t" .. npcCategory)
+
+		npcMulti:AddCell():AddText(string.format("%s%%", characterMultiplier * 100))
+		npcMulti:AddCell():AddText("---")
+		totalAmount = totalAmount * characterMultiplier
+		npcMulti:AddCell():AddText(tostring(totalAmount))
+	end
+
+	return totalAmount
+end
+
 local function BuildReport()
 	if reportWindow then
 		for _, child in pairs(reportWindow.Children) do
@@ -144,7 +185,6 @@ local function BuildReport()
 
 					local damageResultText = damageGroup:AddText("Injury Damage / Threshold: ")
 
-					-- damageGroup:AddText("Click To See Report")
 					local damageReportButton = damageGroup:AddImageButton("DamageReport", "Spell_Divination_SeeInvisibility", { 30, 30 })
 					damageReportButton.SameLine = true
 					damageReportButton:Tooltip():AddText("Click to toggle the table")
@@ -198,35 +238,7 @@ local function BuildReport()
 						row:AddCell():AddText("---")
 						row:AddCell():AddText(tostring(totalDamage))
 
-						local raceRow = damageReportTable:AddRow()
-						local raceMulti = AddRaceMultiplierText(raceRow:AddCell(), entity, injuryConfig)
-						raceRow:AddCell():AddText(raceMulti and ((raceMulti * 100) .. "%") or "N/A")
-						raceRow:AddCell():AddText("---")
-						totalDamage = totalDamage * (raceMulti or 1)
-						raceRow:AddCell():AddText(tostring(totalDamage))
-
-						local tagRow = damageReportTable:AddRow()
-						local tagDisplayCell = tagRow:AddCell()
-						tagDisplayCell:AddText("Tag")
-						local totalTagMultiplier = AddTagMultiplierText(tagDisplayCell, entity, injuryConfig)
-						tagRow:AddCell():AddText(totalTagMultiplier and ((totalTagMultiplier * 100) .. "%") or "N/A")
-						tagRow:AddCell():AddText("---")
-						totalDamage = totalDamage * (totalTagMultiplier or 1)
-						tagRow:AddCell():AddText(tostring(totalDamage))
-
-						if npcCategory then
-							local npcMulti = damageReportTable:AddRow()
-							local npcDisplay = npcMulti:AddCell()
-							npcDisplay:AddText("NPC Category")
-							local seeNpcButton = npcDisplay:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
-							seeNpcButton.SameLine = true
-							seeNpcButton:Tooltip():AddText("\t" .. npcCategory)
-
-							npcMulti:AddCell():AddText(string.format("%s%%", characterMultiplier * 100))
-							npcMulti:AddCell():AddText("---")
-							totalDamage = totalDamage * characterMultiplier
-							npcMulti:AddCell():AddText(tostring(totalDamage))
-						end
+						totalDamage = AddMultiplierRows(damageReportTable, entity, injuryConfig, totalDamage, npcCategory, characterMultiplier)
 
 						damageResultText.Label = string.format("%s: %.2f%%/%.2f%%",
 							damageResultText.Label,
@@ -241,31 +253,66 @@ local function BuildReport()
 				--#region ApplyOnStatus report
 				if next(injuryConfig.apply_on_status["applicable_statuses"]) then
 					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
-					if keepGroup then
-						statusGroup:AddNewLine()
+
+					local statusText = statusGroup:AddText("Cumulative Rounds / Threshold")
+					local statusReportButton = statusGroup:AddImageButton("StatusReport", "Spell_Divination_SeeInvisibility", { 30, 30 })
+					statusReportButton.SameLine = true
+					statusReportButton:Tooltip():AddText("Click to toggle the table")
+
+					local statusReportTable = statusGroup:AddTable("Status Report", 4)
+					statusReportTable.SizingStretchSame = true
+					statusReportTable.BordersInnerH = true
+					statusReportTable.Visible = false
+
+					local statusReportHeaders = statusReportTable:AddRow()
+					statusReportHeaders.Headers = true
+					statusReportHeaders:AddCell():AddText("")
+					statusReportHeaders:AddCell():AddText("Multiplier")
+					statusReportHeaders:AddCell():AddText("Before")
+					statusReportHeaders:AddCell():AddText("After")
+
+					local wasClicked = false
+					statusReportButton.OnHoverEnter = function()
+						statusReportTable.Visible = true
 					end
-					statusGroup:AddText("Apply On Status Report")
+
+					statusReportButton.OnClick = function()
+						wasClicked = not wasClicked
+					end
+
+					statusReportButton.OnHoverLeave = function()
+						statusReportTable.Visible = wasClicked
+					end
 
 					local totalRounds = 0
-
 					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 						local numRoundsApplied = injuryReport["applyOnStatus"][status]
 						if numRoundsApplied and numRoundsApplied[injury] then
 							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
-							statusGroup:AddText(string.format("%s: Multiplier: %s | Number of (Non-Consecutive) Rounds Applied After Multiplier: %s",
-								status,
-								statusConfig["multiplier"],
-								numRoundsApplied[injury] * statusConfig["multiplier"]))
+							local row = statusReportTable:AddRow()
+							row:AddCell():AddText(status)
+							row:AddCell():AddText(string.format("%d%%", statusConfig["multiplier"] * 100))
+							row:AddCell():AddText(tostring(numRoundsApplied[injury]))
+							row:AddCell():AddText(tostring(numRoundsApplied[injury] * statusConfig["multiplier"]))
 						end
 					end
 
 					if totalRounds == 0 then
 						statusGroup:Destroy()
 					else
-						totalRounds = totalRounds * raceMulti * totalTagMultiplier * characterMultiplier
-						statusGroup:AddText(string.format("Total Rounds For All Multipliers / Threshold: %s/%s",
+						local row = statusReportTable:AddRow()
+						row:AddCell():AddText("Total # of Rounds")
+						row:AddCell():AddText("---")
+						row:AddCell():AddText("---")
+						row:AddCell():AddText(tostring(totalRounds))
+
+						totalRounds = AddMultiplierRows(statusReportTable, entity, injuryConfig, totalRounds, npcCategory, characterMultiplier)
+
+						statusText.Label = string.format("%s: %.2f/%s",
+							statusText.Label,
 							totalRounds,
-							injuryConfig.apply_on_status["number_of_rounds"]))
+							injuryConfig.apply_on_status["number_of_rounds"])
+
 						keepGroup = true
 					end
 				end
