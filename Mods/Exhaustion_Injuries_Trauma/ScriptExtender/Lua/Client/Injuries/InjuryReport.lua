@@ -17,6 +17,69 @@ local entityInjuriesReport = {}
 --- @type ExtuiWindow?
 local reportWindow
 
+---@param parent ExtuiTableCell
+---@param entity EntityHandle
+---@param injuryConfig Injury
+---@return number?
+local function AddRaceMultiplierText(parent, entity, injuryConfig)
+	---@type ResourceRace
+	local raceResource = Ext.StaticData.Get(entity.Race.Race, "Race")
+
+	parent:AddText(string.format("Race: %s (%s)",
+		(raceResource.DisplayName:Get() or ("Can't Translate")),
+		string.sub(raceResource.ResourceUUID, -5)))
+
+	return injuryConfig.character_multipliers["races"][raceResource.ResourceUUID]
+end
+
+---@param parent ExtuiTableCell
+---@param entity EntityHandle
+---@param injuryConfig Injury
+---@return number?
+local function AddTagMultiplierText(parent, entity, injuryConfig)
+	local seeTagButton = parent:AddImageButton("AllTags", "Spell_Divination_SeeInvisibility", { 30, 30 })
+	seeTagButton.SameLine = true
+
+	local tagPopup = seeTagButton:Tooltip("Tags")
+
+	local tagTable = tagPopup:AddTable("TagTable", 2)
+	tagTable.SizingStretchProp = true
+	tagTable.BordersInnerH = true
+	tagTable.BordersInnerV = true
+	tagTable.RowBg = true
+
+	local foundTag = false
+	local totalTagMultiplier = 1
+	for _, tagUUID in pairs(entity.Tag.Tags) do
+		---@type ResourceTag
+		local tagData = Ext.StaticData.Get(tagUUID, "Tag")
+
+		local row = tagTable:AddRow()
+
+		local tagMulti = injuryConfig.character_multipliers["tags"][tagUUID]
+		if tagMulti then
+			totalTagMultiplier = totalTagMultiplier * tagMulti
+			row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
+			foundTag = true
+			-- RGB -> Green with 50% opacity (multiply each value by 255)
+			row:SetColor("TableRowBg", {0.09, 0.55, 0.04, 0.5})
+			row:SetColor("TableRowBgAlt", {0.09, 0.55, 0.04, 0.5})
+		else
+			row:AddCell():AddText("---")
+			row:SetColor("TableRowBg", {0.09, 0.55, 0.04, 0})
+			row:SetColor("TableRowBgAlt", {0.09, 0.55, 0.04, 0})
+		end
+
+		row:AddCell():AddText(string.format("%s (%s - %s)",
+			tagData.Name,
+			tagData.DisplayName:Get() or "N/A",
+			string.sub(tagData.ResourceUUID, -5)
+		))
+	end
+
+	return foundTag and totalTagMultiplier or nil
+end
+
 local function BuildReport()
 	if reportWindow then
 		for _, child in pairs(reportWindow.Children) do
@@ -64,91 +127,105 @@ local function BuildReport()
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)
 
-				injuryReportGroup:AddSeparatorText(Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
+				local sepText = Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury)
+				sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
 
 				if injuryReport["injuryAppliedReason"][injury] then
-					injuryReportGroup:AddText("Injury Applied Due To: " .. injuryReport["injuryAppliedReason"][injury])
-					injuryReportGroup:AddSeparator()
+					sepText = sepText .. " || Applied Due To " .. injuryReport["injuryAppliedReason"][injury]
 				end
-
-				injuryReportGroup:AddText("Severity: " .. injuryConfig.severity)
-				injuryReportGroup:AddSeparator()
-
-				---@type ResourceRace
-				local raceResource = Ext.StaticData.Get(entity.Race.Race, "Race")
-				local raceMulti = injuryConfig.character_multipliers["races"][raceResource.ResourceUUID]
-				injuryReportGroup:AddText(string.format("Race: %s (%s) | Multiplier: %s",
-					(raceResource.DisplayName:Get() or ("Can't Translate")),
-					string.sub(raceResource.ResourceUUID, -5),
-					raceMulti and ((raceMulti * 100) .. "%") or "N/A"))
-				injuryReportGroup:AddSeparator()
-
-				--#region Tags
-				local tagTotalMultiText = injuryReportGroup:AddText("Total Tag Multiplier: ")
-				local seeTagButton = injuryReportGroup:AddImageButton("AllTags", "Spell_Divination_SeeInvisibility", { 30, 30 })
-				seeTagButton.SameLine = true
-
-				local tagPopup = seeTagButton:Tooltip("Tags")
-
-				local tagTable = tagPopup:AddTable("TagTable", 2)
-				tagTable.SizingStretchProp = true
-				tagTable.BordersH = true
-				tagTable.RowBg = true
-
-				local foundTag = false
-				local totalTagMultiplier = 0
-				for _, tagUUID in pairs(entity.Tag.Tags) do
-					---@type ResourceTag
-					local tagData = Ext.StaticData.Get(tagUUID, "Tag")
-
-					local row = tagTable:AddRow()
-					row:AddCell():AddText(string.format("%s (%s - %s)",
-						tagData.Name,
-						tagData.DisplayName:Get() or "N/A",
-						string.sub(tagData.ResourceUUID, -5)
-					))
-
-					local tagMulti = injuryConfig.character_multipliers["tags"][tagUUID]
-					if tagMulti then
-						totalTagMultiplier = totalTagMultiplier + (tagMulti * 100)
-						row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
-						foundTag = true
-					else
-						row:AddCell():AddText("N/A")
-					end
-				end
-				tagTotalMultiText.Label = string.format(tagTotalMultiText.Label .. "%s",
-					foundTag and (totalTagMultiplier .. "%") or "N/A")
-				--#endregion
+				injuryReportGroup:AddSeparatorText(sepText)
 
 				local keepGroup = false
 
 				--#region Damage Report
-				local damageGroup = injuryReportGroup:AddGroup("Damage")
 				if next(injuryConfig.damage["damage_types"]) then
-					damageGroup:AddText("Damage Report")
+					local damageGroup = injuryReportGroup:AddGroup("Damage")
+
+					local damageResultText = damageGroup:AddText("Injury Damage / Threshold: ")
+
+					-- damageGroup:AddText("Click To See Report")
+					local damageReportButton = damageGroup:AddImageButton("DamageReport", "Spell_Divination_SeeInvisibility", { 30, 30 })
+					damageReportButton.SameLine = true
+					damageReportButton:Tooltip():AddText("Click to toggle the table")
+
+					local damageReportTable = damageGroup:AddTable("Damage Report", 4)
+					damageReportTable.SizingStretchSame = true
+					damageReportTable.BordersInnerH = true
+					damageReportTable.Visible = false
+
+					local damageReportHeaders = damageReportTable:AddRow()
+					damageReportHeaders.Headers = true
+					damageReportHeaders:AddCell():AddText("")
+					damageReportHeaders:AddCell():AddText("Multiplier")
+					damageReportHeaders:AddCell():AddText("Before")
+					damageReportHeaders:AddCell():AddText("After")
+
+					local wasClicked = false
+					damageReportButton.OnHoverEnter = function()
+						damageReportTable.Visible = true
+					end
+
+					damageReportButton.OnClick = function()
+						wasClicked = not wasClicked
+					end
+
+					damageReportButton.OnHoverLeave = function()
+						damageReportTable.Visible = wasClicked
+					end
 
 					local totalDamage = 0
 					for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
 						local damageAmount = injuryReport["damage"][damageType]
 						if damageAmount and damageAmount[injury] then
-							local flatWithMultiplier = (damageAmount[injury] * damageTypeConfig["multiplier"]) * characterMultiplier
-							-- Rounding to 2 digits
+							local flatWithMultiplier = damageAmount[injury] * damageTypeConfig["multiplier"]
 							totalDamage = totalDamage + flatWithMultiplier
-							damageGroup:AddText(string.format("%s: Multiplier: %d%% | Flat Damage Before Multiplier: %s | Flat Damage After Multiplier: %s",
-								damageType,
-								damageTypeConfig["multiplier"] * 100,
-								damageAmount[injury],
-								flatWithMultiplier))
+
+							local row = damageReportTable:AddRow()
+							row:AddCell():AddText(damageType)
+							row:AddCell():AddText(string.format("%d%%", damageTypeConfig["multiplier"] * 100))
+							row:AddCell():AddText(tostring(damageAmount[injury]))
+							row:AddCell():AddText(tostring(flatWithMultiplier))
 						end
 					end
 
 					if totalDamage == 0 then
 						damageGroup:Destroy()
 					else
-						damageGroup:AddText(string.format("Total Injury Damage in %% of Health / Threshold %%: %.2f%%/%.2f%% ",
+						local row = damageReportTable:AddRow()
+						row:AddCell():AddText("Total Damage")
+						row:AddCell():AddText("---")
+						row:AddCell():AddText("---")
+						row:AddCell():AddText(tostring(totalDamage))
+
+						local raceRow = damageReportTable:AddRow()
+						local raceMulti = AddRaceMultiplierText(raceRow:AddCell(), entity, injuryConfig)
+						raceRow:AddCell():AddText(raceMulti and ((raceMulti * 100) .. "%") or "N/A")
+						raceRow:AddCell():AddText("---")
+						totalDamage = totalDamage * (raceMulti or 1)
+						raceRow:AddCell():AddText(tostring(totalDamage))
+
+						local tagRow = damageReportTable:AddRow()
+						local tagDisplayCell = tagRow:AddCell()
+						tagDisplayCell:AddText("Tag")
+						local totalTagMultiplier = AddTagMultiplierText(tagDisplayCell, entity, injuryConfig)
+						tagRow:AddCell():AddText(totalTagMultiplier and ((totalTagMultiplier * 100) .. "%") or "N/A")
+						tagRow:AddCell():AddText("---")
+						totalDamage = totalDamage * (totalTagMultiplier or 1)
+						tagRow:AddCell():AddText(tostring(totalDamage))
+
+						if npcCategory then
+							local npcMulti = damageReportTable:AddRow()
+							npcMulti:AddCell():AddText("NPC Category")
+							npcMulti:AddCell():AddText(string.format("%s%%", characterMultiplier * 100))
+							npcMulti:AddCell():AddText("---")
+							totalDamage = totalDamage * characterMultiplier
+							npcMulti:AddCell():AddText(tostring(totalDamage))
+						end
+
+						damageResultText.Label = string.format("%s: %.2f%%/%.2f%%",
+							damageResultText.Label,
 							((totalDamage / entity.Health.MaxHp) * 100),
-							injuryConfig.damage["threshold"]))
+							injuryConfig.damage["threshold"])
 
 						keepGroup = true
 					end
@@ -168,17 +245,18 @@ local function BuildReport()
 					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 						local numRoundsApplied = injuryReport["applyOnStatus"][status]
 						if numRoundsApplied and numRoundsApplied[injury] then
-							totalRounds = totalRounds + ((numRoundsApplied[injury] * statusConfig["multiplier"]) * characterMultiplier)
+							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
 							statusGroup:AddText(string.format("%s: Multiplier: %s | Number of (Non-Consecutive) Rounds Applied After Multiplier: %s",
 								status,
 								statusConfig["multiplier"],
-								(numRoundsApplied[injury] * statusConfig["multiplier"]) * characterMultiplier))
+								numRoundsApplied[injury] * statusConfig["multiplier"]))
 						end
 					end
 
 					if totalRounds == 0 then
 						statusGroup:Destroy()
 					else
+						totalRounds = totalRounds * raceMulti * totalTagMultiplier * characterMultiplier
 						statusGroup:AddText(string.format("Total Rounds For All Multipliers / Threshold: %s/%s",
 							totalRounds,
 							injuryConfig.apply_on_status["number_of_rounds"]))

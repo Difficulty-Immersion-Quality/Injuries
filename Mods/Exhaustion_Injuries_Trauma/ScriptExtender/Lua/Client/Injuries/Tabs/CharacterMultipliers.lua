@@ -33,6 +33,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	raceHeader.DefaultOpen = true
 
 	local raceTable = raceHeader:AddTable("Races", 2)
+	raceTable.BordersInnerH = true
 	raceTable.SizingStretchProp = true
 	raceTable.Resizable = true
 
@@ -100,7 +101,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local tagsHeader = multiplierTab:AddCollapsingHeader("Tags")
 	tagsHeader.DefaultOpen = true
 
+	tagsHeader:AddText("If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)").TextWrapPos = 0
+
 	local tagTable = tagsHeader:AddTable("TagTable", 3)
+	tagTable.BordersInnerH = true
 	tagTable.SizingStretchProp = true
 	tagTable.Resizable = true
 
