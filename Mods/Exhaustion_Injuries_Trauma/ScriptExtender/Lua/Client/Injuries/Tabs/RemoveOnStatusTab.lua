@@ -82,15 +82,21 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local statusTable = statusTab:AddTable("RemoveOnStatus", 3)
 	statusTable.BordersInnerH = true
+	statusTable.Resizable = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("Save Conditions")
 
-	DataSearchHelper:BuildSearch(statusTab, Ext.Stats.GetStats("StatusData"), function(status)
-		BuildRows(statusTable, status, removeOnConfig, true)
-	end)
+	DataSearchHelper:BuildSearch(statusTab,
+		Ext.Stats.GetStats("StatusData"),
+		function(resourceId)
+			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
+		end,
+		function(status)
+			BuildRows(statusTable, status, removeOnConfig, true)
+		end)
 
 	for status, _ in pairs(removeOnConfig) do
 		BuildRows(statusTable, status, removeOnConfig)

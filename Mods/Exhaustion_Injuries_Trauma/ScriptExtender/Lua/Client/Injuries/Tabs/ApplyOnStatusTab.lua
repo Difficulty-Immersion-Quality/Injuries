@@ -56,17 +56,24 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	statusTab:AddNewLine()
 
-	local statusTable = statusTab:AddTable("ApplyOnStatus", 4)
+	local statusTable = statusTab:AddTable("ApplyOnStatus", 3)
 	statusTable.BordersInnerH = true
+	statusTable.Resizable = true
+	statusTable.Sortable = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("Round # Multiplier")
 
-	DataSearchHelper:BuildSearch(statusTab, Ext.Stats.GetStats("StatusData"), function(status)
-		BuildRows(statusTable, status, applyOnConfig["applicable_statuses"], true)
-	end)
+	DataSearchHelper:BuildSearch(statusTab,
+		Ext.Stats.GetStats("StatusData"),
+		function(resourceId)
+			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
+		end,
+		function(status)
+			BuildRows(statusTable, status, applyOnConfig["applicable_statuses"], true)
+		end)
 
 	for status, _ in pairs(applyOnConfig["applicable_statuses"]) do
 		BuildRows(statusTable, status, applyOnConfig["applicable_statuses"])

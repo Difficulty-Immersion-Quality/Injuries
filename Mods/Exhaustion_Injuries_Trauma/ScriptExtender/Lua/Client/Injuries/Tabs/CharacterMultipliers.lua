@@ -103,13 +103,13 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	tagHeaderRow:AddCell():AddText("Name (Display Name - ID)")
 	tagHeaderRow:AddCell():AddText("% Multiplier")
 
-	local function buildTagRow(tagUUID, ignoreExistingStatus)
+	local function buildTagRow(tagUUID, ignoreExistingRecord)
 		---@type ResourceTag
 		local tagData = Ext.StaticData.Get(tagUUID, "Tag")
 
 		if not charMultiplierConfig["tags"][tagUUID] then
 			charMultiplierConfig["tags"][tagUUID] = 1
-		elseif ignoreExistingStatus then
+		elseif ignoreExistingRecord then
 			return
 		end
 
@@ -143,13 +143,17 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		end
 	end
 
-	DataSearchHelper:BuildSearch(tagsHeader, Ext.StaticData.GetAll("Tag"), function(tagUUID)
-		buildTagRow(tagUUID, true)
-	end)
+	DataSearchHelper:BuildSearch(tagsHeader,
+		Ext.StaticData.GetAll("Tag"),
+		function(id)
+			return Ext.StaticData.Get(id, "Tag").DisplayName:Get()
+		end,
+		function(tagUUID)
+			buildTagRow(tagUUID, true)
+		end)
 
 	for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
 		buildTagRow(tagUUID, false)
 	end
-
 	--#endregion
 end)

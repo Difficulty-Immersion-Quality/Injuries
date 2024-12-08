@@ -1,6 +1,12 @@
 DataSearchHelper = {}
 
-local function BuildStatusesForInput(input, callback, dataTable)
+---@param input string
+---@param callback function
+---@param dataTable table
+---@param displayNameFunc function
+---@param searchMethod "ResourceId"|"DisplayName"
+---@return boolean
+local function BuildStatusesForData(input, callback, dataTable, displayNameFunc, searchMethod)
 	local inputText = string.upper(input)
 	local isWildcard = false
 	if string.find(inputText, "*") then
@@ -8,28 +14,43 @@ local function BuildStatusesForInput(input, callback, dataTable)
 		isWildcard = true
 	end
 
-	local statusCount = 0
+	local recordCount = 0
 	for _, name in pairs(dataTable) do
-		local upperName = string.upper(name)
+		local id
+		if searchMethod == "ResourceId" then
+			id = name
+		elseif searchMethod == "DisplayName" then
+			id = displayNameFunc(name)
+			if not id then
+				goto continue
+			end
+		end
+		id = string.upper(id)
+
 		if isWildcard then
-			if string.find(upperName, inputText) then
-				statusCount = statusCount + 1
+			if string.find(id, inputText) then
+				recordCount = recordCount + 1
 				callback(name)
 			end
-		elseif upperName == inputText then
-			statusCount = statusCount + 1
+		elseif id == inputText then
 			callback(name)
-			break
+			if searchMethod == "ResourceId" then
+				return true
+			else
+				recordCount = recordCount + 1
+			end
 		end
+		::continue::
 	end
 
-	return statusCount > 0
+	return recordCount > 0
 end
 
 ---@param parent ExtuiTabItem|ExtuiCollapsingHeader
 ---@param dataTable table
+---@param displayNameFunc function
 ---@param onClick function
-function DataSearchHelper:BuildSearch(parent, dataTable, onClick)
+function DataSearchHelper:BuildSearch(parent, dataTable, displayNameFunc, onClick)
 	parent:AddText("Add New Row")
 
 	local statusInput = parent:AddInputText("")
@@ -37,17 +58,24 @@ function DataSearchHelper:BuildSearch(parent, dataTable, onClick)
 	statusInput.AutoSelectAll = true
 	statusInput.EscapeClearsAll = true
 
-	local statusInputButton = parent:AddButton("Search")
+	local searchId = parent:AddButton("Search by Resource ID (e.g. BURNING_TRAPWALL)")
+	searchId.UserData = "ResourceId"
+
+	local searchDisplayName = parent:AddButton("Search by Display Name (e.g. Burning)")
+	searchDisplayName.UserData = "DisplayName"
+	searchDisplayName:Tooltip():AddText("Depends on the resource having a Display Name set in the game resources and localization being implemented for your language")
 
 	local errorText = parent:AddText("Error: Search returned no results")
 	errorText:SetColor("Text", { 1, 0.02, 0, 1 })
 	errorText.Visible = false
 
-	statusInputButton.OnClick = function()
-		if not BuildStatusesForInput(statusInput.Text, onClick, dataTable) then
+	local searchFunc = function(button)
+		if not BuildStatusesForData(statusInput.Text, onClick, dataTable, displayNameFunc, button.UserData) then
 			errorText.Visible = true
 		end
 	end
+	searchId.OnClick = searchFunc
+	searchDisplayName.OnClick = searchFunc
 
 	statusInput.OnChange = function(inputElement, text)
 		errorText.Visible = false
@@ -85,5 +113,4 @@ function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 	if status.DescriptionParams ~= "" then
 		tooltip:AddText("Description Params: " .. status.DescriptionParams)
 	end
-
 end
