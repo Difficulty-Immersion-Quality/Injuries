@@ -86,11 +86,17 @@ end
 ---@param status StatsObject
 function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
+
+	if status.Using ~= "" then
+		tooltip:AddText("Using: " .. status.Using)
+	end
+
 	tooltip:AddText("StatusType: " .. status.StatusType)
 
 	if status.TooltipDamage ~= "" then
 		tooltip:AddText("Damage: " .. status.TooltipDamage)
 	end
+
 
 	if status.HealValue ~= "" then
 		tooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")

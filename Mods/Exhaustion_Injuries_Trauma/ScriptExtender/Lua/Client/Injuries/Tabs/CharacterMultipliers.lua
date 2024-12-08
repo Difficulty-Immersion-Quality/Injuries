@@ -126,8 +126,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		if tagData.Icon ~= "" then
 			toolTip:AddImage(tagData.Icon, { 30, 30 })
 		end
-		toolTip:AddText(tagData.DisplayName:Get() or "No Display Name").SameLine = true
-		toolTip:AddText("Stat UUID (Search using this): " .. tagUUID)
+		toolTip:AddText("Display Name: " .. (tagData.DisplayName:Get() or "N/A")).SameLine = true
+		toolTip:AddText("ResourceId: " .. tagUUID)
 		toolTip:AddText("Tag UUID: " .. tagData.ResourceUUID)
 		toolTip:AddText("Description: " .. (tagData.Description ~= "" and tagData.Description or "N/A"))
 		toolTip:AddText("Display Description: " .. (tagData.DisplayDescription:Get() or "N/A"))

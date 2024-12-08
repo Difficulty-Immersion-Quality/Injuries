@@ -86,7 +86,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Status Name")
+	headerRow:AddCell():AddText("Status Name (ResourceID)")
 	headerRow:AddCell():AddText("Save Conditions")
 
 	DataSearchHelper:BuildSearch(statusTab,

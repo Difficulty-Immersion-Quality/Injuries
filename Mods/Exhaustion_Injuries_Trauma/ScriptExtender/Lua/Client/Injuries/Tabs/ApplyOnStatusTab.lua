@@ -59,11 +59,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local statusTable = statusTab:AddTable("ApplyOnStatus", 3)
 	statusTable.BordersInnerH = true
 	statusTable.Resizable = true
-	statusTable.Sortable = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Status Name")
+	headerRow:AddCell():AddText("Status Name (ResourceID)")
 	headerRow:AddCell():AddText("Round # Multiplier")
 
 	DataSearchHelper:BuildSearch(statusTab,
