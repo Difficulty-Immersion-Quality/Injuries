@@ -25,7 +25,11 @@ local function AddRaceMultiplierText(parent, entity, injuryConfig)
 	---@type ResourceRace
 	local raceResource = Ext.StaticData.Get(entity.Race.Race, "Race")
 
-	parent:AddText(string.format("Race: %s (%s)",
+	parent:AddText("Race")
+
+	local button = parent:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
+	button.SameLine = true
+	button:Tooltip():AddText(string.format("\t%s (%s)",
 		(raceResource.DisplayName:Get() or ("Can't Translate")),
 		string.sub(raceResource.ResourceUUID, -5)))
 
@@ -62,12 +66,12 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 			row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
 			foundTag = true
 			-- RGB -> Green with 50% opacity (multiply each value by 255)
-			row:SetColor("TableRowBg", {0.09, 0.55, 0.04, 0.5})
-			row:SetColor("TableRowBgAlt", {0.09, 0.55, 0.04, 0.5})
+			row:SetColor("TableRowBg", { 0.09, 0.55, 0.04, 0.5 })
+			row:SetColor("TableRowBgAlt", { 0.09, 0.55, 0.04, 0.5 })
 		else
 			row:AddCell():AddText("---")
-			row:SetColor("TableRowBg", {0.09, 0.55, 0.04, 0})
-			row:SetColor("TableRowBgAlt", {0.09, 0.55, 0.04, 0})
+			row:SetColor("TableRowBg", { 0.09, 0.55, 0.04, 0 })
+			row:SetColor("TableRowBgAlt", { 0.09, 0.55, 0.04, 0 })
 		end
 
 		row:AddCell():AddText(string.format("%s (%s - %s)",
@@ -120,9 +124,6 @@ local function BuildReport()
 			end
 
 			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateCharacterMultiplier(entity)
-			if npcCategory then
-				charReport:AddText(string.format("NPC Category: %s | Multiplier: %s%%", npcCategory, characterMultiplier * 100))
-			end
 
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)
@@ -215,7 +216,12 @@ local function BuildReport()
 
 						if npcCategory then
 							local npcMulti = damageReportTable:AddRow()
-							npcMulti:AddCell():AddText("NPC Category")
+							local npcDisplay = npcMulti:AddCell()
+							npcDisplay:AddText("NPC Category")
+							local seeNpcButton = npcDisplay:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
+							seeNpcButton.SameLine = true
+							seeNpcButton:Tooltip():AddText("\t" .. npcCategory)
+
 							npcMulti:AddCell():AddText(string.format("%s%%", characterMultiplier * 100))
 							npcMulti:AddCell():AddText("---")
 							totalDamage = totalDamage * characterMultiplier
