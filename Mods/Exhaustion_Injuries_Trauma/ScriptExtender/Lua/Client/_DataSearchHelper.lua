@@ -1,6 +1,6 @@
-StatusHelper = {}
+DataSearchHelper = {}
 
-local function BuildStatusesForInput(input, callback)
+local function BuildStatusesForInput(input, callback, dataTable)
 	local inputText = string.upper(input)
 	local isWildcard = false
 	if string.find(inputText, "*") then
@@ -9,7 +9,7 @@ local function BuildStatusesForInput(input, callback)
 	end
 
 	local statusCount = 0
-	for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
+	for _, name in pairs(dataTable) do
 		local upperName = string.upper(name)
 		if isWildcard then
 			if string.find(upperName, inputText) then
@@ -26,24 +26,25 @@ local function BuildStatusesForInput(input, callback)
 	return statusCount > 0
 end
 
----@param tab ExtuiTabItem
+---@param parent ExtuiTabItem|ExtuiCollapsingHeader
+---@param dataTable table
 ---@param onClick function
-function StatusHelper:BuildSearch(tab, onClick)
-	tab:AddText("Add New Row")
+function DataSearchHelper:BuildSearch(parent, dataTable, onClick)
+	parent:AddText("Add New Row")
 
-	local statusInput = tab:AddInputText("")
+	local statusInput = parent:AddInputText("")
 	statusInput.Hint = "Case-insensitive - use * to wildcard. Example: *ing*trap* for BURNING_TRAPWALL"
 	statusInput.AutoSelectAll = true
 	statusInput.EscapeClearsAll = true
 
-	local statusInputButton = tab:AddButton("Search")
+	local statusInputButton = parent:AddButton("Search")
 
-	local errorText = tab:AddText("Error: Search returned no results")
+	local errorText = parent:AddText("Error: Search returned no results")
 	errorText:SetColor("Text", { 1, 0.02, 0, 1 })
 	errorText.Visible = false
 
 	statusInputButton.OnClick = function()
-		if not BuildStatusesForInput(statusInput.Text, onClick) then
+		if not BuildStatusesForInput(statusInput.Text, onClick, dataTable) then
 			errorText.Visible = true
 		end
 	end
@@ -54,7 +55,8 @@ function StatusHelper:BuildSearch(tab, onClick)
 end
 
 ---@param tooltip ExtuiTooltip
-function StatusHelper:BuildTooltip(tooltip, status)
+---@param status StatsObject
+function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
 	tooltip:AddText("StatusType: " .. status.StatusType)
 

@@ -3,9 +3,10 @@
 ---@param removeOnConfig InjuryRemoveOnStatusClass
 ---@param ignoreExistingStatus boolean?
 local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStatus)
-	status = Ext.Stats.Get(status)
+	---@type StatsObject
+	local statusObj = Ext.Stats.Get(status)
 
-	local statusName = status.Name
+	local statusName = statusObj.Name
 	if not removeOnConfig[statusName] then
 		removeOnConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class)
 	elseif ignoreExistingStatus then
@@ -17,12 +18,12 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 
 	--#region Status Name
 	local statusNameRow = row:AddCell()
-	local statusNameText = statusNameRow:AddText(status.Name)
-	if status.Icon ~= '' then
-		statusNameRow:AddImage(status.Icon, { 36, 36 }).SameLine = true
+	local statusNameText = statusNameRow:AddText(statusObj.Name)
+	if statusObj.Icon ~= '' then
+		statusNameRow:AddImage(statusObj.Icon, { 36, 36 }).SameLine = true
 	end
 
-	StatusHelper:BuildTooltip(statusNameText:Tooltip(), status)
+	DataSearchHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
 	--#endregion
 
 	--#region Save Options
@@ -87,7 +88,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("Save Conditions")
 
-	StatusHelper:BuildSearch(statusTab, function(status)
+	DataSearchHelper:BuildSearch(statusTab, Ext.Stats.GetStats("StatusData"), function(status)
 		BuildRows(statusTable, status, removeOnConfig, true)
 	end)
 

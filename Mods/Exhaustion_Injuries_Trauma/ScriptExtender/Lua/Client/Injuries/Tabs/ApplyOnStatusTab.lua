@@ -3,25 +3,27 @@
 ---@param applyOnConfig { [StatusName] : InjuryApplyOnStatusModifierClass }
 ---@param ignoreExistingStatus boolean?
 local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatus)
-	status = Ext.Stats.Get(status)
-	local statusName = status.Name
+	---@type StatsObject
+	local statusObj = Ext.Stats.Get(status)
+
+	local statusName = statusObj.Name
 
 	if not applyOnConfig[statusName] then
 		applyOnConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class)
 	elseif ignoreExistingStatus then
-		goto continue
+		return
 	end
 	local statusConfig = applyOnConfig[statusName]
 
 	local row = statusTable:AddRow()
 
 	local statusNameRow = row:AddCell()
-	local statusNameText = statusNameRow:AddText(status.Name)
-	if status.Icon ~= '' then
-		statusNameRow:AddImage(status.Icon, { 30, 30 }).SameLine = true
+	local statusNameText = statusNameRow:AddText(statusObj.Name)
+	if statusObj.Icon ~= '' then
+		statusNameRow:AddImage(statusObj.Icon, { 30, 30 }).SameLine = true
 	end
 
-	StatusHelper:BuildTooltip(statusNameText:Tooltip(), status)
+	DataSearchHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
 
 	local multiplier = row:AddCell():AddSliderInt("", statusConfig["multiplier"], 1, 10)
 	multiplier.OnChange = function(slider)
@@ -33,7 +35,6 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 		statusConfig.delete = true
 		row:Destroy()
 	end
-	::continue::
 end
 
 --- @param tabBar ExtuiTabBar
@@ -63,7 +64,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow:AddCell():AddText("Status Name")
 	headerRow:AddCell():AddText("Round # Multiplier")
 
-	StatusHelper:BuildSearch(statusTab, function(status)
+	DataSearchHelper:BuildSearch(statusTab, Ext.Stats.GetStats("StatusData"), function(status)
 		BuildRows(statusTable, status, applyOnConfig["applicable_statuses"], true)
 	end)
 

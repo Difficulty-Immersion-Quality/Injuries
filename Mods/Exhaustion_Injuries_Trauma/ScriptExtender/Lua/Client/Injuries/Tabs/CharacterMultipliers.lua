@@ -94,6 +94,62 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	--#endregion
 
 	--#region Tags
+	local tagsHeader = multiplierTab:AddCollapsingHeader("Tags")
+	tagsHeader.DefaultOpen = true
+
+	local tagTable = tagsHeader:AddTable("TagTable", 3)
+	local tagHeaderRow = tagTable:AddRow()
+	tagHeaderRow.Headers = true
+	tagHeaderRow:AddCell():AddText("Name (Display Name - ID)")
+	tagHeaderRow:AddCell():AddText("% Multiplier")
+
+	local function buildTagRow(tagUUID, ignoreExistingStatus)
+		---@type ResourceTag
+		local tagData = Ext.StaticData.Get(tagUUID, "Tag")
+
+		if not charMultiplierConfig["tags"][tagUUID] then
+			charMultiplierConfig["tags"][tagUUID] = 1
+		elseif ignoreExistingStatus then
+			return
+		end
+
+		local row = tagTable:AddRow()
+
+		local tagNameCell = row:AddCell()
+		tagNameCell:AddText(string.format("%s (%s - %s)",
+			tagData.Name,
+			tagData.DisplayName:Get() or "N/A",
+			string.sub(tagData.ResourceUUID, -5)
+		))
+
+		local toolTip = tagNameCell:Tooltip()
+		if tagData.Icon ~= "" then
+			toolTip:AddImage(tagData.Icon, { 30, 30 })
+		end
+		toolTip:AddText(tagData.DisplayName:Get() or "No Display Name").SameLine = true
+		toolTip:AddText("Stat UUID (Search using this): " .. tagUUID)
+		toolTip:AddText("Tag UUID: " .. tagData.ResourceUUID)
+		toolTip:AddText("Description: " .. (tagData.Description ~= "" and tagData.Description or "N/A"))
+		toolTip:AddText("Display Description: " .. (tagData.DisplayDescription:Get() or "N/A"))
+
+		local multiplier = row:AddCell():AddSliderInt("", charMultiplierConfig["tags"][tagUUID] * 100, 0, 500)
+		multiplier.OnChange = function()
+			charMultiplierConfig["tags"][tagUUID] = tonumber(string.format("%.2f", multiplier.Value[1] / 100))
+		end
+
+		row:AddCell():AddButton("Delete").OnClick = function()
+			charMultiplierConfig["tags"][tagUUID] = nil
+			row:Destroy()
+		end
+	end
+
+	DataSearchHelper:BuildSearch(tagsHeader, Ext.StaticData.GetAll("Tag"), function(tagUUID)
+		buildTagRow(tagUUID, true)
+	end)
+
+	for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
+		buildTagRow(tagUUID, false)
+	end
 
 	--#endregion
 end)
