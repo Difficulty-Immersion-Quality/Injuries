@@ -128,9 +128,10 @@ end
 ---@param group ExtuiGroup
 ---@return ExtuiTable
 local function CreateReport(group)
+	-- prefixing with UserData otherwise subsequent buttons can't maintain state, as earlier buttons with the same ID are already reserved
 	local reportButton = group:AddImageButton(group.UserData .. "Report", "Spell_Divination_SeeInvisibility", { 30, 30 })
 	reportButton.SameLine = true
-	reportButton:Tooltip():AddText("Click to toggle the table")
+	reportButton:Tooltip():AddText("\tClick To Toggle")
 
 	local reportTable = group:AddTable(group.UserData .. "Report", 4)
 	reportTable.SizingStretchSame = true
@@ -217,7 +218,7 @@ local function BuildReport()
 				--#region Damage Report
 				if next(injuryConfig.damage["damage_types"]) then
 					local damageGroup = injuryReportGroup:AddGroup("Damage")
-					damageGroup.UserData = "damage"
+					damageGroup.UserData = injury .. "damage"
 
 					local damageResultText = damageGroup:AddText("Injury Damage / Threshold")
 					local damageReportTable = CreateReport(damageGroup)
@@ -261,7 +262,7 @@ local function BuildReport()
 				--#region ApplyOnStatus report
 				if next(injuryConfig.apply_on_status["applicable_statuses"]) then
 					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
-					statusGroup.UserData = "applyOnStatus"
+					statusGroup.UserData = injury .. "applyOnStatus"
 
 					local statusText = statusGroup:AddText("Apply On Status: Cumulative Rounds / Threshold")
 					local statusReportTable = CreateReport(statusGroup)
