@@ -73,9 +73,11 @@ EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGui
 
 				-- InjuryConfigHelper handles resetting vars each round
 				local applyOnStatus = injuryVar["applyOnStatus"]
-				for status, _ in pairs(applyOnStatus) do
-					if Osi.HasActiveStatus(combatParticipant[1], status) == 1 then
-						processInjuries(entity, status, ConfigManager.Injuries.ApplyOnStatus[status], applyOnStatus)
+				if applyOnStatus then
+					for status, _ in pairs(applyOnStatus) do
+						if Osi.HasActiveStatus(combatParticipant[1], status) == 1 then
+							processInjuries(entity, status, ConfigManager.Injuries.ApplyOnStatus[status], applyOnStatus)
+						end
 					end
 				end
 			end

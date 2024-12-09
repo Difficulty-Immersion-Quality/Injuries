@@ -81,7 +81,7 @@ local function ProcessDamageEvent(event)
 						local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(defenderEntity, injuryConfig)
 						finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier * characterMultiplier * npcMultiplier
 
-						local totalHpPercentageRemoved = finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp
+						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
 						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
 							Osi.ApplyStatus(defender, injury, -1)
