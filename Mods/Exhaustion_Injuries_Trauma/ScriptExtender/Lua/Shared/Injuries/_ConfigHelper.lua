@@ -20,11 +20,11 @@ local injuryVar = {
 
 InjuryConfigHelper = {}
 
---- Returns the npcType just for the InjuryReport, so we know if the character even has a multiplier available instead of 
+--- Returns the npcType just for the InjuryReport, so we know if the character even has a multiplier available instead of
 --- defaulting in the absence of one
 ---@param character EntityHandle
 ---@return number, string?
-function InjuryConfigHelper:CalculateCharacterMultiplier(character)
+function InjuryConfigHelper:CalculateNpcMultiplier(character)
 	local xpReward = Ext.Stats.Get(character.Data.StatsId).XPReward
 	if character.PartyMember or not xpReward then
 		return 1
@@ -42,7 +42,7 @@ function InjuryConfigHelper:CalculateCharacterMultiplier(character)
 		local lowerCat = string.lower(xpCategory)
 		for npcType, multiplier in pairs(config.npc_multipliers) do
 			npcType = string.lower(npcType)
-			
+
 			-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
 			if string.find(lowerCat, "^" .. npcType .. "$") or string.find(lowerCat, "_" .. npcType .. "$") then
 				return multiplier, xpCategory
@@ -51,6 +51,24 @@ function InjuryConfigHelper:CalculateCharacterMultiplier(character)
 
 		return config.npc_multipliers["Base"], xpCategory .. " (Base Multiplier)"
 	end
+end
+
+---@param character EntityHandle
+---@param injuryConfig Injury
+function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfig)
+	local finalMultiplier = 1
+
+	if injuryConfig.character_multipliers["races"][character.Race.Race] then
+		finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["races"][character.Race.Race]
+	end
+
+	for _, tagUUID in pairs(character.Tag.Tags) do
+		if injuryConfig.character_multipliers["tags"][tagUUID] then
+			finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+		end
+	end
+
+	return finalMultiplier
 end
 
 if Ext.IsServer() then

@@ -199,7 +199,7 @@ local function BuildReport()
 				BuildReport()
 			end
 
-			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateCharacterMultiplier(entity)
+			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 				local injuryReportGroup = charReport:AddGroup(injury)

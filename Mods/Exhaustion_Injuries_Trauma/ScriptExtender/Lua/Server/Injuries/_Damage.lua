@@ -33,7 +33,7 @@ local function ProcessDamageEvent(event)
 
 	local randomlyAppliedInjuries = RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
-	local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultiplier(defenderEntity)
+	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(defenderEntity)
 
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
@@ -77,18 +77,13 @@ local function ProcessDamageEvent(event)
 								finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier + existingInjuryDamage
 							end
 						end
-						finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier * characterMultiplier
 
-						-- This is apparently how you round to 2 decimal places? Thanks ChatGPT
-						local totalHpPercentageRemoved = math.floor((finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 10000) / 100
+						local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(defenderEntity, injuryConfig)
+						finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier * characterMultiplier * npcMultiplier
+
+						local totalHpPercentageRemoved = finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp
 
 						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
-							Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",
-								injury,
-								defender,
-								totalHpPercentageRemoved,
-								injuryConfig.damage["threshold"])
-
 							Osi.ApplyStatus(defender, injury, -1)
 							injuryVar["injuryAppliedReason"][injury] = "Damage"
 						end
