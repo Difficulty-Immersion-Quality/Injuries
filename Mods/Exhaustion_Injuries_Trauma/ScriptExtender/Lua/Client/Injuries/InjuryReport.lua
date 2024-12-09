@@ -207,12 +207,12 @@ local function BuildReport()
 				local sepText = Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury)
 				sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
 
+				local keepGroup = false
 				if injuryReport["injuryAppliedReason"][injury] then
+					keepGroup = true
 					sepText = sepText .. " || Applied Due To " .. injuryReport["injuryAppliedReason"][injury]
 				end
 				injuryReportGroup:AddSeparatorText(sepText)
-
-				local keepGroup = false
 
 				--#region Damage Report
 				if next(injuryConfig.damage["damage_types"]) then
