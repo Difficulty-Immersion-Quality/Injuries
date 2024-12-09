@@ -1,9 +1,12 @@
 ---@param statusTable ExtuiTable
----@param status FixedString[]
+---@param status string
 ---@param removeOnConfig InjuryRemoveOnStatusClass
 ---@param ignoreExistingStatus boolean?
 local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStatus)
-	local statusName = status.Name
+	---@type StatsObject
+	local statusObj = Ext.Stats.Get(status)
+
+	local statusName = statusObj.Name
 	if not removeOnConfig[statusName] then
 		removeOnConfig[statusName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class)
 	elseif ignoreExistingStatus then
@@ -15,11 +18,13 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 
 	--#region Status Name
 	local statusNameRow = row:AddCell()
-	statusNameRow:AddImage(status.Icon, {36, 36})
-	local statusNameText = statusNameRow:AddText(status.Name)
+	if statusObj.Icon ~= '' then
+		statusNameRow:AddImage(statusObj.Icon, { 36, 36 })
+	end
+	local statusNameText = statusNameRow:AddText(statusObj.Name)
 	statusNameText.SameLine = true
 
-	StatusHelper:BuildTooltip(statusNameRow:Tooltip(), status)
+	DataSearchHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
 	--#endregion
 
 	--#region Save Options
@@ -69,7 +74,8 @@ end
 InjuryMenu:RegisterTab(function(tabBar, injury)
 	-- Since the keys of this table are dynamic, we can't rely on ConfigurationStructure to initialize the defaults if the entry doesn't exist - we need to do that here
 	if not InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status then
-		InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status = {}
+		InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status =
+			TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status)
 	end
 	local removeOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status
 
@@ -77,19 +83,23 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local statusTable = statusTab:AddTable("RemoveOnStatus", 3)
 	statusTable.BordersInnerH = true
+	statusTable.Resizable = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Status Name")
+	headerRow:AddCell():AddText("Status Name (ResourceID)")
 	headerRow:AddCell():AddText("Save Conditions")
 
-	StatusHelper:BuildSearch(statusTab, function(status)
-		BuildRows(statusTable, status, removeOnConfig, true)
-	end)
+	DataSearchHelper:BuildSearch(statusTab,
+		Ext.Stats.GetStats("StatusData"),
+		function(resourceId)
+			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
+		end,
+		function(status)
+			BuildRows(statusTable, status, removeOnConfig, true)
+		end)
 
-	if next(removeOnConfig) then
-		for status, _ in pairs(removeOnConfig) do
-			BuildRows(statusTable, Ext.Stats.Get(status), removeOnConfig)
-		end
+	for status, _ in pairs(removeOnConfig) do
+		BuildRows(statusTable, status, removeOnConfig)
 	end
 end)

@@ -19,9 +19,11 @@ local function generateInjuryCountTooltip(displayTooltip, injury_config)
 		child:Destroy()
 	end
 
-	displayTooltip:AddText(string.format("ApplyOnStatus Settings: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
-	displayTooltip:AddText(string.format("Damage Settings: %d", countInjuryConfig(injury_config.damage["damage_types"])))
-	displayTooltip:AddText(string.format("RemoveOnStatus Settings: %d", countInjuryConfig(injury_config.remove_on_status)))
+	displayTooltip:AddText(string.format("ApplyOnStatus: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
+	displayTooltip:AddText(string.format("Damage: %d", countInjuryConfig(injury_config.damage["damage_types"])))
+	displayTooltip:AddText(string.format("RemoveOnStatus: %d", countInjuryConfig(injury_config.remove_on_status)))
+	displayTooltip:AddText(string.format("Races: %d", countInjuryConfig(injury_config.character_multipliers["races"])))
+	displayTooltip:AddText(string.format("Tags: %d", countInjuryConfig(injury_config.character_multipliers["tags"])))
 end
 
 
@@ -37,6 +39,7 @@ end
 
 Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
+Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
 Ext.Require("Client/Injuries/Tabs/RemoveOnStatusTab.lua")
 
 local injuryDisplayNames = {}
@@ -403,6 +406,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				dmg.SameLine = true
 				dmg.UserData = "damage"
 
+				local charMultipliers = copyWhatGroup:AddCheckbox("Character Multipliers", true)
+				charMultipliers.SameLine = true
+				charMultipliers.UserData = "character_multipliers"
+				
 				local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
 				removeStatus.SameLine = true
 				removeStatus.UserData = "remove_on_status"

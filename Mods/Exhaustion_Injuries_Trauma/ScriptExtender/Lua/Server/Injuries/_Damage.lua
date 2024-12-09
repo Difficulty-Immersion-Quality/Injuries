@@ -33,7 +33,7 @@ local function ProcessDamageEvent(event)
 
 	local randomlyAppliedInjuries = RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
-	local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultiplier(defenderEntity)
+	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(defenderEntity)
 
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
@@ -60,13 +60,13 @@ local function ProcessDamageEvent(event)
 
 						preexistingDamage[injury] = finalDamageWithPreviousDamage
 
-						local finalDamageWithInjuryMultiplier = (finalDamageWithPreviousDamage * injuryDamageConfig["multiplier"]) * characterMultiplier
+						local finalDamageWithInjuryMultiplier = finalDamageWithPreviousDamage * injuryDamageConfig["multiplier"]
 
 						local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 						for otherDamageType, otherDamageConfig in pairs(injuryConfig.damage["damage_types"]) do
 							local existingDamageForOtherDamageType = injuryVar["damage"][otherDamageType]
 							if damageType ~= otherDamageType and (existingDamageForOtherDamageType and existingDamageForOtherDamageType[injury]) then
-								local existingInjuryDamage = (existingDamageForOtherDamageType[injury] * otherDamageConfig["multiplier"]) * characterMultiplier
+								local existingInjuryDamage = existingDamageForOtherDamageType[injury] * otherDamageConfig["multiplier"]
 
 								Logger:BasicTrace("Adding %d damage due to preexisting damageType %s for Injury %s on %s",
 									existingInjuryDamage,
@@ -78,16 +78,12 @@ local function ProcessDamageEvent(event)
 							end
 						end
 
-						-- This is apparently how you round to 2 decimal places? Thanks ChatGPT
-						local totalHpPercentageRemoved = math.floor((finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 10000) / 100
+						local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(defenderEntity, injuryConfig)
+						finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier * characterMultiplier * npcMultiplier
+
+						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
 						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
-							Logger:BasicDebug("Applying %s to %s since %s damage exceeds the threshold of %s",
-								injury,
-								defender,
-								totalHpPercentageRemoved,
-								injuryConfig.damage["threshold"])
-
 							Osi.ApplyStatus(defender, injury, -1)
 							injuryVar["injuryAppliedReason"][injury] = "Damage"
 						end

@@ -34,7 +34,7 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 		local eligibleInjuries = {}
 		for damageType, damageRolls in pairs(event.Hit.Damage.DamageRolls) do
 			for _, damageRoll in pairs(damageRolls) do
-				if damageRoll.Result.Critical == "Success" then
+				if damageRoll.Result.Critical == "Success" and ConfigManager.Injuries.Damage[damageType] then
 					for injury, _ in pairs(ConfigManager.Injuries.Damage[damageType]) do
 						if Osi.HasActiveStatus(defender, injury) == 0
 							and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity
