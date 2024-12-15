@@ -6,7 +6,7 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 	local row = damageTable:AddRow()
 
 	if not damageConfig["damage_types"][damageType] then
-		damageConfig["damage_types"][damageType] = ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class
+		damageConfig["damage_types"][damageType] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class)
 	end
 	local damageTypeConfig = damageConfig["damage_types"][damageType]
 

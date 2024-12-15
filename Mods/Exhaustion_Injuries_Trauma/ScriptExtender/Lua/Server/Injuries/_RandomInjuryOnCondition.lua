@@ -72,7 +72,7 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 			local finalDamageAmount = event.Hit.Damage.FinalDamagePerType[damagePair.DamageType]
 
 			if tempHpReductionTable[damagePair.DamageType] then
-				finalDamageAmount = damagePair.DamageType - tempHpReductionTable[damagePair.DamageType]
+				finalDamageAmount = finalDamageAmount - tempHpReductionTable[damagePair.DamageType]
 			end
 
 			hp = hp - finalDamageAmount
