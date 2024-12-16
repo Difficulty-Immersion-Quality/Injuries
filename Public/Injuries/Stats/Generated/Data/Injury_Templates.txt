@@ -1,18 +1,52 @@
-new entry "Goon_Template_Injuries"
+// ==================================== Proxy template ====================================
+
+new entry "Goon_Proxy_Template"
 type "StatusData" 
 data "StatusType" "BOOST" 
+// 
 data "DisplayName" ""
+//
 data "Description" ""
-data "ExtraDescription" ""
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
-data "StatusPropertyFlags" "ApplyToDead"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
 data "StackId" ""
+data "StackPriority" ""
 data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" ""
 data "RemoveEvents" ""
-data "StatusGroups" "SG_Goon_Injuries"
-data "StillAnimationType" "Dazed"
-data "StillAnimationPriority" "Dazed"
-data "SoundVocalStart" "WEAK"
-data "SplatterBloodAmount" "0.5"
-data "SplatterDirtAmount" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+
+// ==================================== Real injury template ====================================
+
+new entry "Goon_Real_Injury_Template"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// 
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" ""
+data "StackPriority" ""
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"

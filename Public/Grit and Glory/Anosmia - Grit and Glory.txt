@@ -1,0 +1,56 @@
+// ==================================== Anosmia Filter Proxies  ====================================
+
+new entry "Goon_Injury_Proxy_Grit_Glory_Anosmia"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Anosmia
+data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
+// 
+data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" ""
+data "StackPriority" ""
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not HasStatusImmunity(STINKING_CLOUD)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Partial_Anosmia,100,-1)"
+data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Anosmia)"
+data "RemoveEvents" "OnHeal"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+
+// ==================================== Anosmia Flavour Proxies  ====================================
+
+
+
+// ==================================== Anosmia Injuries  ====================================
+
+new entry "Goon_Real_Injury_Grit_Glory_Anosmia"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Anosmia
+data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
+// 
+data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" ""
+data "StackPriority" ""
+data "Boosts" "StatusImmunity(STINKING_CLOUD)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" "OnHeal"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" "WEAK"
+data "SoundVocalEnd" ""
+data "SplatterBloodAmount" "1.0"
+data "SplatterDirtAmount" ""

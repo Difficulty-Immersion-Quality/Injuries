@@ -1,0 +1,117 @@
+// ==================================== Technicals ====================================
+
+// Statuses
+new entry "Goon_Grit_Glory_Partial_Blindness_Detect"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "RemoveConditions" "not HasStatus (Goon_Injury_Grit_Glory_Partial_Blindness)"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+
+// ==================================== Eyeball Filter Proxies ====================================
+
+new entry "Goon_Injury_Proxy_Grit_Glory_Blindness"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Blindness
+data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
+// 
+data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "Goon_Injury_Grit_Glory_Blindness"
+data "StackPriority" "2"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not HasPassive (Blindsight) and not StatusImmunity(BLINDED)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Blindness,100,-1)"
+data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Blindness)"
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+
+// ----------------------------------------------------------------------------------------------------
+
+new entry "Goon_Injury_Proxy_Grit_Glory_Partial_Blindness"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Partial Blindness
+data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
+// 
+data "Description" "h7d6551ecgf53ag46b9g91b9g0ce90774a3b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "Goon_Injury_Grit_Glory_Blindness"
+data "StackPriority" "1"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus (Goon_Grit_Glory_Partial_Blindness_Detect)):ApplyStatus(Goon_Injury_Grit_Glory_Blindness);IF(not HasPassive (Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(Goon_Real_Injury_Grit_Glory_Partial_Blindness) or HasStatus(Goon_Injury_Grit_Glory_Blindness)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Partial_Blindness,100,-1)"
+data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Partial_Blindness)"
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+
+// ==================================== Regular Eyeball Injuries ====================================
+
+new entry "Goon_Real_Injury_Grit_Glory_Blindness"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Blindness
+data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
+// 
+data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "Goon_Real_Injury_Grit_Glory_Blindness"
+data "StackPriority" "2"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(BLINDED,100,-1)"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+//
+data "StillAnimationType" "Blinded"
+data "StillAnimationPriority" "Blinded"
+data "SoundVocalStart" "WEAK"
+data "SoundVocalEnd" ""
+data "SplatterBloodAmount" "1.0"
+data "SplatterDirtAmount" ""
+
+// ----------------------------------------------------------------------------------------------------
+
+new entry "Goon_Real_Injury_Grit_Glory_Partial_Blindness"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Partial Blindness
+data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
+// 
+data "Description" "h7d6551ecgf53ag46b9g91b9g0ce90774a3b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "Goon_Real_Injury_Grit_Glory_Blindness"
+data "StackPriority" "1"
+data "Boosts" "Disadvantage(Skill,Perception);IF(IsAttackType(AttackType.RangedWeaponAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedSpellAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedUnarmedAttack)):Disadvantage(AttackTarget)"
+data "OnApplyFunctors" "ApplyStatus(Goon_Grit_Glory_Partial_Blindness_Detect,100,-1)"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+//
+data "StillAnimationType" "Blinded"
+data "StillAnimationPriority" "Blinded"
+data "SoundVocalStart" "WEAK"
+data "SoundVocalEnd" ""
+data "SplatterBloodAmount" "1.0"
+data "SplatterDirtAmount" ""
+
+// ==================================== Eyeball Flavour Proxies ====================================
+
