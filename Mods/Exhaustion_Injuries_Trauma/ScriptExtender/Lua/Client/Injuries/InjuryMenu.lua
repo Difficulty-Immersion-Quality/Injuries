@@ -208,7 +208,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local newSlider = newRow:AddCell():AddSliderInt("", universal.npc_multipliers[npcType] * 100, 0, 500)
 			newSlider.OnChange = function(slider)
 				---@cast slider ExtuiSliderInt
-				universal.npc_multipliers[npcType] = tonumber(string.format("%.2f", slider.Value[1] / 100))
+				universal.npc_multipliers[npcType] = math.floor(slider.Value[1] * 100 + 0.5) / 10000
 			end
 
 			return newRow

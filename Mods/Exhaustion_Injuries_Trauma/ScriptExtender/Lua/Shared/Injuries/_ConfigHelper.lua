@@ -44,7 +44,7 @@ function InjuryConfigHelper:CalculateNpcMultiplier(character)
 			npcType = string.lower(npcType)
 
 			-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
-			if string.find(lowerCat, "^" .. npcType .. "$") or string.find(lowerCat, "_" .. npcType .. "$") then
+			if lowerCat == npcType or string.find(lowerCat, "_" .. npcType .. "$") then
 				return multiplier, xpCategory
 			end
 		end
