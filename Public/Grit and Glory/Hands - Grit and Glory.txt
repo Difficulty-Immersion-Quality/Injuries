@@ -1,4 +1,4 @@
-// ==================================== Anosmia Filter Proxies  ====================================
+// ==================================== Destroyed Hand Filter Proxy  ====================================
 
 new entry "Goon_Injury_Proxy_Grit_Glory_Destroyed_Hand"
 type "StatusData" 
@@ -14,18 +14,15 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "Goon_Injury_Proxy_Grit_Glory_Destroyed_Hand"
 data "StackPriority" ""
 data "Boosts" ""
-data "OnApplyFunctors" "ApplyStatus(Goon_Real_Injury_Grit_Glory_Partial_Destroyed_Hand,100,-1)"
-data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Destroyed_Hand)"
-data "RemoveEvents" "OnHeal"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(Goon_Real_Injury_Grit_Glory_Destroyed_Hand,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(Goon_Real_Injury_Grit_Glory_Gangrene_Hand,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Hand,100,-1);"
+data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Destroyed_Hand) and not HasStatus (Goon_Real_Injury_Grit_Glory_Gangrene_Hand) and not HasStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Hand)"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
+data "Passives" ""
 
-// ==================================== Anosmia Flavour Proxies  ====================================
-
-
-
-// ==================================== Hands Injuries  ====================================
+// ==================================== Destroyed Hand Injury  ====================================
 
 new entry "Goon_Real_Injury_Grit_Glory_Destroyed_Hand"
 type "StatusData" 
@@ -40,17 +37,33 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "Goon_Real_Injury_Grit_Glory_Destroyed_Hand"
 data "StackPriority" ""
-data "Boosts" "IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(Ability,Strength);Disadvantage(Ability,Dexterity);Disadvantage(AttackRoll)"
+data "Boosts" "IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(Ability,Strength);IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(Ability,Dexterity);IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(AttackRoll);IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):UnlockSpellVariant(Goon_Injury_Spell_Check(),IsSpell(),ModifySavingThrowAdvantage())"
 data "OnApplyFunctors" "IF(IsEquipmentSlot(EquipmentSlot.MeleeOffHand)):DisarmWeapon();IF(IsEquipmentSlot(EquipmentSlot.RangedOffHand)):DisarmWeapon()"
-data "RemoveConditions" ""
+data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
 data "RemoveEvents" "OnHeal"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 //
-data "StillAnimationType" "Blinded"
-data "StillAnimationPriority" "Blinded"
-data "SoundVocalStart" "WEAK"
-data "SoundVocalEnd" ""
-data "SplatterBloodAmount" "1.0"
-data "SplatterDirtAmount" ""
+data "StillAnimationType" "Snared"
+data "StillAnimationPriority" "Snared"
+data "SoundVocalStart" "PAIN"
+data "SoundVocalEnd" "EFFORTS"
+data "SplatterBloodAmount" "0.69"
+data "SplatterDirtAmount" "0.5"
+
+// ==================================== Destroyed Hand Flavour Proxies  ====================================
+
+new entry "Goon_Real_Injury_Grit_Glory_Gangrene_Hand"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "Goon_Real_Injury_Grit_Glory_Destroyed_Hand"
+// Gangrene of the Hand
+data "DisplayName" "h34796a02g9f5ag4718gbd3ag0db46988abef"
+
+new entry "Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Hand"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "Goon_Real_Injury_Grit_Glory_Destroyed_Hand"
+// Explosive Grounding of the Hand
+data "DisplayName" "ha4e6d02fg6328g4072gbca4gfd3de57e6035"

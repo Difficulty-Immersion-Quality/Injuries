@@ -20,6 +20,19 @@ data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Flavour proxy template  ====================================
+
+new entry "Goon_Flavour_Proxy_Template"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "Goon_Real_Injury_Template"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "DescriptionParams" ""
 
 // ==================================== Real injury template ====================================
 

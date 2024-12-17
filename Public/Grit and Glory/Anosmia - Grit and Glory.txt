@@ -1,4 +1,4 @@
-// ==================================== Anosmia Filter Proxies  ====================================
+// ==================================== Anosmia Filter Proxy  ====================================
 
 new entry "Goon_Injury_Proxy_Grit_Glory_Anosmia"
 type "StatusData" 
@@ -16,16 +16,13 @@ data "StackPriority" ""
 data "Boosts" ""
 data "OnApplyFunctors" "IF(not HasStatusImmunity(STINKING_CLOUD)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Partial_Anosmia,100,-1)"
 data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Anosmia)"
-data "RemoveEvents" "OnHeal"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
+data "Passives" ""
 
-// ==================================== Anosmia Flavour Proxies  ====================================
-
-
-
-// ==================================== Anosmia Injuries  ====================================
+// ==================================== Anosmia Injury  ====================================
 
 new entry "Goon_Real_Injury_Grit_Glory_Anosmia"
 type "StatusData" 
@@ -42,7 +39,7 @@ data "StackId" ""
 data "StackPriority" ""
 data "Boosts" "StatusImmunity(STINKING_CLOUD)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" ""
+data "RemoveConditions" "SavingThrow(Ability.Constitution,10)"
 data "RemoveEvents" "OnHeal"
 data "TickType" ""
 data "TickFunctors" ""
@@ -50,7 +47,10 @@ data "StatusGroups" "SG_Condition"
 //
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
-data "SoundVocalStart" "WEAK"
-data "SoundVocalEnd" ""
-data "SplatterBloodAmount" "1.0"
+data "SoundVocalStart" "ANTICIPATION"
+data "SoundVocalEnd" "RECOVER"
+data "SplatterBloodAmount" ""
 data "SplatterDirtAmount" ""
+
+// ==================================== Anosmia Flavour Proxies  ====================================
+
