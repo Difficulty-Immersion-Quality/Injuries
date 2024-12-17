@@ -1,6 +1,6 @@
 // ==================================== Destroyed Foot Filter Proxy  ====================================
 
-new entry "Goon_Injury_Proxy_Grit_Glory_Destroyed_Foot"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Destroyed Foot
@@ -14,8 +14,8 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" ""
 data "StackPriority" ""
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasStatus(GOON_DAMAGE_DEALT_COLD) and not HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Destroyed_Foot,100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Gangrene_Foot,100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Foot,100,-1);"
-data "RemoveConditions" "not HasStatus(Goon_Real_Injury_Grit_Glory_Destroyed_Foot) and not HasStatus(Goon_Real_Injury_Grit_Glory_Gangrene_Foot) and not HasStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Foot)"
+data "OnApplyFunctors" "IF(not HasStatus(GOON_DAMAGE_DEALT_COLD) and not HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT',100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT',100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT',100,-1);"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT)"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -24,7 +24,7 @@ data "Passives" ""
 
 // ==================================== Destroyed Foot Injury  ====================================
 
-new entry "Goon_Real_Injury_Grit_Glory_Destroyed_Foot"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Destroyed Foot
@@ -35,7 +35,7 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "Goon_Real_Injury_Grit_Glory_Destroyed_Foot"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 data "StackPriority" ""
 data "Boosts" "ActionResourceConsumeMultiplier(Movement,1.5,0);Disadvantage(Skill,Acrobatics)"
 data "OnApplyFunctors" ""
@@ -55,16 +55,16 @@ data "SplatterDirtAmount" "0.5"
 
 // ==================================== Destroyed Foot Flavour Proxies  ====================================
 
-new entry "Goon_Real_Injury_Grit_Glory_Gangrene_Foot"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
-using "Goon_Real_Injury_Grit_Glory_Destroyed_Foot"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 // Gangrene of the Foot
 data "DisplayName" "h90ace1b3ga948g45e0ga139g25a5eb374b87"
 
-new entry "Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Foot"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
-using "Goon_Real_Injury_Grit_Glory_Destroyed_Foot"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 // Explosive Grounding of the Foot
 data "DisplayName" "h002467ecg9b8dg43e4g8845g7e43225de74b"

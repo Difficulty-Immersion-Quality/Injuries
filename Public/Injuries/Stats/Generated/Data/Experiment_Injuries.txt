@@ -35,7 +35,7 @@ data "DarkvisionRange" "14"
 data "ArmorType" "None"
 
 
-new entry "Goon_Injury_SEE_DELUSIONS"
+new entry "GOON_INJURY_SEE_DELUSIONS"
 type "StatusData"
 data "StatusType" "BOOST"
 // See Delusions

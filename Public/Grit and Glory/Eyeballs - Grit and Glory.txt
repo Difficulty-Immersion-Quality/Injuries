@@ -1,6 +1,6 @@
 // ==================================== Blindness Filter Proxy ====================================
 
-new entry "Goon_Injury_Proxy_Grit_Glory_Blindness"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Blindness
@@ -11,11 +11,11 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "Goon_Injury_Grit_Glory_Blindness"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
 data "StackPriority" "2"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasPassive (Blindsight) and not StatusImmunity(BLINDED)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Blindness,100,-1)"
-data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Blindness)"
+data "OnApplyFunctors" "IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS',100,-1)"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS)"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -24,7 +24,7 @@ data "Passives" ""
 
 // ==================================== Blindness Injury ====================================
 
-new entry "Goon_Real_Injury_Grit_Glory_Blindness"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Blindness
@@ -35,8 +35,8 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "Goon_Real_Injury_Grit_Glory_Blindness"
-data "StackPriority" "2"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
+data "StackPriority" ""
 data "Boosts" ""
 data "OnApplyFunctors" "ApplyStatus(BLINDED,100,-1)"
 data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,20)"
@@ -62,7 +62,7 @@ data "SplatterDirtAmount" ""
 
 // ==================================== Partial Blindness Filter Proxy ====================================
 
-new entry "Goon_Injury_Proxy_Grit_Glory_Partial_Blindness"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Partial Blindness
@@ -73,11 +73,11 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "Goon_Injury_Grit_Glory_Blindness"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
 data "StackPriority" "1"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus (Goon_Grit_Glory_Partial_Blindness_Detect)):ApplyStatus(Goon_Injury_Grit_Glory_Blindness);IF(not HasPassive (Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(Goon_Real_Injury_Grit_Glory_Partial_Blindness) or HasStatus(Goon_Injury_Grit_Glory_Blindness) and HasStatus(GOON_DAMAGE_DEALT_COLD):ApplyStatus(Goon_Real_Injury_Grit_Glory_Ocular_Damage,100,-1);IF(not HasPassive (Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(Goon_Real_Injury_Grit_Glory_Partial_Blindness) or HasStatus(Goon_Injury_Grit_Glory_Blindness)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Partial_Blindness,100,-1)"
-data "RemoveConditions" "not HasStatus (Goon_Real_Injury_Grit_Glory_Partial_Blindness) and not HasStatus (Goon_Real_Injury_Grit_Glory_Ocular_Damage)"
+data "OnApplyFunctors" "IF(HasStatus(GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT)):ApplyStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS');IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS) and HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE',100,-1);IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS) and not HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS',100,-1)"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE)"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -85,15 +85,15 @@ data "StatusGroups" "SG_Condition;SG_Blinded"
 data "Passives" ""
 
 // Technical Status
-new entry "Goon_Grit_Glory_Partial_Blindness_Detect"
+new entry "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "RemoveConditions" "not HasStatus (Goon_Injury_Grit_Glory_Partial_Blindness) and not HasStatus (Goon_Real_Injury_Grit_Glory_Ocular_Damage)"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE)"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 
 // ==================================== Partial Blindness Injury ====================================
 
-new entry "Goon_Real_Injury_Grit_Glory_Partial_Blindness"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Partial Blindness
@@ -104,10 +104,10 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "Goon_Real_Injury_Grit_Glory_Blindness"
-data "StackPriority" "1"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
+data "StackPriority" ""
 data "Boosts" "Disadvantage(Skill,Perception);IF(IsAttackType(AttackType.RangedWeaponAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedSpellAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedUnarmedAttack)):Disadvantage(AttackTarget)"
-data "OnApplyFunctors" "ApplyStatus(Goon_Grit_Glory_Partial_Blindness_Detect,100,-1)"
+data "OnApplyFunctors" "ApplyStatus(GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT,100,-1)"
 data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
 data "RemoveEvents" "OnHeal"
 data "TickType" ""
@@ -123,10 +123,10 @@ data "SplatterDirtAmount" "0.1"
 
 // ==================================== Partial Blindness Flavour Proxies ====================================
 
-new entry "Goon_Real_Injury_Grit_Glory_Ocular_Damage"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE"
 type "StatusData" 
 data "StatusType" "BOOST"
-using "Goon_Real_Injury_Grit_Glory_Partial_Blindness"
+using "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
 // Ocular Damage
 data "DisplayName" "h38bec16bgc8cag4cf3g95eeg8d0ebe33e616"
 // 

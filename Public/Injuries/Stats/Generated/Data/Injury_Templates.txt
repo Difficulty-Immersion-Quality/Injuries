@@ -1,6 +1,6 @@
 // ==================================== Proxy template ====================================
 
-new entry "Goon_Proxy_Template"
+new entry "GOON_PROXY_TEMPLATE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // 
@@ -24,7 +24,7 @@ data "Passives" ""
 
 // ==================================== Flavour proxy template  ====================================
 
-new entry "Goon_Flavour_Proxy_Template"
+new entry "GOON_FLAVOUR_PROXY_TEMPLATE"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "Goon_Real_Injury_Template"
@@ -36,7 +36,7 @@ data "DescriptionParams" ""
 
 // ==================================== Real injury template ====================================
 
-new entry "Goon_Real_Injury_Template"
+new entry "GOON_REAL_INJURY_TEMPLATE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // 
