@@ -1,62 +1,145 @@
 // ==================================== Damage detection ====================================
 
+// Unlike vanilla's tracking this includes Necrotic damage and they all share a stack so last application wins.
+
 // Passive
+
 new entry "Goon_Damage_Detect"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnDamaged"
-data "StatsFunctors" "IF(IsDamageTypeAcid()):ApplyStatus(DAMAGE_DEALT_ACID,100,1);IF(IsDamageTypeCold()):ApplyStatus(DAMAGE_DEALT_COLD,100,1);IF(IsDamageTypeFire()):ApplyStatus(DAMAGE_DEALT_FIRE,100,1);IF(IsDamageTypeLightning()):ApplyStatus(DAMAGE_DEALT_LIGHTNING,100,1);IF(IsDamageTypeThunder()):ApplyStatus(DAMAGE_DEALT_THUNDER,100,1);IF(IsDamageTypeRadiant()):ApplyStatus(DAMAGE_DEALT_RADIANT,100,1);IF(IsDamageTypePoison()):ApplyStatus(DAMAGE_DEALT_POISON,100,1);IF(IsDamageTypePsychic()):ApplyStatus(DAMAGE_DEALT_PSYCHIC,100,1);IF(IsDamageTypeForce()):ApplyStatus(DAMAGE_DEALT_FORCE,100,1);IF(IsDamageTypeSlashing()):ApplyStatus(DAMAGE_DEALT_SLASHING,100,1);IF(IsDamageTypePiercing()):ApplyStatus(DAMAGE_DEALT_PIERCING,100,1);IF(IsDamageTypeBludgeoning()):ApplyStatus(DAMAGE_DEALT_BLUDGEONING,100,1);IF(IsDamageTypeNecrotic()):ApplyStatus(DAMAGE_DEALT_NECROTIC,100,1)"
+data "StatsFunctors" "IF(IsDamageTypeAcid()):ApplyStatus(GOON_DAMAGE_DEALT_ACID,100,1);IF(IsDamageTypeCold()):ApplyStatus(GOON_DAMAGE_DEALT_COLD,100,1);IF(IsDamageTypeFire()):ApplyStatus(GOON_DAMAGE_DEALT_FIRE,100,1);IF(IsDamageTypeLightning()):ApplyStatus(GOON_DAMAGE_DEALT_LIGHTNING,100,1);IF(IsDamageTypeThunder()):ApplyStatus(GOON_DAMAGE_DEALT_THUNDER,100,1);IF(IsDamageTypeRadiant()):ApplyStatus(GOON_DAMAGE_DEALT_RADIANT,100,1);IF(IsDamageTypePoison()):ApplyStatus(GOON_DAMAGE_DEALT_POISON,100,1);IF(IsDamageTypePsychic()):ApplyStatus(GOON_DAMAGE_DEALT_PSYCHIC,100,1);IF(IsDamageTypeForce()):ApplyStatus(GOON_DAMAGE_DEALT_FORCE,100,1);IF(IsDamageTypeSlashing()):ApplyStatus(GOON_DAMAGE_DEALT_SLASHING,100,1);IF(IsDamageTypePiercing()):ApplyStatus(GOON_DAMAGE_DEALT_PIERCING,100,1);IF(IsDamageTypeBludgeoning()):ApplyStatus(GOON_DAMAGE_DEALT_BLUDGEONING,100,1);IF(IsDamageTypeNecrotic()):ApplyStatus(GOON_DAMAGE_DEALT_NECROTIC,100,1)"
 
-// Statuses
-new entry "DAMAGE_DEALT_NECROTIC"
+// Template 
+
+new entry "GOON_DAMAGE_DEALT_TEMPLATE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StackId" "DAMAGE_DEALT_NECROTIC"
+data "StackId" "GOON_DAMAGE_DETECT"
 data "StackType" "Overwrite"
 data "TickType" "StartTurn"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;TickingWithSource"
 
+// Statuses
+
+new entry "GOON_DAMAGE_DEALT_NECROTIC"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_BLUDGEONING"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_PIERCING"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_SLASHING"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_FORCE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_PSYCHIC"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_POISON"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_RADIANT"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_THUNDER"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_LIGHTNING"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_FIRE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_COLD"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
+new entry "GOON_DAMAGE_DEALT_ACID"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_DAMAGE_DEALT_TEMPLATE"
+
 // ==================================== Attack detection ====================================
 
 // Passive
+
 new entry "Goon_Attack_Detect"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnDamaged"
 data "StatsFunctors" "IF(IsMeleeWeaponAttack()):ApplyStatus(GOON_ATTACKED_MELEE_WEAPON,100,1);IF(IsRangedWeaponAttack()):ApplyStatus(GOON_ATTACKED_RANGED_WEAPON,100,1);IF(IsMeleeUnarmedAttack()):ApplyStatus(GOON_ATTACKED_MELEE_UNARMED,100,1);IF(IsRangedUnarmedAttack()):ApplyStatus(GOON_ATTACKED_RANGED_UNARMED,100,1);IF(IsMeleeSpellAttack()):ApplyStatus(GOON_ATTACKED_MELEE_SPELL,100,1);IF(IsRangedSpellAttack()):ApplyStatus(GOON_ATTACKED_RANGED_SPELL,100,1);IF(NotMeleeSpellAttack() and not RangedSpellAttack() and is Spell()):ApplyStatus(GOON_ATTACKED_SPELL_SPELL,100,1)"
 
+// Template 
+
+new entry "GOON_ATTACKED_TEMPLATE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "StackId" "GOON_ATTACK_DETECT"
+data "StackType" "Overwrite"
+data "TickType" "StartTurn"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;TickingWithSource"
+
 // Statuses
+
 new entry "GOON_ATTACKED_MELEE_WEAPON"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
 
 new entry "GOON_ATTACKED_RANGED_WEAPON"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
 
 new entry "GOON_ATTACKED_MELEE_UNARMED"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
 
 new entry "GOON_ATTACKED_RANGED_UNARMED"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
 
 new entry "GOON_ATTACKED_MELEE_SPELL"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
 
 new entry "GOON_ATTACKED_RANGED_SPELL"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
 
 new entry "GOON_ATTACKED_SPELL_SPELL"
 type "StatusData" 
 data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+using "GOON_ATTACKED_TEMPLATE"
