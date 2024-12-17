@@ -14,7 +14,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" ""
 data "StackPriority" ""
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Destroyed_Foot,100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Gangrene_Foot,100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Foot,100,-1);"
+data "OnApplyFunctors" "IF(not HasStatus(GOON_DAMAGE_DEALT_COLD) and not HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Destroyed_Foot,100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Gangrene_Foot,100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Foot,100,-1);"
 data "RemoveConditions" "not HasStatus(Goon_Real_Injury_Grit_Glory_Destroyed_Foot) and not HasStatus(Goon_Real_Injury_Grit_Glory_Gangrene_Foot) and not HasStatus(Goon_Real_Injury_Grit_Glory_Explosive_Grounding_Foot)"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
