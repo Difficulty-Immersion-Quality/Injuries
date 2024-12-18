@@ -1,4 +1,4 @@
-// ==================================== Destroyed Foot Filter Proxy  ====================================
+// ==================================== Filter Proxy ====================================
 
 new entry "GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
@@ -22,7 +22,7 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// ==================================== Destroyed Foot Injury  ====================================
+// ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
@@ -53,7 +53,7 @@ data "SoundVocalEnd" "EFFORTS"
 data "SplatterBloodAmount" "0.69"
 data "SplatterDirtAmount" "0.5"
 
-// ==================================== Destroyed Foot Flavour Proxies  ====================================
+// ==================================== Flavour Proxies  ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT"
 type "StatusData" 

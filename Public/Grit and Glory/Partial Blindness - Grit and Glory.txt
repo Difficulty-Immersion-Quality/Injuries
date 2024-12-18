@@ -1,4 +1,4 @@
-// ==================================== Partial Blindness Filter Proxy ====================================
+// ==================================== Filter Proxy ====================================
 
 new entry "GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS"
 type "StatusData" 
@@ -29,7 +29,7 @@ data "StatusType" "BOOST"
 data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE)"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 
-// ==================================== Partial Blindness Injury ====================================
+// ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
 type "StatusData" 
@@ -45,7 +45,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
 data "StackPriority" ""
 data "Boosts" "Disadvantage(Skill,Perception);IF(IsAttackType(AttackType.RangedWeaponAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedSpellAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedUnarmedAttack)):Disadvantage(AttackTarget)"
-data "OnApplyFunctors" "ApplyStatus(GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT,100,-1)"
+data "OnApplyFunctors" "ApplyStatus('GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT',100,-1)"
 data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
 data "RemoveEvents" "OnHeal"
 data "TickType" ""
@@ -60,7 +60,7 @@ data "SoundVocalEnd" "EXHAUSTED"
 data "SplatterBloodAmount" "0.25"
 data "SplatterDirtAmount" "0.1"
 
-// ==================================== Partial Blindness Flavour Proxies ====================================
+// ==================================== Flavour Proxies  ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE"
 type "StatusData" 

@@ -1,4 +1,4 @@
-// ==================================== Blindness Filter Proxy ====================================
+// ==================================== Filter Proxy ====================================
 
 new entry "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
 type "StatusData" 
@@ -22,7 +22,7 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition;SG_Blinded"
 data "Passives" ""
 
-// ==================================== Blindness Injury ====================================
+// ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
 type "StatusData" 
@@ -53,5 +53,5 @@ data "SoundVocalEnd" ""
 data "SplatterBloodAmount" "1.0"
 data "SplatterDirtAmount" ""
 
-// ==================================== Blindness Flavour Proxies ====================================
+// ==================================== Flavour Proxies  ====================================
 

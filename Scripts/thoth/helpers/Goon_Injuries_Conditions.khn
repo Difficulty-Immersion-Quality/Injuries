@@ -1,3 +1,7 @@
-function Goon_Injury_Spell_Check()
-    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow') | HasStringInSpellRoll('SpellAutoResolveOnAlly') | HasStringInSpellRoll('HeatMetalInitialCheck') | HasStringInSpellRoll('HeatMetalReapplyCheck')) & (HasSpellFlag(SpellFlags.Spell) | NonSpellMetamagicAbilities())
+function Goon_Injury_Spell_Check_Somatic()
+    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasSomaticComponent))
+end
+
+function Goon_Injury_Spell_Check_Verbal()
+    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasVerbalComponent))
 end

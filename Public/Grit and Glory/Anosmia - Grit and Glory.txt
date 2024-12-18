@@ -1,4 +1,4 @@
-// ==================================== Anosmia Filter Proxy  ====================================
+// ==================================== Filter Proxy ====================================
 
 new entry "GOON_INJURY_PROXY_GRIT_GLORY_ANOSMIA"
 type "StatusData" 
@@ -22,7 +22,7 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// ==================================== Anosmia Injury  ====================================
+// ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_ANOSMIA"
 type "StatusData" 
@@ -53,5 +53,5 @@ data "SoundVocalEnd" "RECOVER"
 data "SplatterBloodAmount" ""
 data "SplatterDirtAmount" ""
 
-// ==================================== Anosmia Flavour Proxies  ====================================
+// ==================================== Flavour Proxies  ====================================
 
