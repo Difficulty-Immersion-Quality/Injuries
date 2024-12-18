@@ -23,9 +23,9 @@
 					<attribute id="LevelName" type="FixedString" value="" />
 					<attribute id="LevelOverride" type="int32" value="5" />
 					<attribute id="LightID" type="FixedString" value="4a2b554e-69c1-4137-b6a8-f8065bf2b5cc" />
-					<attribute id="MapKey" type="FixedString" value="749b1e7d-63a1-4a3d-b0ca-f237b9ada5c4" />
-					<attribute id="Name" type="LSString" value="Shadow_A" />
-					<attribute id="ParentTemplateId" type="FixedString" value="29ad5160-21d6-4e0b-9073-4fdee590f62f" />
+					<attribute id="MapKey" type="FixedString" value="3e065176-2624-453d-9ae1-31ad4fd24694" />
+					<attribute id="Name" type="LSString" value="Goon_Shadow_Delusion" />
+					<attribute id="ParentTemplateId" type="FixedString" value="749b1e7d-63a1-4a3d-b0ca-f237b9ada5c4" />
 					<attribute id="PhysicsTemplate" type="FixedString" value="efc67096-7e61-46ce-3542-74884e07e693" />
 					<attribute id="Race" type="guid" value="9d4c97ce-5b07-4bf6-97fa-2e744032e170" />
 					<attribute id="SoundInitEvent" type="FixedString" value="790a8ad4-8cac-4631-931b-e6e1c715f473" />
