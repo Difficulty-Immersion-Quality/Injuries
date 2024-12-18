@@ -37,7 +37,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
 data "StackPriority" ""
-data "Boosts" "IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(Ability,Strength);IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(Ability,Dexterity);IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):Disadvantage(AttackRoll);IF(DualWielding(true) or FightingStyle_GreatWeapon(context.Source) or HasShieldEquipped(context.Source)):UnlockSpellVariant(Goon_Injury_Spell_Check_Somatic(),IsSpell(),ModifySavingThrowAdvantage())"
+data "Boosts" "IF(Goon_Injury_Offhand_Check(true)):Disadvantage(Ability,Strength);IF(Goon_Injury_Offhand_Check(true)):Disadvantage(Ability,Dexterity);IF(Goon_Injury_Offhand_Check(true)):Disadvantage(AttackRoll);IF(Goon_Injury_Offhand_Check(true)):UnlockSpellVariant(Goon_Injury_Spell_Check_Somatic(),IsSpell(),ModifySavingThrowAdvantage())"
 data "OnApplyFunctors" "IF(IsEquipmentSlot(EquipmentSlot.MeleeOffHand)):DisarmWeapon();IF(IsEquipmentSlot(EquipmentSlot.RangedOffHand)):DisarmWeapon()"
 data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
 data "RemoveEvents" "OnHeal"
