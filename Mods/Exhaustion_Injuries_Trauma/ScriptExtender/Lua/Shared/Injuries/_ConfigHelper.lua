@@ -72,16 +72,6 @@ function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfi
 end
 
 if Ext.IsServer() then
-	local function RemoveTrackerPassives(character) 
-		if Osi.HasPassive(character, "Goon_Damage_Detect") == 0 then
-			Osi.RemovePassive(character, "Goon_Damage_Detect")
-		end
-
-		if Osi.HasPassive(character, "Goon_Damage_Detect") == 0 then
-			Osi.RemovePassive(character, "Goon_Attack_Detect")
-		end
-	end
-
 	---@param character GUIDSTRING
 	---@return boolean
 	function InjuryConfigHelper:IsEligible(character)
@@ -152,6 +142,16 @@ if Ext.IsServer() then
 			end
 		end
 	end)
+
+	local function RemoveTrackerPassives(character)
+		if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
+			Osi.RemovePassive(character, "Goon_Damage_Detect")
+		end
+
+		if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
+			Osi.RemovePassive(character, "Goon_Attack_Detect")
+		end
+	end
 
 	EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
 		if Ext.Entity.Get(object).Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
