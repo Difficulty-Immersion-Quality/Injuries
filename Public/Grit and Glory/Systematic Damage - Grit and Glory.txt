@@ -1,22 +1,23 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_X"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_SYSTEMATIC_DAMAGE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// 
-data "DisplayName" ""
+// Systematic Damage
+data "DisplayName" "h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe"
 //
-data "Description" ""
+data "Description" "h5d84c3d1g8f32g45e4g8ca0g3587fdad6755"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" ""
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_SYSTEMATIC_DAMAGE"
 data "StackPriority" ""
+data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" ""
-data "RemoveConditions" ""
-data "RemoveEvents" ""
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_SYSTEMATIC_DAMAGE) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_X)"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
@@ -24,34 +25,35 @@ data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_SYSTEMATIC_DAMAGE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// 
-data "DisplayName" ""
+// Systematic Damage
+data "DisplayName" "h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe"
 //
-data "Description" ""
+data "Description" "h5d84c3d1g8f32g45e4g8ca0g3587fdad6755"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" ""
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SYSTEMATIC_DAMAGE"
 data "StackPriority" ""
-data "Boosts" ""
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Ability,Strength);Disadvantage(Ability,Dexterity);Disadvantage(Ability,Constitution);Disadvantage(SavingThrow,Strength);Disadvantage(SavingThrow,Dexterity);Disadvantage(SavingThrow,Constitution)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" ""
-data "RemoveEvents" ""
+data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
+data "RemoveEvents" "OnHeal"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
-data "StillAnimationType" ""
-data "StillAnimationPriority" ""
-data "SoundVocalStart" ""
-data "SoundVocalEnd" ""
-data "SplatterBloodAmount" "0.0"
-data "SplatterDirtAmount" "0.0"
+data "StillAnimationType" "Weakened"
+data "StillAnimationPriority" "Weakened"
+data "SoundVocalStart" "WEAK"
+data "SoundVocalEnd" "RELAXED"
+data "SplatterBloodAmount" ""
+data "SplatterDirtAmount" ""
 
 // ==================================== Flavour Proxies  ====================================
 

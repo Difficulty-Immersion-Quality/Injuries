@@ -6,7 +6,8 @@ function Goon_Injury_Spell_Check_Verbal()
     return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasVerbalComponent))
 end
 
-// Not sure this is going to work as intended
+-- Not sure this is going to work as intended
+
 function Goon_Injury_Offhand_Check()
     entity = entity or context.Target
     local OffhandInUse WieldingWeapon('Melee', false, true, entity) | WieldingWeapon('Melee', true, true, entity) | WieldingWeapon('Ammunition', entity) | HasShieldEquipped(entity)

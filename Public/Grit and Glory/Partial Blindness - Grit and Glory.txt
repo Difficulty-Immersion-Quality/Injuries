@@ -13,6 +13,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 //
 data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
 data "StackPriority" "1"
+data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" "IF(HasStatus(GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT)):ApplyStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS');IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS) and HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE',100,-1);IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS) and not HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS',100,-1)"
 data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE)"
@@ -44,6 +45,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
 data "StackPriority" ""
+data "StackType" "Overwrite"
 data "Boosts" "Disadvantage(Skill,Perception);IF(IsAttackType(AttackType.RangedWeaponAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedSpellAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedUnarmedAttack)):Disadvantage(AttackTarget)"
 data "OnApplyFunctors" "ApplyStatus('GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT',100,-1)"
 data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
