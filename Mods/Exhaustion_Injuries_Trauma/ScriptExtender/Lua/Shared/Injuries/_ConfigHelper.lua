@@ -131,6 +131,28 @@ if Ext.IsServer() then
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 	end
 
+	---@param character GUIDSTRING
+	---@param injury InjuryName
+	function InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
+		local injuryEntry = Ext.Stats.Get(injury)
+		if injuryEntry.StackId and injuryEntry.StackPriority then
+			---@type EntityHandle
+			local entity = Ext.Entity.Get(character)
+
+			for _, statusName in pairs(entity.StatusContainer.Statuses) do
+				local existingInjuryEntry = Ext.Stats.Get(statusName)
+				if existingInjuryEntry
+					and injuryEntry.StackId == existingInjuryEntry.StackId
+					and tonumber(injuryEntry.StackPriority) < tonumber(existingInjuryEntry.StackPriority)
+				then
+					return true
+				end
+			end
+		end
+
+		return false
+	end
+
 	EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
 		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
 			for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
