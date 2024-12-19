@@ -13,3 +13,8 @@ function Goon_Injury_Offhand_Check()
     local OffhandInUse WieldingWeapon('Melee', false, true, entity) | WieldingWeapon('Melee', true, true, entity) | WieldingWeapon('Ammunition', entity) | HasShieldEquipped(entity)
     return OffhandInUse
 end
+
+
+function Goon_Tracking_Long_Rests_X()
+    return HasAnyStatus({'HEX_STRENGTH','HEX_DEXTERITY','HEX_CONSTITUTION','HEX_INTELLIGENCE','HEX_WISDOM','HEX_CHARISMA'}, {}, {},context.Target,context.Source)
+end
