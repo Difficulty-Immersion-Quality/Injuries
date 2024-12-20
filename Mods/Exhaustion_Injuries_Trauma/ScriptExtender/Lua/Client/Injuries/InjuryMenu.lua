@@ -196,7 +196,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		universalOptions:AddText("Customize Damage + Status Multipliers For NPCs")
 		local enemyDesc = universalOptions:AddText(
 			"These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-		.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant")
+			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant")
 		enemyDesc.TextWrapPos = 0
 		enemyDesc:SetStyle("Alpha", 0.9)
 
@@ -299,6 +299,19 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		lowSeverity.OnChange = ensureAdditionFunction
 		mediumSeverity.OnChange = ensureAdditionFunction
 		highSeverity.OnChange = ensureAdditionFunction
+
+		local damageFilterCheckbox = severityHeader:AddCheckbox("Only consider Injuries that are configured to apply on the relevant damage type",
+			universal.random_injury_filter_by_damage_type)
+		damageFilterCheckbox.TextWrapPos = 0
+		damageFilterCheckbox.OnChange = function(checkbox)
+			universal.random_injury_filter_by_damage_type = checkbox.Checked
+		end
+
+		local damageFilterDesc = severityHeader:AddText(
+			"If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
+			.. "otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered")
+		damageFilterDesc.TextWrapPos = 0
+		damageFilterDesc:SetStyle("Alpha", 0.9)
 
 		--#endregion
 
@@ -415,7 +428,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				local charMultipliers = copyWhatGroup:AddCheckbox("Character Multipliers", true)
 				charMultipliers.SameLine = true
 				charMultipliers.UserData = "character_multipliers"
-				
+
 				local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
 				removeStatus.SameLine = true
 				removeStatus.UserData = "remove_on_status"
