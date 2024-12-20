@@ -89,7 +89,7 @@ if Ext.IsServer() then
 				Osi.AddPassive(character, "Goon_Damage_Detect")
 			end
 
-			if Osi.HasPassive(character, "Goon_Damage_Detect") == 0 then
+			if Osi.HasPassive(character, "Goon_Attack_Detect") == 0 then
 				Osi.AddPassive(character, "Goon_Attack_Detect")
 			end
 
@@ -170,7 +170,7 @@ if Ext.IsServer() then
 			Osi.RemovePassive(character, "Goon_Damage_Detect")
 		end
 
-		if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
+		if Osi.HasPassive(character, "Goon_Attack_Detect") == 1 then
 			Osi.RemovePassive(character, "Goon_Attack_Detect")
 		end
 	end
