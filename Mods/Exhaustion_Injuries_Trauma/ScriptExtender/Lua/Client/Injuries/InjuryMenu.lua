@@ -92,6 +92,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		--#region Injury Removal
 		universalOptions:AddNewLine()
+
 		universalOptions:AddText("How Many Different Injuries Can Be Removed At Once?")
 		universalOptions:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
 			:SetStyle("Alpha", 0.90)
@@ -135,6 +136,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			prioritizeSeverityText.Visible = oneRadio.Active
 			prioritizeSeverityCombo.Visible = oneRadio.Active
+		end
+
+		local removeInjuriesOnDeath = universalOptions:AddCheckbox("Remove All Injuries On Death", universal.remove_on_death)
+		removeInjuriesOnDeath.OnChange = function()
+			universal.remove_on_death = removeInjuriesOnDeath.Checked
 		end
 		--#endregion
 

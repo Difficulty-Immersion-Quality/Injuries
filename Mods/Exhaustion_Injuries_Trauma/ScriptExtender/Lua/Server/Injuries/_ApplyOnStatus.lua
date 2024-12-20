@@ -48,7 +48,7 @@ local function CheckStatusOnTickOrApplication(status, character)
 		processInjuries(entity, status, statusConfig, injuryVar)
 
 		if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
-			-- 5.9 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
+			-- 5.7 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
 			-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
 			Ext.Timer.WaitFor(5700, function()
 				if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then

@@ -112,7 +112,7 @@ if Ext.IsServer() then
 	end
 
 	--- @param character EntityHandle
-	--- @param injuryVar InjuryVar
+	--- @param injuryVar InjuryVar?
 	function InjuryConfigHelper:UpdateUserVar(character, injuryVar)
 		local counter_reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 		if counter_reset == "Attack/Tick" then
@@ -195,12 +195,46 @@ if Ext.IsServer() then
 		end
 	end)
 
-	Ext.Osiris.RegisterListener("KilledBy", 4, "before", function(character, _, _, _)
-		local entity = Ext.Entity.Get(character)
-		if entity.Vars.Goon_Injuries then
-			entity.Vars.Goon_Injuries = nil
+	Ext.Osiris.RegisterListener("Died", 1, "after", function(character)
+		if ConfigManager.ConfigCopy.injuries.universal.remove_on_death then
+			local entity = Ext.Entity.Get(character)
+			if entity.Vars.Goon_Injuries then
+				for injuryName, _ in pairs(entity.Vars.Goon_Injuries["injuryAppliedReason"]) do
+					Osi.RemoveStatus(character, injuryName)
+				end
+			end
 			RemoveTrackerPassives(character)
-			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
+		end
+	end)
+
+	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, status, causee, applyStoryActionID)
+		local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
+
+		if injuryUserVar["injuryAppliedReason"][status] then
+			for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
+				injuryTable[status] = nil
+				if not next(injuryTable) then
+					injuryUserVar["damage"][damageType] = nil
+				end
+			end
+
+			for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
+				injuryTable[status] = nil
+				if not next(injuryTable) then
+					injuryUserVar["applyOnStatus"][statusName] = nil
+				end
+			end
+
+			injuryUserVar["injuryAppliedReason"][status] = nil
+
+			if not next(injuryUserVar["injuryAppliedReason"])
+				and not next(injuryUserVar["damage"])
+				and not next(injuryUserVar["applyOnStatus"])
+			then
+				injuryUserVar = nil
+			end
+
+			InjuryConfigHelper:UpdateUserVar(entity, injuryUserVar)
 		end
 	end)
 end
