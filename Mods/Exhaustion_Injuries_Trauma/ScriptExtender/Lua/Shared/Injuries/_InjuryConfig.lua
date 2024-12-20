@@ -20,6 +20,9 @@ ConfigurationStructure.config.injuries.universal.how_many_injuries_can_be_remove
 ---@alias injury_removal_severity_priority "Random"|"Most Severe"
 ---@type injury_removal_severity_priority
 ConfigurationStructure.config.injuries.universal.injury_removal_severity_priority = "Most Severe"
+
+--- @type boolean
+ConfigurationStructure.config.injuries.universal.remove_on_death = true
 --#endregion
 
 --#region Damage Counter
@@ -50,6 +53,9 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 	["Medium"] = 50,
 	["High"] = 25
 }
+
+--- @type boolean
+ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_type = true
 --#endregion
 
 --#endregion
@@ -95,6 +101,14 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
 	["number_of_rounds"] = 3,
 	---@type { [StatusName] : InjuryApplyOnStatusModifierClass }
 	["applicable_statuses"] = {}
+}
+
+---@class InjuryCharacterMultiplierClass
+ConfigurationStructure.DynamicClassDefinitions.injury_class.character_multipliers = {
+	---@type {[TAG] : number}
+	["tags"] = {},
+	---@type {[GUIDSTRING] : number}
+	["races"] = {}
 }
 
 ---@alias InjuryName string

@@ -23,22 +23,32 @@ RandomInjuryOnConditionProcessor = {}
 ---@param event EsvLuaBeforeDealDamageEvent
 ---@param defender CHARACTER
 ---@param tempHpReductionTable { [DamageType] : integer }
----@return {[InjuryName] : boolean}
 function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
-	local appliedInjuries = {}
-
 	if ConfigManager.ConfigCopy.injuries.universal.random_injury_conditional["Suffered a Critical Hit"] then
 		local severityToChoose = ChooseRandomSeverity()
 
 		local alreadySelectedInjuries = {}
 		local eligibleInjuries = {}
+
 		for damageType, damageRolls in pairs(event.Hit.Damage.DamageRolls) do
 			for _, damageRoll in pairs(damageRolls) do
 				if damageRoll.Result.Critical == "Success" then
-					for injury, _ in pairs(ConfigManager.Injuries.Damage[damageType]) do
+					local injuryPool
+					if not ConfigManager.ConfigCopy.injuries.universal.random_injury_filter_by_damage_type then
+						injuryPool = ConfigManager.ConfigCopy.injuries.injury_specific
+					else
+						injuryPool = ConfigManager.Injuries.Damage[damageType]
+					end
+
+					if not injuryPool then
+						break
+					end
+
+					for injury, _ in pairs(injuryPool) do
 						if Osi.HasActiveStatus(defender, injury) == 0
 							and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity
 							and not alreadySelectedInjuries[injury]
+							and not InjuryConfigHelper:IsHigherStackInjuryApplied(defender, injury)
 						then
 							table.insert(eligibleInjuries, injury)
 							alreadySelectedInjuries[injury] = true
@@ -55,10 +65,9 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 
 			local chosenInjury = eligibleInjuries[Osi.Random(#eligibleInjuries) + 1]
 			Osi.ApplyStatus(defender, chosenInjury, -1)
-			local _, injuryVar = InjuryConfigHelper:GetUserVar(defender)
+			local entity, injuryVar = InjuryConfigHelper:GetUserVar(defender)
 			injuryVar["injuryAppliedReason"][chosenInjury] = "Critical Hit"
-
-			appliedInjuries[chosenInjury] = true
+			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 		end
 	end
 
@@ -72,7 +81,7 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 			local finalDamageAmount = event.Hit.Damage.FinalDamagePerType[damagePair.DamageType]
 
 			if tempHpReductionTable[damagePair.DamageType] then
-				finalDamageAmount = damagePair.DamageType - tempHpReductionTable[damagePair.DamageType]
+				finalDamageAmount = finalDamageAmount - tempHpReductionTable[damagePair.DamageType]
 			end
 
 			hp = hp - finalDamageAmount
@@ -86,7 +95,6 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 			end
 		end
 	end
-	return appliedInjuries
 end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
@@ -100,10 +108,23 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 
 			local alreadySelectedInjuries = {}
 			local eligibleInjuries = {}
-			for injury, _ in pairs(ConfigManager.Injuries.Damage[damageType]) do
+
+			local injuryPool
+			if not ConfigManager.ConfigCopy.injuries.universal.random_injury_filter_by_damage_type then
+				injuryPool = ConfigManager.ConfigCopy.injuries.injury_specific
+			else
+				injuryPool = ConfigManager.Injuries.Damage[damageType]
+			end
+
+			if not injuryPool then
+				goto skip
+			end
+
+			for injury, _ in pairs(injuryPool) do
 				if Osi.HasActiveStatus(character, injury) == 0
 					and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity
 					and not alreadySelectedInjuries[injury]
+					and not InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
 				then
 					table.insert(eligibleInjuries, injury)
 					alreadySelectedInjuries[injury] = true
@@ -121,6 +142,7 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 				InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 			end
 
+			::skip::
 			entity.Vars.Injury_Downed_Tracker = nil
 		end
 	end

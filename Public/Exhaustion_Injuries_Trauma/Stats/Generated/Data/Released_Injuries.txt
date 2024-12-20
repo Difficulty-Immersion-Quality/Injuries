@@ -135,6 +135,8 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "StackId" "Goon_Injury_1st_Degree_Burn"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "Boosts" "Ability(Constitution,-1)"
+data "StackId" "Goon_Burns"
+data "StackPriority" "1"
 
 new entry "Goon_Injury_2nd_Degree_Burn"
 type "StatusData"
@@ -147,6 +149,8 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "StackId" "Goon_Injury_2nd_Degree_Burn"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "Boosts" "Ability(Constitution,-2)"
+data "StackId" "Goon_Burns"
+data "StackPriority" "2"
 
 new entry "Goon_Injury_3rd_Degree_Burn"
 type "StatusData"
@@ -159,6 +163,8 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "StackId" "Goon_Injury_3rd_Degree_Burn"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "Boosts" "Ability(Constitution,-3)"
+data "StackId" "Goon_Burns"
+data "StackPriority" "3"
 
 // ==================================== Lightning Injuries  ==================================== !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

@@ -19,9 +19,11 @@ local function generateInjuryCountTooltip(displayTooltip, injury_config)
 		child:Destroy()
 	end
 
-	displayTooltip:AddText(string.format("ApplyOnStatus Settings: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
-	displayTooltip:AddText(string.format("Damage Settings: %d", countInjuryConfig(injury_config.damage["damage_types"])))
-	displayTooltip:AddText(string.format("RemoveOnStatus Settings: %d", countInjuryConfig(injury_config.remove_on_status)))
+	displayTooltip:AddText(string.format("ApplyOnStatus: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
+	displayTooltip:AddText(string.format("Damage: %d", countInjuryConfig(injury_config.damage["damage_types"])))
+	displayTooltip:AddText(string.format("RemoveOnStatus: %d", countInjuryConfig(injury_config.remove_on_status)))
+	displayTooltip:AddText(string.format("Races: %d", countInjuryConfig(injury_config.character_multipliers["races"])))
+	displayTooltip:AddText(string.format("Tags: %d", countInjuryConfig(injury_config.character_multipliers["tags"])))
 end
 
 
@@ -37,6 +39,7 @@ end
 
 Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
+Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
 Ext.Require("Client/Injuries/Tabs/RemoveOnStatusTab.lua")
 
 local injuryDisplayNames = {}
@@ -89,6 +92,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		--#region Injury Removal
 		universalOptions:AddNewLine()
+
 		universalOptions:AddText("How Many Different Injuries Can Be Removed At Once?")
 		universalOptions:AddText("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen.")
 			:SetStyle("Alpha", 0.90)
@@ -132,6 +136,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			prioritizeSeverityText.Visible = oneRadio.Active
 			prioritizeSeverityCombo.Visible = oneRadio.Active
+		end
+
+		local removeInjuriesOnDeath = universalOptions:AddCheckbox("Remove All Injuries On Death", universal.remove_on_death)
+		removeInjuriesOnDeath.OnChange = function()
+			universal.remove_on_death = removeInjuriesOnDeath.Checked
 		end
 		--#endregion
 
@@ -187,7 +196,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		universalOptions:AddText("Customize Damage + Status Multipliers For NPCs")
 		local enemyDesc = universalOptions:AddText(
 			"These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-		.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant")
+			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant")
 		enemyDesc.TextWrapPos = 0
 		enemyDesc:SetStyle("Alpha", 0.9)
 
@@ -205,7 +214,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local newSlider = newRow:AddCell():AddSliderInt("", universal.npc_multipliers[npcType] * 100, 0, 500)
 			newSlider.OnChange = function(slider)
 				---@cast slider ExtuiSliderInt
-				universal.npc_multipliers[npcType] = tonumber(string.format("%.2f", slider.Value[1] / 100))
+				universal.npc_multipliers[npcType] = math.floor(slider.Value[1] * 100 + 0.5) / 10000
 			end
 
 			return newRow
@@ -290,6 +299,19 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		lowSeverity.OnChange = ensureAdditionFunction
 		mediumSeverity.OnChange = ensureAdditionFunction
 		highSeverity.OnChange = ensureAdditionFunction
+
+		local damageFilterCheckbox = severityHeader:AddCheckbox("Only consider Injuries that are configured to apply on the relevant damage type",
+			universal.random_injury_filter_by_damage_type)
+		damageFilterCheckbox.TextWrapPos = 0
+		damageFilterCheckbox.OnChange = function(checkbox)
+			universal.random_injury_filter_by_damage_type = checkbox.Checked
+		end
+
+		local damageFilterDesc = severityHeader:AddText(
+			"If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
+			.. "otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered")
+		damageFilterDesc.TextWrapPos = 0
+		damageFilterDesc:SetStyle("Alpha", 0.9)
 
 		--#endregion
 
@@ -402,6 +424,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				local dmg = copyWhatGroup:AddCheckbox("Damage", true)
 				dmg.SameLine = true
 				dmg.UserData = "damage"
+
+				local charMultipliers = copyWhatGroup:AddCheckbox("Character Multipliers", true)
+				charMultipliers.SameLine = true
+				charMultipliers.UserData = "character_multipliers"
 
 				local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
 				removeStatus.SameLine = true
