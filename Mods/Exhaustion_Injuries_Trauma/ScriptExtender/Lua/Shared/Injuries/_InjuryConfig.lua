@@ -53,6 +53,9 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 	["Medium"] = 50,
 	["High"] = 25
 }
+
+--- @type boolean
+ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_type = true
 --#endregion
 
 --#endregion

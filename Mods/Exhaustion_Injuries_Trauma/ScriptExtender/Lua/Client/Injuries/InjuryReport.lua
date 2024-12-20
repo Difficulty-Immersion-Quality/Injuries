@@ -325,6 +325,7 @@ Ext.RegisterNetListener("Injuries_Update_Report", function(channel, character, u
 	else
 		if (not entityVars.Goon_Injuries["damage"] or not next(entityVars.Goon_Injuries["damage"]))
 			and (not entityVars.Goon_Injuries["applyOnStatus"] or not next(entityVars.Goon_Injuries["applyOnStatus"]))
+			and (not entityVars.Goon_Injuries["injuryAppliedReason"] or not next(entityVars.Goon_Injuries["injuryAppliedReason"]))
 		then
 			entityInjuriesReport[character] = nil
 		else
