@@ -1,26 +1,9 @@
-local function clearInjuryVar(character, injuryName)
-	local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
-
-	for _, injuryTable in pairs(injuryVar["damage"]) do
-		injuryTable[injuryName] = nil
-	end
-
-	for _, injuryTable in pairs(injuryVar["applyOnStatus"]) do
-		injuryTable[injuryName] = nil
-	end
-
-	injuryVar["injuryAppliedReason"][injuryName] = nil
-
-	InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
-end
-
 ---@param character GUIDSTRING
 ---@param injury InjuryName
 ---@param injuryConfig InjuryRemoveOnStatus
 local function removeInjury(character, injury, injuryConfig)
 	if injuryConfig["ability"] == "No Save" or injuryConfig["ability"] == "None" then
 		Osi.RemoveStatus(character, injury)
-		clearInjuryVar(character, injury)
 	else
 		Osi.RequestPassiveRoll(character,
 			character,
@@ -92,8 +75,6 @@ EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller
 
 		if resultType == 1 then
 			Osi.RemoveStatus(roller, injuryName)
-
-			clearInjuryVar(roller, injuryName)
 		end
 	end
 end)

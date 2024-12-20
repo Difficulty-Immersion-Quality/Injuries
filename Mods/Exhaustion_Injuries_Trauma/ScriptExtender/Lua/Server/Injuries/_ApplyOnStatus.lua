@@ -9,7 +9,9 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
 	for injury, injuryStatusConfig in pairs(statusConfig) do
-		if Osi.HasActiveStatus(character, injury) == 0 then
+		if Osi.HasActiveStatus(character, injury) == 0
+			and not InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
+		then
 			local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 
 			if not statusVar[status] then
@@ -46,9 +48,9 @@ local function CheckStatusOnTickOrApplication(status, character)
 		processInjuries(entity, status, statusConfig, injuryVar)
 
 		if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
-			-- 5.9 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
+			-- 5.7 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
 			-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
-			Ext.Timer.WaitFor(5900, function()
+			Ext.Timer.WaitFor(5700, function()
 				if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
 					-- Make sure we're tracking ticks when not in combat, since there's no event for that
 					-- TODO: Check to see if there's any injuries left to apply for this status, so this isn't running unnecessarily

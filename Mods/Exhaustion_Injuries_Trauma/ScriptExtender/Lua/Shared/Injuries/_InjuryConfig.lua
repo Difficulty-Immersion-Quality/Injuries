@@ -20,6 +20,9 @@ ConfigurationStructure.config.injuries.universal.how_many_injuries_can_be_remove
 ---@alias injury_removal_severity_priority "Random"|"Most Severe"
 ---@type injury_removal_severity_priority
 ConfigurationStructure.config.injuries.universal.injury_removal_severity_priority = "Most Severe"
+
+--- @type boolean
+ConfigurationStructure.config.injuries.universal.remove_on_death = true
 --#endregion
 
 --#region Damage Counter

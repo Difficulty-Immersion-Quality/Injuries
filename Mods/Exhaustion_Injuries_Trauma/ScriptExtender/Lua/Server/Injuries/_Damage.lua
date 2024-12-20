@@ -31,7 +31,7 @@ local function ProcessDamageEvent(event)
 		)
 	end
 
-	local randomlyAppliedInjuries = RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
+	RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
 	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(defenderEntity)
 
@@ -46,7 +46,10 @@ local function ProcessDamageEvent(event)
 
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
-					if Osi.HasActiveStatus(defender, injury) == 0 and not injuryVar["injuryAppliedReason"][injury] and not randomlyAppliedInjuries[injury] then
+					if Osi.HasActiveStatus(defender, injury) == 0
+						and not InjuryConfigHelper:IsHigherStackInjuryApplied(defender, injury)
+						and not injuryVar["injuryAppliedReason"][injury]
+					then
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
 						if not injuryVar["damage"][damageType] then
@@ -67,12 +70,6 @@ local function ProcessDamageEvent(event)
 							local existingDamageForOtherDamageType = injuryVar["damage"][otherDamageType]
 							if damageType ~= otherDamageType and (existingDamageForOtherDamageType and existingDamageForOtherDamageType[injury]) then
 								local existingInjuryDamage = existingDamageForOtherDamageType[injury] * otherDamageConfig["multiplier"]
-
-								Logger:BasicTrace("Adding %d damage due to preexisting damageType %s for Injury %s on %s",
-									existingInjuryDamage,
-									otherDamageType,
-									injury,
-									defender)
 
 								finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier + existingInjuryDamage
 							end

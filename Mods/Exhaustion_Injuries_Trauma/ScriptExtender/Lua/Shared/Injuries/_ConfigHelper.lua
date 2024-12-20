@@ -44,7 +44,7 @@ function InjuryConfigHelper:CalculateNpcMultiplier(character)
 			npcType = string.lower(npcType)
 
 			-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
-			if string.find(lowerCat, "^" .. npcType .. "$") or string.find(lowerCat, "_" .. npcType .. "$") then
+			if lowerCat == npcType or string.find(lowerCat, "_" .. npcType .. "$") then
 				return multiplier, xpCategory
 			end
 		end
@@ -85,6 +85,14 @@ if Ext.IsServer() then
 			or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)
 			or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), character) == 1)
 		then
+			if Osi.HasPassive(character, "Goon_Damage_Detect") == 0 then
+				Osi.AddPassive(character, "Goon_Damage_Detect")
+			end
+
+			if Osi.HasPassive(character, "Goon_Damage_Detect") == 0 then
+				Osi.AddPassive(character, "Goon_Attack_Detect")
+			end
+
 			return true
 		else
 			return false
@@ -104,7 +112,7 @@ if Ext.IsServer() then
 	end
 
 	--- @param character EntityHandle
-	--- @param injuryVar InjuryVar
+	--- @param injuryVar InjuryVar?
 	function InjuryConfigHelper:UpdateUserVar(character, injuryVar)
 		local counter_reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 		if counter_reset == "Attack/Tick" then
@@ -123,6 +131,28 @@ if Ext.IsServer() then
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 	end
 
+	---@param character GUIDSTRING
+	---@param injury InjuryName
+	function InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
+		local injuryEntry = Ext.Stats.Get(injury)
+		if injuryEntry.StackId and injuryEntry.StackPriority then
+			---@type EntityHandle
+			local entity = Ext.Entity.Get(character)
+
+			for _, statusName in pairs(entity.StatusContainer.Statuses) do
+				local existingInjuryEntry = Ext.Stats.Get(statusName)
+				if existingInjuryEntry
+					and injuryEntry.StackId == existingInjuryEntry.StackId
+					and tonumber(injuryEntry.StackPriority) < tonumber(existingInjuryEntry.StackPriority)
+				then
+					return true
+				end
+			end
+		end
+
+		return false
+	end
+
 	EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
 		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
 			for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
@@ -135,10 +165,21 @@ if Ext.IsServer() then
 		end
 	end)
 
+	local function RemoveTrackerPassives(character)
+		if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
+			Osi.RemovePassive(character, "Goon_Damage_Detect")
+		end
+
+		if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
+			Osi.RemovePassive(character, "Goon_Attack_Detect")
+		end
+	end
+
 	EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
 		if Ext.Entity.Get(object).Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
 			Ext.Entity.Get(object).Vars.Goon_Injuries = nil
 			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", object)
+			RemoveTrackerPassives(object)
 		end
 	end)
 
@@ -148,16 +189,52 @@ if Ext.IsServer() then
 			local entity = Ext.Entity.Get(character)
 			if entity.Vars.Goon_Injuries then
 				Ext.Entity.Get(character).Vars.Goon_Injuries = nil
+				RemoveTrackerPassives(character)
 				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 			end
 		end
 	end)
 
-	Ext.Osiris.RegisterListener("KilledBy", 4, "before", function(character, _, _, _)
-		local entity = Ext.Entity.Get(character)
-		if entity.Vars.Goon_Injuries then
-			entity.Vars.Goon_Injuries = nil
-			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
+	Ext.Osiris.RegisterListener("Died", 1, "after", function(character)
+		if ConfigManager.ConfigCopy.injuries.universal.remove_on_death then
+			local entity = Ext.Entity.Get(character)
+			if entity.Vars.Goon_Injuries then
+				for injuryName, _ in pairs(entity.Vars.Goon_Injuries["injuryAppliedReason"]) do
+					Osi.RemoveStatus(character, injuryName)
+				end
+			end
+			RemoveTrackerPassives(character)
+		end
+	end)
+
+	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, status, causee, applyStoryActionID)
+		local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
+
+		if injuryUserVar["injuryAppliedReason"][status] then
+			for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
+				injuryTable[status] = nil
+				if not next(injuryTable) then
+					injuryUserVar["damage"][damageType] = nil
+				end
+			end
+
+			for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
+				injuryTable[status] = nil
+				if not next(injuryTable) then
+					injuryUserVar["applyOnStatus"][statusName] = nil
+				end
+			end
+
+			injuryUserVar["injuryAppliedReason"][status] = nil
+
+			if not next(injuryUserVar["injuryAppliedReason"])
+				and not next(injuryUserVar["damage"])
+				and not next(injuryUserVar["applyOnStatus"])
+			then
+				injuryUserVar = nil
+			end
+
+			InjuryConfigHelper:UpdateUserVar(entity, injuryUserVar)
 		end
 	end)
 end
