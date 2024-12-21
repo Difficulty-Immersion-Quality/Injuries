@@ -19,7 +19,7 @@
           <attribute id="Author" type="LSString" value="Goonsack and osirisofinternet" />
           <attribute id="CharacterCreationLevelName" type="FixedString" value="" />
           <attribute id="Description" type="LSString" value="Goon wounds." />
-          <attribute id="Folder" type="LSString" value="Exhaustion_Injuries_Trauma" />
+          <attribute id="Folder" type="LSString" value="Injuries" />
           <attribute id="GMTemplate" type="FixedString" value="" />
           <attribute id="LobbyLevelName" type="FixedString" value="" />
           <attribute id="MD5" type="LSString" value="" />

@@ -28,5 +28,3 @@ Ext.Require("Server/Injuries/_RandomInjuryOnCondition.lua")
 Ext.Require("Server/Injuries/_Healing.lua")
 Ext.Require("Server/Injuries/_ApplyOnStatus.lua")
 Ext.Require("Server/Injuries/_RemoveOnStatus.lua")
-
--- Ext.StaticData.Get("4fda6bce-0b91-4427-901f-690c2d091c47", "Race")
