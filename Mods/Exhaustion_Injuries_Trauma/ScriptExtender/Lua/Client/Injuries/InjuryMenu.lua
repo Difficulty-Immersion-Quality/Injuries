@@ -311,7 +311,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local systemHeader = systemGroup:AddCollapsingHeader(system)
 			systemHeader.DefaultOpen = false
 
-			systemHeader:AddButton("Delete System").OnClick = function()
+			local deleteSystemButton = systemHeader:AddButton("Delete System")
+			deleteSystemButton.IDContext = system
+			deleteSystemButton.OnClick = function()
 				for injury, _ in pairs(InjuryMenu.ConfigurationSlice.injury_specific) do
 					if string.find(string.upper(injury), "^" .. string.upper(system) .. ".*") then
 						InjuryMenu.ConfigurationSlice.injury_specific[injury].delete = true
@@ -399,7 +401,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
 					injuryPopup.TextWrapPos = 0
 					injuryPopup.Closeable = true
-					-- injuryPopup.HorizontalScrollbar = true
 
 					local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
 					newTabBar.TextWrapPos = 0
@@ -438,7 +439,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					copyPopup.Closeable = true
 
 					copyPopup:AddText("Copying from: " .. displayName)
-					copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs (fix TBD)").TextWrapPos = 0
+					copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs").TextWrapPos = 0
 					copyPopup:AddNewLine()
 
 					copyPopup:AddSeparatorText("Which Configs Should Be Copied?")
@@ -460,6 +461,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					copyPopup:AddNewLine()
 					copyPopup:AddSeparatorText("What Injuries should these configs be copied to?")
 					local copyToGroup = copyPopup:AddGroup("CopyTo")
+					copyPopup:AddButton("Select All").OnClick = function ()
+						for _, child in pairs(copyToGroup.Children) do
+							child.Checked = true
+						end
+					end
+					
 					for _, otherDisplayName in pairs(injuryDisplayNames) do
 						if displayName ~= otherDisplayName then
 							copyToGroup:AddCheckbox(otherDisplayName, false).UserData = injuriesDisplayMap[otherDisplayName]
