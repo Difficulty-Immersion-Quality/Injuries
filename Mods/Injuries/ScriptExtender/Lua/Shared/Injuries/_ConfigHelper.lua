@@ -202,6 +202,8 @@ if Ext.IsServer() then
 				for injuryName, _ in pairs(entity.Vars.Goon_Injuries["injuryAppliedReason"]) do
 					Osi.RemoveStatus(character, injuryName)
 				end
+				entity.Vars.Goon_Injuries = nil
+				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 			end
 			RemoveTrackerPassives(character)
 		end
