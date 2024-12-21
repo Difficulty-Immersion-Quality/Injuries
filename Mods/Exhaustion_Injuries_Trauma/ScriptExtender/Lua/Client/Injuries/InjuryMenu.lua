@@ -312,7 +312,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			systemHeader.DefaultOpen = false
 
 			local deleteSystemButton = systemHeader:AddButton("Delete System")
-			deleteSystemButton.IDContext = system
+			deleteSystemButton.IDContext = system -- otherwise it won't trigger when there are multiple systems
 			deleteSystemButton.OnClick = function()
 				for injury, _ in pairs(InjuryMenu.ConfigurationSlice.injury_specific) do
 					if string.find(string.upper(injury), "^" .. string.upper(system) .. ".*") then
