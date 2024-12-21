@@ -3,6 +3,12 @@
 --#region Injuries
 ConfigurationStructure.config.injuries = {}
 
+--#region Systems
+ConfigurationStructure.config.injuries.systems = {
+}
+
+--#endregion
+
 --#region Universal
 ConfigurationStructure.config.injuries.universal = {}
 

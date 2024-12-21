@@ -1,5 +1,5 @@
 {
     "RequiredVersion": 21,
-    "ModTable": "Exhaustion_Injuries_Trauma",
+    "ModTable": "Injuries",
     "FeatureFlags": ["Lua"]
 }

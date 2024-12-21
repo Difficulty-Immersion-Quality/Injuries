@@ -1,8 +1,8 @@
 ---@param damageTable ExtuiTable
 ---@param damageType DamageType
 ---@param damageConfig InjuryDamageClass
----@param damageCombo ExtuiCombo
-local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
+---@return ExtuiTableRow
+local function BuildRow(damageTable, damageType, damageConfig)
 	local row = damageTable:AddRow()
 
 	if not damageConfig["damage_types"][damageType] then
@@ -35,35 +35,7 @@ local function BuildRow(damageTable, damageType, damageConfig, damageCombo)
 			10 * damageTypeConfig["multiplier"])
 	end
 
-
-	local deleteRowButton = row:AddCell():AddButton("Delete")
-
-	local newOptions = {}
-	for _, option in pairs(damageCombo.Options) do
-		if option ~= damageType then
-			table.insert(newOptions, option)
-		end
-	end
-	table.sort(newOptions)
-	damageCombo.Options = newOptions
-	damageCombo.SelectedIndex = -1
-
-	deleteRowButton.OnClick = function()
-		-- hack to allow us to monitor table deletion
-		damageConfig["damage_types"][damageType].delete = true
-
-		local newOptions = {}
-		for _, option in pairs(damageCombo.Options) do
-			table.insert(newOptions, option)
-		end
-		table.insert(newOptions, damageType)
-		table.sort(newOptions)
-		damageCombo.Options = newOptions
-
-		damageCombo.SelectedIndex = -1
-
-		row:Destroy()
-	end
+	return row
 end
 
 --- @param tabBar ExtuiTabBar
@@ -93,10 +65,6 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow:AddCell():AddText("Damage Type")
 	headerRow:AddCell():AddText("Injury Damage Multiplier %")
 
-	damageTab:AddText("Add New Row")
-	local damageTypeCombo = damageTab:AddCombo("")
-	damageTypeCombo.SameLine = true
-
 	local damageTypes = {}
 	for _, damageType in ipairs(Ext.Enums.DamageType) do
 		if tostring(damageType) ~= "Sentinel" then
@@ -105,18 +73,31 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 	table.sort(damageTypes)
 
-	damageTypeCombo.Options = damageTypes
-	damageTypeCombo.WidthFitPreview = true
+	local addRowButton = damageTab:AddButton("+")
+	local damageTypePopup = damageTab:AddPopup("")
 
-	--- @param combo ExtuiCombo
-	--- @param selectedIndex integer
-	damageTypeCombo.OnChange = function(combo, selectedIndex)
-		BuildRow(damageTable, combo.Options[selectedIndex + 1], damageConfig, damageTypeCombo)
+	for _, damageType in pairs(damageTypes) do
+		---@type ExtuiSelectable
+		local damageSelect = damageTypePopup:AddSelectable(damageType, "DontClosePopups")
+
+		damageSelect.OnActivate = function()
+			if damageSelect.UserData then
+				damageSelect.UserData:Destroy()
+				damageSelect.UserData = nil
+				damageConfig["damage_types"][damageType].delete = true
+				damageConfig["damage_types"][damageType] = nil
+			else
+				damageSelect.UserData = BuildRow(damageTable, damageType, damageConfig)
+			end
+		end
+
+		if damageConfig["damage_types"][damageType] then
+			damageSelect.Selected = true
+			damageSelect:OnActivate()
+		end
 	end
 
-	if next(damageConfig) then
-		for damageType, _ in pairs(damageConfig["damage_types"]) do
-			BuildRow(damageTable, damageType, damageConfig, damageTypeCombo)
-		end
+	addRowButton.OnClick = function()
+		damageTypePopup:Open()
 	end
 end)
