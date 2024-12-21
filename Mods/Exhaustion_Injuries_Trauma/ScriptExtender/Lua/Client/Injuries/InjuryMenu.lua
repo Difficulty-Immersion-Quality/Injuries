@@ -426,6 +426,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
 					injuryPopup.TextWrapPos = 0
 					injuryPopup.Closeable = true
+					injuryPopup.OnClose = function ()
+						statCountTooltip:OnHoverEnter()
+					end
 
 					local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
 					newTabBar.TextWrapPos = 0
