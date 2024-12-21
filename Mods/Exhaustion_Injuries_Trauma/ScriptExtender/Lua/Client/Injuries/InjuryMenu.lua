@@ -373,8 +373,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 				local newRow = injuryTable:AddRow()
 				local displayCell = newRow:AddCell()
-				displayCell:AddImage(Ext.Stats.Get(injuryName).Icon, { 36, 36 })
+				local injuryStat = Ext.Stats.Get(injuryName)
+				displayCell:AddImage(injuryStat.Icon, { 36, 36 })
 				displayCell:AddText(displayName).SameLine = true
+				
+				DataSearchHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
 
 				local severityCombo = newRow:AddCell():AddCombo("")
 				severityCombo.Options = {
@@ -399,18 +402,18 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				local customizeButton = buttonCell:AddButton("Customize")
 
 				local statCountTooltip = customizeButton:Tooltip()
-				
+
 				statCountTooltip.OnHoverEnter = function()
 					for _, child in pairs(statCountTooltip.Children) do
 						child:Destroy()
 					end
-				
+
 					local applyOnStatusCount = countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])
 					local damageCount = countInjuryConfig(injury_config.damage["damage_types"])
 					local removeOnStatusCount = countInjuryConfig(injury_config.remove_on_status)
 					local racesCount = countInjuryConfig(injury_config.character_multipliers["races"])
 					local tagsCount = countInjuryConfig(injury_config.character_multipliers["tags"])
-					
+
 					customizeButton.Label = string.format("Customize (%s)", applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
 
 					statCountTooltip:AddText(string.format("Apply On Status: %d", applyOnStatusCount))
@@ -426,7 +429,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
 					injuryPopup.TextWrapPos = 0
 					injuryPopup.Closeable = true
-					injuryPopup.OnClose = function ()
+					injuryPopup.OnClose = function()
 						statCountTooltip:OnHoverEnter()
 					end
 
@@ -489,12 +492,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					copyPopup:AddNewLine()
 					copyPopup:AddSeparatorText("What Injuries should these configs be copied to?")
 					local copyToGroup = copyPopup:AddGroup("CopyTo")
-					copyPopup:AddButton("Select All").OnClick = function ()
+					copyPopup:AddButton("Select All").OnClick = function()
 						for _, child in pairs(copyToGroup.Children) do
 							child.Checked = true
 						end
 					end
-					
+
 					for _, otherDisplayName in pairs(injuryDisplayNames) do
 						if displayName ~= otherDisplayName then
 							copyToGroup:AddCheckbox(otherDisplayName, false).UserData = injuriesDisplayMap[otherDisplayName]
@@ -529,7 +532,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			end
 		end
 
-		
 		--#region Systems
 		for _, system in pairs(InjuryMenu.ConfigurationSlice.systems) do
 			AddSystem(system)

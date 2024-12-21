@@ -85,6 +85,7 @@ end
 ---@param tooltip ExtuiTooltip
 ---@param status StatsObject
 function DataSearchHelper:BuildStatusTooltip(tooltip, status)
+	tooltip:AddText("\n")
 	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
 
 	if status.Using ~= "" then
@@ -96,7 +97,6 @@ function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 	if status.TooltipDamage ~= "" then
 		tooltip:AddText("Damage: " .. status.TooltipDamage)
 	end
-
 
 	if status.HealValue ~= "" then
 		tooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
@@ -118,5 +118,9 @@ function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 
 	if status.DescriptionParams ~= "" then
 		tooltip:AddText("Description Params: " .. status.DescriptionParams)
+	end
+
+	if status.Boosts ~= "" then
+		tooltip:AddText("Boosts: " .. status.Boosts).TextWrapPos = 600
 	end
 end
