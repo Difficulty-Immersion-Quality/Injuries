@@ -6,8 +6,8 @@
 		{
 			"label": "bg3Continue",
 			"type": "shell",
-			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Mods\Injuries" "D:\Mods\BG3 Modder MultiTool\Injuries\Mods\Injuries"
-			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Public\Injuries" "D:\Mods\BG3 Modder MultiTool\Injuries\Public\Injuries"
+			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Mods\Injuries" "D:\Mods\BG3 Modder MultiTool\Injuries\Injuries\Mods\Injuries"
+			// mklink /J "D:\GOG\Baldurs Gate 3\Data\Public\Injuries" "D:\Mods\BG3 Modder MultiTool\Injuries\Injuries\Public\Injuries"
 			"windows": {
 				"command": "Start-Process",
 				"args": [
