@@ -89,6 +89,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			"Random",
 			"Most Severe"
 		}
+		prioritizeSeverityCombo.WidthFitPreview = true
 		prioritizeSeverityCombo.SelectedIndex = 1
 		prioritizeSeverityCombo.OnChange = function(_, selectedIndex)
 			universal.injury_removal_severity_priority = prioritizeSeverityCombo.Options[selectedIndex + 1]
@@ -130,6 +131,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		universalOptions:AddText("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."):SetStyle("Alpha", 0.90)
 
 		local cumulationCombo = universalOptions:AddCombo("")
+		cumulationCombo.WidthFitPreview = true
 		cumulationCombo.Options = {
 			"Attack/Tick",
 			"Round",
@@ -289,7 +291,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		local damageFilterDesc = severityHeader:AddText(
 			"If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
-			.. "otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered")
+			.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered")
 		damageFilterDesc.TextWrapPos = 0
 		damageFilterDesc:SetStyle("Alpha", 0.9)
 
@@ -332,8 +334,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				systemHeader:Destroy()
 			end
 
-			local injuryTable = systemHeader:AddTable(system .. "_InjuryTable", 3)
+			local injuryTable = systemHeader:AddTable(system .. "_InjuryTable", 4)
 			injuryTable.BordersInnerH = true
+			injuryTable.SizingStretchProp = true
 			injuryTable.PreciseWidths = true
 
 			local headerRow = injuryTable:AddRow()
@@ -372,10 +375,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				local displayCell = newRow:AddCell()
 				displayCell:AddImage(Ext.Stats.Get(injuryName).Icon, { 36, 36 })
 				displayCell:AddText(displayName).SameLine = true
-				local displayTooltip = displayCell:Tooltip()
-				displayCell.OnHoverEnter = function()
-					generateInjuryCountTooltip(displayTooltip, injury_config)
-				end
 
 				local severityCombo = newRow:AddCell():AddCombo("")
 				severityCombo.Options = {
@@ -383,6 +382,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					"Medium",
 					"High"
 				}
+				severityCombo.WidthFitPreview = true
+
 				for index, option in pairs(severityCombo.Options) do
 					if option == injury_config.severity then
 						severityCombo.SelectedIndex = index - 1
@@ -396,6 +397,30 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 				local buttonCell = newRow:AddCell()
 				local customizeButton = buttonCell:AddButton("Customize")
+
+				local statCountTooltip = customizeButton:Tooltip()
+				
+				statCountTooltip.OnHoverEnter = function()
+					for _, child in pairs(statCountTooltip.Children) do
+						child:Destroy()
+					end
+				
+					local applyOnStatusCount = countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])
+					local damageCount = countInjuryConfig(injury_config.damage["damage_types"])
+					local removeOnStatusCount = countInjuryConfig(injury_config.remove_on_status)
+					local racesCount = countInjuryConfig(injury_config.character_multipliers["races"])
+					local tagsCount = countInjuryConfig(injury_config.character_multipliers["tags"])
+					
+					customizeButton.Label = string.format("Customize (%s)", applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
+
+					statCountTooltip:AddText(string.format("Apply On Status: %d", applyOnStatusCount))
+					statCountTooltip:AddText(string.format("Damage: %d", damageCount))
+					statCountTooltip:AddText(string.format("Remove On Status: %d", removeOnStatusCount))
+					statCountTooltip:AddText(string.format("Races: %d", racesCount))
+					statCountTooltip:AddText(string.format("Tags: %d", tagsCount))
+				end
+				statCountTooltip:OnHoverEnter()
+
 				local injuryPopup
 				customizeButton.OnClick = function()
 					injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
@@ -501,11 +526,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			end
 		end
 
+		
+		--#region Systems
 		for _, system in pairs(InjuryMenu.ConfigurationSlice.systems) do
 			AddSystem(system)
 		end
 
-		--#region Systems
 		tabHeader:AddSeparatorText("Register a New Injury System")
 		tabHeader:AddText("Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..
 			" All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved").TextWrapPos = 0
