@@ -45,6 +45,7 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 	seeTagButton.SameLine = true
 
 	local tagPopup = seeTagButton:Tooltip("Tags")
+	tagPopup:AddNewLine()
 
 	local tagTable = tagPopup:AddTable("TagTable", 2)
 	tagTable.SizingStretchProp = true
