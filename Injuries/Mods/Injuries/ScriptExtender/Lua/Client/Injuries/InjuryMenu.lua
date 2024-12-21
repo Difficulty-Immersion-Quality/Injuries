@@ -12,20 +12,6 @@ local function countInjuryConfig(configToCount)
 	return count
 end
 
----@param displayTooltip ExtuiTooltip
----@param injury_config Injury
-local function generateInjuryCountTooltip(displayTooltip, injury_config)
-	for _, child in pairs(displayTooltip.Children) do
-		child:Destroy()
-	end
-
-	displayTooltip:AddText(string.format("ApplyOnStatus: %d", countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])))
-	displayTooltip:AddText(string.format("Damage: %d", countInjuryConfig(injury_config.damage["damage_types"])))
-	displayTooltip:AddText(string.format("RemoveOnStatus: %d", countInjuryConfig(injury_config.remove_on_status)))
-	displayTooltip:AddText(string.format("Races: %d", countInjuryConfig(injury_config.character_multipliers["races"])))
-	displayTooltip:AddText(string.format("Tags: %d", countInjuryConfig(injury_config.character_multipliers["tags"])))
-end
-
 InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
@@ -416,6 +402,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 					customizeButton.Label = string.format("Customize (%s)", applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
 
+					statCountTooltip:AddNewLine()
 					statCountTooltip:AddText(string.format("Apply On Status: %d", applyOnStatusCount))
 					statCountTooltip:AddText(string.format("Damage: %d", damageCount))
 					statCountTooltip:AddText(string.format("Remove On Status: %d", removeOnStatusCount))
