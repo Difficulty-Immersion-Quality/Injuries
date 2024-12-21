@@ -19,6 +19,9 @@ local function generate_recursive_metatable(proxy_table, real_table)
 		__index = function(this_table, key)
 			return real_table[key]
 		end,
+		__len = function(this_table)
+			return #real_table
+		end,
 		__newindex = function(this_table, key, value)
 			if key == "delete" then
 				rawset(this_table._parent_proxy, this_table._parent_key, nil)
