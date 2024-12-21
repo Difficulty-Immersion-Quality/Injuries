@@ -26,7 +26,6 @@ local function generateInjuryCountTooltip(displayTooltip, injury_config)
 	displayTooltip:AddText(string.format("Tags: %d", countInjuryConfig(injury_config.character_multipliers["tags"])))
 end
 
-
 InjuryMenu = {}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
