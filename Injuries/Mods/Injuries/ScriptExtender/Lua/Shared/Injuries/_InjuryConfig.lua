@@ -29,6 +29,9 @@ ConfigurationStructure.config.injuries.universal.injury_removal_severity_priorit
 
 --- @type boolean
 ConfigurationStructure.config.injuries.universal.remove_on_death = true
+
+---@type boolean
+ConfigurationStructure.config.injuries.universal.remove_all_on_long_rest = true
 --#endregion
 
 --#region Damage Counter
