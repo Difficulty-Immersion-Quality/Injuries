@@ -109,6 +109,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		removeInjuriesOnDeath.OnChange = function()
 			universal.remove_on_death = removeInjuriesOnDeath.Checked
 		end
+
+		local removeInjuriesOnLongRest = universalOptions:AddCheckbox("Remove All Injuries On Long Rest", universal.remove_all_on_long_rest)
+		removeInjuriesOnLongRest.OnChange = function()
+			universal.remove_all_on_long_rest = removeInjuriesOnLongRest.Checked
+		end
 		--#endregion
 
 		--#region Damage Counter
@@ -362,7 +367,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				local injuryStat = Ext.Stats.Get(injuryName)
 				displayCell:AddImage(injuryStat.Icon, { 36, 36 })
 				displayCell:AddText(displayName).SameLine = true
-				
+
 				DataSearchHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
 
 				local severityCombo = newRow:AddCell():AddCombo("")
@@ -371,7 +376,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					"Medium",
 					"High"
 				}
-				severityCombo.WidthFitPreview = true
 
 				for index, option in pairs(severityCombo.Options) do
 					if option == injury_config.severity then
