@@ -1,0 +1,74 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Partial Blindness
+data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
+// 
+data "Description" "h7d6551ecgf53ag46b9g91b9g0ce90774a3b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus(GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT)):ApplyStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS');IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS) and HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE',100,-1);IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS) and not HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS',100,-1)"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE)"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+data "Passives" ""
+
+// Technical Status
+new entry "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE)"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Partial Blindness
+data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
+// 
+data "Description" "h7d6551ecgf53ag46b9g91b9g0ce90774a3b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Skill,Perception);IF(IsAttackType(AttackType.RangedWeaponAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedSpellAttack)):Disadvantage(AttackTarget);IF(IsAttackType(AttackType.RangedUnarmedAttack)):Disadvantage(AttackTarget)"
+data "OnApplyFunctors" "ApplyStatus('GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT',100,-1)"
+data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
+data "RemoveEvents" "OnHeal"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+data "Passives" ""
+//
+data "StillAnimationType" "Blinded"
+data "StillAnimationPriority" "Blinded"
+data "SoundVocalStart" "GASP"
+data "SoundVocalEnd" "EXHAUSTED"
+data "SplatterBloodAmount" "0.25"
+data "SplatterDirtAmount" "0.1"
+
+// ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS"
+// Ocular Damage
+data "DisplayName" "h38bec16bgc8cag4cf3g95eeg8d0ebe33e616"
+// 
+data "Description" "h557372beg9346g4955ga9eeg9d6643ce5294"
