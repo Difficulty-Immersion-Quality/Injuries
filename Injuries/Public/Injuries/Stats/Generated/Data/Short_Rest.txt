@@ -1,7 +1,0 @@
-new entry "PASSIVE_SHORT_REST_MODIFIERS_REMOVE_ALL_LEVELS"
-type "PassiveData"
-data "DisplayName" "hfad5bf4eg0236g4af2g970agfdc9c7d219e1;2"
-data "Description" "hafc743f7g5d89g4175g80bfg869c348717ec;9"
-data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnShortRest"
-data "StatsFunctors" "ApplyStatus(SELF,REMOVE_ALL_LEVELS_FATIGUE_ANY_TYPE_CHECK_PASSIVES,100,0);"
