@@ -17,12 +17,7 @@ end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
 	if status == "LONG_REST" and ConfigManager.ConfigCopy.injuries.universal.remove_all_on_long_rest then
-		local _, var = InjuryConfigHelper:GetUserVar(character)
-
-		for injury, _ in pairs(var["injuryAppliedReason"]) do
-			Osi.RemoveStatus(character, injury)
-		end
-
+		InjuryConfigHelper:RemoveAllInjuries(character)
 		return
 	end
 
