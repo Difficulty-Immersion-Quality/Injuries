@@ -7,8 +7,16 @@ function Goon_Injury_Spell_Check_Verbal()
 end
 
 function Goon_Injury_Offhand_Check()
-    entity = entity or context.Target
-    local OffhandInUse WieldingWeapon('Melee', false, true, entity) | WieldingWeapon('Melee', true, true, entity) | WieldingWeapon('Ammunition', entity) | HasShieldEquipped(entity)
+    local entity = entity or context.Target
+    if not entity then
+        return false -- Ensure the function exits safely if the entity is undefined
+    end
+
+    local hasMeleeWeapon = WieldingWeapon('Melee', false, true, entity) or WieldingWeapon('Melee', true, true, entity)
+    local hasAmmunition = WieldingWeapon('Ammunition', entity)
+    local hasShield = HasShieldEquipped(entity)
+    local OffhandInUse = hasMeleeWeapon or hasAmmunition or hasShield
+
     return OffhandInUse
 end
 
