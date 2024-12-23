@@ -270,13 +270,7 @@ if Ext.IsServer() then
 			then
 				injuryUserVar = nil
 
-				if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
-					Osi.RemovePassive(character, "Goon_Damage_Detect")
-				end
-
-				if Osi.HasPassive(character, "Goon_Attack_Detect") == 1 then
-					Osi.RemovePassive(character, "Goon_Attack_Detect")
-				end
+				RemoveTrackers(character)
 			end
 
 			entity.Vars.Goon_Injuries = injuryUserVar
