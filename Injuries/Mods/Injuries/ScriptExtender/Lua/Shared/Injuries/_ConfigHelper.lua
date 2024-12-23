@@ -227,8 +227,8 @@ if Ext.IsServer() then
 	end)
 
 	function InjuryConfigHelper:RemoveAllInjuries(character)
-		local entity, var = InjuryConfigHelper:GetUserVar(character)
-		for injury, _ in pairs(var["injuryAppliedReason"]) do
+		local entity, _ = InjuryConfigHelper:GetUserVar(character)
+		for injury, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
 			Osi.RemoveStatus(character, injury)
 		end
 

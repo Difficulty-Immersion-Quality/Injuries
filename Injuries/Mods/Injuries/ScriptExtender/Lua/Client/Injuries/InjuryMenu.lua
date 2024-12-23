@@ -451,6 +451,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
 
 					severityCombo.SelectedIndex = 1
+					statCountTooltip:OnHoverEnter()
 				end
 
 				local copyButton = buttonCell:AddButton("Copy")
