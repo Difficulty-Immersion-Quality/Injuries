@@ -1,0 +1,72 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Destroyed Foot
+data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
+// 
+data "Description" "h293bdfafg7bdeg4067gb1eag2a20fbe3a899"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not HasStatus(GOON_DAMAGE_DEALT_COLD) and not HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT',100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT',100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT',100,-1);"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT)"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Destroyed Foot
+data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
+// 
+data "Description" "h293bdfafg7bdeg4067gb1eag2a20fbe3a899"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "ActionResourceConsumeMultiplier(Movement,1.5,0);Disadvantage(Skill,Acrobatics)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
+data "RemoveEvents" "OnHeal"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(HasStatus(DASH)):ApplyStatus(PRONE,100,1)"
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+//
+data "StillAnimationType" "Sitting"
+data "StillAnimationPriority" "Sitting"
+data "SoundVocalStart" "PAIN"
+data "SoundVocalEnd" "EFFORTS"
+data "SplatterBloodAmount" "0.69"
+data "SplatterDirtAmount" "0.5"
+
+// ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+// Gangrene of the Foot
+data "DisplayName" "h90ace1b3ga948g45e0ga139g25a5eb374b87"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+// Explosive Grounding of the Foot
+data "DisplayName" "h002467ecg9b8dg43e4g8845g7e43225de74b"

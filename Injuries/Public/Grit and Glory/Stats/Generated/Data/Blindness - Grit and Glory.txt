@@ -1,0 +1,59 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Blindness
+data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
+// 
+data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
+data "StackPriority" "2"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not HasPassive(Blindsight) and not StatusImmunity(BLINDED)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS',100,-1)"
+data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS)"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Blindness
+data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
+// 
+data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(BLINDED,100,-1)"
+data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,20)"
+data "RemoveEvents" "OnHeal"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition;SG_Blinded"
+data "Passives" ""
+//
+data "StillAnimationType" "Blinded"
+data "StillAnimationPriority" "Blinded"
+data "SoundVocalStart" "WEAK"
+data "SoundVocalEnd" ""
+data "SplatterBloodAmount" "1.0"
+data "SplatterDirtAmount" ""
+
+// ==================================== Flavour Proxies  ====================================
+
