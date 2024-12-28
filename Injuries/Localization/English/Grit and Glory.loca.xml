@@ -15,7 +15,7 @@ Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesse
 
 -- Feets:
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
-	<content contentuid="h216c62e0g214dg4953g95fcgcf84eb6579cf" version="1">Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is halved. If you use the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action you fall &lt;LSTag Type="Status" Tooltip="PRONE
+	<content contentuid="hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a" version="1">Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is halved. If you use the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action you fall &lt;LSTag Type="Status" Tooltip="PRONE
 "&gt;Prone&lt;/LSTag&gt; at the end of your turn. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; checks.
 Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content> -- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
