@@ -22,6 +22,21 @@ type "StatusData"
 data "StatusType" "BOOST" 
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
+// ==================================== Heal ====================================
+
+new entry "Target_Heal"
+type "SpellData"
+data "SpellType" "Target"
+using "Target_Heal"
+data "Level" "6"
+data "SpellSchool" "Evocation"
+data "SpellProperties" "RegainHitPoints(70);RemoveStatus(SG_Blinded);RemoveStatus(SG_Disease);ApplyStatus('GOON_TARGET_HEAL_INJURY_REMOVE',100,0)"
+
+new entry "GOON_TARGET_HEAL_INJURY_REMOVE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
 // ==================================== Regenerate from 5E Spells ====================================
 
 new entry "Target_Regenerate"
@@ -32,7 +47,7 @@ data "Level" "7"
 data "SpellSchool" "Transmutation"
 data "SpellProperties" "RegainHitPoints(4d8+15);ApplyStatus(REGENERATE,100,600);RemoveStatus(CAMP_VOLO_LOBOTOMY);RemoveStatus(HAG_HAGEYED);RemoveStatus(CAMP_VOLO_NEEDLE);ApplyStatus('GOON_REGENERATE_INJURY_REMOVE',100,0)"
 
-new entry "GOON_REGENERATE_INJURY_REMOVE"
+new entry "GOON_TARGET_REGENERATE_INJURY_REMOVE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
