@@ -153,19 +153,7 @@ if Ext.IsServer() then
 		return false
 	end
 
-	EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
-		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
-			for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
-				local entity = Ext.Entity.Get(combatParticipant[1])
-				if entity.Vars.Goon_Injuries then
-					entity.Vars.Goon_Injuries = nil
-					Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", combatParticipant[1])
-				end
-			end
-		end
-	end)
-
-	local function RemoveTrackerPassives(character)
+	local function RemoveTrackers(character)
 		if Osi.HasPassive(character, "Goon_Damage_Detect") == 1 then
 			Osi.RemovePassive(character, "Goon_Damage_Detect")
 		end
@@ -175,11 +163,56 @@ if Ext.IsServer() then
 		end
 	end
 
+	local function ResetCounters(character, entityVar)
+		---@type InjuryVar
+		local injuryUserVar = entityVar.Goon_Injuries
+
+		for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
+			for injury, _ in pairs(injuryTable) do
+				if not injuryUserVar["injuryAppliedReason"][injury] then
+					injuryTable[injury] = nil
+				end
+			end
+
+			if not next(injuryTable) then
+				injuryUserVar["damage"][damageType] = nil
+			end
+		end
+
+		for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
+			for injury, _ in pairs(injuryTable) do
+				if not injuryUserVar["injuryAppliedReason"][injury] then
+					injuryTable[injury] = nil
+				end
+			end
+
+			if not next(injuryTable) then
+				injuryUserVar["applyOnStatus"][statusName] = nil
+			end
+		end
+
+		entityVar.Goon_Injuries = injuryUserVar
+
+		RemoveTrackers(character)
+
+		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
+	end
+
+	EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGuid, round)
+		if ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Round" then
+			for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
+				local entity = Ext.Entity.Get(combatParticipant[1])
+				if entity.Vars.Goon_Injuries then
+					ResetCounters(combatParticipant[1], entity.Vars)
+				end
+			end
+		end
+	end)
+
 	EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
-		if Ext.Entity.Get(object).Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
-			Ext.Entity.Get(object).Vars.Goon_Injuries = nil
-			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", object)
-			RemoveTrackerPassives(object)
+		local entity = Ext.Entity.Get(object)
+		if entity.Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
+			ResetCounters(object, entity.Vars)
 		end
 	end)
 
@@ -188,24 +221,26 @@ if Ext.IsServer() then
 		if (status == "SHORT_REST" and counterReset == "Short Rest") or (status == "LONG_REST" and counterReset == "Long Rest") then
 			local entity = Ext.Entity.Get(character)
 			if entity.Vars.Goon_Injuries then
-				Ext.Entity.Get(character).Vars.Goon_Injuries = nil
-				RemoveTrackerPassives(character)
-				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
+				ResetCounters(character, entity.Vars)
 			end
 		end
 	end)
 
+	function InjuryConfigHelper:RemoveAllInjuries(character)
+		local entity, _ = InjuryConfigHelper:GetUserVar(character)
+		for injury, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
+			Osi.RemoveStatus(character, injury)
+		end
+
+		entity.Vars.Goon_Injuries = nil
+		RemoveTrackers(character)
+
+		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
+	end
+
 	Ext.Osiris.RegisterListener("Died", 1, "after", function(character)
 		if ConfigManager.ConfigCopy.injuries.universal.remove_on_death then
-			local entity = Ext.Entity.Get(character)
-			if entity.Vars.Goon_Injuries then
-				for injuryName, _ in pairs(entity.Vars.Goon_Injuries["injuryAppliedReason"]) do
-					Osi.RemoveStatus(character, injuryName)
-				end
-				entity.Vars.Goon_Injuries = nil
-				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
-			end
-			RemoveTrackerPassives(character)
+			InjuryConfigHelper:RemoveAllInjuries(character)
 		end
 	end)
 
@@ -234,9 +269,13 @@ if Ext.IsServer() then
 				and not next(injuryUserVar["applyOnStatus"])
 			then
 				injuryUserVar = nil
+
+				RemoveTrackers(character)
 			end
 
-			InjuryConfigHelper:UpdateUserVar(entity, injuryUserVar)
+			entity.Vars.Goon_Injuries = injuryUserVar
+
+			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 		end
 	end)
 end
