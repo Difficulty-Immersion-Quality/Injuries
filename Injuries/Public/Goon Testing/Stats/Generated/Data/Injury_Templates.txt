@@ -36,7 +36,7 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" ""
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_X"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
