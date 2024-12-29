@@ -41,10 +41,10 @@ data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" ""
-data "RemoveConditions" "IF(HasPassive('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source)):SavingThrow(Ability.Constitution,15);IF(HasPassive('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)):SavingThrow(Ability.Constitution,15)"
+data "RemoveConditions" "IF(HasPassive('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasPassive('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,15)"
 data "RemoveEvents" "OnHeal"
-data "TickType" "OnTurn"
-data "TickFunctors" ""
+data "TickType" "StartTurn"
+data "TickFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL,100,1)"
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
@@ -54,6 +54,13 @@ data "SoundVocalStart" ""
 data "SoundVocalEnd" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
+
+// Technical status
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+data "Boosts" "ActionResourceBlock(ReactionActionPoint)"
 
 // ==================================== Flavour Proxies  ====================================
 
