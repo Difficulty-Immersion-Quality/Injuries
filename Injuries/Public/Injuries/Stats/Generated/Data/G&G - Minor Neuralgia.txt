@@ -1,10 +1,10 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_NEURALGIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Neuralgia
-data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
+// Minor Neuralgia
+data "DisplayName" "h1919463eg4e1ag465bg82ffg0c4648b2b60d"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "DescriptionParams" ""
@@ -12,11 +12,11 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA"
-data "StackPriority" "2"
+data "StackPriority" "1"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID') or HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID') and not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA') and not HasStatus()"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID') or HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID') and not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus()"
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
@@ -25,11 +25,11 @@ data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Neuralgia
-data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
+// Minor Neuralgia
+data "DisplayName" "h1919463eg4e1ag465bg82ffg0c4648b2b60d"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "DescriptionParams" ""
@@ -37,14 +37,14 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
-data "StackPriority" "2"
+data "StackPriority" "1"
 data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" ""
-data "RemoveConditions" "IF(HasPassive('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasPassive('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,15)"
+data "RemoveConditions" "IF(HasPassive('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasPassive('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,10)"
 data "RemoveEvents" "OnHeal"
 data "TickType" "StartTurn"
-data "TickFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL,100,1)"
+data "TickFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA_TECHNICAL,100,1)"
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
@@ -56,7 +56,7 @@ data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 
 // Technical status
-new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
