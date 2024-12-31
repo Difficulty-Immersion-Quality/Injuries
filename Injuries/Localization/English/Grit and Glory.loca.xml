@@ -1,17 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
 
-	<content contentuid="h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f" version="1">Partial Blindness</content> -- Acid damage
-	<content contentuid="h7d6551ecgf53ag46b9g91b9g0ce90774a3b3" version="1">Your eyes are damaged; you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Partial_Blindness"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
-&lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content> -- Your eyes are damaged; you have disadvantage on Wisdom (Perception) checks that rely on sight and on ranged attack rolls. Magic such as the regenerate spell can heal the damage to your eyes. If you have already suffered partial blindness, you're blinded.
 
-	<content contentuid="h38bec16bgc8cag4cf3g95eeg8d0ebe33e616" version="1">Ocular Damage</content> -- Cold damage
-	<content contentuid="h557372beg9346g4955ga9eeg9d6643ce5294" version="1">One of your corneas is damaged from frostbite. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Ocular_Damage"&gt;Ocular Damage&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
-&lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore the damaged cornea.</content> -- One of your corneas is damaged from frostbite. You have disadvantage on Wisdom (Perception) checks that rely on sight and on ranged attack rolls. Magic such as the regenerate spell can restore the damaged cornea. If you have no corneas that remain undamaged after sustaining this injury, you're blinded.
-
-	<content contentuid="h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe" version="1">Systematic Damage</content> -- Cold damage
-	<content contentuid="h5d84c3d1g8f32g45e4g8ca0g3587fdad6755" version="1">You have disadvantage on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt;, &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;.
-&lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can cure the damage.</content> -- You have disadvantage on Strength, Dexterity, and Constitution ability checks and Strength, Dexterity, and Constitution saving throws. Magic such as the regenerate spell cures this damage.
 
 
 </contentList>
