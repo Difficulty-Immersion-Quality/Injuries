@@ -15,13 +15,25 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS,100,-1)"
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS,100,-1);ApplyStatus(GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL_OVERWRITE,100,-1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS,100-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition;SG_Blinded"
 data "Passives" ""
+
+// Technical Status
+new entry "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL_OVERWRITE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "StackId" "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL"
+data "StackPriority" "2"
+data "StackType" "Overwrite"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE')"
+data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
 

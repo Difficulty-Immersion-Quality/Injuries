@@ -30,7 +30,7 @@ type "StatusData"
 data "StatusType" "BOOST" 
 // Systematic Damage
 data "DisplayName" "h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe"
-//
+// 
 data "Description" "h5d84c3d1g8f32g45e4g8ca0g3587fdad6755"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"

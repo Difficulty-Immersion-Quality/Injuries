@@ -25,6 +25,12 @@ Intended severity: High.
 You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; and &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
+	<content contentuid="h9ddc85a9g19a4g496bg8e8dgbe197296cb87" version="1">Horrible Disfigurement is intended for Acid damage.
+Intended severity: Low.
+
+You have acid burns to the extent that the scars can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
+
 	<content contentuid="hfe21a6c2ge12dg4fa7g9ee6gb1463317e349" version="1">Major Neuralgia is intended for Acid and Cold damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury just with a higher DC saving throw.
 Intended severity: High.
 
