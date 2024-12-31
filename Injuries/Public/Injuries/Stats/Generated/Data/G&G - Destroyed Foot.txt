@@ -6,7 +6,7 @@ data "StatusType" "BOOST"
 // Destroyed Foot
 data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
 // 
-data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
+data "Description" "hfef4d455g444ag4669g8edeg4b13371f1ec0"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"

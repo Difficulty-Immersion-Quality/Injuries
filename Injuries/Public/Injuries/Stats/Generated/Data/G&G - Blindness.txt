@@ -6,7 +6,7 @@ data "StatusType" "BOOST"
 // Blindness
 data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
 // 
-data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
+data "Description" "ha0f3dd5cgcb44g4dffgb445g89a63dbf428c"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
