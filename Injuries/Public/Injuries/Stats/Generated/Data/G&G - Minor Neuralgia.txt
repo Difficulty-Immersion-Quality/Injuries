@@ -48,7 +48,7 @@ data "TickFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GO
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
-data "StillAnimationType" "Swapped"
+data "StillAnimationType" "Weakened"
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "DEATH"
 data "SoundVocalEnd" "WEAK"
