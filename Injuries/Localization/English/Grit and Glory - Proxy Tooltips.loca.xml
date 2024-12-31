@@ -1,16 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
-	<content contentuid="h361b72aag422fg4ec5g9f9cgc41d8575b5b0" version="1">Anosmia is intended Cold damage.
-Intended severity: Low.
+	<content contentuid="h622dd1e8g6eb9g4433g90f1g3e33876428a4" version="1">Anosmia</content> -- Cold damage
+	-- You lose your sense of smell and taste. You automatically fail any ability checks that involve your sense of smell or taste. The condition heals if you receive any magical healing.
 
-You lose your sense of smell and taste. You're immune to smells and tastes that would make you &lt;LSTag Type="Status" Tooltip="STINKING_CLOUD"&gt;Nauseous&lt;/LSTag&gt;.
-&lt;br&gt;The condition heals if you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
-	
-	<content contentuid="ha0f3dd5cgcb44g4dffgb445g89a63dbf428c" version="1">Blindness is intended for Acid and Cold damage. Acquiring Partial Blindness twice will induce Blindness.
-Intended severity: High.
+	<content contentuid="h7df433adg98bag42c0ga299g3ce91f3f521f" version="1">You lose your sense of smell and taste. You're immune to smells and tastes that would make you &lt;LSTag Type="Status" Tooltip="STINKING_CLOUD"&gt;Nauseous&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
-Your eyes are destroyed; you gain the &lt;LSTag Type="Status" Tooltip="BLINDED"&gt;Blinded&lt;/LSTag&gt; condition.
+	<content contentuid="h361b72aag422fg4ec5g9f9cgc41d8575b5b0" version="1">Anosmia is intended Cold damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;You lose your sense of smell and taste. You're immune to smells and tastes that would make you &lt;LSTag Type="Status" Tooltip="STINKING_CLOUD"&gt;Nauseous&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
+	<content contentuid="h88eb37b4g8863g4f9ag947eged6ebb27067a" version="1">Blindness</content> -- Acid damage
+	-- Your eyes are destroyed; you gain the blinded condition. Magic such as the regenerate spell can restore your sight.	
+
+	<content contentuid="hba6c9190g4297g49dfg9cf8g2fc42c9b42b3" version="1">Your eyes are destroyed; you gain the &lt;LSTag Type="Status" Tooltip="BLINDED"&gt;Blinded&lt;/LSTag&gt; condition.
 &lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
+
+	<content contentuid="ha0f3dd5cgcb44g4dffgb445g89a63dbf428c" version="1">Blindness is intended for Acid and Cold damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
+&lt;br&gt;Your eyes are destroyed; you gain the &lt;LSTag Type="Status" Tooltip="BLINDED"&gt;Blinded&lt;/LSTag&gt; condition.
+&lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
+
+
+
+	<content contentuid="h0bc85864g6ee0g4869gbd8age0510c02e0ed" version="1">Blisters</content> -- Acid damage
+	-- You have severe blisters. You have disadvantage on Dexterity checks. The blisters heal if you receive magical healing. Alternatively, someone can tend to the blisters and make a DC 15 Wisdom (Medicine) check once every 24 hours. After seven successes, the blisters heal.
+
+	<content contentuid="h4dda121fg7f26g4024ga953ge554d4eb82e1" version="1">You have severe blisters. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="h3fcc33dfg2b46g427cg85f8g8e061550d70e" version="1">Blindness is intended for Acid damage.&lt;br&gt;Intended severity: Low. 
+&lt;br&gt;You have severe blisters. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
 
 	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Cold and Lightning damage.
 Intended severity: Medium.

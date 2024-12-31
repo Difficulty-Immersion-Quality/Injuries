@@ -1,0 +1,58 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_BLISTERS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// 
+data "DisplayName" "h0bc85864g6ee0g4869gbd8age0510c02e0ed"
+//
+data "Description" ""
+data "DescriptionParams" "h3fcc33dfg2b46g427cg85f8g8e061550d70e"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BLISTERS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID') or not HasStatus()):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BLISTERS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BLISTERS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BLISTERS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// 
+data "DisplayName" "h0bc85864g6ee0g4869gbd8age0510c02e0ed"
+//
+data "Description" "h4dda121fg7f26g4024ga953ge554d4eb82e1"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BLISTERS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "SavingThrow(Ability.Constitution,10)"
+data "RemoveEvents" "OnHeal"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+
+// ==================================== Flavour Proxies  ====================================
