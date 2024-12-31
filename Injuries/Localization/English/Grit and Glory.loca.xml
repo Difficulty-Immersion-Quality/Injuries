@@ -46,8 +46,12 @@
 	<content contentuid="he7892f2egac8ag4c9eg8c98g8d2a7d24f78f" version="1">You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.</content> -- You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must make a DC 15 Constitution saving throw. On a failed save, you lose your action and can't use reactions until the start of your next turn. Magical healing of 6th level or higher, such as heal and regenerate, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.
 
-	<content contentuid="hf9899dabg1cb4g4dd3gbd91gf74112304ee5" version="1">Horrible Disfigurement</content>
+	<content contentuid="hf9899dabg1cb4g4dd3gbd91gf74112304ee5" version="1">Horrible Disfigurement</content> -- Acid damage
 	<content contentuid="hb58b1ce6g670ag4e2cgb5b0g3e587385a812" version="1">You have acid burns to the extent that the scars can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
+
+	<content contentuid="h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf" version="1">Minor Disfigurement</content> -- Acid damage
+	<content contentuid="hcd4c6a38ge62bg4f89g8e4bg41def2c557a5" version="1">You have acid burn scars, but they don't have any adverse effect.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
 
 </contentList>

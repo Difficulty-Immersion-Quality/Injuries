@@ -26,7 +26,7 @@ You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon 
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
 	<content contentuid="h9ddc85a9g19a4g496bg8e8dgbe197296cb87" version="1">Horrible Disfigurement is intended for Acid damage.
-Intended severity: Low.
+Intended severity: Medium.
 
 You have acid burns to the extent that the scars can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
@@ -36,6 +36,12 @@ Intended severity: High.
 
 You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.</content>
+
+	<content contentuid="h1aa75497g697fg4269gbbffga8e7eeeec2e5" version="1">Minor Disfigurement is intended for Acid damage.
+Intended severity: Low.
+
+You have acid burn scars, but they don't have any adverse effect.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
 
 	<content contentuid="h6239ca1egb1f3g4cdeg97ddg46d397765ffc" version="1">Minor Neuralgia is intended for Acid and Cold damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury just with a higher DC saving throw.
 Intended severity: High.
