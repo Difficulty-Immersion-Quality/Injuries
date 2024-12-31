@@ -77,5 +77,3 @@ data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
 // Broken Arm
 data "DisplayName" "ha3100bf8g8b25g4169g9682gddb0f2606e60"
-//
-data "Description" "hb7671175g6cf4g4f28ga5fagd086c9de8b00"

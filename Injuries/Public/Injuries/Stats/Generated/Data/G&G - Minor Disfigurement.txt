@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// 
+// Minor Disfigurement
 data "DisplayName" "h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf"
 //
 data "Description" "h1aa75497g697fg4269gbbffga8e7eeeec2e5"
@@ -28,7 +28,7 @@ data "Passives" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// 
+// Minor Disfigurement
 data "DisplayName" "h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf"
 //
 data "Description" "hcd4c6a38ge62bg4f89g8e4bg41def2c557a5"
@@ -56,13 +56,3 @@ data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 
 // ==================================== Flavour Proxies ====================================
-
-//new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
-type "StatusData" 
-data "StatusType" "BOOST"
-using "GOON_REAL_INJURY_GRIT_GLORY_X"
-// 
-data "DisplayName" ""
-// 
-data "Description" ""
-data "DescriptionParams" ""
