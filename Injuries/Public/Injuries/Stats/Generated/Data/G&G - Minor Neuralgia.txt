@@ -56,7 +56,7 @@ data "OnApplyFunctors" "ApplyStatus(GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHN
 data "RemoveConditions" "IF(HasPassive('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasPassive('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,10)"
 data "RemoveEvents" "OnHeal"
 data "TickType" "StartTurn"
-data "TickFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA_TECHNICAL,100,1)"
+data "TickFunctors" "IF(Combat() and not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA_TECHNICAL,100,1)"
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //

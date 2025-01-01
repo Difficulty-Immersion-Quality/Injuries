@@ -1,0 +1,58 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_FROSTBITTEN_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Frostbitten Foot
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+// 
+data "Description" "h3052f96cg1b54g4b7fgab6agef1c3a4362cb"
+data "DescriptionParams" "Distance(2)"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_FROSTBITTEN_FOOT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Frostbitten Foot
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+// 
+data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "DescriptionParams" "Distance(2)"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "ActionResource(Movement,-2,0)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "SavingThrow(Ability.Constitution,10)"
+data "RemoveEvents" "OnHeal"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(HasStatus('DASH') and not SavingThrow(Ability.Constitution,10)):ApplyStatus(PRONE,100,1)"
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+//
+data "StillAnimationType" "Snared"
+data "StillAnimationPriority" "Snared"
+data "SoundVocalStart" "PAIN"
+data "SoundVocalEnd" "EFFORTS"
+data "SplatterBloodAmount" "0.69"
+data "SplatterDirtAmount" "0.5"
+
+// ==================================== Flavour Proxies  ====================================

@@ -72,6 +72,25 @@
 
 
 
+	<content contentuid="h7b65727bgf511g454fga094gfb246a8f5ad6" version="1">Frostbitten Foot</content> -- Cold damage
+	-- Your speed on foot is reduced by 5 feet. You must make a DC 10 Dexterity saving throw after using the Dash action. If you fail the save, you fall prone. Magical healing cures the frostbite. Alternatively, your foot can be treated with a successful DC 15 Wisdom (Medicine) check, in which case it will heal naturally in 2 weeks.
+
+	<content contentuid="h3052f96cg1b54g4b7fgab6agef1c3a4362cb" version="1">Frostbitten Foot is intended for Cold damage.&lt;br&gt;Intended severity: Medium.
+&lt;br&gt;Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by [1]. You must make a &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after using the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action or fall &lt;LSTag Type="Status" Tooltip="PRONE
+"&gt;Prone&lt;/LSTag&gt; at the end of your turn.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="h1b478e2dg0e85g4839g9780gf541ab767efb" version="1">Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by [1]. You must make a &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after using the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action or fall &lt;LSTag Type="Status" Tooltip="PRONE
+"&gt;Prone&lt;/LSTag&gt; at the end of your turn.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
+
+
+
+
+
 	<content contentuid="hf9899dabg1cb4g4dd3gbd91gf74112304ee5" version="1">Horrible Disfigurement</content> -- Acid damage
 	--You have acid burns to the extent that the scars can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal or regenerate, remove the acid burn scar.
 
