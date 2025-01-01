@@ -16,10 +16,10 @@
 	-- Your eyes are destroyed; you gain the blinded condition. Magic such as the regenerate spell can restore your sight.	
 
 	<content contentuid="ha0f3dd5cgcb44g4dffgb445g89a63dbf428c" version="1">Blindness is intended for Acid and Cold damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
-&lt;br&gt;Your eyes are destroyed; you gain the &lt;LSTag Type="Status" Tooltip="BLINDED"&gt;Blinded&lt;/LSTag&gt; condition.
+&lt;br&gt;Your eyes are destroyed; you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;, the  range of your attacks and spells are reduced to [1].&lt;br&gt;Attack Rolls against Blinded creatures have &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt;.
 &lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
 
-	<content contentuid="hba6c9190g4297g49dfg9cf8g2fc42c9b42b3" version="1">Your eyes are destroyed; you gain the &lt;LSTag Type="Status" Tooltip="BLINDED"&gt;Blinded&lt;/LSTag&gt; condition.
+	<content contentuid="hba6c9190g4297g49dfg9cf8g2fc42c9b42b3" version="1">Your eyes are destroyed; you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;, the  range of your attacks and spells are reduced to [1].&lt;br&gt;Attack Rolls against Blinded creatures have &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt;.
 &lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
 
 
