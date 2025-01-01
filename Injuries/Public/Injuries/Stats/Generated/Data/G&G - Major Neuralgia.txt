@@ -11,11 +11,11 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NEURALGIA"
-data "StackPriority" "2"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA"
+data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID') or HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID') and not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1)"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID') or HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID') and not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_NEURALGIA,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
@@ -23,7 +23,7 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// Technical Status
+// Technical Status for stack management
 new entry "GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL_OVERWRITE"
 type "StatusData" 
 data "StatusType" "BOOST" 
@@ -56,7 +56,7 @@ data "OnApplyFunctors" ""
 data "RemoveConditions" "IF(HasPassive('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasPassive('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,15)"
 data "RemoveEvents" "OnHeal"
 data "TickType" "StartTurn"
-data "TickFunctors" "IF(Combat() and not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL,100,1)"
+data "TickFunctors" "IF(not Dead() and Combat()):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL,100,0)"
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
@@ -67,11 +67,27 @@ data "SoundVocalEnd" "WEAK"
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 
-// Technical status
+// Technical status for application
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Major Neuralgia
+data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
+//
+data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL,100,1)"
+data "SoundVocalStart" "DEATH"
+
+// Technical status for boosts
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"
+data "StackPriority" ""
+data "StackType" "Overwrite"
 data "Boosts" "ActionResource(ActionPoint,-1,0);ActionResourceBlock(ReactionActionPoint)"
 data "SoundVocalStart" "DEATH"
 
