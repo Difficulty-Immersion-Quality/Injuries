@@ -44,7 +44,7 @@ data "OnApplyFunctors" ""
 data "RemoveConditions" "SavingThrow(Ability.Constitution,10)"
 data "RemoveEvents" "OnHeal"
 data "TickType" "EndTurn"
-data "TickFunctors" "IF(HasStatus('DASH') and not SavingThrow(Ability.Constitution,10)):ApplyStatus(PRONE,100,1)"
+data "TickFunctors" "IF(HasStatus('DASH')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL,100,0)"
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
@@ -54,5 +54,18 @@ data "SoundVocalStart" "PAIN"
 data "SoundVocalEnd" "EFFORTS"
 data "SplatterBloodAmount" "0.69"
 data "SplatterDirtAmount" "0.5"
+
+// Technical status for application
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Major Neuralgia
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+//
+data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(PRONE,100,1)"
+data "SoundVocalStart" "DEATH"
 
 // ==================================== Flavour Proxies  ====================================
