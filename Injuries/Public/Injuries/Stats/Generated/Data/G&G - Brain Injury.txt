@@ -46,7 +46,7 @@ data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"
 //
 data "StillAnimationType" "Dazed"
 data "StillAnimationPriority" "Dazed"
@@ -57,7 +57,8 @@ data "SoundStop" "Misc_Status_MindCrush_End"
 data "SplatterBloodAmount" "0.5"
 data "SplatterDirtAmount" ""
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+// Technical passive for stun
+new entry "Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctors" "IF((SaveFailed) and IsDamageTypeBludgeoning() or IsDamageTypeForce() or IsDamageTypePsychic()):ApplyStatus(STUNNED,100,1)"
