@@ -36,6 +36,20 @@
 
 
 
+	<content contentuid="hdbad060ag6520g4f71ga58eg486c0bad4e82" version="1">Brain Injury</content> -- Bludgeoning, Lightning, Psychic and Thunder danage
+	-- You have suffered a brain injury. You have disadvantage on Intelligence, Wisdom, and Charisma checks, as well as Intelligence, Wisdom, and Charisma saving throws. If you fail a saving throw against bludgeoning damage, force damage, or psychic damage, you are also stunned until the end of your next turn. Magic such as the regenerate spell can restore your full brain function.
+
+	<content contentuid="h0d43077fg2adcg4133g9d0dgfb6a32237a75" version="1">Brain Injury is intended for Bludgeoning, Lightning, Psychic and Thunder danage damage.&lt;br&gt;Intended severity: High.
+&lt;br&gt;You have suffered a brain injury. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt;, &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;. If you fail a &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; against bludgeoning damage, force damage, or psychic damage, you are also &lt;LSTag Type="Status" Tooltip="STUNNED
+"&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
+&lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore your brain function.</content>
+
+	<content contentuid="h349e6ff4g0427g4ec4gb259g01c20432b0f0" version="1">You have suffered a brain injury. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt;, &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;. If you fail a &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; against bludgeoning damage, force damage, or psychic damage, you are also &lt;LSTag Type="Status" Tooltip="STUNNED
+"&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
+&lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore your brain function.</content>
+
+
+
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
 	-- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
@@ -87,6 +101,7 @@
 
 
 	<content contentuid="h83db0a7bg55d4g45e3g8511g5249fee00067" version="1">Frostbitten Hand</content> -- Cold damage
+	-- Randomly determine which hand has been frostbitten. In order to grasp or manipulate an object with that hand, you must succeed at a DC 15 Dexterity check. Magical healing cures the frostbite. Alternatively, your hand can be treated with a successful DC 15 Wisdom (Medicine) check, in which case it will heal naturally in 2 weeks.
 
 	<content contentuid="h48a9a49aga341g4bc0g98ceg73c12e4bdf1f" version="1">Frostbitten Hand is intended for Cold damage.&lt;br&gt;Intended severity: Medium.
 &lt;br&gt;At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you suffer from &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; if you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.

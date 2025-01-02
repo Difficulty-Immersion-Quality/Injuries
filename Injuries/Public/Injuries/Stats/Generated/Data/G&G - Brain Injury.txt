@@ -1,0 +1,66 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_BRAIN_INJURY"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Brain Injury
+data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
+//
+data "Description" "h0d43077fg2adcg4133g9d0dgfb6a32237a75"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BRAIN_INJURY"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Brain Injury
+data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
+//
+data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Ability,Intelligence);Disadvantage(Ability,Wisdom);Disadvantage(Ability,Charisma);Advantage(SavingThrow, Intelligence);Advantage(SavingThrow, Wisdom);Advantage(SavingThrow, Charisma)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+//
+data "StillAnimationType" "Dazed"
+data "StillAnimationPriority" "Dazed"
+data "SoundVocalStart" "SHOUT"
+data "SoundVocalEnd" ""
+data "SoundLoop" "Misc_Status_MindCrush_MO"
+data "SoundStop" "Misc_Status_MindCrush_End"
+data "SplatterBloodAmount" "0.5"
+data "SplatterDirtAmount" ""
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF((SaveFailed) and IsDamageTypeBludgeoning() or IsDamageTypeForce() or IsDamageTypePsychic()):ApplyStatus(STUNNED,100,1)"
+data "StatsFunctorContext" "OnDamaged"
+
+// ==================================== Flavour Proxies  ====================================
