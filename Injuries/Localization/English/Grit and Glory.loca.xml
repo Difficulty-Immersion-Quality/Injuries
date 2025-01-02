@@ -58,10 +58,10 @@
 	-- You can no longer hold anything with two hands, and you can hold only a single object at a time. Magic such as the regenerate spell can restore the lost appendage.
 
 	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Hand is intended for Acid, Cold, Lightning and Bludgeoning damage.&lt;br&gt;Intended severity: High.
-&lt;br&gt;You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; and &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
+&lt;br&gt;You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
-	<content contentuid="h71b43149gbf31g4237g81d3gd49581729036" version="1">You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; and &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
+	<content contentuid="h71b43149gbf31g4237g81d3gd49581729036" version="1">You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
 	<content contentuid="ha4e6d02fg6328g4072gbca4gfd3de57e6035" version="1">Gangrene of the Hand</content> -- Cold damage
@@ -86,8 +86,14 @@
 
 
 
+	<content contentuid="h83db0a7bg55d4g45e3g8511g5249fee00067" version="1">Frostbitten Hand</content> -- Cold damage
 
+	<content contentuid="h48a9a49aga341g4bc0g98ceg73c12e4bdf1f" version="1">Frostbitten Hand is intended for Cold damage.&lt;br&gt;Intended severity: Medium.
+&lt;br&gt;At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you suffer from &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; if you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
+	<content contentuid="h6ac1a043g71fbg4931gae8fg1253275947cc" version="1">At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save you suffer from &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; if you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
 
 
