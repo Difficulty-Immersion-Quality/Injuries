@@ -12,10 +12,10 @@
 
 
 
-	<content contentuid="h88eb37b4g8863g4f9ag947eged6ebb27067a" version="1">Blindness</content> -- Acid damage
+	<content contentuid="h88eb37b4g8863g4f9ag947eged6ebb27067a" version="1">Blindness</content> -- Acid and Radiant damage
 	-- Your eyes are destroyed; you gain the blinded condition. Magic such as the regenerate spell can restore your sight.	
 
-	<content contentuid="ha0f3dd5cgcb44g4dffgb445g89a63dbf428c" version="1">Blindness is intended for Acid and Cold damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
+	<content contentuid="ha0f3dd5cgcb44g4dffgb445g89a63dbf428c" version="1">Blindness is intended for Acid and Radiant damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
 &lt;br&gt;Your eyes are destroyed; you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;, the  range of your attacks and spells are reduced to [1].&lt;br&gt;Attack Rolls against Blinded creatures have &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt;.
 &lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
 
@@ -24,10 +24,10 @@
 
 
 
-	<content contentuid="h0bc85864g6ee0g4869gbd8age0510c02e0ed" version="1">Blisters</content> -- Acid damage
+	<content contentuid="h0bc85864g6ee0g4869gbd8age0510c02e0ed" version="1">Blisters</content> -- Acid and Fire damage
 	-- You have severe blisters. You have disadvantage on Dexterity checks. The blisters heal if you receive magical healing. Alternatively, someone can tend to the blisters and make a DC 15 Wisdom (Medicine) check once every 24 hours. After seven successes, the blisters heal.
 
-	<content contentuid="h3fcc33dfg2b46g427cg85f8g8e061550d70e" version="1">Blindness is intended for Acid damage.&lt;br&gt;Intended severity: Low. 
+	<content contentuid="h3fcc33dfg2b46g427cg85f8g8e061550d70e" version="1">Blindness is intended for Acid and Fire damage.&lt;br&gt;Intended severity: Low. 
 &lt;br&gt;You have severe blisters. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
@@ -45,6 +45,13 @@
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore your brain function.</content>
 
 	<content contentuid="h349e6ff4g0427g4ec4gb259g01c20432b0f0" version="1">You have suffered a brain injury. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt;, &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;. If you fail a &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; against bludgeoning damage, force damage, or psychic damage, you are also &lt;LSTag Type="Status" Tooltip="STUNNED
+"&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
+&lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore your brain function.</content>
+
+	<content contentuid="h15d0897bg5accg44f6g94d4gb79d3e6f5abe" version="1">Plane Splitting Brain Injury</content> -- Force Damage
+	-- You have suffered a brain injury. Your mind exists in two planes of reality, one real and one borne of raw magic. You constantly shift between the two, seeing or hearing things that may not exist. You have disadvantage on Intelligence, Wisdom, and Charisma checks, as well as Intelligence, Wisdom, and Charisma saving throws. If you fail a saving throw against bludgeoning damage, force damage, or psychic damage, you are also stunned until the end of your next turn. Magic such as the regenerate spell can restore your full brain functions.
+
+	<content contentuid="h9f3f9585g5856g4dafg8a70g7a971dd7036e" version="1">You have suffered a brain injury. Your mind exists in two planes of reality, one real and one borne of rawmagic. You constantly shift between the two, seeing or hearing things that may not exist. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt;, &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;. If you fail a &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; against bludgeoning damage, force damage, or psychic damage, you are also &lt;LSTag Type="Status" Tooltip="STUNNED
 "&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore your brain function.</content>
 
@@ -113,21 +120,25 @@
 
 
 	<content contentuid="hf9899dabg1cb4g4dd3gbd91gf74112304ee5" version="1">Horrible Disfigurement</content> -- Acid damage
-	--You have acid burns to the extent that the scars can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal or regenerate, remove the acid burn scar.
+	-- You have burn scars to the extent that they can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal or regenerate, removes the burn scars.
+	-- You have acid burns to the extent that the scars can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal or regenerate, remove the acid burn scar.
 
 	<content contentuid="h9ddc85a9g19a4g496bg8e8dgbe197296cb87" version="1">Horrible Disfigurement is intended for Acid damage.&lt;br&gt;Intended severity: Medium.
-&lt;br&gt;You have acid burns to the extent that the scars can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
+&lt;br&gt;You have burns to the extent that the scars can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
+
+	<content contentuid="hdcd8ef23g0678g43ffga877g57e954d5e81b" version="1">You have burn scars to the extent that they can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, removes the burn scars</content>
 
 	<content contentuid="hb58b1ce6g670ag4e2cgb5b0g3e587385a812" version="1">You have acid burns to the extent that the scars can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, remove the acid burn scar.</content>
 
 
 
-	<content contentuid="h72857995g39acg494bg8c6dgf312f698c4ab" version="1">Major Neuralgia</content> -- Cold and Acid damage
+	<content contentuid="h72857995g39acg494bg8c6dgf312f698c4ab" version="1">Major Neuralgia</content> -- Acid, Cold and Fire damage
 	-- You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must make a DC 15 Constitution saving throw. On a failed save, you lose your action and can't use reactions until the start of your next turn. Magical healing of 6th level or higher, such as heal and regenerate, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.
 
-		<content contentuid="hfe21a6c2ge12dg4fa7g9ee6gb1463317e349" version="1">Major Neuralgia is intended for Acid and Cold damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury just with a higher DC saving throw.&lt;br&gt;Intended severity: High.
+		<content contentuid="hfe21a6c2ge12dg4fa7g9ee6gb1463317e349" version="1">Major Neuralgia is intended for Acid, Cold and Fire damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury just with a higher DC saving throw.&lt;br&gt;Intended severity: High.
 &lt;br&gt;You are in constant pain from nerve damage. At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia.</content>
 
@@ -148,19 +159,19 @@
 
 
 
-	<content contentuid="h1919463eg4e1ag465bg82ffg0c4648b2b60d" version="1">Minor Neuralgia</content> -- Cold and Acid damage
+	<content contentuid="h1919463eg4e1ag465bg82ffg0c4648b2b60d" version="1">Minor Neuralgia</content> -- Acid, Cold and Fire damage
 	-- This has the same effect as Major Neuralgia above, except that the save DC is 10 and it only takes ten days to resolve on its own.
 
-	<content contentuid="h6239ca1egb1f3g4cdeg97ddg46d397765ffc" version="1">Minor Neuralgia is intended for Acid and Cold damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury with a higher DC saving throw.&lt;br&gt;Intended severity: Low.
+	<content contentuid="h6239ca1egb1f3g4cdeg97ddg46d397765ffc" version="1">Minor Neuralgia is intended for Acid, Cold and Fire damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury with a higher DC saving throw.&lt;br&gt;Intended severity: Low.
 &lt;br&gt;You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia.</content>
 
 
 
-	<content contentuid="h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f" version="1">Partial Blindness</content> -- Acid damage
+	<content contentuid="h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f" version="1">Partial Blindness</content> -- Acid, Radiant and Cold damage
 	-- Your eyes are damaged; you have disadvantage on Wisdom (Perception) checks that rely on sight and on ranged attack rolls. Magic such as the regenerate spell can heal the damage to your eyes. If you have already suffered partial blindness, you're blinded.
 
-	<content contentuid="h889936c6gda61g4c68g957cg979b6a746205" version="1">Partial Blindness is intended for Acid and Cold damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
+	<content contentuid="h889936c6gda61g4c68g957cg979b6a746205" version="1">Partial Blindness is intended for Acid, Cold and Radiant damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
 &lt;br&gt;Your eyes are damaged. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Partial_Blindness"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
 &lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
 
@@ -175,10 +186,10 @@
 
 
 
-	<content contentuid="h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe" version="1">Systematic Damage</content> -- Cold damage
+	<content contentuid="h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe" version="1">Systematic Damage</content> -- Cold and Poison damage
 	-- You have disadvantage on Strength, Dexterity, and Constitution ability checks and Strength, Dexterity, and Constitution saving throws. Magic such as the regenerate spell cures this damage.
 
-	<content contentuid="h8adc744bg0c6fg4c21g8ff5g50c7287acab1" version="1">Systematic Damage is intended for Cold damage.&lt;br&gt;Intended severity: High.
+	<content contentuid="h8adc744bg0c6fg4c21g8ff5g50c7287acab1" version="1">Systematic Damage is intended for Cold and Poison damage.&lt;br&gt;Intended severity: High.
 &lt;br&gt;You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt;, &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can cure the damage.</content>
 

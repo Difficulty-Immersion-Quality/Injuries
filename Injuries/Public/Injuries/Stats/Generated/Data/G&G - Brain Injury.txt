@@ -64,3 +64,12 @@ data "StatsFunctors" "IF((SaveFailed) and IsDamageTypeBludgeoning() or IsDamageT
 data "StatsFunctorContext" "OnDamaged"
 
 // ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_PLANE_SPLITTING_BRAIN_INJURY"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+// Plane Splitting Brain Injury
+data "DisplayName" "h15d0897bg5accg44f6g94d4gb79d3e6f5abe"
+// 
+data "Description" "h9f3f9585g5856g4dafg8a70g7a971dd7036e"

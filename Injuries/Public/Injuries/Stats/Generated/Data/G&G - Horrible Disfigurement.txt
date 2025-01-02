@@ -15,7 +15,7 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT,100,-1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_DISFIGUREMENT,100,-1)"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT,100,-1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_DISFIGUREMENT,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
@@ -31,7 +31,7 @@ data "StatusType" "BOOST"
 // Horrible Disfigurement
 data "DisplayName" "hf9899dabg1cb4g4dd3gbd91gf74112304ee5"
 //
-data "Description" "hb58b1ce6g670ag4e2cgb5b0g3e587385a812"
+data "Description" "hdcd8ef23g0678g43ffga877g57e954d5e81b"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
@@ -58,3 +58,10 @@ data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 
 // ==================================== Flavour Proxies ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
+// 
+data "Description" "hb58b1ce6g670ag4e2cgb5b0g3e587385a812"
