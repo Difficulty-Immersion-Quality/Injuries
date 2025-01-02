@@ -64,6 +64,8 @@ data "StillAnimationType" "Blinded"
 data "StillAnimationPriority" "Blinded"
 data "SoundVocalStart" "GASP"
 data "SoundVocalEnd" "EXHAUSTED"
+data "SoundLoop" ""
+data "SoundStop" ""
 data "SplatterBloodAmount" "0.25"
 data "SplatterDirtAmount" "0.1"
 

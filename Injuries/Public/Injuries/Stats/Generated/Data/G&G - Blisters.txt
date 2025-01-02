@@ -52,6 +52,8 @@ data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" ""
 data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 

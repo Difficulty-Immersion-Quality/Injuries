@@ -52,6 +52,8 @@ data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "PAIN"
 data "SoundVocalEnd" "EFFORTS"
+data "SoundLoop" ""
+data "SoundStop" ""
 data "SplatterBloodAmount" "0.69"
 data "SplatterDirtAmount" "0.5"
 

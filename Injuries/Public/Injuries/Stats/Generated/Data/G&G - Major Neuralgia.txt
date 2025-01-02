@@ -64,6 +64,8 @@ data "StillAnimationType" "Weakened"
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "DEATH"
 data "SoundVocalEnd" "WEAK"
+data "SoundLoop" ""
+data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 

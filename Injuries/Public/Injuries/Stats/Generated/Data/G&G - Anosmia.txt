@@ -52,6 +52,8 @@ data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "ANTICIPATION"
 data "SoundVocalEnd" "RECOVER"
+data "SoundLoop" ""
+data "SoundStop" ""
 data "SplatterBloodAmount" ""
 data "SplatterDirtAmount" ""
 
