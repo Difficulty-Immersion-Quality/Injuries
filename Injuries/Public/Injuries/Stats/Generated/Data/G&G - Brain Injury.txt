@@ -15,7 +15,7 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BRAIN_INJURY"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PLANE_SPLITTING_BRAIN_INJURY,100,-1)"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_FORCE') and not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PLANE_SPLITTING_BRAIN_INJURY,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PLANE_SPLITTING_BRAIN_INJURY')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
@@ -75,3 +75,12 @@ using "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
 data "DisplayName" "h15d0897bg5accg44f6g94d4gb79d3e6f5abe"
 // 
 data "Description" "h9f3f9585g5856g4dafg8a70g7a971dd7036e"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_SPIRITUAL_INJURY"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
+// Spiritual Injury
+data "DisplayName" "h9080cd68gc75eg4e33g846fg105d18a5323f"
+// 
+data "Description" "h888b1204g85b7g43c1gb0d1gd4b4550d68e0"

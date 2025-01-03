@@ -55,6 +55,13 @@
 "&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore your brain function.</content>
 
+	<content contentuid="h9080cd68gc75eg4e33g846fg105d18a5323f" version="1">Spiritual Injury</content> -- Necrotic damage
+	-- You are afflicted with intense apathy and depression. You have disadvantage on Intelligence, Wisdom, and Charisma ability checks and Intelligence, Wisdom, and Charisma saving throws. Magic such as the heal or regenerate spell can resolve your spiritual injury, but such spells must be cast by a cleric, druid, or other class that uses divine magic.
+
+	<content contentuid="h888b1204g85b7g43c1gb0d1gd4b4550d68e0" version="1">You are afflicted with intense apathy and depression. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt;, &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;. If you fail a &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; against bludgeoning damage, force damage, or psychic damage, you are also &lt;LSTag Type="Status" Tooltip="STUNNED
+"&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
+&lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can resolve your spiritual injury.</content>
+
 
 
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
@@ -168,10 +175,10 @@
 
 
 
-	<content contentuid="h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f" version="1">Partial Blindness</content> -- Acid, Radiant and Cold damage
+	<content contentuid="h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f" version="1">Partial Blindness</content> -- Acid, Cold, Fire, Piercing, Radiant and Slashing damage
 	-- Your eyes are damaged; you have disadvantage on Wisdom (Perception) checks that rely on sight and on ranged attack rolls. Magic such as the regenerate spell can heal the damage to your eyes. If you have already suffered partial blindness, you're blinded.
 
-	<content contentuid="h889936c6gda61g4c68g957cg979b6a746205" version="1">Partial Blindness is intended for Acid, Cold and Radiant damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
+	<content contentuid="h889936c6gda61g4c68g957cg979b6a746205" version="1">Partial Blindness is intended for Acid, Cold, Fire, Piercing, Radiant and Slashing damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
 &lt;br&gt;Your eyes are damaged. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Partial_Blindness"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
 &lt;br&gt;Magic such as &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt; can restore your sight.</content>
 
