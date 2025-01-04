@@ -67,7 +67,7 @@
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
 	-- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
-	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Cold and Lightning damage.&lt;br&gt;Intended severity: Medium.
+	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold and Lightning damage.&lt;br&gt;Intended severity: Medium.
 &lt;br&gt;Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is halved. If you use the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action you fall &lt;LSTag Type="Status" Tooltip="PRONE
 "&gt;Prone&lt;/LSTag&gt; at the end of your turn. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; checks.
 &lt;br&gt;Magic such as the &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
@@ -147,12 +147,18 @@
 	<content contentuid="h72857995g39acg494bg8c6dgf312f698c4ab" version="1">Major Neuralgia</content> -- Acid, Cold and Fire damage
 	-- You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must make a DC 15 Constitution saving throw. On a failed save, you lose your action and can't use reactions until the start of your next turn. Magical healing of 6th level or higher, such as heal and regenerate, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.
 
-		<content contentuid="hfe21a6c2ge12dg4fa7g9ee6gb1463317e349" version="1">Major Neuralgia is intended for Acid, Cold and Fire damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury just with a higher DC saving throw.&lt;br&gt;Intended severity: High.
+		<content contentuid="hfe21a6c2ge12dg4fa7g9ee6gb1463317e349" version="1">Major Neuralgia is intended for Acid, Bludgeoning, Cold and Fire damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury just with a higher DC saving throw.&lt;br&gt;Intended severity: High.
 &lt;br&gt;You are in constant pain from nerve damage. At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia.</content>
 
 	<content contentuid="he7892f2egac8ag4c9eg8c98g8d2a7d24f78f" version="1">You are in constant pain from nerve damage. At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia.</content>
+
+	<content contentuid="h5486d5efga04bg4f58g9b38gfe7dd7656b8a" version="1">Internal Injury</content> Bludgeoning damage
+	-- Whenever you attempt an action in combat, you must make a DC 15 Constitution saving throw. On a failed save, you lose your action and can't use reactions until the start of your next turn. Magical healing of 6th level or higher, such as heal or regenerate, repair the injury, or if you spend ten days doing nothing but resting, it will heal naturally.
+
+	<content contentuid="hdd0e0481g329cg4282ga8e4gb7484c9f37c6" version="1">You are internally wounded. At the beginning of your turn in combat you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, repair the injury.</content>
 
 
 
@@ -171,9 +177,12 @@
 	<content contentuid="h1919463eg4e1ag465bg82ffg0c4648b2b60d" version="1">Minor Neuralgia</content> -- Acid, Cold and Fire damage
 	-- This has the same effect as Major Neuralgia above, except that the save DC is 10 and it only takes ten days to resolve on its own.
 
-	<content contentuid="h6239ca1egb1f3g4cdeg97ddg46d397765ffc" version="1">Minor Neuralgia is intended for Acid, Cold and Fire damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury with a higher DC saving throw.&lt;br&gt;Intended severity: Low.
+	<content contentuid="h6239ca1egb1f3g4cdeg97ddg46d397765ffc" version="1">Minor Neuralgia is intended for Acid, Bludgeoning, Cold and Fire damage. Acquiring Major Neuralgia will replace Minor Neuraliga, it's the same injury with a higher DC saving throw.&lt;br&gt;Intended severity: Low.
 &lt;br&gt;You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;. On a failed save, you lose your &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Action&lt;/LSTag&gt; and can't use &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt; until the start of your next turn.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt;, cures the neuralgia.</content>
+
+	<content contentuid="h90f2ea78g905bg4a2cgb7e3g1d0533a95576" version="1">Broken Ribs</content> -- Bludgeoning damage
+	-- This has the same effect as Internal Injury above, except that the save DC is 10.
 
 
 

@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_NEURALGIA"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL')):ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA')"
+data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL')):ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL') and not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL') and HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -32,7 +32,7 @@ data "StackId" "GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
 data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_NEURALGIA)"
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_INJURY_PROXY_GRIT_MAJOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA')"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA')"
 data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
@@ -94,3 +94,12 @@ data "Boosts" "ActionResource(ActionPoint,-1,0);ActionResourceBlock(ReactionActi
 data "SoundVocalStart" "DEATH"
 
 // ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
+// Broken Ribs
+data "DisplayName" "h90f2ea78g905bg4a2cgb7e3g1d0533a95576"
+// 
+data "Description" "hdd0e0481g329cg4282ga8e4gb7484c9f37c6"
