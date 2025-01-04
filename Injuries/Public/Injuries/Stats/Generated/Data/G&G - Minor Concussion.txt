@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION,100-1);ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION')"
+data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL')):ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL')):ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -37,7 +37,7 @@ data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Minor Concussion

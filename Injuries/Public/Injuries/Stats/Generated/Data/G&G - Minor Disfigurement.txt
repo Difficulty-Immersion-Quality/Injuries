@@ -16,7 +16,7 @@ data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT,100,-1)
-data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
