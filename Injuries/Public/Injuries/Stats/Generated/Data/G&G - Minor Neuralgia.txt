@@ -23,7 +23,7 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// Technical Status
+// Technical Status for stack management
 new entry "GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST" 

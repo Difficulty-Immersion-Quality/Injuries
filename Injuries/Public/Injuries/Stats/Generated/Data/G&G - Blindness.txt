@@ -23,7 +23,7 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition;SG_Blinded"
 data "Passives" ""
 
-// Technical Status
+// Technical Status for stack management
 new entry "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL_OVERWRITE"
 type "StatusData" 
 data "StatusType" "BOOST" 
