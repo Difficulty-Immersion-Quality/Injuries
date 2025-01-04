@@ -1,21 +1,21 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Concussion
-data "DisplayName" "h69d681d7gf0d5g4a87g8ffcgb85877d13fc4"
+// Minor Concussion
+data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
 // 
-data "Description" "hb04fa562gd8f4g4ae1gb6a6g2af86c77422a"
+data "Description" "hb854d70cg0b6cg43acg9d36g903a9ee88e61"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION,100,-1);ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL_OVERWRITE,100,-1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION,100-1)"
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION,100-1);ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
@@ -24,15 +24,15 @@ data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
 // Technical Status for stack management
-new entry "GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL_OVERWRITE"
+new entry "GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST" 
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 data "StackId" "GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL"
-data "StackPriority" "2"
+data "StackPriority" "1"
 data "StackType" "Overwrite"
-data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION')"
+data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION')"
 data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
@@ -40,19 +40,19 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Majory Concussion
-data "DisplayName" "h69d681d7gf0d5g4a87g8ffcgb85877d13fc4"
+// Minor Concussion
+data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
 // 
-data "Description" "h1758c8ceg6385g44b5g98d8g9ca2cad41361"
+data "Description" "h75a67443gffdfg4d69g99eag808e91e7a982"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_CONCUSSION"
-data "StackPriority" "2"
+data "StackPriority" "1"
 data "StackType" "Overwrite"
-data "Boosts" "Disadvantage(Concentration);Disadvantage(Ability,Intelligence);Disadvantage(Ability,Wisdom);Disadvantage(Ability,Charisma)"
-data "OnApplyFunctors" ""
+data "Boosts" "Disadvantage(Ability,Intelligence)"
+data "OnApplyFunctors" "ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_DETECT_TECHNICAL,100,-1)"
 data "RemoveConditions" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,10)"
 data "RemoveEvents" "OnHeal"
 data "TickType" ""

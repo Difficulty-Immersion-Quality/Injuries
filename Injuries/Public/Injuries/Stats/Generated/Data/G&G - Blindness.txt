@@ -32,7 +32,7 @@ data "StackId" "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_OCULAR_DAMAGE') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_BLINDNESS')"
 data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
