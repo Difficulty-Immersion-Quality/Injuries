@@ -6,7 +6,7 @@ data "StatusType" "BOOST"
 // Broken Nose
 data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
 //
-data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
+data "Description" "h7f58fc9fgb4b7g4a88g907egdf9a379a1711"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
@@ -31,7 +31,7 @@ data "StatusType" "BOOST"
 // Broken Nose
 data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
 //
-data "Description" "h7f58fc9fgb4b7g4a88g907egdf9a379a1711"
+data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"

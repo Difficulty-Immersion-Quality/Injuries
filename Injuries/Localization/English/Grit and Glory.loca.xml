@@ -240,14 +240,14 @@
 
 
 
-	<content contentuid="hb9b656deg732cg4b1eg8957gf2daba2aa2b8" version="1">Severe Bludgeoning</content> -- Bludgeoning damage
+	<content contentuid="hb9b656deg732cg4b1eg8957gf2daba2aa2b8" version="1">Severe Bruising</content> -- Bludgeoning damage
 	-- You suffer severe bruising over an extensive portion of your anatomy. Anytime you suffer bludgeoning or force damage, you suffer an additional point of bludgeoning or force damage. The bruising heals if you receive magical healing. Alternatively, it heals on its own in 2 weeks.
 
-	<content contentuid="hc54e7debg648dg49c4gbb31gb700f574ce1d" version="1">Severe Bludgeoning is intended for Bludgeoning damage.&lt;br&gt;Intended severity: Low. 
-&lt;br&gt;You suffer severe bruising over an extensive portion of your anatomy. Anytime you suffer bludgeoning or force damage, you suffer an additional point of bludgeoning or force damage..
+	<content contentuid="hc54e7debg648dg49c4gbb31gb700f574ce1d" version="1">Severe Bruising is intended for Bludgeoning damage.&lt;br&gt;Intended severity: Low. 
+&lt;br&gt;You suffer severe bruising over an extensive portion of your anatomy. Anytime you suffer bludgeoning or force damage, you suffer an additional point of bludgeoning or force damage.
 &lt;br&gt;The bruising heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
-	<content contentuid="h9046416fg1d3dg42acg9761gd3bc088082d6" version="1">You suffer severe bruising over an extensive portion of your anatomy. Anytime you suffer bludgeoning or force damage, you suffer an additional point of bludgeoning or force damage..
+	<content contentuid="h9046416fg1d3dg42acg9761gd3bc088082d6" version="1">You suffer severe bruising over an extensive portion of your anatomy. Anytime you suffer bludgeoning or force damage, you suffer an additional point of bludgeoning or force damage.
 &lt;br&gt;The bruising heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
 
