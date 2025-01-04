@@ -72,3 +72,10 @@ data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 // Explosive Grounding of the Foot
 data "DisplayName" "h002467ecg9b8dg43e4g8845g7e43225de74b"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
+// Broken Leg
+data "DisplayName" "he2c12678gbf3bg43efgac5ag1068bf452b7f"
