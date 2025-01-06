@@ -10,7 +10,7 @@ end
 
 function Goon_Injury_Offhand_Check(entity)
     entity = entity or context.Source
-    return WieldingWeapon('Melee', true, false, entity) | WieldingWeapon('Ranged', true, false, entity) | HasShieldEquipped(entity)
+    return WieldingWeapon('Melee', true, false, entity) | WieldingWeapon('Ranged', true, false, entity) | HasShieldEquipped(entity) | WieldingWeapon('Twohanded', false, false, entity) | WieldingWeapon('Versatile', false, false, entity)
 end
 
 function Goon_Tracking_Long_Rests_X()
