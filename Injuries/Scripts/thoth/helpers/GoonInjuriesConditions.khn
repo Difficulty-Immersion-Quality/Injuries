@@ -1,3 +1,5 @@
+local __util = require 'larian.util'
+
 function Goon_Injury_Spell_Check_Somatic()
     return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasSomaticComponent))
 end
@@ -6,18 +8,9 @@ function Goon_Injury_Spell_Check_Verbal()
     return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasVerbalComponent))
 end
 
-function Goon_Injury_Offhand_Check()
-    local entity = entity or context.Source
-    if not entity then
-        return false
-    end
-
-    local hasMeleeWeapon = WieldingWeapon('Melee', false, true, entity) or WieldingWeapon('Melee', true, true, entity)
-    local hasAmmunition = WieldingWeapon('Ammunition', entity)
-    local hasShield = HasShieldEquipped(entity)
-    local OffhandInUse = hasMeleeWeapon or hasAmmunition or hasShield
-
-    return OffhandInUse
+function Goon_Injury_Offhand_Check(entity)
+    entity = entity or context.Source
+    return WieldingWeapon('Melee', true, false, entity) | WieldingWeapon('Ranged', true, false, entity) | HasShieldEquipped(entity)
 end
 
 function Goon_Tracking_Long_Rests_X()
