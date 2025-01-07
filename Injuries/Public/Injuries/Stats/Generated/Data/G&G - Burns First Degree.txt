@@ -1,0 +1,88 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_FIRST_DEGREE_BURNS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// First Degree Burns
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURALGIA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// Technical Status for stack management
+new entry "GOON_GRIT_GLORY_FIRST_DEGREE_BURNS_DETECT_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "StackId" "GOON_GRIT_GLORY_BURNS_DETECT_TECHNICAL"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_FIRST_DEGREE_BURNS)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_FIRST_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_SECOND_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// First Degree Burns
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BURNS"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ";ApplyStatus(GOON_GRIT_GLORY_FIRST_DEGREE_BURNS_DETECT_TECHNICAL,100,-1)"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" "StartTurn"
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
+//
+data "StillAnimationType" "Weakened"
+data "StillAnimationPriority" ""
+data "SoundVocalStart" "DEATH"
+data "SoundVocalEnd" "WEAK"
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// Technical passive for damage
+new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "DealDamage(SELF,1, Fire)"
+data "StatsFunctorContext" "OnDamaged"
+data "Conditions" "IsDamageTypeFire()"
+
+// ==================================== Flavour Proxies  ====================================
