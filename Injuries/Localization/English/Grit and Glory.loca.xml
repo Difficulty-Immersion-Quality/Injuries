@@ -88,15 +88,15 @@
 
 
 
-	<content contentuid="hcfea4417g8d70g4990gb5adgbe1848a4df05" version="1">Second Degree Burns</content> -- Fire damage
+	<content contentuid="hdeef1c57g760cg473eg92edg2091f46ddb07" version="1">Second Degree Burns</content> -- Fire damage
 	-- You have disadvantage on Strength, Dexterity, and Constitution checks. Magic such as the regenerate spell cures this damage. Alternatively, they will heal on their own in 4 weeks. If you already have second degree burns, you instead suffer third degree burns.
 
-	<content contentuid="h9de8fbfcg0947g47b1gaa42gceff0104806d" version="1">First Degree Burns is intended for Fire damage.&lt;br&gt;Intended severity: Low.
-&lt;br&gt;You have superficial but painful burns. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_FIRST_DEGREE_BURNS"&gt;First Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;.
-&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+	<content contentuid="hf40e3401g8d0dg46b7g9ef1g3adfae2a8f42" version="1">Second Degree Burns is intended for Fire damage.&lt;br&gt;Intended severity: Medium.
+&lt;br&gt;You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt;, &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; and &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; checks. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_THIRD_DEGREE_BURNS"&gt;Third Degree Burns&lt;/LSTag&gt;.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can cure the burns.</content>
 
-	<content contentuid="ha696d835gba79g4231ga1a7gff4582bd7de1" version="1">You have superficial but painful burns. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_FIRST_DEGREE_BURNS"&gt;First Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;.
-&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+	<content contentuid="haf797f25gd47dg44d6g8dc3g58715c7d08d2" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt;, &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; and &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; checks. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_THIRD_DEGREE_BURNS"&gt;Third Degree Burns&lt;/LSTag&gt;.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can cure the burns.</content>
 
 
 
