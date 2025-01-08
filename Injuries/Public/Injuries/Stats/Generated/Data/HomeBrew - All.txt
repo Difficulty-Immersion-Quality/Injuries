@@ -124,7 +124,7 @@ data "Boosts" "ActionResource(Movement,-3,0);Resistance(Cold, Vulnerable)"
 
 // ==================================== Fire & Radiant Injuries  ====================================
 
-new entry "Goon_Injury_1st_Degree_Burn"
+//new entry "Goon_Injury_1st_Degree_Burn"
 type "StatusData"
 data "StatusType" "BOOST" 
 data "DisplayName" "h3b974ebbg7689g4721gad47g129257efa819;1"
@@ -138,7 +138,7 @@ data "Boosts" "Ability(Constitution,-1)"
 data "StackId" "Goon_Burns"
 data "StackPriority" "1"
 
-new entry "Goon_Injury_2nd_Degree_Burn"
+//new entry "Goon_Injury_2nd_Degree_Burn"
 type "StatusData"
 data "StatusType" "BOOST" 
 data "DisplayName" "hd5e56cb7g3706g40feg9b4dgb011827baf16;1"
@@ -152,7 +152,7 @@ data "Boosts" "Ability(Constitution,-2)"
 data "StackId" "Goon_Burns"
 data "StackPriority" "2"
 
-new entry "Goon_Injury_3rd_Degree_Burn"
+//new entry "Goon_Injury_3rd_Degree_Burn"
 type "StatusData"
 data "StatusType" "BOOST" 
 data "DisplayName" "h0759b883gfc22g4417gb062gf74280ef243b;1"
