@@ -1,22 +1,22 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_SECOND_DEGREE_BURNS"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Second Degree Burns
-data "DisplayName" "hdeef1c57g760cg473eg92edg2091f46ddb07"
+// Third Degree Burns
+data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 //
-data "Description" "hf40e3401g8d0dg46b7g9ef1g3adfae2a8f42"
+data "Description" "h796256d9g56ecg4632g8d27g121f80b67351"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_SECOND_DEGREE_BURNS"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_SECOND_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_SECOND_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS')"
+data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_THIRD_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS,100,-1);IF(not HasStatus('GOON_GRIT_GLORY_THIRD_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -24,41 +24,41 @@ data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
 // Technical Status for stack management
-new entry "GOON_GRIT_GLORY_SECOND_DEGREE_BURNS_DETECT_TECHNICAL"
+new entry "GOON_GRIT_GLORY_THIRD_DEGREE_BURNS_DETECT_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST" 
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 data "StackId" "GOON_GRIT_GLORY_BURNS_DETECT_TECHNICAL"
-data "StackPriority" "2"
+data "StackPriority" "3"
 data "StackType" "Overwrite"
-data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_SECOND_DEGREE_BURNS)"
+data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_FIRST_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_SECOND_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS') and not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS')"
 data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Second Degree Burns
-data "DisplayName" "hdeef1c57g760cg473eg92edg2091f46ddb07"
+// Third Degree Burns
+data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 //
-data "Description" "haf797f25gd47dg44d6g8dc3g58715c7d08d2"
+data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BURNS"
-data "StackPriority" "2"
+data "StackPriority" "3"
 data "StackType" "Overwrite"
-data "Boosts" "Disadvantage(Ability,Strength);Disadvantage(Ability,Dexterity);Disadvantage(Ability,Constitution)"
-data "OnApplyFunctors" "ApplyStatus(GOON_GRIT_GLORY_SECOND_DEGREE_BURNS_DETECT_TECHNICAL,100,-1)"
+data "Boosts" "Disadvantage(Ability,Strength);Disadvantage(Ability,Dexterity);Disadvantage(Ability,Constitution);Disadvantage(Ability,Intelligence);Disadvantage(Ability,Wisdom);Disadvantage(Ability,Charisma);Disadvantage(SavingThrow,Constitution)"
+data "OnApplyFunctors" "ApplyStatus(GOON_GRIT_GLORY_THIRD_DEGREE_BURNS_DETECT_TECHNICAL,100,-1)"
 data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" "StartTurn"
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" "Goon_Real_Injury_Grit_Glory_Second_Degree_Burns_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Third_Degree_Burns_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive;Goon_Real_Injury_Grit_Glory_Third_Degree_Burn_Technical_Passive"
 //
 data "StillAnimationType" "Weakened"
 data "StillAnimationPriority" ""
@@ -70,10 +70,10 @@ data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 
 // Technical passive for removal
-new entry "Goon_Real_Injury_Grit_Glory_Second_Degree_Burns_Removal_Technical_Passive"
+new entry "Goon_Real_Injury_Grit_Glory_Third_Degree_Burns_Removal_Technical_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
@@ -84,5 +84,13 @@ data "Properties" "IsHidden"
 data "StatsFunctors" "DealDamage(SELF,1, Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"
+
+// Technical passive for stun
+new entry "Goon_Real_Injury_Grit_Glory_Third_Degree_Burn_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
+data "StatsFunctorContext" "OnDamaged"
+data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypeFire()"
 
 // ==================================== Flavour Proxies  ====================================
