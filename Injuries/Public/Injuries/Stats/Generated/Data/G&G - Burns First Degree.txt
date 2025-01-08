@@ -4,10 +4,10 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_FIRST_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // First Degree Burns
-data "DisplayName" ""
+data "DisplayName" "h4453d35eg5dd9g4e44g9ca3g3a63432dc937"
 //
-data "Description" ""
-data "DescriptionParams" ""
+data "Description" "h0b74a561gcfa9g4665g9b82g5b1a353aef67"
+data "DescriptionParams" "DealDamage(1, Fire)"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -41,10 +41,10 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // First Degree Burns
-data "DisplayName" ""
+data "DisplayName" "h4453d35eg5dd9g4e44g9ca3g3a63432dc937"
 //
-data "Description" ""
-data "DescriptionParams" ""
+data "Description" "h3133cb5fg419dg4fb5g89c3g2c778cefd714"
+data "DescriptionParams" "DealDamage(1, Fire)"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //

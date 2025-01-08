@@ -76,6 +76,30 @@
 
 
 
+	<content contentuid="h4453d35eg5dd9g4e44g9ca3g3a63432dc937" version="1">First Degree Burns</content> -- Fire damage
+	-- You have superficial but painful burns. Whenever you take fire damage, you take an additional point of damage. Magical healing cures the burns; alternatively, they will heal on their own in 2 weeks. If you already have first degree burns, you instead suffer second degree burns.
+
+	<content contentuid="h0b74a561gcfa9g4665g9b82g5b1a353aef67" version="1">First Degree Burns is intended for Fire damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;You have superficial but painful burns. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_FIRST_DEGREE_BURNS"&gt;First Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="h3133cb5fg419dg4fb5g89c3g2c778cefd714" version="1">You have superficial but painful burns. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_FIRST_DEGREE_BURNS"&gt;First Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
+	<content contentuid="hcfea4417g8d70g4990gb5adgbe1848a4df05" version="1">Second Degree Burns</content> -- Fire damage
+	-- You have disadvantage on Strength, Dexterity, and Constitution checks. Magic such as the regenerate spell cures this damage. Alternatively, they will heal on their own in 4 weeks. If you already have second degree burns, you instead suffer third degree burns.
+
+	<content contentuid="h9de8fbfcg0947g47b1gaa42gceff0104806d" version="1">First Degree Burns is intended for Fire damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;You have superficial but painful burns. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_FIRST_DEGREE_BURNS"&gt;First Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="ha696d835gba79g4231ga1a7gff4582bd7de1" version="1">You have superficial but painful burns. Whenever you take Fire damage, you take an additional [1]. If you already have &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_FIRST_DEGREE_BURNS"&gt;First Degree Burns&lt;/LSTag&gt;, you instead suffer from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_SECOND_DEGREE_BURNS"&gt;Second Degree Burns&lt;/LSTag&gt;.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
 	-- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
@@ -226,16 +250,16 @@
 	-- Your eyes are damaged; you have disadvantage on Wisdom (Perception) checks that rely on sight and on ranged attack rolls. Magic such as the regenerate spell can heal the damage to your eyes. If you have already suffered partial blindness, you're blinded.
 
 	<content contentuid="h889936c6gda61g4c68g957cg979b6a746205" version="1">Partial Blindness is intended for Acid, Cold, Fire, Piercing, Radiant and Slashing damage. Acquiring Partial Blindness twice will induce Blindness.&lt;br&gt;Intended severity: High.
-&lt;br&gt;Your eyes are damaged. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Partial_Blindness"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
+&lt;br&gt;Your eyes are damaged. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_PARTIAL_BLINDNESS"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_BLINDNESS"&gt;Blindness&lt;/LSTag&gt; injury.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can restore your sight.</content>
 
-	<content contentuid="h7d6551ecgf53ag46b9g91b9g0ce90774a3b3" version="1">Your eyes are damaged. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Partial_Blindness"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
+	<content contentuid="h7d6551ecgf53ag46b9g91b9g0ce90774a3b3" version="1">Your eyes are damaged. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_PARTIAL_BLINDNESS"&gt;Partial Blindness&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_BLINDNESS"&gt;Blindness&lt;/LSTag&gt; injury.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can restore your sight.</content>
 
 	<content contentuid="h38bec16bgc8cag4cf3g95eeg8d0ebe33e616" version="1">Ocular Damage</content> -- Cold damage
 	-- One of your corneas is damaged from frostbite. You have disadvantage on Wisdom (Perception) checks that rely on sight and on ranged attack rolls. Magic such as the regenerate spell can restore the damaged cornea. If you have no corneas that remain undamaged after sustaining this injury, you're blinded.
 
-	<content contentuid="h557372beg9346g4955ga9eeg9d6643ce5294" version="1">One of your corneas is damaged from frostbite. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Ocular_Damage"&gt;Ocular Damage&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Blindness"&gt;Blindness&lt;/LSTag&gt; injury.
+	<content contentuid="h557372beg9346g4955ga9eeg9d6643ce5294" version="1">One of your corneas is damaged from frostbite. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Perception"&gt;Perception&lt;/LSTag&gt; checks that rely on sight and on ranged &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;. If you are already suffering from &lt;LSTag Type="Status" Tooltip="Goon_Real_Injury_Grit_Glory_Ocular_Damage"&gt;Ocular Damage&lt;/LSTag&gt; and are inflicted with it again, you instead gain the &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRITY_GLORY_BLINDNESS"&gt;Blindness&lt;/LSTag&gt; injury.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can restore the damaged cornea.</content>
 
 
