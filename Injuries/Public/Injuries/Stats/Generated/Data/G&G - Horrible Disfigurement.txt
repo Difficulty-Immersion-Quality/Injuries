@@ -41,12 +41,12 @@ data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" "Advantage(Skill,Intimidation);Disadvantage(Skill,Persuasion)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,15)"
-data "RemoveEvents" "OnHeal"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" ""
+data "Passives" "Goon_Real_Injury_Grit_Glory_Horrible_Disfigurement_Removal_Technical_Passive"
 //
 data "StillAnimationType" "Weakened"
 data "StillAnimationPriority" ""
@@ -56,6 +56,14 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Horrible_Disfigurement_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
 
 // ==================================== Flavour Proxies ====================================
 

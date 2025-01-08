@@ -46,7 +46,7 @@ data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" "Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Brain_Injury_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"
 //
 data "StillAnimationType" "Dazed"
 data "StillAnimationPriority" "Dazed"
@@ -56,6 +56,14 @@ data "SoundLoop" "Misc_Status_MindCrush_MO"
 data "SoundStop" "Misc_Status_MindCrush_End"
 data "SplatterBloodAmount" "0.5"
 data "SplatterDirtAmount" ""
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Brain_Injury_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
 
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"

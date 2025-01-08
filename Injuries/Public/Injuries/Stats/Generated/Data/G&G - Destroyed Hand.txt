@@ -41,12 +41,12 @@ data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" "IF(Goon_Injury_Offhand_Check(context.Source)):Disadvantage(Ability,Strength);IF(Goon_Injury_Offhand_Check(context.Source)):Disadvantage(Ability,Dexterity);IF(Goon_Injury_Offhand_Check(context.Source)):Disadvantage(AttackRoll);IF(Goon_Injury_Offhand_Check(context.Source)):UnlockSpellVariant(Goon_Injury_Spell_Check_Somatic(),IsSpell(),ModifySavingThrowAdvantage(),ModifyIconGlow())"
 data "OnApplyFunctors" "IF(Goon_Injury_Offhand_Check(context.Source)):ApplyStatus(DISARM, 100, 1)"
-data "RemoveConditions" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source)):SavingThrow(Ability.Constitution,15)"
-data "RemoveEvents" "OnHeal"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" ""
+data "Passives" "Goon_Real_Injury_Grit_Glory_Destroyed_Hand_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
@@ -56,6 +56,14 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.69"
 data "SplatterDirtAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Destroyed_Hand_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
 
 // ==================================== Flavour Proxies  ====================================
 

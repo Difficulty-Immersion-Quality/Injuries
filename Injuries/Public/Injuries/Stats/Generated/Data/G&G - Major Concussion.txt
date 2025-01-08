@@ -53,12 +53,12 @@ data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" "Disadvantage(Concentration);Disadvantage(Ability,Intelligence);Disadvantage(Ability,Wisdom);Disadvantage(Ability,Charisma)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE') or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE')):SavingThrow(Ability.Constitution,10)"
-data "RemoveEvents" "OnHeal"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" ""
+data "Passives" "Goon_Real_Injury_Grit_Glory_Major_Concussion_Removal_Technical_Passive"
 //
 data "StillAnimationType" "Mental"
 data "StillAnimationPriority" "Mental"
@@ -68,6 +68,14 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "1.0"
 data "SplatterDirtAmount" ""
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Major_Concussion_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
 
 // ==================================== Flavour Proxies  ====================================
 

@@ -41,12 +41,12 @@ data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" "StatusImmunity(STINKING_CLOUD)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" "SavingThrow(Ability.Constitution,10)"
-data "RemoveEvents" "OnHeal"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" ""
+data "Passives" "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
@@ -56,6 +56,14 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" ""
 data "SplatterDirtAmount" ""
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_ANOSMIA)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
 
 // ==================================== Flavour Proxies  ====================================
 

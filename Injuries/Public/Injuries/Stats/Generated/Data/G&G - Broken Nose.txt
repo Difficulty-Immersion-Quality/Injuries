@@ -46,7 +46,7 @@ data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" ""
+data "Passives" "Goon_Real_Injury_Grit_Glory_Broken_Nose_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
@@ -56,5 +56,13 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.5"
 data "SplatterDirtAmount" "0.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Broken_Nose_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_NOSE)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
 
 // ==================================== Flavour Proxies  ====================================
