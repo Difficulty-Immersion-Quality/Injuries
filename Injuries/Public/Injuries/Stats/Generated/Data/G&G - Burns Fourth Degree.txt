@@ -15,7 +15,7 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL,100,0);IF(not HasStatus('GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
+data "OnApplyFunctors" "IF(HasStatus('GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL,100,1);IF(not HasStatus('GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DETECT_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
@@ -43,10 +43,26 @@ data "StatusType" "BOOST"
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
+data "DescriptionParams" "DealDamage(1, Fire)"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 data "StackId" "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
-data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):DealDamage(666,Fire)"
-data "Boosts" "IgnoreResistance(Fire,Immune);IgnoreResistance(Fire,Resistant)"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):UseSpell(Goon_Shout_Burns_Death,true,true,true)"
+data "Boosts" "IgnoreResistance(Fire,Immune);IgnoreResistance(Fire,Resistant);UnlockSpell(Goon_Shout_Burns_Death)"
+
+// Spell for technical status for death
+new entry "Goon_Shout_Burns_Death"
+type "SpellData"
+data "SpellType" "Shout"
+data "SpellProperties" "GROUND:SurfaceChange(Ignite);GROUND:CreateSurface(2.5,0.5,Fire);SELF:DealDamage(666,Fire)"
+data "TargetConditions" "Self()"
+// Fourth Degree Burns
+data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
+//
+data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
+data "DescriptionParams" "DealDamage(1, Fire)"
+data "SpellAnimation" "dd86aa43-8189-4d9f-9a5c-454b5fe4a197,,;,,;29cc8ef2-e45e-4513-8f98-085d0dad7bc1,,;bb428832-db99-4236-8a81-a2737b81d0cc,,;cc5b0caf-3ed1-4711-a50d-11dc3f1fdc6a,,;,,;1715b877-4512-472e-9bd0-fd568a112e90,,;,,;,,"
+data "PrepareEffect" "7b26059d-9a0a-46f5-b269-3df00842ecd2"
+data "CastEffect" "715ae090-ae24-4b93-9543-d431e7aaefb9"
 
 // ==================================== Real Injury ====================================
 
