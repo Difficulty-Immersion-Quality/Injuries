@@ -72,10 +72,15 @@ data "SplatterDirtAmount" "0.0"
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Second_Degree_Burns_Removal_Technical_Passive"
 type "PassiveData"
+// Second Degree Burns
+data "DisplayName" "hdeef1c57g760cg473eg92edg2091f46ddb07"
+//
+data "Description" "haf797f25gd47dg44d6g8dc3g58715c7d08d2"
+data "DescriptionParams" "DealDamage(1, Fire)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
-data "Conditions" ""
+data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"

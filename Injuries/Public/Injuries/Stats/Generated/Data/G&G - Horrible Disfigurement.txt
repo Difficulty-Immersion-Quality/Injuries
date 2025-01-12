@@ -60,10 +60,15 @@ data "SplatterDirtAmount" "0.0"
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Horrible_Disfigurement_Removal_Technical_Passive"
 type "PassiveData"
+// Horrible Disfigurement
+data "DisplayName" "hf9899dabg1cb4g4dd3gbd91gf74112304ee5"
+//
+data "Description" "hdcd8ef23g0678g43ffga877g57e954d5e81b"
+data "DescriptionParams" ""
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT)"
 data "StatsFunctorContext" "OnHeal"
-data "Conditions" ""
+data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
 // ==================================== Flavour Proxies ====================================
 

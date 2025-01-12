@@ -60,10 +60,15 @@ data "SplatterDirtAmount" "0.5"
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Frostbitten_Foot_Technical_Passive"
 type "PassiveData"
+// Frostbitten Foot
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+// 
+data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "DescriptionParams" "Distance(2)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT)"
 data "StatsFunctorContext" "OnHeal"
-data "Conditions" ""
+data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
 // Technical status for application
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL"

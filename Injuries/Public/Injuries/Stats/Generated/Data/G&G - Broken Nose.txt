@@ -60,6 +60,11 @@ data "SplatterDirtAmount" "0.0"
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Broken_Nose_Removal_Technical_Passive"
 type "PassiveData"
+// Broken Nose
+data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
+//
+data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
+data "DescriptionParams" ""
 data "Properties" "IsHidden"
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_NOSE)"
 data "StatsFunctorContext" "OnHeal"

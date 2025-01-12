@@ -60,9 +60,14 @@ data "SplatterDirtAmount" "0.0"
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Disfigurement_Removal_Technical_Passive"
 type "PassiveData"
+// Minor Disfigurement
+data "DisplayName" "h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf"
+//
+data "Description" "hcd4c6a38ge62bg4f89g8e4bg41def2c557a5"
+data "DescriptionParams" ""
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT)"
 data "StatsFunctorContext" "OnHeal"
-data "Conditions" ""
+data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
 // ==================================== Flavour Proxies ====================================

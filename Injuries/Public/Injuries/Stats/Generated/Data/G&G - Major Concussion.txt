@@ -72,6 +72,10 @@ data "SplatterDirtAmount" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Major_Concussion_Removal_Technical_Passive"
 type "PassiveData"
+// Majory Concussion
+data "DisplayName" "h69d681d7gf0d5g4a87g8ffcgb85877d13fc4"
+// 
+data "Description" "h1758c8ceg6385g44b5g98d8g9ca2cad41361"
 data "Properties" "IsHidden"
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION)"
 data "StatsFunctorContext" "OnHeal"

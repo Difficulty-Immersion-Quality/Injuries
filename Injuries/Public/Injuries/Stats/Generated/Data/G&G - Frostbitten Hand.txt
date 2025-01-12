@@ -60,6 +60,11 @@ data "SplatterDirtAmount" "0.5"
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Frostbitten_Hand_Removal_Technical_Passive"
 type "PassiveData"
+// Frostbitten Hand
+data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
+// 
+data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
+data "DescriptionParams" ""
 data "Properties" "IsHidden"
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND)"
 data "StatsFunctorContext" "OnHeal"
@@ -71,7 +76,7 @@ type "StatusData"
 data "StatusType" "BOOST"
 // Frostbitten Hand
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
-//
+// 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
