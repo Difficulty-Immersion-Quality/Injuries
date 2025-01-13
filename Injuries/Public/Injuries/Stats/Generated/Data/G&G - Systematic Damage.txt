@@ -56,6 +56,7 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" ""
 data "SplatterDirtAmount" ""
+data "SplatterSweatAmount" "1"
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Systematic_Damage_Removal_Technical_Passive"

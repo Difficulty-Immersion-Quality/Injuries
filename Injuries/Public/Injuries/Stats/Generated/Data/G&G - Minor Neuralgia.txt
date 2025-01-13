@@ -68,6 +68,7 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.69"
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Neuralgia_Removal_Technical_Passive"

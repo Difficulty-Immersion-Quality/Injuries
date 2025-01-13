@@ -54,8 +54,9 @@ data "SoundVocalStart" "DEATH"
 data "SoundVocalEnd" "WEAK"
 data "SoundLoop" ""
 data "SoundStop" ""
-data "SplatterBloodAmount" "0.0"
+data "SplatterBloodAmount" "0.69"
 data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" ""
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Horrible_Disfigurement_Removal_Technical_Passive"

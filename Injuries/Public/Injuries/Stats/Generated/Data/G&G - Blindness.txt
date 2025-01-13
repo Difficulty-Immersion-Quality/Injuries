@@ -68,6 +68,7 @@ data "SoundLoop" "Spell_Status_Blinded_MO"
 data "SoundStop" "Spell_Status_Blinded_MO_Stop"
 data "SplatterBloodAmount" "1.0"
 data "SplatterDirtAmount" ""
+data "SplatterSweatAmount" ""
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Blindness_Removal_Technical_Passive"

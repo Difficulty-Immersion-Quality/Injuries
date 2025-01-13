@@ -66,8 +66,9 @@ data "SoundVocalStart" "WEAK"
 data "SoundVocalEnd" "RELAXED"
 data "SoundLoop" ""
 data "SoundStop" ""
-data "SplatterBloodAmount" "1.0"
+data "SplatterBloodAmount" "1"
 data "SplatterDirtAmount" ""
+data "SplatterSweatAmount" "0.5"
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Concussion_Removal_Technical_Passive"
