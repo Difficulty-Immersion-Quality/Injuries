@@ -38,7 +38,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SYSTEMATIC_DAMAGE"
 data "StackPriority" ""
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
 data "Boosts" "Disadvantage(Ability,Strength);Disadvantage(Ability,Dexterity);Disadvantage(Ability,Constitution);Disadvantage(SavingThrow,Strength);Disadvantage(SavingThrow,Dexterity);Disadvantage(SavingThrow,Constitution)"
 data "OnApplyFunctors" ""
 data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_SYSTEMATIC_DAMAGE')"

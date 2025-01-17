@@ -38,7 +38,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
 data "StackPriority" ""
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
 data "Boosts" "IF(Goon_Injury_Offhand_Check(context.Source)):Disadvantage(Ability,Strength);IF(Goon_Injury_Offhand_Check(context.Source)):Disadvantage(Ability,Dexterity);IF(Goon_Injury_Offhand_Check(context.Source)):Disadvantage(AttackRoll);IF(Goon_Injury_Offhand_Check(context.Source)):UnlockSpellVariant(Goon_Injury_Spell_Check_Somatic(),IsSpell(),ModifySavingThrowAdvantage(),ModifyIconGlow())"
 data "OnApplyFunctors" "IF(Goon_Injury_Offhand_Check(context.Source)):ApplyStatus(DISARM, 100, 1)"
 data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_HAND')"
