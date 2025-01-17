@@ -45,13 +45,14 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 					end
 
 					for injury, _ in pairs(injuryPool) do
-						if Osi.HasActiveStatus(defender, injury) == 0
-							and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity
-							and not alreadySelectedInjuries[injury]
-							and not InjuryConfigHelper:IsHigherStackInjuryApplied(defender, injury)
+						local injuryToApply = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
+						
+						if Osi.HasActiveStatus(defender,  injuryToApply) == 0
+							and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injuryToApply].severity
+							and not alreadySelectedInjuries[injuryToApply]
 						then
-							table.insert(eligibleInjuries, injury)
-							alreadySelectedInjuries[injury] = true
+							table.insert(eligibleInjuries, injuryToApply)
+							alreadySelectedInjuries[injuryToApply] = true
 						end
 					end
 				end
@@ -121,10 +122,12 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 			end
 
 			for injury, _ in pairs(injuryPool) do
+				injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+				
 				if Osi.HasActiveStatus(character, injury) == 0
 					and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity
 					and not alreadySelectedInjuries[injury]
-					and not InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
+					and not InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
 				then
 					table.insert(eligibleInjuries, injury)
 					alreadySelectedInjuries[injury] = true

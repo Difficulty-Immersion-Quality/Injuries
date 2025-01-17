@@ -9,9 +9,9 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
 	for injury, injuryStatusConfig in pairs(statusConfig) do
-		if Osi.HasActiveStatus(character, injury) == 0
-			and not InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
-		then
+		injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+
+		if Osi.HasActiveStatus(character, injury) == 0 then
 			local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 
 			if not statusVar[status] then

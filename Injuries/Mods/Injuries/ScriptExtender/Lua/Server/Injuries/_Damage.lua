@@ -46,8 +46,9 @@ local function ProcessDamageEvent(event)
 
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
+					injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
+					
 					if Osi.HasActiveStatus(defender, injury) == 0
-						and not InjuryConfigHelper:IsHigherStackInjuryApplied(defender, injury)
 						and not injuryVar["injuryAppliedReason"][injury]
 					then
 						local finalDamageWithPreviousDamage = finalDamageAmount

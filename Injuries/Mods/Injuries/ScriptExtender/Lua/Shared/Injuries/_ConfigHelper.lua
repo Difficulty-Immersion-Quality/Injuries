@@ -131,26 +131,39 @@ if Ext.IsServer() then
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 	end
 
+	--- If an eligible injury shares a stack with an applied injury, and is not the next injury in the stack, find the injury with the next
+	--- highest stackPriority (of the applied injury)
 	---@param character GUIDSTRING
 	---@param injury InjuryName
-	function InjuryConfigHelper:IsHigherStackInjuryApplied(character, injury)
+	function InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+		---@type StatusData
 		local injuryEntry = Ext.Stats.Get(injury)
 		if injuryEntry.StackId and injuryEntry.StackPriority then
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
-			for _, statusName in pairs(entity.StatusContainer.Statuses) do
-				local existingInjuryEntry = Ext.Stats.Get(statusName)
+			for _, existingStatusName in pairs(entity.StatusContainer.Statuses) do
+				---@type StatusData
+				local existingInjuryEntry = Ext.Stats.Get(existingStatusName)
 				if existingInjuryEntry
 					and injuryEntry.StackId == existingInjuryEntry.StackId
-					and tonumber(injuryEntry.StackPriority) < tonumber(existingInjuryEntry.StackPriority)
+					and tonumber(injuryEntry.StackPriority) <= tonumber(existingInjuryEntry.StackPriority)
 				then
-					return true
+					for configuredInjuryName, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
+						---@type StatusData
+						local configuredInjuryEntry = Ext.Stats.Get(configuredInjuryName)
+
+						if existingInjuryEntry.StackId == configuredInjuryEntry.StackId
+							and (tonumber(existingInjuryEntry.StackPriority) + 1) == tonumber(configuredInjuryEntry.StackPriority)
+						then
+							return configuredInjuryName
+						end
+					end
 				end
 			end
 		end
 
-		return false
+		return injury
 	end
 
 	local function RemoveTrackers(character)
