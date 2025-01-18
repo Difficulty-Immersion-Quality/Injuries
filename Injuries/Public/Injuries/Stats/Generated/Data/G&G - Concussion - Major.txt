@@ -4,7 +4,7 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Major Concussion
-data "DisplayName" "h69d681d7gf0d5g4a87g8ffcgb85877d13fc4"
+data "DisplayName" "hc1954d4bgb30cg4a0dga246gc68c82dc262c"
 // 
 data "Description" "hb04fa562gd8f4g4ae1gb6a6g2af86c77422a"
 data "DescriptionParams" ""

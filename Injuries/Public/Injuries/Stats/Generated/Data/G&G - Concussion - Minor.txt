@@ -4,7 +4,7 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_CONCUSSION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Minor Concussion
-data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
+data "DisplayName" "h24ca675egb7b6g470fga43dg5f220e6f4dba"
 // 
 data "Description" "hb854d70cg0b6cg43acg9d36g903a9ee88e61"
 data "DescriptionParams" ""

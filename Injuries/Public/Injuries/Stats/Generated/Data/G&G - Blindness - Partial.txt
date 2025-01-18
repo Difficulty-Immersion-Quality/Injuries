@@ -4,7 +4,7 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Partial Blindness
-data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
+data "DisplayName" "h8578aea7g7bd7g482ag8898ga573242a32dc"
 // 
 data "Description" "h889936c6gda61g4c68g957cg979b6a746205"
 data "DescriptionParams" ""

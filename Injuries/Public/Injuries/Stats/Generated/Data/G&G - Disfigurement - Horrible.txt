@@ -4,7 +4,7 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Horrible Disfigurement
-data "DisplayName" "hf9899dabg1cb4g4dd3gbd91gf74112304ee5"
+data "DisplayName" "h6fece6cagf1e4g4a82gaa56g5937de1f04a7"
 //
 data "Description" "h9ddc85a9g19a4g496bg8e8dgbe197296cb87"
 data "DescriptionParams" ""

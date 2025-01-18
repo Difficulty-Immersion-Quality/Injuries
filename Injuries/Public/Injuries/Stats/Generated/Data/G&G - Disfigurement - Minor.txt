@@ -4,7 +4,7 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Minor Disfigurement
-data "DisplayName" "h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf"
+data "DisplayName" "hc0ec1649g2409g4fbcg8b8dge9811cef3546"
 //
 data "Description" "h1aa75497g697fg4269gbbffga8e7eeeec2e5"
 data "DescriptionParams" ""
