@@ -1,0 +1,86 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_PHANTOM_PAIN"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Phantom Pain
+data "DisplayName" "h4f6b5709gb398g4d9ega578g6e67239d85ef"
+//
+data "Description" "h2b2e19ffg4febg4fd8g8f15g67e451ebf025"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_PHANTOM_PAIN"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Phantom Pain
+data "DisplayName" "h4f6b5709gb398g4d9ega578g6e67239d85ef"
+//
+data "Description" "h47f7e9begfb8dg4662gad98g3d03b67053e3"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_PHANTOM_PAIN')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Phantom_Pain_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.69"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Phantom_Pain_Removal_Technical_Passive"
+type "PassiveData"
+// Phantom Pain
+data "DisplayName" "h4f6b5709gb398g4d9ega578g6e67239d85ef"
+// 
+data "Description" "h47f7e9begfb8dg4662gad98g3d03b67053e3"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_X"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "DescriptionParams" ""
