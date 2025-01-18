@@ -352,6 +352,18 @@ Spiritual Injury: Necrotic damage.
 
 
 
+	<content contentuid="hcc007514g1be4g4dc8g9b6fg66091319d671" version="1">Necrotising Wound</content> -- Necrotic damage
+	-- Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die. The wound heals if you receive magical healing. Alternatively, someone can tend to the wound and make a DC 15 Wisdom (Medicine) check once every 24 hours. After ten successes, the wound heals.
+
+	<content contentuid="h86d7091dg4408g4174g87c1g512f7fb2ea67" version="1">Necrotising Wound is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die..
+&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="hc56ff4cdg1473g410bg9845g8f5cafc85ed5" version="1">Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die..
+&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
 	<content contentuid="h0251ef90g9d69g4179g8480ge58de2c960e4" version="1">Neuralgia - Major</content>
 	<content contentuid="h72857995g39acg494bg8c6dgf312f698c4ab" version="1">Major Neuralgia</content> -- Acid, Cold and Fire damage
 	-- You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must make a DC 15 Constitution saving throw. On a failed save, you lose your action and can't use reactions until the start of your next turn. Magical healing of 6th level or higher, such as heal and regenerate, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.
