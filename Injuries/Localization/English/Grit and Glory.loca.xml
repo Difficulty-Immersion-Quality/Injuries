@@ -356,10 +356,10 @@ Spiritual Injury: Necrotic damage.
 	-- Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die. The wound heals if you receive magical healing. Alternatively, someone can tend to the wound and make a DC 15 Wisdom (Medicine) check once every 24 hours. After ten successes, the wound heals.
 
 	<content contentuid="h86d7091dg4408g4174g87c1g512f7fb2ea67" version="1">Necrotising Wound is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
-&lt;br&gt;Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die..
+&lt;br&gt;You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
 &lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
-	<content contentuid="hc56ff4cdg1473g410bg9845g8f5cafc85ed5" version="1">Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die..
+	<content contentuid="hc56ff4cdg1473g410bg9845g8f5cafc85ed5" version="1">You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
 &lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
 
