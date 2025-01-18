@@ -90,13 +90,3 @@ data "OnApplyFunctors" "DealDamage(SELF,0, Force)"
 data "SoundVocalStart" "PAIN"
 
 // ==================================== Flavour Proxies ====================================
-
-new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
-type "StatusData" 
-data "StatusType" "BOOST"
-using "GOON_REAL_INJURY_GRIT_GLORY_X"
-// 
-data "DisplayName" ""
-// 
-data "Description" ""
-data "DescriptionParams" ""

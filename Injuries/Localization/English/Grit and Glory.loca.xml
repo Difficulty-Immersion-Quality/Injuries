@@ -328,6 +328,18 @@ Spiritual Injury: Necrotic damage.
 
 
 
+	<content contentuid="h4d3a5cfeg3495g4cbfgadd0g79e406021bcb" version="1">Necrotic Stench</content> -- Necrotic damage
+	-- You smell like rotting flesh. You have disadvantage on Charisma (Persuasion) checks. Magical healing of 6th level or higher, such as heal or regenerate, removes the smell.
+
+	<content contentuid="h58cf14bbg108dg4da2g998cg925dd5816141" version="1">Necrotic Stench is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;You smell like rotting flesh. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Persuasion"&gt;Persuasion&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can cleanse the stench.</content>
+
+	<content contentuid="h582f879fgf7a7g4040gb30dgac0021216b2b" version="1">You smell like rotting flesh. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Persuasion"&gt;Persuasion&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can cleanse the stench.</content>
+
+
+
 	<content contentuid="h0251ef90g9d69g4179g8480ge58de2c960e4" version="1">Neuralgia - Major</content>
 	<content contentuid="h72857995g39acg494bg8c6dgf312f698c4ab" version="1">Major Neuralgia</content> -- Acid, Cold and Fire damage
 	-- You are in constant pain from nerve damage. Whenever you attempt an action in combat, you must make a DC 15 Constitution saving throw. On a failed save, you lose your action and can't use reactions until the start of your next turn. Magical healing of 6th level or higher, such as heal and regenerate, cures the neuralgia, or if you spend twenty days doing nothing but resting it resolves on its own.

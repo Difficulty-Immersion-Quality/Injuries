@@ -1,22 +1,22 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_MUSCLE_SPASMS"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Muscle Spasms
-data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
+// Necrotic Stench
+data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 //
-data "Description" "h01a4e10eg09f7g47faga37fgf537aedc3ce2"
+data "Description" "h58cf14bbg108dg4da2g998cg925dd5816141"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_X"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS')"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -25,28 +25,28 @@ data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Muscle Spasms
-data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
+// Necrotic Stench
+data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 //
-data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
+data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_X"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 data "StackPriority" ""
 data "StackType" "Overwrite"
-data "Boosts" "Disadvantage(Ability, Dexterity)"
+data "Boosts" "Disadvantage(Skill, Persuasion)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MUSCLE_SPASMS')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" "Goon_Real_Injury_Grit_Glory_Muscle_Spasms_Removal_Technical_Passive"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Necrotic_Stench_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
@@ -55,19 +55,18 @@ data "SoundVocalEnd" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
-data "SplatterDirtAmount" "0.0"
+data "SplatterDirtAmount" "1.0"
 data "SplatterSweatAmount" "0.0"
 
 // Technical passive for removal
-new entry "Goon_Real_Injury_Grit_Glory_Muscle_Spasms_Removal_Technical_Passive"
+new entry "Goon_Real_Injury_Grit_Glory_Necrotic_Stench_Removal_Technical_Passive"
 type "PassiveData"
-// Muscle Spasms
-data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
+// Necrotic Stench
+data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 // 
-data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
-data "DescriptionParams" ""
+data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
