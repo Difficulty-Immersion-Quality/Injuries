@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_INFLAMMATION"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Inflammation
+data "DisplayName" "h13e3527eg72b5g4f74g948fg380ff8f1958e"
+//
+data "Description" "h220079bbg0610g4cc3gb2d9g951f00728f52"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_INFLAMMATION"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Inflammation
+data "DisplayName" "h13e3527eg72b5g4f74g948fg380ff8f1958e"
+//
+data "Description" "h95975bc2g5c4eg4bdega2e6g0a7cba290fbb"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Ability, Strength)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_INFLAMMATION')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Inflammation_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Inflammation_Removal_Technical_Passive"
+type "PassiveData"
+// Inflammation
+data "DisplayName" "h13e3527eg72b5g4f74g948fg380ff8f1958e"
+// 
+data "Description" "h95975bc2g5c4eg4bdega2e6g0a7cba290fbb"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
