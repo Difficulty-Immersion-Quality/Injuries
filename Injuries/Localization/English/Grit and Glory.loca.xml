@@ -276,6 +276,18 @@ Broken Arm: Bludgeoning Damage.
 
 
 
+	<content contentuid="hd3ead466g847eg4eeag89bfg94447e15c9a7" version="1">Inappropriate Volume</content> -- Psychic damage
+	-- You can’t regulate your volume. You shout when you intend to whisper, and whisper when you intend to shout. Magical healing cures your inappropriate volume.
+
+	<content contentuid="h2c28395ag79ceg4125gb432gfc7075bfc5d4" version="1">Inappropriate Volume is intended for Psychic damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;You can’t regulate your volume. You shout when you intend to whisper, and whisper when you intend to shout. Magical healing cures your inappropriate volume.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32" version="1">You can’t regulate your volume. You shout when you intend to whisper, and whisper when you intend to shout. Magical healing cures your inappropriate volume.
+&lt;br&gt;The condition heals when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
 	<content contentuid="ha160b3cag1a81g4a63g9b9fg7d0d251be976" version="1">Kidney Failure - Major</content>
 	<content contentuid="h9392009egb2fbg407egbef6gdea8c81007f7" version="1">Major Kidney Failure</content> -- Poison and Lightning damage.
 	-- When you complete a long rest, you must succeed at a Constitution saving throw of DC 15 or gain the poisoned condition until you complete a long rest. Magic such as the regenerate spell can cure your kidney failure. Alternatively, someone can tend to the kidney failure and make a DC 15 Wisdom (Medicine) check once every week. After ten successes, the kidney failure is resolved.

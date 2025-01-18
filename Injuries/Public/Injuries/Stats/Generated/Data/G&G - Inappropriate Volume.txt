@@ -1,0 +1,86 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Inappropriate Volume
+data "DisplayName" "hd3ead466g847eg4eeag89bfg94447e15c9a7"
+//
+data "Description" "h2c28395ag79ceg4125gb432gfc7075bfc5d4"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_PSYCHIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_PSYCHIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Inappropriate Volume
+data "DisplayName" "hd3ead466g847eg4eeag89bfg94447e15c9a7"
+//
+data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "IF(HasSpellFlag(SpellFlags.Verbal)):Disadvantage(Skill,Stealth)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_INAPPROPRIATE_VOLUME')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Inappropriate_Volume_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Inappropriate_Volume_Removal_Technical_Passive"
+type "PassiveData"
+// Inappropriate Volume
+data "DisplayName" "hd3ead466g847eg4eeag89bfg94447e15c9a7"
+// 
+data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_X"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "DescriptionParams" ""
