@@ -71,6 +71,8 @@ data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
+// ==================================== Technicals for individual injury functionality ====================================
+
 // Technical status for application
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL"
 type "StatusData" 

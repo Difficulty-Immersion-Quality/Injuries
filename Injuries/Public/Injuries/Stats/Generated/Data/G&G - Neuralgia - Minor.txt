@@ -23,18 +23,6 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// Technical Status for stack management
-new entry "GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "StackId" "GOON_GRIT_GLORY_MINOR_NEURALGIA_DETECT_TECHNICAL"
-data "StackPriority" "1"
-data "StackType" "Overwrite"
-data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
-data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
-
 // ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA"
@@ -82,6 +70,8 @@ data "Properties" "IsHidden"
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
+
+// ==================================== Technicals for individual injury functionality ====================================
 
 // Technical status for application
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA_TECHNICAL"

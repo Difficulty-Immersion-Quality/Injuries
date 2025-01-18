@@ -85,6 +85,8 @@ data "Boosts" ""
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Dexterity,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL,100,1)"
 data "SoundVocalStart" ""
 
+// ==================================== Technicals for individual injury functionality ====================================
+
 // Technical status for boosts
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL"
 type "StatusData" 

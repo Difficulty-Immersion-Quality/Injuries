@@ -23,18 +23,6 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// Technical Status for stack management
-new entry "GOON_GRIT_GLORY_SECOND_DEGREE_BURNS_DETECT_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "StackId" "GOON_GRIT_GLORY_BURNS_DETECT_TECHNICAL"
-data "StackPriority" "2"
-data "StackType" "Overwrite"
-data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
-data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
-
 // ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_SECOND_DEGREE_BURNS"
@@ -86,9 +74,15 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
 type "PassiveData"
+// Second Degree Burns
+data "DisplayName" "hdeef1c57g760cg473eg92edg2091f46ddb07"
+//
+data "Description" "haf797f25gd47dg44d6g8dc3g58715c7d08d2"
 data "Properties" "IsHidden"
 data "StatsFunctors" "DealDamage(SELF,1, Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"
+
+// ==================================== Technicals for individual injury functionality ====================================
 
 // ==================================== Flavour Proxies  ====================================

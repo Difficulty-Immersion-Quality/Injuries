@@ -1,9 +1,9 @@
 // ==================================== Filter Proxy ====================================
 
-// new entry "GOON_INJURY_PROXY_GRIT_GLORY_X"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// 
+// Kidney Failure
 data "DisplayName" ""
 //
 data "Description" ""
@@ -11,12 +11,12 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_X"
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_X')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_X,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_X')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_X,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_X') and not HasStatus()"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_X')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_X')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -25,10 +25,10 @@ data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// 
+// Kidney Failure
 data "DisplayName" ""
 //
 data "Description" ""
@@ -36,17 +36,17 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_X"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_X')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" "Goon_Real_Injury_Grit_Glory_X_Removal_Technical_Passive"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Kidney_Failure_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
@@ -59,9 +59,9 @@ data "SplatterDirtAmount" "0.0"
 data "SplatterSweatAmount" "0.0"
 
 // Technical passive for removal
-new entry "Goon_Real_Injury_Grit_Glory_X_Removal_Technical_Passive"
+new entry "Goon_Real_Injury_Grit_Glory_Kidney_Failure_Removal_Technical_Passive"
 type "PassiveData"
-// 
+// Kidney Failure
 data "DisplayName" ""
 // 
 data "Description" ""
@@ -73,41 +73,9 @@ data "Conditions" ""
 
 // ==================================== Technicals for individual injury functionality ====================================
 
-// Technical status for application
-new entry "GOON_REAL_INJURY_GRIT_GLORY_X_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST"
-// 
-data "DisplayName" ""
-// 
-data "Description" ""
-data "DescriptionParams" ""
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "Boosts" ""
-data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,X)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_X_BOOST_TECHNICAL,100,X)"
-data "SoundVocalStart" ""
 
-// Technical status for boosts
-new entry "GOON_REAL_INJURY_GRIT_GLORY_X_BOOST_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST"
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_X_BOOST_TECHNICAL"
-data "StackPriority" ""
-data "StackType" "Overwrite"
-data "Boosts" ""
-data "OnApplyFunctors" ""
-data "SoundVocalStart" ""
 
-// Technical passive for stat functors
-new entry "Goon_Real_Injury_Grit_Glory_X_Technical_Passive"
-type "PassiveData"
-data "Properties" "IsHidden"
-data "StatsFunctors" ""
-data "StatsFunctorContext" ""
-data "Conditions" ""
-
-// ==================================== Flavour Proxies ====================================
+// ==================================== Flavour Proxies  ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
 type "StatusData" 

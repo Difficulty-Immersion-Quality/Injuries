@@ -71,4 +71,6 @@ data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
+// ==================================== Technicals for individual injury functionality ====================================
+
 // ==================================== Flavour Proxies  ====================================

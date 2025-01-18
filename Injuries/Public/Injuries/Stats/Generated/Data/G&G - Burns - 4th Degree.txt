@@ -23,50 +23,6 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// Technical status for stack management
-new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DETECT_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "StackId" "GOON_GRIT_GLORY_BURNS_DETECT_TECHNICAL"
-data "StackPriority" "4"
-data "StackType" "Overwrite"
-data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
-data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
-
-// Technical status for death application
-new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST" 
-// Fourth Degree Burns
-data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
-//
-data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
-data "DescriptionParams" "DealDamage(1, Fire)"
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
-//
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BURNS"
-data "StackPriority" "5"
-data "StackType" "Overwrite"
-data "Boosts" ""
-data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL,100,1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
-data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
-data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
-
-// Technical status for death
-new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL"
-type "StatusData" 
-data "StatusType" "BOOST" 
-using "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
-data "StackId" "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL"
-data "TickType" "EndTurn"
-data "TickFunctors" "Kill()"
-data "OnApplyFunctors" "Kill();ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
-data "OnRemoveFunctors" "Kill()"
-data "HitAnimationType" "MagicalDamage_External"
-data "StatusEffect" "2156dd48-f83b-4060-9a4e-cab994da8857"
-
 // ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS"
@@ -115,9 +71,15 @@ data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
+// ==================================== Technicals for individual injury functionality ====================================
+
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
 type "PassiveData"
+// Fourth Degree Burns
+data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
+//
+data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "Properties" "IsHidden"
 data "StatsFunctors" "DealDamage(SELF,1, Fire)"
 data "StatsFunctorContext" "OnDamaged"
@@ -126,9 +88,46 @@ data "Conditions" "IsDamageTypeFire()"
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Third_Degree_Burn_Technical_Passive"
 type "PassiveData"
+// Fourth Degree Burns
+data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
+//
+data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "Properties" "IsHidden"
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypeFire()"
+
+// For handling reapplication of Fourth Degree burns via SE stack management
+// Technical status for death application
+new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Fourth Degree Burns
+data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
+//
+data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
+data "DescriptionParams" "DealDamage(1, Fire)"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BURNS"
+data "StackPriority" "5"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL,100,1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
+data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
+
+// Technical status for death
+new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+using "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
+data "StackId" "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL"
+data "TickType" "EndTurn"
+data "TickFunctors" "Kill()"
+data "OnApplyFunctors" "Kill();ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
+data "OnRemoveFunctors" "Kill()"
+data "HitAnimationType" "MagicalDamage_External"
+data "StatusEffect" "2156dd48-f83b-4060-9a4e-cab994da8857"
 
 // ==================================== Flavour Proxies  ====================================

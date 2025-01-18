@@ -23,18 +23,6 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition;SG_Blinded"
 data "Passives" ""
 
-// Technical Status for stack management
-new entry "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL_OVERWRITE"
-type "StatusData" 
-data "StatusType" "BOOST" 
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "StackId" "GOON_GRIT_GLORY_PARTIAL_BLINDNESS_DETECT_TECHNICAL"
-data "StackPriority" "2"
-data "StackType" "Overwrite"
-data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
-data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
-
 // ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
@@ -82,6 +70,8 @@ data "Properties" "IsHidden"
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
+
+// ==================================== Technicals for individual injury functionality ====================================
 
 // ==================================== Flavour Proxies  ====================================
 
