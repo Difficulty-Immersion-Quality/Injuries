@@ -179,10 +179,11 @@ Spiritual Injury: Necrotic damage.
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
 	-- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
-	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold and Lightning damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
-Gangrene of the Foot: Cold damage
-Explosive Grounding of the Foot: Lightning damage
-Broken Leg: Bludgeoning Damage.
+	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold, Lightning and Necrotic damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+- Broken Leg: Bludgeoning Damage
+- Gangrene of the Foot: Cold damage
+- Explosive Grounding of the Foot: Lightning damage
+- Withered Foot: Necrotic damage.
 &lt;br&gt;Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is halved. If you use the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action you fall &lt;LSTag Type="Status" Tooltip="PRONE
 "&gt;Prone&lt;/LSTag&gt; at the end of your turn. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; checks.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
@@ -191,32 +192,37 @@ Broken Leg: Bludgeoning Damage.
 "&gt;Prone&lt;/LSTag&gt; at the end of your turn. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; checks.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
+	<content contentuid="he2c12678gbf3bg43efgac5ag1068bf452b7f" version="1">Broken Leg</content> -- Bludgeoning damage
+
 	<content contentuid="h90ace1b3ga948g45e0ga139g25a5eb374b87" version="1">Gangrene of the Foot</content> -- Cold damage
 
 	<content contentuid="h002467ecg9b8dg43e4g8845g7e43225de74b" version="1">Explosive Grounding of the Foot</content> -- Lightning damage
 
-	<content contentuid="he2c12678gbf3bg43efgac5ag1068bf452b7f" version="1">Broken Leg</content> -- Bludgeoning damage
+	<content contentuid="h3c013c87g0972g4a94ga69cgbf96024818e3" version="1">Withered Foot</content> -- Necrotic damage
 
 
 
 	<content contentuid="hab934a8fg8d74g4227g9907gfbae49662d8a" version="1">Destroyed Hand</content> -- Acid damage.
 	-- You can no longer hold anything with two hands, and you can hold only a single object at a time. Magic such as the regenerate spell can restore the lost appendage.
 
-	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Hand is intended for Acid, Cold, Lightning and Bludgeoning damage.&lt;br&gt;Intended severity: High.&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
-Gangrene of the Hand: Cold damage
-Explosive Grounding of the Hand: Lightning damage
-Broken Arm: Bludgeoning Damage.
+	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Hand is intended for Acid, Bludgeoning, Cold, Lightning and Necrotic damage.&lt;br&gt;Intended severity: High.&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+- Broken Arm: Bludgeoning Damage
+- Gangrene of the Hand: Cold damage
+- Explosive Grounding of the Hand: Lightning damage
+- Withered Hand: Necrotic damage.
 &lt;br&gt;You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
 	<content contentuid="h71b43149gbf31g4237g81d3gd49581729036" version="1">You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
 
+	<content contentuid="ha3100bf8g8b25g4169g9682gddb0f2606e60" version="1">Broken Arm</content> -- Bludgeoning Damage
+
 	<content contentuid="ha4e6d02fg6328g4072gbca4gfd3de57e6035" version="1">Gangrene of the Hand</content> -- Cold damage
 
 	<content contentuid="h34796a02g9f5ag4718gbd3ag0db46988abef" version="1">Explosive Grounding of the Hand</content> -- Lightning damage
 
-	<content contentuid="ha3100bf8g8b25g4169g9682gddb0f2606e60" version="1">Broken Arm</content> -- Bludgeoning Damage
+	<content contentuid="h89422f20g4748g4b5egb4edg5f04f6a9449a" version="1">Withered Hand</content> -- Necrotic damage
 
 
 
