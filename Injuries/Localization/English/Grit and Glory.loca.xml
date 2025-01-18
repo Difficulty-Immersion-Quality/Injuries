@@ -95,7 +95,7 @@
 
 
 
-	<content contentuid="ha85631f2g62efg422bg987bg86369c9db2a8" version="1">Burns - First Degree</content>
+	<content contentuid="ha85631f2g62efg422bg987bg86369c9db2a8" version="1">Burns - 1st Degree</content>
 	<content contentuid="h4453d35eg5dd9g4e44g9ca3g3a63432dc937" version="1">First Degree Burns</content> -- Fire damage
 	-- You have superficial but painful burns. Whenever you take fire damage, you take an additional point of damage. Magical healing cures the burns; alternatively, they will heal on their own in 2 weeks. If you already have first degree burns, you instead suffer second degree burns.
 
@@ -108,7 +108,7 @@
 
 
 
-	<content contentuid="ha1a5438cga415g48c5ga696g55291ace1d40" version="1">Burns - Second Degree</content>
+	<content contentuid="ha1a5438cga415g48c5ga696g55291ace1d40" version="1">Burns - 2nd Degree</content>
 	<content contentuid="hdeef1c57g760cg473eg92edg2091f46ddb07" version="1">Second Degree Burns</content> -- Fire damage
 	-- You have disadvantage on Strength, Dexterity, and Constitution checks. Magic such as the regenerate spell cures this damage. Alternatively, they will heal on their own in 4 weeks. If you already have second degree burns, you instead suffer third degree burns.
 
@@ -121,7 +121,7 @@
 
 
 
-	<content contentuid="he918d108ge057g4970g8e6eg37e252de91cf" version="1">Burns - Third Degree</content>
+	<content contentuid="he918d108ge057g4970g8e6eg37e252de91cf" version="1">Burns - 3rd Degree</content>
 	<content contentuid="h5a24e12cg49a2g460bga698g6a7c1300b0d4" version="1">Third Degree Burns</content> -- Fire damage
 	-- You have disadvantage on ability checks and Constitution saving throws. If you fail a saving throw against an effect that causes fire damage, you also gain the stunned condition until the end of your next turn. Magic such as the regenerate spell cures this damage. Alternatively, someone can tend to the burns and make a DC 15 Wisdom (Medicine) check once every week. After ten successes, the burns heal. If you already have third degree burns, you instead suffer fourth degree burns.
 
@@ -134,7 +134,7 @@
 
 
 
-	<content contentuid="h4a2652cfg6361g42e1g933cgdac23aced91c" version="1">Burns - Fourth Degree</content>
+	<content contentuid="h4a2652cfg6361g42e1g933cgdac23aced91c" version="1">Burns - 4th Degree</content>
 	<content contentuid="h09a2c3c0gc012g4deeg9f4cgd0966025431d" version="1">Fourth Degree Burns</content> -- Fire damage
 	-- You have disadvantage on ability checks and Constitution saving throws. If you fail a saving throw against an effect that causes fire damage, you also gain the stunned condition until the end of your next turn. Magic such as the regenerate spell cures this damage. Alternatively, someone can tend to the burns and make a DC 15 Wisdom (Medicine) check once every week. After ten successes, the burns heal. If you already have third degree burns, you instead suffer fourth degree burns.
 
