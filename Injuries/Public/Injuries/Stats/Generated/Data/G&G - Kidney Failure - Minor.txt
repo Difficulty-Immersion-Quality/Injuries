@@ -1,0 +1,105 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_KIDNEY_FAILURE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Kidney Failure
+data "DisplayName" "hc4a2a3a4ga8a7g411egb318g3f3bd1a4cb37"
+//
+data "Description" "h850143d8g0501g45f7ga74fg7bb9c3456d96"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') or HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') or not HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Kidney Failure
+data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
+//
+data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MINOR_KIDNEY_FAILURE')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Minor_Kidney_Failure_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Minor_Kidney_Failure_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" "DEATH"
+data "SoundVocalEnd" "WEAK"
+data "SoundLoop" "Misc_Status_Poison_MO"
+data "SoundStop" "Misc_Status_Poison_MO_Stop"
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Kidney_Failure_Removal_Technical_Passive"
+type "PassiveData"
+// Kidney Failure
+data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
+// 
+data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_KIDNEY_FAILURE)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical passive for application
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Kidney_Failure_Technical_Passive"
+type "PassiveData"
+// Kidney Failure
+data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
+// 
+data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_FAILURE,100,-1)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "HasStatus('LONG_REST')"
+
+// Custom Poisoned condition to ensure it's not overwritten by other Poisoned conditions
+new entry "GOON_POISONED_KIDNEY_FAILURE"
+type "StatusData"
+data "StatusType" "BOOST"
+using "POISONED"
+data "StackType" "Ignore"
+data "StackPriority" "20"
+
+// ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_X"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_X"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "DescriptionParams" ""

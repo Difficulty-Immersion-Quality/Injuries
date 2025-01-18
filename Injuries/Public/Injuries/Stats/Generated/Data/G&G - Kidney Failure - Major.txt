@@ -1,22 +1,22 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Kidney Failure
-data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
+data "DisplayName" "ha160b3cag1a81g4a63g9b9fg7d0d251be976"
 //
-data "Description" "hdb89d258g7e70g46c1g893cg429c37902719"
+data "Description" "h767c5f1fg87d8g417bg8b9cg5ecac1a3a201"
 data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
-data "StackPriority" ""
+data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE')"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') or HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') or not HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -25,7 +25,7 @@ data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Kidney Failure
@@ -37,52 +37,60 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
-data "StackPriority" ""
+data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
 data "OnApplyFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
-data "Passives" "Goon_Real_Injury_Grit_Glory_Kidney_Failure_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Kidney_Failure_Technical_Passive"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Major_Kidney_Failure_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Major_Kidney_Failure_Technical_Passive"
 //
-data "StillAnimationType" "Weakened"
+data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "DEATH"
 data "SoundVocalEnd" "WEAK"
-data "SoundLoop" ""
-data "SoundStop" ""
+data "SoundLoop" "Misc_Status_Poison_MO"
+data "SoundStop" "Misc_Status_Poison_MO_Stop"
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 data "SplatterSweatAmount" "1.0"
 
 // Technical passive for removal
-new entry "Goon_Real_Injury_Grit_Glory_Kidney_Failure_Removal_Technical_Passive"
+new entry "Goon_Real_Injury_Grit_Glory_Major_Kidney_Failure_Removal_Technical_Passive"
 type "PassiveData"
 // Kidney Failure
 data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
 // ==================================== Technicals for individual injury functionality ====================================
 
 // Technical passive for application
-new entry "Goon_Real_Injury_Grit_Glory_Kidney_Failure_Technical_Passive"
+new entry "Goon_Real_Injury_Grit_Glory_Major_Kidney_Failure_Technical_Passive"
 type "PassiveData"
 // Kidney Failure
 data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(POISONED,100,-1)"
+data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_FAILURE,100,-1)"
 data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "HasStatus('LONG_REST')"
+
+// Custom Poisoned condition to ensure it's not overwritten by other Poisoned conditions
+new entry "GOON_POISONED_KIDNEY_FAILURE"
+type "StatusData"
+data "StatusType" "BOOST"
+using "POISONED"
+data "StackType" "Ignore"
+data "StackPriority" "20"
 
 // ==================================== Flavour Proxies  ====================================
 
