@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NEURALGIA"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY')"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING') and not HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_FORCE')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY_FORCE,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY_FORCE')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -106,3 +106,12 @@ using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
 data "DisplayName" "h5486d5efga04bg4f58g9b38gfe7dd7656b8a"
 // 
 data "Description" "hdd0e0481g329cg4282ga8e4gb7484c9f37c6"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_INTERNAL_INJURY_FORCE"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
+// Internal Injury
+data "DisplayName" "h5486d5efga04bg4f58g9b38gfe7dd7656b8a"
+// 
+data "Description" "h7ded237bgd646g42a1g96e4g64781638e7ce"
