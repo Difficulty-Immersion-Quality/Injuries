@@ -9,15 +9,18 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
 	for injury, injuryStatusConfig in pairs(statusConfig) do
-		injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
-
-		if Osi.HasActiveStatus(character, injury) == 0 then
+		local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+		if Osi.HasActiveStatus(character, nextStackInjury) == 0 then
 			local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 
 			if not statusVar[status] then
 				statusVar[status] = { [injury] = 0 }
 			end
 			statusVar[status][injury] = (statusVar[status][injury] or 0) + 1
+
+			if injury ~= nextStackInjury then
+				statusVar[status][nextStackInjury] = (statusVar[status][nextStackInjury] or 0) + 1
+			end
 
 			local roundsWithMultiplier = (statusVar[status][injury] * injuryStatusConfig["multiplier"])
 
@@ -32,8 +35,13 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
 			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] then
-				Osi.ApplyStatus(character, injury, -1)
-				injuryVar["injuryAppliedReason"][injury] = "Status"
+				Osi.ApplyStatus(character, nextStackInjury, -1)
+				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
+
+				if injury ~= nextStackInjury then
+					injuryVar["injuryAppliedReason"][nextStackInjury] = string.format("Status (Stacked on top of %s)",
+						Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
+				end
 			end
 		end
 	end

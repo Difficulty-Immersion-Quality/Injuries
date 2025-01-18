@@ -156,6 +156,7 @@ if Ext.IsServer() then
 						if existingInjuryEntry.StackId == configuredInjuryEntry.StackId
 							and (tonumber(existingInjuryEntry.StackPriority) + 1) == tonumber(configuredInjuryEntry.StackPriority)
 						then
+							Logger:BasicInfo("Original injury %s was upgraded to %s due to stack logic", injury, configuredInjuryName)
 							return configuredInjuryName
 						end
 					end

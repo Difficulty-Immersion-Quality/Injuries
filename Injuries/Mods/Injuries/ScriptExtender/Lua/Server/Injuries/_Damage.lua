@@ -46,10 +46,11 @@ local function ProcessDamageEvent(event)
 
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
-					injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
-					
-					if Osi.HasActiveStatus(defender, injury) == 0
-						and not injuryVar["injuryAppliedReason"][injury]
+					local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
+					local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
+
+					if Osi.HasActiveStatus(defender, nextStackInjury) == 0
+						and not injuryVar["injuryAppliedReason"][nextStackInjury]
 					then
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
@@ -63,10 +64,14 @@ local function ProcessDamageEvent(event)
 						end
 
 						preexistingDamage[injury] = finalDamageWithPreviousDamage
+						if injury ~= nextStackInjury then
+							preexistingDamage[nextStackInjury] = preexistingDamage[nextStackInjury]
+								and preexistingDamage[nextStackInjury] + finalDamageWithPreviousDamage
+								or finalDamageWithPreviousDamage
+						end
 
 						local finalDamageWithInjuryMultiplier = finalDamageWithPreviousDamage * injuryDamageConfig["multiplier"]
 
-						local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 						for otherDamageType, otherDamageConfig in pairs(injuryConfig.damage["damage_types"]) do
 							local existingDamageForOtherDamageType = injuryVar["damage"][otherDamageType]
 							if damageType ~= otherDamageType and (existingDamageForOtherDamageType and existingDamageForOtherDamageType[injury]) then
@@ -82,8 +87,13 @@ local function ProcessDamageEvent(event)
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
 						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
-							Osi.ApplyStatus(defender, injury, -1)
-							injuryVar["injuryAppliedReason"][injury] = "Damage"
+							Osi.ApplyStatus(defender, nextStackInjury, -1)
+							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
+
+							if injury ~= nextStackInjury then
+								injuryVar["injuryAppliedReason"][nextStackInjury] = string.format("Damage (Stacked on top of %s)",
+									Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
+							end
 						end
 					end
 				end
