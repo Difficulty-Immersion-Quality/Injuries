@@ -74,6 +74,10 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"
 type "PassiveData"
+// Brain Injury
+data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
+//
+data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
 data "Properties" "IsHidden"
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"

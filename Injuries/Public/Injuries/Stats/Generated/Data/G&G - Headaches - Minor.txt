@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_HEADACHES"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Minor Headaches
+data "DisplayName" "h563aa3bbg6ae2g4619g9551ga2f5fb155be3"
+//
+data "Description" "haa02e3a6g96edg48f2gbc1cg770c1b4a31ff"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_HEADACHES"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_PSYCHIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_HEADACHES,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_PSYCHIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_HEADACHES,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_HEADACHES')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_HEADACHES"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Minor Headaches
+data "DisplayName" "h8ee2fc0fgbc08g4991g9a98g3dc9912fc004"
+//
+data "Description" "h62edf2d8g6e5ag4f8fg9c34gfc64922051d8"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_HEADACHES"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MINOR_HEADACHES')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Minor_Headaches_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.4"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Headaches_Removal_Technical_Passive"
+type "PassiveData"
+// Minor Headaches
+data "DisplayName" "h8ee2fc0fgbc08g4991g9a98g3dc9912fc004"
+// 
+data "Description" "h62edf2d8g6e5ag4f8fg9c34gfc64922051d8"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_HEADACHES)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
