@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NEURALGIA"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS')"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING') and not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS,100,-1);If(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_ORGAN_NECROSIS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_ORGAN_NECROSIS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -107,3 +107,12 @@ using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
 data "DisplayName" "h90f2ea78g905bg4a2cgb7e3g1d0533a95576"
 // 
 data "Description" "hdd0e0481g329cg4282ga8e4gb7484c9f37c6"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_ORGAN_NECROSIS"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
+// Minor Organ Necrosis
+data "DisplayName" "ha1a3cb75g7229g4f8eg8068g52b1bcf1900e"
+// 
+data "Description" "h10a971eeg759ag4d3cgb19egce86d6bf117e"
