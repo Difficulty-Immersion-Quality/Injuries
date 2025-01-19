@@ -1,0 +1,77 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_DEAFNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Deafness
+data "DisplayName" "heac98411g42b7g4ccfg88ccg8b70364f3fad"
+//
+data "Description" "h3cd01db1g6db4g4368g85e8gb8852c1f351f"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_DEAFNESS"
+data "StackPriority" "2"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_THUNDER')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_THUNDER')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Deafness
+data "DisplayName" "h9e21e673gf37eg4797g9d17ga53938db0255"
+//
+data "Description" "hae24b548gd574g4ac1g9f14g8bed1fe63b6f"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS"
+data "StackPriority" "2"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_DEAFENED,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_DEAFNESS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "OnRemoveFunctors" "RemoveStatus(GOON_DEAFENED)"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Deafness_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Deafness_Removal_Technical_Passive"
+type "PassiveData"
+// Deafness
+data "DisplayName" "h9e21e673gf37eg4797g9d17ga53938db0255"
+// 
+data "Description" "hae24b548gd574g4ac1g9f14g8bed1fe63b6f"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
+
