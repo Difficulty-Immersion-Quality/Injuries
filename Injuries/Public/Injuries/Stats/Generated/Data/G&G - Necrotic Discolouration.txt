@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_DISCOLOURATION"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Necrotic Discolouration
+data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
+//
+data "Description" "h16f03877g6dabg4f19g9f29g14acc374461f"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_DISCOLOURATION"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Necrotic Discolouration
+data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
+//
+data "Description" "hfb72f78dgff01g49b4gb954ge378cee73e09"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_DISCOLOURATION')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Necrotic_Discolouration_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.69"
+data "SplatterSweatAmount" "0.2"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Necrotic_Discolouration_Removal_Technical_Passive"
+type "PassiveData"
+// Necrotic Discolouration
+data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
+// 
+data "Description" "hfb72f78dgff01g49b4gb954ge378cee73e09"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================

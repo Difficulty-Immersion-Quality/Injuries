@@ -340,6 +340,18 @@ Spiritual Injury: Necrotic damage.
 
 
 
+	<content contentuid="h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb" version="1">Necrotic Discolouration</content> -- Necrotic damage
+	-- You get white and grey spots on your cheeks. The spots don't have any adverse effect. Magical healing of 6th level or higher, such as heal or regenerate, removes the spots.
+
+	<content contentuid="h16f03877g6dabg4f19g9f29g14acc374461f" version="1">Necrotic Discolouration is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;Your body develops white and grey spots which don't have any adverse effect.
+&lt;br&gt;The spots are cleared up when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="hfb72f78dgff01g49b4gb954ge378cee73e09" version="1">Your body develops white and grey spots which don't have any adverse effect.
+&lt;br&gt;The spots are cleared up when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
 	<content contentuid="h4d3a5cfeg3495g4cbfgadd0g79e406021bcb" version="1">Necrotic Stench</content> -- Necrotic damage
 	-- You smell like rotting flesh. You have disadvantage on Charisma (Persuasion) checks. Magical healing of 6th level or higher, such as heal or regenerate, removes the smell.
 
