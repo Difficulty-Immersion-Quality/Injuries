@@ -108,7 +108,7 @@ data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d4,Poison)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('DRUNK') or HasStatus('GOB_FESTIVITIES_DRUNK') or HasStatus('EPI_EPILOGUE_HALSIN_DRUNK') or HasStatus('TWN_DISTILLERY_DRUNK_01') or HasStatus('TWN_DISTILLERY_DRUNK_02') or HasStatus('TWN_DISTILLERY_DRUNK_03') or HasStatus('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or HasStatus('TWN_DISTILLERY_DRANK_ONCE') or HasStatus('DRINK_ALCOHOL') or HasStatus('WYR_SHARESSCARESS_POTENTDRINK')):DealDamage(SELF,1d4, Poison)"
+data "StatsFunctors" "IF(HasStatus('DRUNK') or HasStatus('GOB_FESTIVITIES_DRUNK') or HasStatus('EPI_EPILOGUE_HALSIN_DRUNK') or HasStatus('TWN_DISTILLERY_DRUNK_01') or HasStatus('TWN_DISTILLERY_DRUNK_02') or HasStatus('TWN_DISTILLERY_DRUNK_03') or HasStatus('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or HasStatus('TWN_DISTILLERY_DRANK_ONCE') or HasStatus('DRINK_ALCOHOL') or HasStatus('WYR_SHARESSCARESS_POTENTDRINK') or HasStatus('CONS_DRUG_STIMULANT') or HasStatus('DRUG_DREAMMIST_CONDITION') or HasStatus('DRUG_ETHER_CONDITION') or HasStatus('CONS_DRUG_EUPHORIC')):DealDamage(SELF,1d4, Poison)"
 data "StatsFunctorContext" "OnStatusApplied"
 
 // ==================================== Flavour Proxies ====================================
