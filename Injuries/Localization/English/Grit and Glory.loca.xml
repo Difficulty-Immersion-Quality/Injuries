@@ -307,10 +307,10 @@ Spiritual Injury: Necrotic damage.
 
 
 	<content contentuid="h563aa3bbg6ae2g4619g9551ga2f5fb155be3" version="1">Headaches - Minor</content>
-	<content contentuid="h8ee2fc0fgbc08g4991g9a98g3dc9912fc004" version="1">Minor Headaches</content> -- Psychic damage
+	<content contentuid="h8ee2fc0fgbc08g4991g9a98g3dc9912fc004" version="1">Minor Headaches</content> -- Psychic and Thunder damage
 	-- You have disadvantage on Wisdom checks. Magical healing cures your minor headaches. Alternatively, they will resolve on their own in two weeks.
 
-	<content contentuid="haa02e3a6g96edg48f2gbc1cg770c1b4a31ff" version="1">Minor Headaches is intended for Psychic damage.&lt;br&gt;Intended severity: Low.
+	<content contentuid="haa02e3a6g96edg48f2gbc1cg770c1b4a31ff" version="1">Minor Headaches is intended for Psychic and Thunder damage.&lt;br&gt;Intended severity: Low.
 &lt;br&gt;&lt;br&gt;You have a pounding skull. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;&lt;br&gt;The headaches leave when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
@@ -320,10 +320,10 @@ Spiritual Injury: Necrotic damage.
 
 
 	<content contentuid="h45aaafddg2c12g48f8ga5f1g249fbbb3b205" version="1">Headaches - Severe</content>
-	<content contentuid="hff207c7dg70a1g41d1ga9b4g01ef5ef64210" version="1">Severe Headaches</content> -- Psychic damage
+	<content contentuid="hff207c7dg70a1g41d1ga9b4g01ef5ef64210" version="1">Severe Headaches</content> -- Psychic and Thunder damage
 	-- You have disadvantage on Wisdom checks and Wisdom saving throws. If you fail a saving throw against bludgeoning damage, force damage, or psychic damage, you are also stunned until the end of your next turn. Magic such as the regenerate spell can cure your severe headaches.
 
-	<content contentuid="h61d833ffgd146g409egb735g9efbb7f1880a" version="1">Severe Headaches is intended for Psychic damage.&lt;br&gt;Intended severity: Medium.
+	<content contentuid="h61d833ffgd146g409egb735g9efbb7f1880a" version="1">Severe Headaches is intended for Psychic and Thunder damage.&lt;br&gt;Intended severity: Medium.
 &lt;br&gt;&lt;br&gt;Your skull feels like it's been split in two. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;. If you fail a &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; against Bludgeoning damage, Force damage, or Psychic damage, you are also &lt;LSTag Type="Status" Tooltip="STUNNED"&gt;Stunned&lt;/LSTag&gt; until the end of your next turn.
 &lt;br&gt;&lt;br&gt;The headaches leave when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
