@@ -307,7 +307,7 @@ Spiritual Injury: Necrotic damage.
 
 
 	<content contentuid="ha160b3cag1a81g4a63g9b9fg7d0d251be976" version="1">Kidney Failure - Major</content>
-	<content contentuid="h9392009egb2fbg407egbef6gdea8c81007f7" version="1">Major Kidney Failure</content> -- Poison and Lightning damage.
+	<content contentuid="h9392009egb2fbg407egbef6gdea8c81007f7" version="1">Major Kidney Failure</content> -- Poison and Lightning damage
 	-- When you complete a long rest, you must succeed at a Constitution saving throw of DC 15 or gain the poisoned condition until you complete a long rest. Magic such as the regenerate spell can cure your kidney failure. Alternatively, someone can tend to the kidney failure and make a DC 15 Wisdom (Medicine) check once every week. After ten successes, the kidney failure is resolved.
 
 	<content contentuid="h767c5f1fg87d8g417bg8b9cg5ecac1a3a201" version="1">Major Kidney Failure is intended for Lightning damage. Acquiring Major Kidney Failure will replace Minor Kidney Failure, it's the same injury with a higher DC Saving Throw.&lt;br&gt;Intended severity: Medium.
@@ -320,11 +320,35 @@ Spiritual Injury: Necrotic damage.
 
 
 	<content contentuid="hc4a2a3a4ga8a7g411egb318g3f3bd1a4cb37" version="1">Kidney Failure - Minor</content>
-	<content contentuid="h61c99903gd27dg4949g92eag2ef898be9bf9" version="1">Minor Kidney Failure</content> -- Poison and Lightning damage.
+	<content contentuid="h61c99903gd27dg4949g92eag2ef898be9bf9" version="1">Minor Kidney Failure</content> -- Poison and Lightning damage
+	-- This has the same effect as Major Kidney Failure above, except that the save DC is 10 and only six Wisdom (Medicine) check successes are needed to resolve the Kidney Failure.
 
 	<content contentuid="h850143d8g0501g45f7ga74fg7bb9c3456d96" version="1">Minor Kidney Failure is intended for Lightning damage. Acquiring Major Kidney Failure will replace Minor Kidney Failure, it's the same injury with a higher DC Saving Throw.&lt;br&gt;Intended severity: Medium.
 &lt;br&gt;When you complete a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;, you must succeed at a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or gain the &lt;LSTag Type="Status" Tooltip="POISONED"&gt;Poisoned&lt;/LSTag&gt; condition until you complete your next &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;.
 &lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can cure your failing kidneys.</content>
+
+
+
+	<content contentuid="h71a5168bg4a05g49eag834dg84884c3b7ed1" version="1">Liver Damage - Major</content>
+	<content contentuid="h5d67276cgfd6eg4598g8ef2gfb805b04e75b" version="1">Major Liver Damage</content> -- Poison damage
+	-- When you complete a long rest, you must succeed at a Constitution saving throw of DC 15 or gain the poisoned condition until you complete a long rest. Magic such as the regenerate spell can cure your kidney failure. Alternatively, someone can tend to the kidney failure and make a DC 15 Wisdom (Medicine) check once every week. After ten successes, the kidney failure is resolved.
+
+	<content contentuid="hc447cb3bg1880g46f9gb860g21b393acb508" version="1">Major Liver Damage is intended for Poison damage. Acquiring Major Liver Damage will replace Minor Liver Damage, it's the same injury with a higher DC Saving Throw and higher damage is dealt.&lt;br&gt;Intended severity: High.
+&lt;br&gt;When you complete a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;, you must succeed at a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or gain the &lt;LSTag Type="Status" Tooltip="POISONED"&gt;Poisoned&lt;/LSTag&gt; condition until you complete your next &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. Additionally, whenever you take Poison damage, you take an additional [1], and anytime you drink alcohol or take another drug, you take [1].
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can cure your damaged liver.</content>
+
+	<content contentuid="hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4" version="1">When you complete a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;, you must succeed at a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or gain the &lt;LSTag Type="Status" Tooltip="POISONED"&gt;Poisoned&lt;/LSTag&gt; condition until you complete your next &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. Additionally, whenever you take Poison damage, you take an additional [1], and anytime you drink alcohol or take another drug, you take [1].
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can cure your damaged liver.</content>
+
+
+
+	<content contentuid="h2f49eba9g4880g4696g8ad4g860ff1bb59dc" version="1">Liver Damage - Minor</content>
+	<content contentuid="he3ce9907g8905g455ag900cgdd39f26178ad" version="1">Minor Liver Damage</content> -- Poison damage
+	-- When you complete a long rest, you must succeed at a Constitution saving throw of DC 10 or gain the poisoned condition until you complete a long rest. Additionally, whenever you take poison damage, you take an additional 2 (1d4) poison damage. Anytime you drink alcohol or take another drug, you take 2 (1d4) poison damage. Magic such as the regenerate spell can cure your liver failure.
+
+	<content contentuid="h0e612ffdgb013g4fafga6fdg6ad97636f274" version="1">Minor Liver Damage is intended for Poison damage. Acquiring Major Liver Damage will replace Minor Liver Damage, it's the same injury with a higher DC Saving Throw and higher damage is dealt.&lt;br&gt;Intended severity: Medium.
+&lt;br&gt;When you complete a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;, you must succeed at a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or gain the &lt;LSTag Type="Status" Tooltip="POISONED"&gt;Poisoned&lt;/LSTag&gt; condition until you complete your next &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. Additionally, whenever you take Poison damage, you take an additional [1], and anytime you drink alcohol or take another drug, you take [1].
+&lt;br&gt;Magical healing of 6th level or higher, such as &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; can cure your damaged liver.</content>
 
 
 

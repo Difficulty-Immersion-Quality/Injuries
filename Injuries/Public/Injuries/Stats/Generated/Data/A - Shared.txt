@@ -1,0 +1,7 @@
+// Custom Poisoned condition to ensure it's not overwritten by other Poisoned conditions
+new entry "GOON_POISONED_KIDNEY_LIVER"
+type "StatusData"
+data "StatusType" "BOOST"
+using "POISONED"
+data "StackType" "Ignore"
+data "StackPriority" "20"

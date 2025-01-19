@@ -66,7 +66,7 @@ data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
@@ -80,16 +80,8 @@ data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_FAILURE,100,-1)"
+data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
 data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "HasStatus('LONG_REST')"
-
-// Custom Poisoned condition to ensure it's not overwritten by other Poisoned conditions
-new entry "GOON_POISONED_KIDNEY_FAILURE"
-type "StatusData"
-data "StatusType" "BOOST"
-using "POISONED"
-data "StackType" "Ignore"
-data "StackPriority" "20"
 
 // ==================================== Flavour Proxies  ====================================

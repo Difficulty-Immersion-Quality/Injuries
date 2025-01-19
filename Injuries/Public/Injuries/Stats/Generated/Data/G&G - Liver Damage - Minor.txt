@@ -1,0 +1,114 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_MINOR_LIVER_DAMAGE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Minor Liver Damage
+data "DisplayName" "h2f49eba9g4880g4696g8ad4g860ff1bb59dc"
+//
+data "Description" "h0e612ffdgb013g4fafga6fdg6ad97636f274"
+data "DescriptionParams" "DealDamage(1d4,Poison)"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_LIVER_DAMAGE"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Minor Liver Damage
+data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
+//
+data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
+data "DescriptionParams" "DealDamage(1d4,Poison)"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_LIVER_DAMAGE"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MINOR_LIVER_DAMAGE')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Technical_Passive;Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Technical_Passive_Damage;Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Technical_Passive_Alcohol"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Removal_Technical_Passive"
+type "PassiveData"
+// Minor Liver Damage
+data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
+// 
+data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
+data "DescriptionParams" "DealDamage(1d4,Poison)"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical passive for application
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Technical_Passive"
+type "PassiveData"
+// Minor Liver Damage
+data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
+// 
+data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
+data "DescriptionParams" "DealDamage(1d4,Poison)"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "HasStatus('LONG_REST')"
+
+// Technical passive for damage
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Technical_Passive_Damage"
+type "PassiveData"
+// Minor Liver Damage
+data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
+// 
+data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
+data "DescriptionParams" "DealDamage(1d4,Poison)"
+data "Properties" "IsHidden"
+data "StatsFunctors" "DealDamage(SELF,1d4, Poison)"
+data "StatsFunctorContext" "OnDamaged"
+data "Conditions" "IsDamageTypePoison()"
+
+// Technical passive for damage
+new entry "Goon_Real_Injury_Grit_Glory_Minor_Liver_Damage_Technical_Passive_Alcohol"
+type "PassiveData"
+// Minor Liver Damage
+data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
+// 
+data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
+data "DescriptionParams" "DealDamage(1d4,Poison)"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('DRUNK') or HasStatus('GOB_FESTIVITIES_DRUNK') or HasStatus('EPI_EPILOGUE_HALSIN_DRUNK') or HasStatus('TWN_DISTILLERY_DRUNK_01') or HasStatus('TWN_DISTILLERY_DRUNK_02') or HasStatus('TWN_DISTILLERY_DRUNK_03') or HasStatus('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or HasStatus('TWN_DISTILLERY_DRANK_ONCE') or HasStatus('DRINK_ALCOHOL') or HasStatus('WYR_SHARESSCARESS_POTENTDRINK')):DealDamage(SELF,1d4, Poison)"
+data "StatsFunctorContext" "OnStatusApplied"
+
+// ==================================== Flavour Proxies ====================================
