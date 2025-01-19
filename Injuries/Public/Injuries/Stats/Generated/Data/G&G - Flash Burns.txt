@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_FLASH_BURNS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Flash Burns
+data "DisplayName" "h89b9f70cg859dg438agb608g037879b28a9f"
+//
+data "Description" "hfa0baeb0ga304g4463gb030gedaf7ce872f8"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_FLASH_BURNS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FLASH_BURNS,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FLASH_BURNS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FLASH_BURNS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FLASH_BURNS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Flash Burns
+data "DisplayName" "h89b9f70cg859dg438agb608g037879b28a9f"
+//
+data "Description" "hda45ad95g1630g49b3g9908g40fd121f16d5"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FLASH_BURNS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_FLASH_BURNS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Flash_Burns_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Flash_Burns_Removal_Technical_Passive"
+type "PassiveData"
+// Flash Burns
+data "DisplayName" "h89b9f70cg859dg438agb608g037879b28a9f"
+// 
+data "Description" "hda45ad95g1630g49b3g9908g40fd121f16d5"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FLASH_BURNS)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
