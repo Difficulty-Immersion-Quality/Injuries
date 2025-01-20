@@ -52,19 +52,20 @@ local function CheckStatusOnTickOrApplication(status, character)
 	local statusConfig = ConfigManager.Injuries.ApplyOnStatus[status]
 	if statusConfig then
 		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+		if entity and injuryVar then
+			processInjuries(entity, status, statusConfig, injuryVar)
 
-		processInjuries(entity, status, statusConfig, injuryVar)
-
-		if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
-			-- 5.7 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
-			-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
-			Ext.Timer.WaitFor(5700, function()
-				if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
-					-- Make sure we're tracking ticks when not in combat, since there's no event for that
-					-- TODO: Check to see if there's any injuries left to apply for this status, so this isn't running unnecessarily
-					CheckStatusOnTickOrApplication(status, character)
-				end
-			end)
+			if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
+				-- 5.7 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
+				-- TODO: Figure out how to get this to continue going if there's a reset or reload while it's ticking
+				Ext.Timer.WaitFor(5700, function()
+					if Osi.HasActiveStatus(character, status) == 1 and Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
+						-- Make sure we're tracking ticks when not in combat, since there's no event for that
+						-- TODO: Check to see if there's any injuries left to apply for this status, so this isn't running unnecessarily
+						CheckStatusOnTickOrApplication(status, character)
+					end
+				end)
+			end
 		end
 	end
 end
@@ -81,12 +82,14 @@ EventCoordinator:RegisterEventProcessor("CombatRoundStarted", function(combatGui
 			if InjuryConfigHelper:IsEligible(combatParticipant[1]) then
 				local entity, injuryVar = InjuryConfigHelper:GetUserVar(combatParticipant[1])
 
-				-- InjuryConfigHelper handles resetting vars each round
-				local applyOnStatus = injuryVar["applyOnStatus"]
-				if applyOnStatus then
-					for status, _ in pairs(applyOnStatus) do
-						if Osi.HasActiveStatus(combatParticipant[1], status) == 1 then
-							processInjuries(entity, status, ConfigManager.Injuries.ApplyOnStatus[status], applyOnStatus)
+				if entity and injuryVar then
+					-- InjuryConfigHelper handles resetting vars each round
+					local applyOnStatus = injuryVar["applyOnStatus"]
+					if applyOnStatus then
+						for status, _ in pairs(applyOnStatus) do
+							if Osi.HasActiveStatus(combatParticipant[1], status) == 1 then
+								processInjuries(entity, status, ConfigManager.Injuries.ApplyOnStatus[status], applyOnStatus)
+							end
 						end
 					end
 				end

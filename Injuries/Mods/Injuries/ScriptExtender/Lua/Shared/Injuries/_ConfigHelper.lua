@@ -75,6 +75,10 @@ if Ext.IsServer() then
 	---@param character GUIDSTRING
 	---@return boolean
 	function InjuryConfigHelper:IsEligible(character)
+		if Osi.IsItem(character) == 1 or Osi.Exists(character) == 0 then
+			return false
+		end
+
 		local reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 		if (reset ~= "Short Rest" and reset ~= "Long Rest") and Osi.IsInCombat(character) == 0 then
 			return false
@@ -100,14 +104,16 @@ if Ext.IsServer() then
 	end
 
 	---@param character GUIDSTRING
-	---@return EntityHandle, InjuryVar
+	---@return EntityHandle?, InjuryVar?
 	function InjuryConfigHelper:GetUserVar(character)
 		local entity = Ext.Entity.Get(character)
 
-		if not entity.Vars.Goon_Injuries then
-			return entity, TableUtils:DeeplyCopyTable(injuryVar)
-		else
-			return entity, entity.Vars.Goon_Injuries
+		if entity then
+			if not entity.Vars.Goon_Injuries then
+				return entity, TableUtils:DeeplyCopyTable(injuryVar)
+			else
+				return entity, entity.Vars.Goon_Injuries
+			end
 		end
 	end
 
@@ -244,14 +250,16 @@ if Ext.IsServer() then
 
 	function InjuryConfigHelper:RemoveAllInjuries(character)
 		local entity, _ = InjuryConfigHelper:GetUserVar(character)
-		for injury, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
-			Osi.RemoveStatus(character, injury)
+		if entity then
+			for injury, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
+				Osi.RemoveStatus(character, injury)
+			end
+
+			entity.Vars.Goon_Injuries = nil
+			RemoveTrackers(character)
+
+			Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 		end
-
-		entity.Vars.Goon_Injuries = nil
-		RemoveTrackers(character)
-
-		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 	end
 
 	Ext.Osiris.RegisterListener("Died", 1, "after", function(character)
@@ -264,35 +272,37 @@ if Ext.IsServer() then
 		if Osi.IsItem(character) == 0 then
 			local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
 
-			if injuryUserVar["injuryAppliedReason"][status] then
-				for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
-					injuryTable[status] = nil
-					if not next(injuryTable) then
-						injuryUserVar["damage"][damageType] = nil
+			if entity and injuryUserVar then
+				if injuryUserVar["injuryAppliedReason"][status] then
+					for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
+						injuryTable[status] = nil
+						if not next(injuryTable) then
+							injuryUserVar["damage"][damageType] = nil
+						end
 					end
-				end
 
-				for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
-					injuryTable[status] = nil
-					if not next(injuryTable) then
-						injuryUserVar["applyOnStatus"][statusName] = nil
+					for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
+						injuryTable[status] = nil
+						if not next(injuryTable) then
+							injuryUserVar["applyOnStatus"][statusName] = nil
+						end
 					end
+
+					injuryUserVar["injuryAppliedReason"][status] = nil
+
+					if not next(injuryUserVar["injuryAppliedReason"])
+						and not next(injuryUserVar["damage"])
+						and not next(injuryUserVar["applyOnStatus"])
+					then
+						injuryUserVar = nil
+
+						RemoveTrackers(character)
+					end
+
+					entity.Vars.Goon_Injuries = injuryUserVar
+
+					Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 				end
-
-				injuryUserVar["injuryAppliedReason"][status] = nil
-
-				if not next(injuryUserVar["injuryAppliedReason"])
-					and not next(injuryUserVar["damage"])
-					and not next(injuryUserVar["applyOnStatus"])
-				then
-					injuryUserVar = nil
-
-					RemoveTrackers(character)
-				end
-
-				entity.Vars.Goon_Injuries = injuryUserVar
-
-				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 			end
 		end
 	end)
