@@ -67,7 +67,7 @@ data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
 data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 

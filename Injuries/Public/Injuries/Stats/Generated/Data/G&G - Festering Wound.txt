@@ -67,7 +67,7 @@ data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_FESTERING_WOUND)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

@@ -67,9 +67,11 @@ data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_FROSTBITTEN_HAND)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
 
 // Technical status for application
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_TECHNICAL"
@@ -84,8 +86,6 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "Boosts" ""
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Dexterity,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL,100,1)"
 data "SoundVocalStart" ""
-
-// ==================================== Technicals for individual injury functionality ====================================
 
 // Technical status for boosts
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL"

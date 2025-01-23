@@ -66,7 +66,7 @@ data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 // 
 data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

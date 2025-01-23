@@ -67,7 +67,7 @@ data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
 data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_NOSE)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_BROKEN_NOSE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

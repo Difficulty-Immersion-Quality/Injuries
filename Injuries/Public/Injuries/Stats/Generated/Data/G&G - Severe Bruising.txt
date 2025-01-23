@@ -67,7 +67,7 @@ data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_SEVERE_BRUISING)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_SEVERE_BRUISING)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

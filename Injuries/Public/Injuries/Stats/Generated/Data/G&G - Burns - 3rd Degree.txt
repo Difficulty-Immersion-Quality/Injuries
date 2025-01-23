@@ -67,9 +67,11 @@ data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_THIRD_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
+
+// ==================================== Technicals for individual injury functionality ====================================
 
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
@@ -94,7 +96,5 @@ data "Properties" "IsHidden"
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypeFire()"
-
-// ==================================== Technicals for individual injury functionality ====================================
 
 // ==================================== Flavour Proxies  ====================================

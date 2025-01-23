@@ -67,7 +67,7 @@ data "DisplayName" "he3ce9907g8905g455ag900cgdd39f26178ad"
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d4,Poison)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MINOR_LIVER_DAMAGE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

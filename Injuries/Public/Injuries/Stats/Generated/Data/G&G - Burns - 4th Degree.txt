@@ -67,7 +67,7 @@ data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS)"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
 
