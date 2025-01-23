@@ -287,6 +287,20 @@ Spiritual Injury: Necrotic damage.
 
 
 
+	<content contentuid="h2461454bgbb5eg4fc0g9686g747c2c16c036" version="1">Festering Wound</content> -- Piercing damage
+	-- Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die. The wound heals if you receive magical healing. Alternatively, someone can tend to the wound and make a DC 15 Wisdom (Medicine) check once every 24 hours. After ten successes, the wound heals.
+
+	<content contentuid="h86d7091dg4408g4174g87c1g512f7fb2ea67" version="1">Festering Wound is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;&lt;br&gt;You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
+&lt;br&gt;&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="hc56ff4cdg1473g410bg9845g8f5cafc85ed5" version="1">You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
+&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="hcc007514g1be4g4dc8g9b6fg66091319d671" version="1">Necrotising Wound</content> -- Necrotic damage
+
+
+
 	<content contentuid="h89b9f70cg859dg438agb608g037879b28a9f" version="1">Flash Burns</content> -- Lightning damage
 	-- You have superficial burns. You turn as red as a lobster, but otherwise suffer no mechanical effects. Magical healing cures your flash burns. Alternatively, they will heal on their own in 2 weeks.
 
@@ -454,18 +468,6 @@ Spiritual Injury: Necrotic damage.
 
 	<content contentuid="h582f879fgf7a7g4040gb30dgac0021216b2b" version="1">You smell like rotting flesh. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Persuasion"&gt;Persuasion&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cleanse the stench.</content>
-
-
-
-	<content contentuid="hcc007514g1be4g4dc8g9b6fg66091319d671" version="1">Necrotising Wound</content> -- Necrotic damage
-	-- Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die. The wound heals if you receive magical healing. Alternatively, someone can tend to the wound and make a DC 15 Wisdom (Medicine) check once every 24 hours. After ten successes, the wound heals.
-
-	<content contentuid="h86d7091dg4408g4174g87c1g512f7fb2ea67" version="1">Necrotising Wound is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
-&lt;br&gt;&lt;br&gt;You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
-&lt;br&gt;&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
-
-	<content contentuid="hc56ff4cdg1473g410bg9845g8f5cafc85ed5" version="1">You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
-&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
 
 

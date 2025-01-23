@@ -1,0 +1,194 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_FESTERING_WOUND"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
+//
+data "Description" "h86d7091dg4408g4174g87c1g512f7fb2ea67"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_FESTERING_WOUND"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NECROTISING_WOUND,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND') not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NECROTISING_WOUND')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
+//
+data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_FESTERING_WOUND')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Festering_Wound_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Festering_Wound_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.5"
+data "SplatterSweatAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Festering_Wound_Removal_Technical_Passive"
+type "PassiveData"
+// Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
+// 
+data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical passive for application
+new entry "Goon_Real_Injury_Grit_Glory_Festering_Wound_Technical_Passive"
+type "PassiveData"
+// Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
+// 
+data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "Properties" "IsHidden"
+data "StatsFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND_TECHNICAL,100,0)"
+data "StatsFunctorContext" "OnStatusRemoved"
+data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')"
+
+// Technical status for boosts
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
+// 
+data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND_TECHNICAL"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "IF(HasStatus('GOON_FESTERING_WOUND_1')):ApplyStatus(GOON_FESTERING_WOUND_2);IF(HasStatus('GOON_FESTERING_WOUND_2')):ApplyStatus(GOON_FESTERING_WOUND_3);IF(HasStatus('GOON_FESTERING_WOUND_3')):ApplyStatus(GOON_FESTERING_WOUND_4);IF(HasStatus('GOON_FESTERING_WOUND_4')):ApplyStatus(GOON_FESTERING_WOUND_5);IF(HasStatus('GOON_FESTERING_WOUND_5')):ApplyStatus(GOON_FESTERING_WOUND_6);IF(HasStatus('GOON_FESTERING_WOUND_6')):ApplyStatus(GOON_FESTERING_WOUND_7);IF(HasStatus('GOON_FESTERING_WOUND_7')):ApplyStatus(GOON_FESTERING_WOUND_8);IF(HasStatus('GOON_FESTERING_WOUND_8')):ApplyStatus(GOON_FESTERING_WOUND_9);IF(HasStatus('GOON_FESTERING_WOUND_9')):ApplyStatus(GOON_FESTERING_WOUND_10)"
+data "SoundVocalStart" "PAIN"
+
+new entry "GOON_FESTERING_WOUND_MAXHP"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
+// 
+data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "StackId" "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+
+new entry "GOON_FESTERING_WOUND_1"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "1"
+data "Boosts" "IncreaseMaxHP(-1)"
+
+new entry "GOON_FESTERING_WOUND_2"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "2"
+data "Boosts" "IncreaseMaxHP(-2)"
+
+new entry "GOON_FESTERING_WOUND_3"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "3"
+data "Boosts" "IncreaseMaxHP(-3)"
+
+new entry "GOON_FESTERING_WOUND_4"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "4"
+data "Boosts" "IncreaseMaxHP(-4)"
+
+new entry "GOON_FESTERING_WOUND_5"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "5"
+data "Boosts" "IncreaseMaxHP(-5)"
+
+new entry "GOON_FESTERING_WOUND_6"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "6"
+data "Boosts" "IncreaseMaxHP(-6)"
+
+new entry "GOON_FESTERING_WOUND_7"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "7"
+data "Boosts" "IncreaseMaxHP(-7)"
+
+new entry "GOON_FESTERING_WOUND_8"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "8"
+data "Boosts" "IncreaseMaxHP(-8)"
+
+new entry "GOON_FESTERING_WOUND_9"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "9"
+data "Boosts" "IncreaseMaxHP(-9)"
+
+new entry "GOON_FESTERING_WOUND_10"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_FESTERING_WOUND_MAXHP"
+data "StackPriority" "10"
+data "Boosts" "IncreaseMaxHP(-10)"
+
+// ==================================== Flavour Proxies ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NECROTISING_WOUND"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND"
+// Necrotising Wound
+data "DisplayName" "hcc007514g1be4g4dc8g9b6fg66091319d671"
