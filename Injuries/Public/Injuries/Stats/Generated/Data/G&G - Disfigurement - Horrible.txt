@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_DISFIGUREMENT"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT')"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_ACID') and not HasStatus('GOON_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_SCAR,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DISFIGUREMENT')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -81,3 +81,12 @@ data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
 // 
 data "Description" "hb58b1ce6g670ag4e2cgb5b0g3e587385a812"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_SCAR"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
+// Horrible Scar
+data "DisplayName" "h37bf7bb7gfb44g4c0egba49ged6c3aa8d93a"
+//
+data "Description" "h79f0edf2gc42ag4209ga0e3g7e50582e6fcf"

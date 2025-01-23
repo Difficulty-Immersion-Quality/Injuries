@@ -258,11 +258,12 @@ Spiritual Injury: Necrotic damage.
 
 
 	<content contentuid="h6fece6cagf1e4g4a82gaa56g5937de1f04a7" version="1">Disfigurement - Horrible</content>
-	<content contentuid="hf9899dabg1cb4g4dd3gbd91gf74112304ee5" version="1">Horrible Disfigurement</content> -- Acid damage
+	<content contentuid="hf9899dabg1cb4g4dd3gbd91gf74112304ee5" version="1">Horrible Disfigurement</content> -- Acid and Fire damage
 	-- You have burn scars to the extent that they can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal or regenerate, removes the burn scars.
 	-- You have acid burns to the extent that the scars can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal or regenerate, remove the acid burn scar.
 
-	<content contentuid="h9ddc85a9g19a4g496bg8e8dgbe197296cb87" version="1">Horrible Disfigurement is intended for Acid damage.&lt;br&gt;Intended severity: Medium.
+	<content contentuid="h9ddc85a9g19a4g496bg8e8dgbe197296cb87" version="1">Horrible Disfigurement is intended for Acid, Fire, Piercing and Slashing damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+- Horrible Scar: Piercing and Slashing damage.
 &lt;br&gt;&lt;br&gt;You have burn scars to the extent that they cannot be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
 &lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells removes the burn scars.</content>
 
@@ -271,6 +272,12 @@ Spiritual Injury: Necrotic damage.
 
 	<content contentuid="hb58b1ce6g670ag4e2cgb5b0g3e587385a812" version="1">You have acid burn scars to the extent that they cannot be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
 &lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells remove the acid burn scar.</content>
+
+	<content contentuid="h37bf7bb7gfb44g4c0egba49ged6c3aa8d93a" version="1">Horrible Scar</content> -- Piercing and Slashing damage
+	-- You are disfigured to the extent that the wound can't be easily concealed. You have disadvantage on Charisma (Persuasion) checks and advantage on Charisma (Intimidation) checks. Magical healing of 6th level or higher, such as heal and regenerate, removes the scar.
+
+	<content contentuid="h79f0edf2gc42ag4209ga0e3g7e50582e6fcf" version="1">You are disfigured to the extent that the wound can't be easily concealed. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Persuasion checks and &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on Intimidation checks.
+&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells remove the scar.</content>
 
 
 
