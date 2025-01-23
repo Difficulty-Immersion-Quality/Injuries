@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_FROSTBITTEN_FOOT"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT')"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT') not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -87,3 +87,10 @@ data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus
 data "SoundVocalStart" "DEATH"
 
 // ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
+// Damaged Hamstring
+data "DisplayName" "h1af91993ga6a8g4e35g98bfg93ae28ab7869"
