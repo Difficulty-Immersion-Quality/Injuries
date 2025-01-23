@@ -83,8 +83,8 @@ data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Properties" "IsHidden"
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
-data "StatsFunctorContext" "OnStatusApplied"
-data "Conditions" "HasStatus('LONG_REST')"
+data "StatsFunctorContext" "OnStatusRemoved"
+data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')"
 
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_Major_Liver_Damage_Technical_Passive_Damage"
@@ -94,7 +94,7 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
-data "Properties" "IsHidden"
+data "Properties" "Highlighted"
 data "StatsFunctors" "DealDamage(SELF,1d6, Poison)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypePoison()"
@@ -107,8 +107,9 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
-data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('DRUNK') or HasStatus('GOB_FESTIVITIES_DRUNK') or HasStatus('EPI_EPILOGUE_HALSIN_DRUNK') or HasStatus('TWN_DISTILLERY_DRUNK_01') or HasStatus('TWN_DISTILLERY_DRUNK_02') or HasStatus('TWN_DISTILLERY_DRUNK_03') or HasStatus('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or HasStatus('TWN_DISTILLERY_DRANK_ONCE') or HasStatus('DRINK_ALCOHOL') or HasStatus('WYR_SHARESSCARESS_POTENTDRINK') or HasStatus('CONS_DRUG_STIMULANT') or HasStatus('DRUG_DREAMMIST_CONDITION') or HasStatus('DRUG_ETHER_CONDITION') or HasStatus('CONS_DRUG_EUPHORIC')):DealDamage(SELF,1d6, Poison)"
+data "Properties" "Highlighted"
+data "StatsFunctors" "IF(StatusId('DRUNK') or StatusId('GOB_FESTIVITIES_DRUNK') or StatusId('EPI_EPILOGUE_HALSIN_DRUNK') or StatusId('TWN_DISTILLERY_DRUNK_01') or StatusId('TWN_DISTILLERY_DRUNK_02') or StatusId('TWN_DISTILLERY_DRUNK_03') or StatusId('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or StatusId('TWN_DISTILLERY_DRANK_ONCE') or StatusId('DRINK_ALCOHOL') or StatusId('WYR_SHARESSCARESS_POTENTDRINK') or StatusId('CONS_DRUG_STIMULANT') or StatusId('DRUG_DREAMMIST_CONDITION') or StatusId('DRUG_ETHER_CONDITION') or StatusId('CONS_DRUG_EUPHORIC')):DealDamage(SELF, 1d6, Poison)"
 data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" ""
 
 // ==================================== Flavour Proxies ====================================
