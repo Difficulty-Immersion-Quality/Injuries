@@ -207,10 +207,10 @@ Spiritual Injury: Necrotic damage.
 
 
 
-	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid damage
+	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid and Slashing damage.
 	-- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
-	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold, Lightning and Necrotic damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold, Lightning Necrotic and Slashing damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
 - Broken Leg: Bludgeoning Damage
 - Gangrene of the Foot: Cold damage
 - Explosive Grounding of the Foot: Lightning damage
@@ -233,10 +233,10 @@ Spiritual Injury: Necrotic damage.
 
 
 
-	<content contentuid="hab934a8fg8d74g4227g9907gfbae49662d8a" version="1">Destroyed Hand</content> -- Acid damage.
+	<content contentuid="hab934a8fg8d74g4227g9907gfbae49662d8a" version="1">Destroyed Hand</content> -- Acid and Slashing damage.
 	-- You can no longer hold anything with two hands, and you can hold only a single object at a time. Magic such as the regenerate spell can restore the lost appendage.
 
-	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Hand is intended for Acid, Bludgeoning, Cold, Lightning and Necrotic damage.&lt;br&gt;Intended severity: High.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Hand is intended for Acid, Bludgeoning, Cold, Lightning Necrotic and Slashing damage.&lt;br&gt;Intended severity: High.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
 - Broken Arm: Bludgeoning Damage
 - Gangrene of the Hand: Cold damage
 - Explosive Grounding of the Hand: Lightning damage
