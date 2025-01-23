@@ -301,10 +301,11 @@ Spiritual Injury: Necrotic damage.
 
 
 
-	<content contentuid="h2461454bgbb5eg4fc0g9686g747c2c16c036" version="1">Festering Wound</content> -- Piercing damage
+	<content contentuid="h2461454bgbb5eg4fc0g9686g747c2c16c036" version="1">Festering Wound</content> -- Piercing and Slashing damage
 	-- Your hit point maximum is reduced by 1 every 24 hours the wound persists. If your hit point maximum drops to 0, you die. The wound heals if you receive magical healing. Alternatively, someone can tend to the wound and make a DC 15 Wisdom (Medicine) check once every 24 hours. After ten successes, the wound heals.
 
-	<content contentuid="h86d7091dg4408g4174g87c1g512f7fb2ea67" version="1">Festering Wound is intended for Necrotic damage.&lt;br&gt;Intended severity: Low.
+	<content contentuid="h86d7091dg4408g4174g87c1g512f7fb2ea67" version="1">Festering Wound is intended for Necrotic, Piercing and Slashing damage.&lt;br&gt;Intended severity: Low.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+- Necrotising Wound: Necrotic damage.
 &lt;br&gt;&lt;br&gt;You have a persistant wound that grows worse with time. Your hit point maximum is reduced by 1 everytime you take a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt;. If your hit point maximum drops to 0, you die.
 &lt;br&gt;&lt;br&gt;The wound is healed when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
