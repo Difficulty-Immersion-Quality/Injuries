@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_NAUSEA"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Nausea
+data "DisplayName" "h2913e7e3gaaf0g4948ga908g92cde386014d"
+//
+data "Description" "h7aff03c3g1ec5g4469gaa08ge06a435392f5"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NAUSEA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NAUSEA,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NAUSEA')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NAUSEA"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Nausea
+data "DisplayName" "h2913e7e3gaaf0g4948ga908g92cde386014d"
+//
+data "Description" "hd30000f0g6d22g4d77g958fg7f83de985ab6"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NAUSEA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Ability,Constitution)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_NAUSEA')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Nausea_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Nausea_Removal_Technical_Passive"
+type "PassiveData"
+// Nausea
+data "DisplayName" "h2913e7e3gaaf0g4948ga908g92cde386014d"
+// 
+data "Description" "hd30000f0g6d22g4d77g958fg7f83de985ab6"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_NAUSEA)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================

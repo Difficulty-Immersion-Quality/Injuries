@@ -480,6 +480,18 @@ Vertigo: Poison damage.
 
 
 
+	<content contentuid="h2913e7e3gaaf0g4948ga908g92cde386014d" version="1">Naesea</content> -- Poison damage
+	-- You have disadvantage on Dexterity checks. Magical healing cures your muscle spasms. Alternatively, they will resolve on their own in 2 weeks.
+
+	<content contentuid="h7aff03c3g1ec5g4469gaa08ge06a435392f5" version="1">Naesea is intended for Poison damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;&lt;br&gt;You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;The naesea subside when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="hd30000f0g6d22g4d77g958fg7f83de985ab6" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;The naesea subside when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+
+
 	<content contentuid="h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb" version="1">Necrotic Discolouration</content> -- Necrotic damage
 	-- You get white and grey spots on your cheeks. The spots don't have any adverse effect. Magical healing of 6th level or higher, such as heal or regenerate, removes the spots.
 
