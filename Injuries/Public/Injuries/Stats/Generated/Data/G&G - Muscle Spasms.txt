@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_X"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS')"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_VERTIGO,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_VERTIGO')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -56,7 +56,7 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
-data "SplatterSweatAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Muscle_Spasms_Removal_Technical_Passive"
@@ -74,3 +74,12 @@ data "Conditions" ""
 // ==================================== Technicals for individual injury functionality ====================================
 
 // ==================================== Flavour Proxies ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_VERTIGO"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+// Vertigo
+data "DisplayName" "h3500cefcgf3cag4224g85b4gfc310ab4ae5e"
+// 
+data "Description" "h98e6f58fg1689g4010g9742g89b4f7505849"

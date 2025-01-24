@@ -465,12 +465,18 @@ Pierced Stomach: Slashing damage.
 	<content contentuid="h3796a49ag0b20g4d62ga072gc87475ae39c7" version="1">Muscle Spasms</content> -- Lightning damage
 	-- You have disadvantage on Dexterity checks. Magical healing cures your muscle spasms. Alternatively, they will resolve on their own in 2 weeks.
 
-	<content contentuid="h01a4e10eg09f7g47faga37fgf537aedc3ce2" version="1">Muscle Spasms is intended for Lightning damage.&lt;br&gt;Intended severity: Low.
+	<content contentuid="h01a4e10eg09f7g47faga37fgf537aedc3ce2" version="1">Muscle Spasms is intended for Lightning and Poison damage.&lt;br&gt;Intended severity: Low.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+Vertigo: Poison damage.
 &lt;br&gt;&lt;br&gt;You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;&lt;br&gt;The spasms subside when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
 	<content contentuid="h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;The spasms subside when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
+
+	<content contentuid="h3500cefcgf3cag4224g85b4gfc310ab4ae5e" version="1">Vertigo</content> -- Poison damage
+
+	<content contentuid="h98e6f58fg1689g4010g9742g89b4f7505849" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;The vertigo subsides when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
 
 
