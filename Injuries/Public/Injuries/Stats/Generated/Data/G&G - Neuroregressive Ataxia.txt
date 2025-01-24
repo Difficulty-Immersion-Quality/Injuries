@@ -1,0 +1,88 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Neuroregressive Ataxia
+data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+//
+data "Description" "hc5551ef8g3666g41c8ga7fag7ae923bb8b1a"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Neuroregressive Ataxia
+data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+// 
+data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Neuroregressive_Ataxia_Removal_Technical_Passive;Goon_Real_Injury_Girt_Glory_Neuroregressive_Ataxia_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Neuroregressive_Ataxia_Removal_Technical_Passive"
+type "PassiveData"
+// Neuroregressive Ataxia
+data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+// 
+data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical passive for stat functors
+new entry "Goon_Real_Injury_Girt_Glory_Neuroregressive_Ataxia_Technical_Passive"
+type "PassiveData"
+// Neuroregressive Ataxia
+data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+// 
+data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnAttack"
+data "Conditions" "IsCriticalMiss()"
+data "StatsFunctors" "ApplyStatus(DISARM,100,1)"
+
+// ==================================== Flavour Proxies ====================================
