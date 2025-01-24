@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Neurodegenerative Disorder
+data "DisplayName" "haa2d89beg5169g43f4g88b6g6b1093266b24"
+//
+data "Description" "h64577567g70b7g4c4bgbaa0gc67ce7d4875d"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Neurodegenerative Disorder
+data "DisplayName" "haa2d89beg5169g43f4g88b6g6b1093266b24"
+//
+data "Description" "h321e22ddg29b7g4464g881bgea4a6fde0b36"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Skill,SleightOfHand)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Neurodegenerative_Disorder_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Neurodegenerative_Disorder_Removal_Technical_Passive"
+type "PassiveData"
+// Neurodegenerative Disorder
+data "DisplayName" "haa2d89beg5169g43f4g88b6g6b1093266b24"
+// 
+data "Description" "h321e22ddg29b7g4464g881bgea4a6fde0b36"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================

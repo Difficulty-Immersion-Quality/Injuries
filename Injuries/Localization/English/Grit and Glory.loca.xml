@@ -557,6 +557,18 @@ Major Organ Damage: Piercing damage.
 
 
 
+	<content contentuid="haa2d89beg5169g43f4g88b6g6b1093266b24" version="1">Neurodegenerative Disorder</content> -- Force damage
+	-- Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer disadvantage to all Dexterity checks to manipulate items and you must make Dexterity saving throws against breaking fragile items you are holding. Magic such as the regenerate spell can restore your coordination.
+
+	<content contentuid="h64577567g70b7g4c4bgbaa0gc67ce7d4875d" version="1">Neurodegenerative Disorder is intended for Force damage.&lt;br&gt;Intended severity: Low. 
+&lt;br&gt;&lt;br&gt;Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content>
+
+	<content contentuid="h321e22ddg29b7g4464g881bgea4a6fde0b36" version="1">Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content></content>
+
+
+
 	<content contentuid="h4f6b5709gb398g4d9ega578g6e67239d85ef" version="1">Neuroregressive Ataxia</content> -- Force damage
 	-- Your limbs lose their sensation to temperature, pain, vibration and touch. Your muscles feel weakened and you have difficulty holding items. You suffer disadvantage to all Strength and Dexterity ability checks and saving throws. You also experience occasional loss of control over your limbs and make sudden and short subconscious actions (such as attempting to unsheathe your weapon or write words on a nearby piece of paper, etc). Magic such as the regenerate spell can restore your coordination.
 
