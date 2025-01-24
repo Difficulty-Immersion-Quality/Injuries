@@ -15,8 +15,8 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') or HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') or not HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE')"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PIERCED_STOMACH,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE') not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PIERCED_STOMACH')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -85,3 +85,12 @@ data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "HasStatus('LONG_REST')"
 
 // ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_PIERCED_STOMACH"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE"
+// Pierced Stomach
+data "DisplayName" "h905dee36g1504g4471gad12gc37f4af93ecd"
+// 
+data "Description" "h8a14284eg959dg4147gb215g838219d2f3fb"
