@@ -480,10 +480,10 @@ Vertigo: Poison damage.
 
 
 
-	<content contentuid="h2913e7e3gaaf0g4948ga908g92cde386014d" version="1">Naesea</content> -- Poison damage
+	<content contentuid="h2913e7e3gaaf0g4948ga908g92cde386014d" version="1">Naesea</content> -- Poison and Radiant damage
 	-- You have disadvantage on Dexterity checks. Magical healing cures your muscle spasms. Alternatively, they will resolve on their own in 2 weeks.
 
-	<content contentuid="h7aff03c3g1ec5g4469gaa08ge06a435392f5" version="1">Naesea is intended for Poison damage.&lt;br&gt;Intended severity: Low.
+	<content contentuid="h7aff03c3g1ec5g4469gaa08ge06a435392f5" version="1">Naesea is intended for Poison and Radiant damage.&lt;br&gt;Intended severity: Low.
 &lt;br&gt;&lt;br&gt;You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;&lt;br&gt;The naesea subside when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving healing.</content>
 
