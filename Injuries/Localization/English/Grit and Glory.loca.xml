@@ -642,6 +642,34 @@ Major Organ Damage: Piercing damage.
 
 
 
+	<content contentuid="h42d2a0f7g685cg469ag9965g9996386bf684" version="1">Skin Tumours - Large</content> -- Radiant damage
+
+	<content contentuid="hbbd12dc1g97feg45a4g80cegfd0d9b1fcdf2" version="1">Large Skin Tumours</content> -- Radiant damage
+	-- You develop several large, painful skin tumors. You have disadvantage on Charisma and Wisdom checks. Magic such as the regenerate spell cures your large skin tumors. If your large skin tumors are not cured within six months, you develop Systemic Damage as per the poison table.
+
+	<content contentuid="h3d662c50g998ag498ag8c71g50b26b7a2bf1" version="1">Large Skin Tumours is intended for Radiant damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;&lt;br&gt;You develop several large, painful skin tumors. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; and &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells cure the tumours.</content>
+
+	<content contentuid="hd030d900gf9c3g46b5g8d2fgf6db5047b100" version="1">You develop several large, painful skin tumors. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; and &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells cure the tumours.</content>
+
+
+
+	<content contentuid="hbaee9f3fg4bd2g4c72g9534g83bb3b79da51" version="1">Skin Tumours - Small</content> -- Radiant damage
+
+	<content contentuid="h21e9c90agf1c0g4431g9499gdb97d0122013" version="1">Small Skin Tumours</content> -- Radiant damage
+	-- You develop several small, painless skin tumors. You have disadvantage on Charisma checks. Magic such as the regenerate spell cures your small skin tumors. If your small skin tumors are not cured within one year, you develop Large Skin Tumors.
+
+	<content contentuid="h65edc3e4g51cfg46b0g8e71ga34de0acd04e" version="1">Small Skin Tumours is intended for Radiant damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;&lt;br&gt;You develop several small, painless skin tumors. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells cure the tumours.</content>
+
+	<content contentuid="ha637e8f0geedfg4e72ga368ga5e055e5802e" version="1">You develop several small, painless skin tumors. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells cure the tumours.</content>
+
+
+
 	<content contentuid="h5cf11ad0g3feag4ff6g8a90g1fe14c00a5fe" version="1">Systematic Damage</content> -- Cold and Poison damage
 	-- You have disadvantage on Strength, Dexterity, and Constitution ability checks and Strength, Dexterity, and Constitution saving throws. Magic such as the regenerate spell cures this damage.
 

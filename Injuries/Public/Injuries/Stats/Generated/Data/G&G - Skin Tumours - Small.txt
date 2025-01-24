@@ -1,0 +1,76 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_SMALL_SKIN_TUMOURS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Small Skin Tumours
+data "DisplayName" "hbaee9f3fg4bd2g4c72g9534g83bb3b79da51"
+//
+data "Description" "h65edc3e4g51cfg46b0g8e71ga34de0acd04e"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_SKIN_TUMOURS"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Small Skin Tumours
+data "DisplayName" "h21e9c90agf1c0g4431g9499gdb97d0122013"
+//
+data "Description" "ha637e8f0geedfg4e72ga368ga5e055e5802e"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SKIN_TUMOURS"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" "Disadvantage(Ability,Charisma)"
+data "OnApplyFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_SMALL_SKIN_TUMOURS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Small_Skin_Tumours_Removal_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.5"
+data "SplatterDirtAmount" "0.5"
+data "SplatterSweatAmount" "0.5"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Small_Skin_Tumours_Removal_Technical_Passive"
+type "PassiveData"
+// Small Skin Tumours
+data "DisplayName" "h21e9c90agf1c0g4431g9499gdb97d0122013"
+// 
+data "Description" "ha637e8f0geedfg4e72ga368ga5e055e5802e"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_SMALL_SKIN_TUMOURS)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// ==================================== Flavour Proxies ====================================
