@@ -644,4 +644,16 @@ Major Organ Damage: Piercing damage.
 
 	<content contentuid="h5d84c3d1g8f32g45e4g8ca0g3587fdad6755" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt;, &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt;, and &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;.
 &lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the damage.</content>
+
+
+
+	<content contentuid="h1808a7c7gf64eg479aga79fg0895ebdf94e3" version="1">Weak Persona</content> -- Psychic damage
+	-- You have disadvantage on Strength checks and Strength saving throws. Magic such as the regenerate spell can cure your muscle breakdown. Alternatively, it will resolve on its own in 6 weeks.
+
+	<content contentuid="hcdb67d48g7d7ag4a77g8fcbg9c973c201cd1" version="1">Weak Persona is intended for Psychic damage.&lt;br&gt;Intended severity: Low.
+&lt;br&gt;&lt;br&gt;You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can restore your persona.</content>
+
+	<content contentuid="he73c8b3fg7abfg493eg84b7gdd8573b49faf" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can restore your persona.</content>
 </contentList>
