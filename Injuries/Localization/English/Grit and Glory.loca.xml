@@ -210,11 +210,12 @@ Spiritual Injury: Necrotic damage.
 	<content contentuid="h403d8304gdd4ag465eg831dg7ce094d5dd97" version="1">Destroyed Foot</content> -- Acid and Slashing damage.
 	-- Your speed on foot is halved, and you must use a crutch or cane to move. You fall prone after using the Dash action. You have disadvantage on Dexterity checks made to balance. Magic such as the regenerate spell can restore the damaged appendage.
 
-	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold, Lightning Necrotic and Slashing damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
+	<content contentuid="hfef4d455g444ag4669g8edeg4b13371f1ec0" version="1">Destroyed foot is intended for Acid, Bludgeoning, Cold, Lightning Necrotic, Piercing and Slashing damage.&lt;br&gt;Intended severity: Medium.&lt;br&gt;&lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
 - Broken Leg: Bludgeoning Damage
 - Gangrene of the Foot: Cold damage
 - Explosive Grounding of the Foot: Lightning damage
-- Withered Foot: Necrotic damage.
+- Withered Foot: Necrotic damage
+- Pierced Groin: Piercing damage.
 &lt;br&gt;&lt;br&gt;Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is halved. If you use the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action you fall &lt;LSTag Type="Status" Tooltip="PRONE
 "&gt;Prone&lt;/LSTag&gt; at the end of your turn. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; checks.
 &lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spell can restore the damaged appendage.</content>
@@ -230,6 +231,12 @@ Spiritual Injury: Necrotic damage.
 	<content contentuid="h002467ecg9b8dg43e4g8845g7e43225de74b" version="1">Explosive Grounding of the Foot</content> -- Lightning damage
 
 	<content contentuid="h3c013c87g0972g4a94ga69cgbf96024818e3" version="1">Withered Foot</content> -- Necrotic damage
+
+	<content contentuid="ha08cf168ge84ag4aeegb9ebgcb138e7071ff" version="1">Pierced Groin</content> -- Piercing damage
+
+	<content contentuid="h928ad7c1g98b7g40b9ga603g9ece9d6aa408" version="1">Your &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is halved. If you use the &lt;LSTag Type="Spell" Tooltip="Shout_Dash"&gt;Dash&lt;/LSTag&gt; action you fall &lt;LSTag Type="Status" Tooltip="PRONE
+"&gt;Prone&lt;/LSTag&gt; at the end of your turn. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Acrobatics"&gt;Acrobatics&lt;/LSTag&gt; checks. You're also sterile.
+&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can heal your groin.</content>
 
 
 
