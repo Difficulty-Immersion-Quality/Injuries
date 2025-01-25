@@ -24,7 +24,35 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// ==================================== Technicals ====================================
+// ==================================== Incurable injury induced Exhaustion level 2 ====================================
+
+new entry "GOON_PERMANENT_HOMEBREW_EXHAUSTION_2"
+type "StatusData"
+data "StatusType" "BOOST"
+// Incurable Exhaustion: Level 2
+data "DisplayName" "hcc360b7eg2957g428eg852ag4977e5fe3de5"
+//
+using "GOON_HOMEBREW_EXHAUSTION_2"
+data "StackId" "GOON_PERMANENT_HOMEBREW_EXHAUSTION"
+data "StackPriority" "2"
+data "Boosts" ""
+data "OnRemoveFunctors" "IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_7')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_6,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_6')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_5,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_5')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_4,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_4')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_3,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_3')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_2,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_2')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_1')):RemoveStatus(GOON_HOMEBREW_EXHAUSTION_1)"
+data "Passives" "Goon_Permanent_Homebrew_Exhaustion_2_Technical_Passive"
+
+// Technical passive for boosts
+new entry "Goon_Permanent_Homebrew_Exhaustion_2_Technical_Passive"
+type "PassiveData"
+// Incurable Exhaustion: Level 2
+data "DisplayName" "hcc360b7eg2957g428eg852ag4977e5fe3de5"
+//
+data "Description" "hf19cd4fag4074g4a8bga525g3186f1e4345f"
+data "Icon" "Status_Exhausted_2"
+data "Properties" "IsHidden"
+//
+data "Boosts" "Ability(Strength,-2);Ability(Dexterity,-2);Ability(Constitution,-2);Ability(Intelligence,-2);Ability(Wisdom,-2);Ability(Charisma,-2);ActionResourceConsumeMultiplier(Movement,1.2,0);CriticalHit(AttackTarget,Success,Always,19)"
+data "BoostConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_7') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_6') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_5') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_4') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_3') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_2')"
+
+// ==================================== Technicals for sleep mechanic ====================================
 
 // Scaling chance to fall asleep
 new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_2"

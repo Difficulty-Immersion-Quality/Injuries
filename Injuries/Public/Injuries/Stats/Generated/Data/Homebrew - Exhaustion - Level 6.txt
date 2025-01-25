@@ -13,7 +13,7 @@ data "Icon" "Status_Exhausted_6"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_HOMEBREW_EXHAUSTION"
-data "StackPriority" "4"
+data "StackPriority" "6"
 data "Boosts" "Ability(Strength,-6);Ability(Dexterity,-6);Ability(Constitution,-6);Ability(Intelligence,-6);Ability(Wisdom,-6);Ability(Charisma,-6);ActionResourceConsumeMultiplier(Movement,1.6,0);CriticalHit(AttackTarget,Success,Always,17)"
 data "OnApplyFunctors" "ApplyStatus(GOON_SCALING_EXHAUSTION_FALL_ASLEEP_6,100,-1)"
 data "OnRemoveFunctors" ""
@@ -24,7 +24,35 @@ data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
-// ==================================== Technicals ====================================
+// ==================================== Incurable injury induced Exhaustion level 6 ====================================
+
+new entry "GOON_PERMANENT_HOMEBREW_EXHAUSTION_6"
+type "StatusData"
+data "StatusType" "BOOST"
+// Incurable Exhaustion: Level 6
+data "DisplayName" "hfd589226g2343g4950g9228gb6dbebea838a"
+//
+using "GOON_HOMEBREW_EXHAUSTION_6"
+data "StackId" "GOON_PERMANENT_HOMEBREW_EXHAUSTION"
+data "StackPriority" "6"
+data "Boosts" ""
+data "OnRemoveFunctors" "IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_7')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_6,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_6')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_5,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_5')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_4,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_4')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_3,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_3')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_2,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_2')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_1')):RemoveStatus(GOON_HOMEBREW_EXHAUSTION_1)"
+data "Passives" "Goon_Permanent_Homebrew_Exhaustion_6_Technical_Passive"
+
+// Technical passive for boosts
+new entry "Goon_Permanent_Homebrew_Exhaustion_6_Technical_Passive"
+type "PassiveData"
+// Incurable Exhaustion: Level 6
+data "DisplayName" "hfd589226g2343g4950g9228gb6dbebea838a"
+//
+data "Description" "hf2b439d8gec5eg41d8gb41bg3cc92363b41b"
+data "Icon" "Status_Exhausted_6"
+data "Properties" "IsHidden"
+//
+data "Boosts" "Ability(Strength,-6);Ability(Dexterity,-6);Ability(Constitution,-6);Ability(Intelligence,-6);Ability(Wisdom,-6);Ability(Charisma,-6);ActionResourceConsumeMultiplier(Movement,1.6,0);CriticalHit(AttackTarget,Success,Always,17)"
+data "BoostConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_7') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_6')"
+
+// ==================================== Technicals for sleep mechanic ====================================
 
 // Scaling chance to fall asleep
 new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_6"
