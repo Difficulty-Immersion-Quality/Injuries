@@ -27,6 +27,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local charMultiplierConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].character_multipliers
 
 	local multiplierTab = tabBar:AddTabItem("Character Multipliers")
+	multiplierTab.TextWrapPos = 0
 
 	--#region Races
 	local raceHeader = multiplierTab:AddCollapsingHeader("Races")

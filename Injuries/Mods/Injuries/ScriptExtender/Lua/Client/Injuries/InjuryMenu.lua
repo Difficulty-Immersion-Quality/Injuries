@@ -406,14 +406,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					local injuryPopup
 					customizeButton.OnClick = function()
 						injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
-						injuryPopup.TextWrapPos = 0
 						injuryPopup.Closeable = true
 						injuryPopup.OnClose = function()
 							statCountTooltip:OnHoverEnter()
 						end
 
 						local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
-						newTabBar.TextWrapPos = 0
 						for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
 							local success, error = pcall(function()
 								tabGenerator(newTabBar, injuryName)
@@ -447,9 +445,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 					copyButton.OnClick = function()
 						local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
+						copyPopup.AlwaysAutoResize = true
 						copyPopup.Closeable = true
 
-						copyPopup:AddText("Copying from: " .. displayName)
+						copyPopup:AddText("Copying from: " .. displayName).Font = "Large"
 						copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs").TextWrapPos = 0
 						copyPopup:AddNewLine()
 

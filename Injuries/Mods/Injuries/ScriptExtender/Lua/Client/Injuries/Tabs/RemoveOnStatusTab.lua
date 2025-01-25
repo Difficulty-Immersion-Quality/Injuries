@@ -80,6 +80,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local removeOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status
 
 	local statusTab = tabBar:AddTabItem("Remove On Status")
+	statusTab.TextWrapPos = 0
 
 	local statusTable = statusTab:AddTable("RemoveOnStatus", 3)
 	statusTable.BordersInnerH = true
