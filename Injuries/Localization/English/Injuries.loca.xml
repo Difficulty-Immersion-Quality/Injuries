@@ -53,4 +53,5 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h5550c488gad91g45ebgbf6dg218c7c4468b7" version="1">Fried Synapses</content>
 	<content contentuid="h6bd6ff42gaf6dg44a9gbdb9g85b6006f0a49" version="1">The abundance of electrical activity in your brain leaves you with &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
+    <content contentuid="h1b6a9749a6eb4488ad5cf03f67eb45f6494b" version="1"></content>
 </contentList>

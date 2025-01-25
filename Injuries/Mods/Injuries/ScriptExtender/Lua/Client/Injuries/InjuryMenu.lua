@@ -1,3 +1,6 @@
+---@type {[string] : StatusData}
+local cachedStats = {}
+
 ---@param configToCount table
 ---@return number
 local function countInjuryConfig(configToCount)
@@ -22,6 +25,7 @@ function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
 end
 
+Ext.Require("Client/Injuries/Tabs/GeneralRulesTab.lua")
 Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
 Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
@@ -325,207 +329,227 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				systemHeader:Destroy()
 			end
 
-			local injuryTable = systemHeader:AddTable(system .. "_InjuryTable", 4)
-			injuryTable.BordersInnerH = true
-			injuryTable.SizingStretchProp = true
-			injuryTable.PreciseWidths = true
+			local function buildTable(tableCategory, injuryNameTable)
+				systemHeader:AddText(tableCategory).Font = "Large"
+				local injuryTable = systemHeader:AddTable(system .. "_InjuryTable", 4)
+				injuryTable.BordersInnerH = true
+				injuryTable.SizingStretchProp = true
+				injuryTable.PreciseWidths = true
 
-			local headerRow = injuryTable:AddRow()
-			headerRow.Headers = true
-			headerRow:AddCell():AddText("Injury")
-			headerRow:AddCell():AddText("Severity")
-			headerRow:AddCell():AddText("Actions")
+				local headerRow = injuryTable:AddRow()
+				headerRow.Headers = true
+				headerRow:AddCell():AddText("Injury")
+				headerRow:AddCell():AddText("Severity")
+				headerRow:AddCell():AddText("Actions")
 
-			local injuryDisplayNames = {}
-			local injuriesDisplayMap = {}
+				for displayName, injuryName in TableUtils:OrderedPairs(injuryNameTable, function(injuryDisplayName)
+					return cachedStats[injuryDisplayName].StackPriority
+				end) do
+					if not InjuryMenu.ConfigurationSlice.injury_specific[injuryName] then
+						InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
+					end
+					local injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
 
-			-- ConfigurationStructure:RegisterPostConfigInitializers(function()
+					local newRow = injuryTable:AddRow()
+					local displayCell = newRow:AddCell()
+					local injuryStat = Ext.Stats.Get(injuryName)
+					displayCell:AddImage(injuryStat.Icon, { 36, 36 })
+					displayCell:AddText(displayName).SameLine = true
+
+					DataSearchHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
+
+					local severityCombo = newRow:AddCell():AddCombo("")
+					severityCombo.Options = {
+						"Low",
+						"Medium",
+						"High"
+					}
+
+					for index, option in pairs(severityCombo.Options) do
+						if option == injury_config.severity then
+							severityCombo.SelectedIndex = index - 1
+							break
+						end
+					end
+
+					severityCombo.OnChange = function(_, selectedIndex)
+						injury_config.severity = severityCombo.Options[selectedIndex + 1]
+					end
+
+					local buttonCell = newRow:AddCell()
+					local customizeButton = buttonCell:AddButton("Customize")
+
+					local statCountTooltip = customizeButton:Tooltip()
+
+					statCountTooltip.OnHoverEnter = function()
+						for _, child in pairs(statCountTooltip.Children) do
+							child:Destroy()
+						end
+
+						local applyOnStatusCount = countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])
+						local damageCount = countInjuryConfig(injury_config.damage["damage_types"])
+						local removeOnStatusCount = countInjuryConfig(injury_config.remove_on_status)
+						local racesCount = countInjuryConfig(injury_config.character_multipliers["races"])
+						local tagsCount = countInjuryConfig(injury_config.character_multipliers["tags"])
+
+						customizeButton.Label = string.format("Customize (%s)", applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
+
+						statCountTooltip:AddNewLine()
+						statCountTooltip:AddText(string.format("Apply On Status: %d", applyOnStatusCount))
+						statCountTooltip:AddText(string.format("Damage: %d", damageCount))
+						statCountTooltip:AddText(string.format("Remove On Status: %d", removeOnStatusCount))
+						statCountTooltip:AddText(string.format("Races: %d", racesCount))
+						statCountTooltip:AddText(string.format("Tags: %d", tagsCount))
+					end
+					statCountTooltip:OnHoverEnter()
+
+					local injuryPopup
+					customizeButton.OnClick = function()
+						injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
+						injuryPopup.TextWrapPos = 0
+						injuryPopup.Closeable = true
+						injuryPopup.OnClose = function()
+							statCountTooltip:OnHoverEnter()
+						end
+
+						local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
+						newTabBar.TextWrapPos = 0
+						for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
+							local success, error = pcall(function()
+								tabGenerator(newTabBar, injuryName)
+							end)
+
+							if not success then
+								Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+							end
+						end
+					end
+
+					local resetButton = buttonCell:AddButton("Reset")
+					resetButton.SameLine = true
+
+					resetButton.OnClick = function()
+						if injuryPopup then
+							injuryPopup.Open = false
+						end
+
+						InjuryMenu.ConfigurationSlice.injury_specific[injuryName].delete = true
+						InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = nil
+						InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
+						injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
+
+						severityCombo.SelectedIndex = 1
+						statCountTooltip:OnHoverEnter()
+					end
+
+					local copyButton = buttonCell:AddButton("Copy")
+					copyButton.SameLine = true
+
+					copyButton.OnClick = function()
+						local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
+						copyPopup.Closeable = true
+
+						copyPopup:AddText("Copying from: " .. displayName)
+						copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs").TextWrapPos = 0
+						copyPopup:AddNewLine()
+
+						copyPopup:AddSeparatorText("Which Configs Should Be Copied?")
+						local copyWhatGroup = copyPopup:AddGroup("CopyWhat")
+						copyWhatGroup:AddCheckbox("ApplyOnStatus", true).UserData = "apply_on_status"
+
+						local dmg = copyWhatGroup:AddCheckbox("Damage", true)
+						dmg.SameLine = true
+						dmg.UserData = "damage"
+
+						local charMultipliers = copyWhatGroup:AddCheckbox("Character Multipliers", true)
+						charMultipliers.SameLine = true
+						charMultipliers.UserData = "character_multipliers"
+
+						local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
+						removeStatus.SameLine = true
+						removeStatus.UserData = "remove_on_status"
+
+						copyPopup:AddNewLine()
+						copyPopup:AddSeparatorText("What Injuries should these configs be copied to?")
+						local copyToGroup = copyPopup:AddGroup("CopyTo")
+						copyPopup:AddButton("Select All").OnClick = function()
+							for _, child in pairs(copyToGroup.Children) do
+								child.Checked = true
+							end
+						end
+
+						for otherDisplayName, stat in TableUtils:OrderedPairs(cachedStats) do
+							if displayName ~= otherDisplayName then
+								copyToGroup:AddCheckbox(otherDisplayName, false).UserData = stat.Name
+							end
+						end
+
+						copyPopup:AddButton("Copy Configs").OnClick = function()
+							local configsToCopy = {}
+							for _, child in pairs(copyWhatGroup.Children) do
+								---@cast child ExtuiCheckbox
+								if child.Checked then
+									table.insert(configsToCopy, child.UserData)
+								end
+							end
+
+							-- Since we use Metatable proxies in ConfigStructure and TableUtils doesn't use pairs, we have to operate on the real table
+							local configCopy = ConfigurationStructure:GetRealConfigCopy().injuries.injury_specific[injuryName]
+							for _, child in pairs(copyToGroup.Children) do
+								---@cast child ExtuiCheckbox
+								if child.Checked then
+									local otherInjuryName = child.UserData
+									for _, configToCopy in pairs(configsToCopy) do
+										InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+										InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] = TableUtils:DeeplyCopyTable(configCopy[configToCopy])
+									end
+								end
+							end
+
+							copyPopup.Open = false
+						end
+					end
+				end
+			end
+
+			local miscInjuriesDisplayMap = {}
+			local stackedInjuriesDisplayMap = {}
 			for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
 				if string.find(string.upper(name), "^" .. string.upper(system) .. ".*") then
 					local displayName = string.sub(name, string.len(system) + 1)
 					displayName = string.gsub(displayName, "_", " ")
 
-					displayName = Ext.Loca.GetTranslatedString(Ext.Stats.Get(name).DisplayName, displayName)
+					---@type StatusData
+					local injuryStat = Ext.Stats.Get(name)
+					displayName = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, displayName)
 
-					table.insert(injuryDisplayNames, displayName)
-					injuriesDisplayMap[displayName] = name
+					cachedStats[displayName] = injuryStat
+
+					if injuryStat.StackId == "" then
+						miscInjuriesDisplayMap[displayName] = name
+					else
+						stackedInjuriesDisplayMap[injuryStat.StackId] = stackedInjuriesDisplayMap[injuryStat.StackId] or {}
+						stackedInjuriesDisplayMap[injuryStat.StackId][displayName] = name
+					end
 				end
 			end
 
-			-- This is why we need a list and a map - too lazy to write a sort myself
-			table.sort(injuryDisplayNames)
-
-			for _, displayName in pairs(injuryDisplayNames) do
-				local injuryName = injuriesDisplayMap[displayName]
-				if not InjuryMenu.ConfigurationSlice.injury_specific[injuryName] then
-					InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
+			for stackId, nameMap in TableUtils:OrderedPairs(stackedInjuriesDisplayMap) do
+				if TableUtils:CountEntries(nameMap) == 1 then
+					local key = next(nameMap)
+					miscInjuriesDisplayMap[key] = nameMap[key]
+					stackedInjuriesDisplayMap[stackId] = nil
 				end
-				local injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
+			end
 
-				local newRow = injuryTable:AddRow()
-				local displayCell = newRow:AddCell()
-				local injuryStat = Ext.Stats.Get(injuryName)
-				displayCell:AddImage(injuryStat.Icon, { 36, 36 })
-				displayCell:AddText(displayName).SameLine = true
-
-				DataSearchHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
-
-				local severityCombo = newRow:AddCell():AddCombo("")
-				severityCombo.Options = {
-					"Low",
-					"Medium",
-					"High"
-				}
-
-				for index, option in pairs(severityCombo.Options) do
-					if option == injury_config.severity then
-						severityCombo.SelectedIndex = index - 1
-						break
-					end
-				end
-
-				severityCombo.OnChange = function(_, selectedIndex)
-					injury_config.severity = severityCombo.Options[selectedIndex + 1]
-				end
-
-				local buttonCell = newRow:AddCell()
-				local customizeButton = buttonCell:AddButton("Customize")
-
-				local statCountTooltip = customizeButton:Tooltip()
-
-				statCountTooltip.OnHoverEnter = function()
-					for _, child in pairs(statCountTooltip.Children) do
-						child:Destroy()
-					end
-
-					local applyOnStatusCount = countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])
-					local damageCount = countInjuryConfig(injury_config.damage["damage_types"])
-					local removeOnStatusCount = countInjuryConfig(injury_config.remove_on_status)
-					local racesCount = countInjuryConfig(injury_config.character_multipliers["races"])
-					local tagsCount = countInjuryConfig(injury_config.character_multipliers["tags"])
-
-					customizeButton.Label = string.format("Customize (%s)", applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
-
-					statCountTooltip:AddNewLine()
-					statCountTooltip:AddText(string.format("Apply On Status: %d", applyOnStatusCount))
-					statCountTooltip:AddText(string.format("Damage: %d", damageCount))
-					statCountTooltip:AddText(string.format("Remove On Status: %d", removeOnStatusCount))
-					statCountTooltip:AddText(string.format("Races: %d", racesCount))
-					statCountTooltip:AddText(string.format("Tags: %d", tagsCount))
-				end
-				statCountTooltip:OnHoverEnter()
-
-				local injuryPopup
-				customizeButton.OnClick = function()
-					injuryPopup = Ext.IMGUI.NewWindow("Customizing " .. displayName)
-					injuryPopup.TextWrapPos = 0
-					injuryPopup.Closeable = true
-					injuryPopup.OnClose = function()
-						statCountTooltip:OnHoverEnter()
-					end
-
-					local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
-					newTabBar.TextWrapPos = 0
-					for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
-						local success, error = pcall(function()
-							tabGenerator(newTabBar, injuryName)
-						end)
-
-						if not success then
-							Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
-						end
-					end
-				end
-
-				local resetButton = buttonCell:AddButton("Reset")
-				resetButton.SameLine = true
-
-				resetButton.OnClick = function()
-					if injuryPopup then
-						injuryPopup.Open = false
-					end
-
-					InjuryMenu.ConfigurationSlice.injury_specific[injuryName].delete = true
-					InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = nil
-					InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
-					injury_config = InjuryMenu.ConfigurationSlice.injury_specific[injuryName]
-
-					severityCombo.SelectedIndex = 1
-					statCountTooltip:OnHoverEnter()
-				end
-
-				local copyButton = buttonCell:AddButton("Copy")
-				copyButton.SameLine = true
-
-				copyButton.OnClick = function()
-					local copyPopup = Ext.IMGUI.NewWindow("Copying Injury Configs")
-					copyPopup.Closeable = true
-
-					copyPopup:AddText("Copying from: " .. displayName)
-					copyPopup:AddText("Close any Customizing windows you have open - they'll show stale data after this runs").TextWrapPos = 0
-					copyPopup:AddNewLine()
-
-					copyPopup:AddSeparatorText("Which Configs Should Be Copied?")
-					local copyWhatGroup = copyPopup:AddGroup("CopyWhat")
-					copyWhatGroup:AddCheckbox("ApplyOnStatus", true).UserData = "apply_on_status"
-
-					local dmg = copyWhatGroup:AddCheckbox("Damage", true)
-					dmg.SameLine = true
-					dmg.UserData = "damage"
-
-					local charMultipliers = copyWhatGroup:AddCheckbox("Character Multipliers", true)
-					charMultipliers.SameLine = true
-					charMultipliers.UserData = "character_multipliers"
-
-					local removeStatus = copyWhatGroup:AddCheckbox("RemoveOnStatus", true)
-					removeStatus.SameLine = true
-					removeStatus.UserData = "remove_on_status"
-
-					copyPopup:AddNewLine()
-					copyPopup:AddSeparatorText("What Injuries should these configs be copied to?")
-					local copyToGroup = copyPopup:AddGroup("CopyTo")
-					copyPopup:AddButton("Select All").OnClick = function()
-						for _, child in pairs(copyToGroup.Children) do
-							child.Checked = true
-						end
-					end
-
-					for _, otherDisplayName in pairs(injuryDisplayNames) do
-						if displayName ~= otherDisplayName then
-							copyToGroup:AddCheckbox(otherDisplayName, false).UserData = injuriesDisplayMap[otherDisplayName]
-						end
-					end
-
-					copyPopup:AddButton("Copy Configs").OnClick = function()
-						local configsToCopy = {}
-						for _, child in pairs(copyWhatGroup.Children) do
-							---@cast child ExtuiCheckbox
-							if child.Checked then
-								table.insert(configsToCopy, child.UserData)
-							end
-						end
-
-						-- Since we use Metatable proxies in ConfigStructure and TableUtils doesn't use pairs, we have to operate on the real table
-						local configCopy = ConfigurationStructure:GetRealConfigCopy().injuries.injury_specific[injuryName]
-						for _, child in pairs(copyToGroup.Children) do
-							---@cast child ExtuiCheckbox
-							if child.Checked then
-								local otherInjuryName = child.UserData
-								for _, configToCopy in pairs(configsToCopy) do
-									InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
-									InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] = TableUtils:DeeplyCopyTable(configCopy[configToCopy])
-								end
-							end
-						end
-
-						copyPopup.Open = false
-					end
-				end
+			buildTable("Miscellaneous", miscInjuriesDisplayMap)
+			for stackId, nameMap in TableUtils:OrderedPairs(stackedInjuriesDisplayMap) do
+				buildTable("Stack: " .. stackId, nameMap)
 			end
 		end
 
 		--#region Systems
-		for _, system in pairs(InjuryMenu.ConfigurationSlice.systems) do
+		for _, system in ipairs(InjuryMenu.ConfigurationSlice.systems) do
 			AddSystem(system)
 		end
 

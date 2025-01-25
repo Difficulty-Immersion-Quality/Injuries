@@ -16,6 +16,7 @@ local injuryVar = {
 	["applyOnStatus"] = {},
 	---@type {[InjuryName] : string}
 	["injuryAppliedReason"] = {},
+	["numberOfApplicationsAttempted"] = 0
 }
 
 InjuryConfigHelper = {}
@@ -272,7 +273,7 @@ if Ext.IsServer() then
 		if Osi.IsItem(character) == 0 then
 			local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
 
-			if entity and injuryUserVar then
+			if entity and injuryUserVar and injuryUserVar["injuryAppliedReason"] then
 				if injuryUserVar["injuryAppliedReason"][status] then
 					for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
 						injuryTable[status] = nil

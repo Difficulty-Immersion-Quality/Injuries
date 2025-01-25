@@ -77,6 +77,12 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 
+---@type number
+ConfigurationStructure.DynamicClassDefinitions.injury_class.chance_of_application = 100
+
+---@type number?
+ConfigurationStructure.DynamicClassDefinitions.injury_class.stacks_to_remove = nil
+
 ---@class InjuryDamageTypeClass
 ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class = {
 	["multiplier"] = 1
