@@ -1,0 +1,71 @@
+// ==================================== Exhaustion level 5 ====================================
+
+// Main exhaustion status
+new entry "GOON_HOMEBREW_EXHAUSTION_5"
+type "StatusData"
+data "StatusType" "BOOST"
+// Exhaustion: Level 5
+data "DisplayName" "h2cc847fegc5b9g43b3g9c78g5e662a0f62b7"
+//
+data "Description" "h68910415g3073g489ag88e4g5d9b976ee937"
+data "DescriptionParams" ""
+data "Icon" "Status_Exhausted_5"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_HOMEBREW_EXHAUSTION"
+data "StackPriority" "4"
+data "Boosts" "Ability(Strength,-5);Ability(Dexterity,-5);Ability(Constitution,-5);Ability(Intelligence,-5);Ability(Wisdom,-5);Ability(Charisma,-5);ActionResourceConsumeMultiplier(Movement,1.5,0);CriticalHit(AttackTarget,Success,Always,17)"
+data "OnApplyFunctors" "ApplyStatus(GOON_SCALING_EXHAUSTION_FALL_ASLEEP_5,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Technicals ====================================
+
+// Scaling chance to fall asleep
+new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_5"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Exhaustion: Level 5
+data "DisplayName" "h2cc847fegc5b9g43b3g9c78g5e662a0f62b7"
+//
+data "Description" "h68910415g3073g489ag88e4g5d9b976ee937"
+data "Icon" "Status_Exhausted_5"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_SCALING_EXHAUSTION_FALL_ASLEEP"
+data "StackPriority" "5"
+data "StackType" "Overwrite"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(Goon_Fall_Asleep_Ability_Check()):ApplyStatus(GOON_SCALING_EXHAUSTION_FALL_ASLEEP_5_CHARISMA_TECHNICAL,100,0);IF(not Goon_Fall_Asleep_Ability_Check()):ApplyStatus(GOON_SCALING_EXHAUSTION_FALL_ASLEEP_5_CONSTITUTION_TECHNICAL,100,0)"
+data "RemoveConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_5')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// Technical statuses for falling asleep saving throws
+new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_5_CHARISMA_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion: Level 5
+data "DisplayName" "h2cc847fegc5b9g43b3g9c78g5e662a0f62b7"
+//
+data "Description" "h68910415g3073g489ag88e4g5d9b976ee937"
+data "Icon" "Status_Exhausted_5"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(not SavingThrow(Charisma,10)):ApplyStatus(SLEEPING,100,1)"
+
+new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_5_CONSTITUTION_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion: Level 5
+data "DisplayName" "h2cc847fegc5b9g43b3g9c78g5e662a0f62b7"
+//
+data "Description" "h68910415g3073g489ag88e4g5d9b976ee937"
+data "Icon" "Status_Exhausted_5"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(not SavingThrow(Constitution,10)):ApplyStatus(SLEEPING,100,1)"

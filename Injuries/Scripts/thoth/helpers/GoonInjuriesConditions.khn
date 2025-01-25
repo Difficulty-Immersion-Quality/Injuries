@@ -16,3 +16,7 @@ end
 function Goon_Tracking_Long_Rests_X()
     return HasAnyStatus({'HEX_STRENGTH','HEX_DEXTERITY','HEX_CONSTITUTION','HEX_INTELLIGENCE','HEX_WISDOM','HEX_CHARISMA'}, {}, {},context.Target,context.Source)
 end
+
+function Goon_Fall_Asleep_Ability_Check()
+    return ConditionResult(context.Source.Charisma >= context.Source.Constitution)
+end

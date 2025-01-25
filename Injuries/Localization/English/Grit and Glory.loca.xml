@@ -590,7 +590,7 @@ Major Organ Damage: Piercing damage.
 &lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content>
 
 	<content contentuid="h321e22ddg29b7g4464g881bgea4a6fde0b36" version="1">Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Checks&lt;/LSTag&gt;.
-&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content></content>
+&lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content>
 
 
 
@@ -691,4 +691,34 @@ Major Organ Damage: Piercing damage.
 
 	<content contentuid="he73c8b3fg7abfg493eg84b7gdd8573b49faf" version="1">You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;&lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can restore your persona.</content>
+
+
+
+	<content contentuid="he1b4523eg30c5g4a25gaf31g6087c9ddda70" version="1">Exhaustion: Level 1</content>
+	<content contentuid="h1946a40dg3c72g4c76gb473g2b97d5ef95f2" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 1. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 10%. Attacks against you have their &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt; threshold reduced by 1.</content>
+
+	<content contentuid="he0329711g8337g4525g9b79ga77f455fc4d7" version="1">Exhaustion: Level 2</content>
+	<content contentuid="hf19cd4fag4074g4a8bga525g3186f1e4345f" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 2. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 20%. Attacks against you have their &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt; threshold reduced by 1.</content>
+
+	<content contentuid="h2b86d81ag6587g4e7dgafcbg6120a2b20e01" version="1">Exhaustion: Level 3</content>
+	<content contentuid="hca30e832gcc44g433eg995dg0373164d4fbe" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 3. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 30%. Attacks against you have their &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt; threshold reduced by 2.</content>
+
+	<content contentuid="hc824f3a1g14dfg4fe9g9d18g070d5238a25e" version="1">Exhaustion: Level 4</content>
+	<content contentuid="h15e87135g69f7g403eg9740g09ca779acb2c" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 4. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 40%. Attacks against you have their &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt; threshold reduced by 2.</content>
+
+	<content contentuid="h2cc847fegc5b9g43b3g9c78g5e662a0f62b7" version="1">Exhaustion: Level 5</content>
+	<content contentuid="h68910415g3073g489ag88e4g5d9b976ee937" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 5. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 50%. Attacks against you have their &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt; threshold reduced by 3.</content>
+
+	<content contentuid="hc6d7f590g7cf7g4301gadbfgd8bba540b71e" version="1">Exhaustion: Level 6</content>
+	<content contentuid="hf2b439d8gec5eg41d8gb41bg3cc92363b41b" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 6. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 60%. Attacks against you have their &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt; threshold reduced by 3.</content>
+
+	<content contentuid="h6cc6529ag532bg4d84g8f52g41cac2e778b6" version="1">Exhaustion: Level 7</content>
+	<content contentuid="h634ff61dgcd3fg41acgb603g7a759516ace0" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
+&lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 7. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 70%. Attacks against you are guaranteed to be a &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt;.</content>
 </contentList>
