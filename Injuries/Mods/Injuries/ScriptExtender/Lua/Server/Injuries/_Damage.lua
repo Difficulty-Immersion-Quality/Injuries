@@ -49,7 +49,8 @@ local function ProcessDamageEvent(event)
 					local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 					local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
 
-					if Osi.HasActiveStatus(defender, nextStackInjury) == 0
+					if nextStackInjury
+						and Osi.HasActiveStatus(defender, nextStackInjury) == 0
 						and not injuryVar["injuryAppliedReason"][nextStackInjury]
 					then
 						local finalDamageWithPreviousDamage = finalDamageAmount
@@ -86,7 +87,7 @@ local function ProcessDamageEvent(event)
 
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
-						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar) then
 							Osi.ApplyStatus(defender, nextStackInjury, -1)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 

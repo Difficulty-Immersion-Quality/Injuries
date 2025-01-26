@@ -111,6 +111,7 @@ function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 	end
 
 	local description = Ext.Loca.GetTranslatedString(status.Description, "N/A")
+	description = string.gsub(description, "<br>", "\n")
 	-- Getting rid of all content contained in <>, like <LsTags../> and <br/>
 	description = string.gsub(description, "<.->", "")
 	local desc = tooltip:AddText("Description: " .. description)

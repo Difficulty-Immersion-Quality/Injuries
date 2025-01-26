@@ -46,8 +46,8 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 
 					for injury, _ in pairs(injuryPool) do
 						local injuryToApply = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
-						
-						if Osi.HasActiveStatus(defender,  injuryToApply) == 0
+						if injuryToApply
+							and Osi.HasActiveStatus(defender, injuryToApply) == 0
 							and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injuryToApply].severity
 							and not alreadySelectedInjuries[injuryToApply]
 						then
@@ -123,11 +123,11 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 
 			for injury, _ in pairs(injuryPool) do
 				injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
-				
-				if Osi.HasActiveStatus(character, injury) == 0
+
+				if injury
+					and Osi.HasActiveStatus(character, injury) == 0
 					and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity
 					and not alreadySelectedInjuries[injury]
-					and not InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
 				then
 					table.insert(eligibleInjuries, injury)
 					alreadySelectedInjuries[injury] = true

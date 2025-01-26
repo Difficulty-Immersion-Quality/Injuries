@@ -1,9 +1,10 @@
 ---@param statusTable ExtuiTable
 ---@param status string
+---@param injury InjuryName
 ---@param removeOnConfig InjuryRemoveOnStatusClass
 ---@param ignoreExistingStatus boolean?
-local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStatus)
-	---@type StatsObject
+local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExistingStatus)
+	---@type StatusData
 	local statusObj = Ext.Stats.Get(status)
 
 	local statusName = statusObj.Name
@@ -35,8 +36,8 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 	table.sort(saveOptions)
 	table.insert(saveOptions, 1, "No Save")
 
-	local saveRow = row:AddCell()
-	local saveCombo = saveRow:AddCombo("")
+	local saveCell = row:AddCell()
+	local saveCombo = saveCell:AddCombo("")
 	saveCombo.Options = saveOptions
 	for index, option in pairs(saveCombo.Options) do
 		if option == statusConfig["ability"] then
@@ -45,7 +46,7 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 		end
 	end
 
-	local saveSlider = saveRow:AddSliderInt("",
+	local saveSlider = saveCell:AddSliderInt("",
 		statusConfig["difficulty_class"],
 		1,
 		30)
@@ -58,6 +59,17 @@ local function BuildRows(statusTable, status, removeOnConfig, ignoreExistingStat
 	saveCombo.OnChange = function(combo, selectedIndex)
 		saveSlider.Visible = selectedIndex ~= 0
 		statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+	end
+
+	---@type StatusData
+	local injuryStat = Ext.Stats.Get(injury)
+	if injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1 then
+		local stackCell = row:AddCell()
+		statusConfig.stacks_to_remove = statusConfig.stacks_to_remove or injuryStat.StackPriority
+		local stackRemovalSlider = stackCell:AddSliderInt("", statusConfig.stacks_to_remove, 1, injuryStat.StackPriority)
+		stackRemovalSlider.OnChange = function()
+			statusConfig.stacks_to_remove = stackRemovalSlider.Value[1]
+		end
 	end
 	--#endregion
 
@@ -80,8 +92,13 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local removeOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status
 
 	local statusTab = tabBar:AddTabItem("Remove On Status")
+	statusTab.TextWrapPos = 0
 
-	local statusTable = statusTab:AddTable("RemoveOnStatus", 3)
+	---@type StatusData
+	local injuryStat = Ext.Stats.Get(injury)
+	local addStackRemovalAspect = injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1
+
+	local statusTable = statusTab:AddTable("RemoveOnStatus", addStackRemovalAspect and 4 or 3)
 	statusTable.BordersInnerH = true
 	statusTable.Resizable = true
 
@@ -89,6 +106,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name (ResourceID)")
 	headerRow:AddCell():AddText("Save Conditions")
+	if addStackRemovalAspect then
+		headerRow:AddCell():AddText("# of Stacks To Remove")
+		-- stackCell:AddText("i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"):SetStyle("Alpha", 0.7)
+	end
 
 	DataSearchHelper:BuildSearch(statusTab,
 		Ext.Stats.GetStats("StatusData"),
@@ -96,10 +117,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
 		end,
 		function(status)
-			BuildRows(statusTable, status, removeOnConfig, true)
+			BuildRows(statusTable, status, injury, removeOnConfig, true)
 		end)
 
 	for status, _ in pairs(removeOnConfig) do
-		BuildRows(statusTable, status, removeOnConfig)
+		BuildRows(statusTable, status, injury, removeOnConfig)
 	end
 end)
