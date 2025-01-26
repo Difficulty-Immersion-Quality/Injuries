@@ -4,6 +4,10 @@ local defender
 local function ProcessDamageEvent(event)
 	local defenderEntity, injuryVar = InjuryConfigHelper:GetUserVar(defender)
 
+	if not defenderEntity or not injuryVar then
+		return
+	end
+
 	-- Damage numbers don't account for TempHp - need to recreate that reduction
 	--- @type { [DamageType] : integer }
 	local tempHpReductionTable = {}
@@ -92,6 +96,10 @@ local function ProcessDamageEvent(event)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 
 							if injury ~= nextStackInjury then
+								for _, entry in pairs(injuryVar["damage"]) do
+									entry[nextStackInjury] = entry[injury]
+									entry[injury] = nil
+								end
 								injuryVar["injuryAppliedReason"][nextStackInjury] = string.format("Damage (Stacked on top of %s)",
 									Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 							end

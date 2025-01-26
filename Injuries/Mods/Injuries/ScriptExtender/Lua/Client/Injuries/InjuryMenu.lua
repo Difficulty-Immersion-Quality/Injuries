@@ -331,7 +331,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			local function buildTable(tableCategory, injuryNameTable)
 				systemHeader:AddText(tableCategory).Font = "Large"
-				local injuryTable = systemHeader:AddTable(system .. "_InjuryTable", 4)
+				local injuryTable = systemHeader:AddTable(system .. "_InjuryTable", 5)
 				injuryTable.BordersInnerH = true
 				injuryTable.SizingStretchProp = true
 				injuryTable.PreciseWidths = true
@@ -360,6 +360,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 					local severityCombo = newRow:AddCell():AddCombo("")
 					severityCombo.Options = {
+						"Exclude",
 						"Low",
 						"Medium",
 						"High"
