@@ -4,6 +4,10 @@ local defender
 local function ProcessDamageEvent(event)
 	local defenderEntity, injuryVar = InjuryConfigHelper:GetUserVar(defender)
 
+	if not defenderEntity or not injuryVar then
+		return
+	end
+
 	-- Damage numbers don't account for TempHp - need to recreate that reduction
 	--- @type { [DamageType] : integer }
 	local tempHpReductionTable = {}
@@ -49,7 +53,8 @@ local function ProcessDamageEvent(event)
 					local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 					local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
 
-					if Osi.HasActiveStatus(defender, nextStackInjury) == 0
+					if nextStackInjury
+						and Osi.HasActiveStatus(defender, nextStackInjury) == 0
 						and not injuryVar["injuryAppliedReason"][nextStackInjury]
 					then
 						local finalDamageWithPreviousDamage = finalDamageAmount
@@ -86,11 +91,15 @@ local function ProcessDamageEvent(event)
 
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
-						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar) then
 							Osi.ApplyStatus(defender, nextStackInjury, -1)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 
 							if injury ~= nextStackInjury then
+								for _, entry in pairs(injuryVar["damage"]) do
+									entry[nextStackInjury] = entry[injury]
+									entry[injury] = nil
+								end
 								injuryVar["injuryAppliedReason"][nextStackInjury] = string.format("Damage (Stacked on top of %s)",
 									Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 							end

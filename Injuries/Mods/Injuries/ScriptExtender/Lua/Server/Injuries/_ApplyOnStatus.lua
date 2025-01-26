@@ -10,7 +10,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 
 	for injury, injuryStatusConfig in pairs(statusConfig) do
 		local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
-		if Osi.HasActiveStatus(character, nextStackInjury) == 0 then
+		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
 			local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 
 			if not statusVar[status] then
@@ -34,7 +34,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 			local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(entity, injuryConfig)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
-			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] then
+			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar, status) then
 				Osi.ApplyStatus(character, nextStackInjury, -1)
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
 

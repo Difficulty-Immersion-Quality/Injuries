@@ -73,9 +73,14 @@ ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
----@alias severity "Low"|"Medium"|"High"
+---@alias severity "Exclude"|"Low"|"Medium"|"High"
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
+
+ConfigurationStructure.DynamicClassDefinitions.injury_class.include_in_random_table = true
+
+---@type number
+ConfigurationStructure.DynamicClassDefinitions.injury_class.chance_of_application = 100
 
 ---@class InjuryDamageTypeClass
 ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class = {
@@ -93,7 +98,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type AbilityId|"No Save"
 	["ability"] = "No Save",
-	["difficulty_class"] = 15
+	["difficulty_class"] = 15,
+	---@type number?
+	stacks_to_remove = nil
 }
 
 ---@alias StatusName string
@@ -103,7 +110,8 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {
 
 ---@class InjuryApplyOnStatusModifierClass
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
-	["multiplier"] = 1
+	["multiplier"] = 1,
+	["guarantee_application"] = false,
 }
 ---@class InjuryApplyOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {

@@ -16,6 +16,10 @@ local injuryVar = {
 	["applyOnStatus"] = {},
 	---@type {[InjuryName] : string}
 	["injuryAppliedReason"] = {},
+	---@type {[InjuryName] : number}
+	["numberOfApplicationsAttempted"] = {},
+	---@type {[InjuryName] : string}
+	["removedDueTo"] = {}
 }
 
 InjuryConfigHelper = {}
@@ -137,10 +141,30 @@ if Ext.IsServer() then
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 	end
 
+	---@param injuryName InjuryName
+	---@param existingInjuryVar InjuryVar
+	---@param status string?
+	function InjuryConfigHelper:RollForApplication(injuryName, existingInjuryVar, status)
+		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
+		local chanceOfApplication = injuryConfig.chance_of_application
+		if not chanceOfApplication or chanceOfApplication == 100 or (status and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
+			return true
+		end
+
+		if not existingInjuryVar["numberOfApplicationsAttempted"] then
+			existingInjuryVar["numberOfApplicationsAttempted"] = {}
+		end
+
+		existingInjuryVar["numberOfApplicationsAttempted"][injuryName] = (existingInjuryVar["numberOfApplicationsAttempted"][injuryName] or 0) + 1
+
+		local randomNumber = Osi.Random(100) + 1
+		return randomNumber <= chanceOfApplication
+	end
+
 	--- If an eligible injury shares a stack with an applied injury, and is not the next injury in the stack, find the injury with the next
 	--- highest stackPriority (of the applied injury)
 	---@param character GUIDSTRING
-	---@param injury InjuryName
+	---@param injury InjuryName?
 	function InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
 		---@type StatusData
 		local injuryEntry = Ext.Stats.Get(injury)
@@ -166,6 +190,8 @@ if Ext.IsServer() then
 							return configuredInjuryName
 						end
 					end
+					-- If we're at the highest stack, don't bother continuing
+					return nil
 				end
 			end
 		end
@@ -268,41 +294,87 @@ if Ext.IsServer() then
 		end
 	end)
 
-	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, status, causee, applyStoryActionID)
+	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, injury, causee, applyStoryActionID)
 		if Osi.IsItem(character) == 0 then
 			local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
 
-			if entity and injuryUserVar then
-				if injuryUserVar["injuryAppliedReason"][status] then
-					for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
-						injuryTable[status] = nil
-						if not next(injuryTable) then
-							injuryUserVar["damage"][damageType] = nil
+			if entity
+				and injuryUserVar
+				and injuryUserVar["injuryAppliedReason"]
+				and injuryUserVar["injuryAppliedReason"][injury]
+			then
+				local injuryToMoveTo
+				if Osi.IsDead(character) == 0 and injuryUserVar["removedDueTo"][injury] then
+					local statusRemovingInjury = injuryUserVar["removedDueTo"][injury]
+					local removeOnStatusConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusRemovingInjury]
+					local stacksToRemove = removeOnStatusConfig.stacks_to_remove
+					if stacksToRemove then
+						---@type StatusData
+						local injuryStat = Ext.Stats.Get(injury)
+
+						if stacksToRemove < injuryStat.StackPriority then
+							for otherInjury in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
+								---@type StatusData
+								local otherInjuryStat = Ext.Stats.Get(otherInjury)
+								if otherInjuryStat.StackId == injuryStat.StackId then
+									if injuryUserVar["injuryAppliedReason"][otherInjury] and otherInjuryStat.StackPriority > injuryStat.StackPriority then
+										injuryToMoveTo = nil
+										break
+									end
+
+									if otherInjuryStat.StackPriority == (injuryStat.StackPriority - stacksToRemove) then
+										injuryToMoveTo = otherInjury
+										Osi.ApplyStatus(character, injuryToMoveTo, -1, 1)
+										injuryUserVar["injuryAppliedReason"][injuryToMoveTo] = "Removal of " .. (Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury))
+									end
+								end
+							end
 						end
 					end
-
-					for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
-						injuryTable[status] = nil
-						if not next(injuryTable) then
-							injuryUserVar["applyOnStatus"][statusName] = nil
-						end
-					end
-
-					injuryUserVar["injuryAppliedReason"][status] = nil
-
-					if not next(injuryUserVar["injuryAppliedReason"])
-						and not next(injuryUserVar["damage"])
-						and not next(injuryUserVar["applyOnStatus"])
-					then
-						injuryUserVar = nil
-
-						RemoveTrackers(character)
-					end
-
-					entity.Vars.Goon_Injuries = injuryUserVar
-
-					Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 				end
+
+				for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["damage"][damageType] = nil
+					end
+				end
+
+				for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["applyOnStatus"][statusName] = nil
+					end
+				end
+
+				if injuryUserVar["numberOfApplicationsAttempted"] then
+					injuryUserVar["numberOfApplicationsAttempted"][injury] = nil
+				end
+
+				if injuryUserVar["removedDueTo"] then
+					injuryUserVar["removedDueTo"][injury] = nil
+				end
+
+				injuryUserVar["injuryAppliedReason"][injury] = nil
+
+				if not next(injuryUserVar["injuryAppliedReason"])
+					and not next(injuryUserVar["damage"])
+					and not next(injuryUserVar["applyOnStatus"])
+				then
+					injuryUserVar = nil
+
+					RemoveTrackers(character)
+				end
+
+				entity.Vars.Goon_Injuries = injuryUserVar
+
+				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 			end
 		end
 	end)

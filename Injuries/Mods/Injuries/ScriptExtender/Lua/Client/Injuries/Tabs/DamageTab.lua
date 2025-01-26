@@ -48,6 +48,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local damageConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].damage
 
 	local damageTab = tabBar:AddTabItem("Damage")
+	damageTab.TextWrapPos = 0
 
 	damageTab:AddText("Applied after total damage from all configured DamageTypes is >= the following % of Health:")
 	local damageThreshold = damageTab:AddSliderInt("", damageConfig["threshold"], 0, 100)
