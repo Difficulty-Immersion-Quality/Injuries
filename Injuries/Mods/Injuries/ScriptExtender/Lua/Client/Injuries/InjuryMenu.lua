@@ -343,7 +343,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				headerRow:AddCell():AddText("Actions")
 
 				for displayName, injuryName in TableUtils:OrderedPairs(injuryNameTable, function(injuryDisplayName)
-					return cachedStats[injuryDisplayName].StackPriority
+					return cachedStats[injuryDisplayName].StackPriority .. injuryDisplayName
 				end) do
 					if not InjuryMenu.ConfigurationSlice.injury_specific[injuryName] then
 						InjuryMenu.ConfigurationSlice.injury_specific[injuryName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)

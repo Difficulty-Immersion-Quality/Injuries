@@ -214,7 +214,12 @@ local function BuildReport()
 					keepGroup = true
 					sepText = sepText .. " || Applied Due To " .. injuryReport["injuryAppliedReason"][injury]
 				end
-				injuryReportGroup:AddSeparatorText(sepText)
+				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
+
+				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
+					injuryReportGroup:AddText(string.format("Application Chance: %s%%", injuryConfig.chance_of_application or 100))
+					injuryReportGroup:AddText(string.format(" | Number Of Attempted Applications: %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+				end
 
 				--#region Damage Report
 				if next(injuryConfig.damage["damage_types"]) then

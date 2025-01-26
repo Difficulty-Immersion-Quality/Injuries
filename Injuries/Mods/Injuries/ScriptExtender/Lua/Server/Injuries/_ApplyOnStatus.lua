@@ -34,7 +34,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 			local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(entity, injuryConfig)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
-			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] then
+			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar) then
 				Osi.ApplyStatus(character, nextStackInjury, -1)
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
 

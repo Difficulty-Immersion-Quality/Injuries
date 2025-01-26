@@ -16,7 +16,8 @@ local injuryVar = {
 	["applyOnStatus"] = {},
 	---@type {[InjuryName] : string}
 	["injuryAppliedReason"] = {},
-	["numberOfApplicationsAttempted"] = 0
+	---@type {[InjuryName] : number}
+	["numberOfApplicationsAttempted"] = {}
 }
 
 InjuryConfigHelper = {}
@@ -136,6 +137,24 @@ if Ext.IsServer() then
 		end
 
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
+	end
+
+	---@param injuryName InjuryName
+	---@param existingInjuryVar InjuryVar
+	function InjuryConfigHelper:RollForApplication(injuryName, existingInjuryVar)
+		local chanceOfApplication = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName].chance_of_application
+		if not chanceOfApplication or chanceOfApplication == 100 then
+			return true
+		end
+
+		if not existingInjuryVar["numberOfApplicationsAttempted"] then
+			existingInjuryVar["numberOfApplicationsAttempted"] = {}
+		end
+
+		existingInjuryVar["numberOfApplicationsAttempted"][injuryName] = (existingInjuryVar["numberOfApplicationsAttempted"][injuryName] or 0) + 1
+
+		local randomNumber = Ext.Math.Random(0, 100)
+		return randomNumber <= chanceOfApplication
 	end
 
 	--- If an eligible injury shares a stack with an applied injury, and is not the next injury in the stack, find the injury with the next
@@ -287,6 +306,10 @@ if Ext.IsServer() then
 						if not next(injuryTable) then
 							injuryUserVar["applyOnStatus"][statusName] = nil
 						end
+					end
+
+					if injuryUserVar["numberOfApplicationsAttempted"] then
+						injuryUserVar["numberOfApplicationsAttempted"][status] = nil
 					end
 
 					injuryUserVar["injuryAppliedReason"][status] = nil

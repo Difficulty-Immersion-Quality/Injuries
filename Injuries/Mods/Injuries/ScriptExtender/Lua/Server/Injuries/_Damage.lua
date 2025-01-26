@@ -86,7 +86,7 @@ local function ProcessDamageEvent(event)
 
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
-						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar) then
 							Osi.ApplyStatus(defender, nextStackInjury, -1)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 

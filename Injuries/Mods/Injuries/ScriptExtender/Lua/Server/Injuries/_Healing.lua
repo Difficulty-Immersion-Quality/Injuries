@@ -8,7 +8,7 @@ Ext.Vars.RegisterUserVariable("Injuries_Healing", {
 Ext.Entity.Subscribe("Health", function(entity, _, _)
 	local _, injuryVar = InjuryConfigHelper:GetUserVar(entity.Uuid.EntityUuid)
 	local damageVar = injuryVar["damage"]
-	if damageVar and next(damageVar) and ConfigManager.ConfigCopy.injuries.universal.healing_subtracts_injury_damage then
+	if damageVar and next(damageVar) and ConfigManager.ConfigCopy.injuries and ConfigManager.ConfigCopy.injuries.universal.healing_subtracts_injury_damage then
 		---@type HealthComponent
 		local healthComp = entity.Health
 
