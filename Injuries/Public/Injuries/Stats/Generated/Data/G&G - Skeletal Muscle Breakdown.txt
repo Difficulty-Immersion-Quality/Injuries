@@ -1,6 +1,6 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN"
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Skeletal Muscle Breakdown
@@ -11,13 +11,13 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_X"
+data "StackId" "GOON_INJURY_PROXY_GRIT_SKELETAL_MUSCLE_BREAKDOWN"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN,100,-1)"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN,100,-1)"
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN')"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -26,7 +26,7 @@ data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
-new entry "GOON_REAL_INJURY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN"
+new entry "GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Skeletal Muscle Breakdown
@@ -37,13 +37,13 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" "Disadvantage(Ability, Strength);Disadvantage(SavingThrow, Strength)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -58,7 +58,7 @@ data "SoundLoop" ""
 data "SoundStop" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
-data "SplatterSweatAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Skeletal_Muscle_Breakdown_Removal_Technical_Passive"
@@ -68,7 +68,7 @@ data "DisplayName" "ha4af6c1dgfe00g48ddg8fadg8096c257fa16"
 // 
 data "Description" "h145ce428gaa14g45bag8e79ga55a241f1ccc"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_SKELETEL_MUSCLE_BREAKDOWN)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
