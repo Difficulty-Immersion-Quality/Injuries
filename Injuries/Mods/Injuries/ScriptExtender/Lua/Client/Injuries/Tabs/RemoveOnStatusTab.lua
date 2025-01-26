@@ -31,7 +31,9 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	--#region Save Options
 	local saveOptions = {}
 	for _, ability in ipairs(Ext.Enums.AbilityId) do
-		table.insert(saveOptions, tostring(ability))
+		if ability ~= "Sentinel" then
+			table.insert(saveOptions, tostring(ability))
+		end
 	end
 	table.sort(saveOptions)
 	table.insert(saveOptions, 1, "No Save")
