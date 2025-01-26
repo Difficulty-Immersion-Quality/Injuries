@@ -313,7 +313,8 @@ if Ext.IsServer() then
 								---@type StatusData
 								local otherInjuryStat = Ext.Stats.Get(otherInjury)
 								if otherInjuryStat.StackId == injuryStat.StackId then
-									if injuryUserVar["injuryAppliedReason"][otherInjury] and otherInjuryStat.StackPriority >= injuryStat.StackPriority then
+									if injuryUserVar["injuryAppliedReason"][otherInjury] and otherInjuryStat.StackPriority > injuryStat.StackPriority then
+										injuryToMoveTo = nil
 										break
 									end
 
@@ -321,7 +322,6 @@ if Ext.IsServer() then
 										injuryToMoveTo = otherInjury
 										Osi.ApplyStatus(character, injuryToMoveTo, -1, 1)
 										injuryUserVar["injuryAppliedReason"][injuryToMoveTo] = "Removal of " .. (Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury))
-										break
 									end
 								end
 							end
