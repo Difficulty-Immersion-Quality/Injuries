@@ -17,7 +17,9 @@ local injuryVar = {
 	---@type {[InjuryName] : string}
 	["injuryAppliedReason"] = {},
 	---@type {[InjuryName] : number}
-	["numberOfApplicationsAttempted"] = {}
+	["numberOfApplicationsAttempted"] = {},
+	---@type {[InjuryName] : string}
+	["removedDueTo"] = {}
 }
 
 InjuryConfigHelper = {}
@@ -288,45 +290,87 @@ if Ext.IsServer() then
 		end
 	end)
 
-	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, status, causee, applyStoryActionID)
+	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, injury, causee, applyStoryActionID)
 		if Osi.IsItem(character) == 0 then
 			local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
 
-			if entity and injuryUserVar and injuryUserVar["injuryAppliedReason"] then
-				if injuryUserVar["injuryAppliedReason"][status] then
-					for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
-						injuryTable[status] = nil
-						if not next(injuryTable) then
-							injuryUserVar["damage"][damageType] = nil
+			if entity
+				and injuryUserVar
+				and injuryUserVar["injuryAppliedReason"]
+				and injuryUserVar["injuryAppliedReason"][injury]
+			then
+				local injuryToMoveTo
+				if Osi.IsDead(character) == 0 and injuryUserVar["removedDueTo"][injury] then
+					local statusRemovingInjury = injuryUserVar["removedDueTo"][injury]
+					local removeOnStatusConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusRemovingInjury]
+					local stacksToRemove = removeOnStatusConfig.stacks_to_remove
+					if stacksToRemove then
+						---@type StatusData
+						local injuryStat = Ext.Stats.Get(injury)
+
+						if stacksToRemove < injuryStat.StackPriority then
+							for otherInjury in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
+								---@type StatusData
+								local otherInjuryStat = Ext.Stats.Get(otherInjury)
+								if otherInjuryStat.StackId == injuryStat.StackId then
+									if injuryUserVar["injuryAppliedReason"][otherInjury] and otherInjuryStat.StackPriority >= injuryStat.StackPriority then
+										break
+									end
+
+									if otherInjuryStat.StackPriority == (injuryStat.StackPriority - stacksToRemove) then
+										injuryToMoveTo = otherInjury
+										Osi.ApplyStatus(character, injuryToMoveTo, -1, 1)
+										injuryUserVar["injuryAppliedReason"][injuryToMoveTo] = "Removal of " .. (Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury))
+										break
+									end
+								end
+							end
 						end
 					end
-
-					for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
-						injuryTable[status] = nil
-						if not next(injuryTable) then
-							injuryUserVar["applyOnStatus"][statusName] = nil
-						end
-					end
-
-					if injuryUserVar["numberOfApplicationsAttempted"] then
-						injuryUserVar["numberOfApplicationsAttempted"][status] = nil
-					end
-
-					injuryUserVar["injuryAppliedReason"][status] = nil
-
-					if not next(injuryUserVar["injuryAppliedReason"])
-						and not next(injuryUserVar["damage"])
-						and not next(injuryUserVar["applyOnStatus"])
-					then
-						injuryUserVar = nil
-
-						RemoveTrackers(character)
-					end
-
-					entity.Vars.Goon_Injuries = injuryUserVar
-
-					Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 				end
+
+				for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["damage"][damageType] = nil
+					end
+				end
+
+				for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["applyOnStatus"][statusName] = nil
+					end
+				end
+
+				if injuryUserVar["numberOfApplicationsAttempted"] then
+					injuryUserVar["numberOfApplicationsAttempted"][injury] = nil
+				end
+
+				if injuryUserVar["removedDueTo"] then
+					injuryUserVar["removedDueTo"][injury] = nil
+				end
+
+				injuryUserVar["injuryAppliedReason"][injury] = nil
+
+				if not next(injuryUserVar["injuryAppliedReason"])
+					and not next(injuryUserVar["damage"])
+					and not next(injuryUserVar["applyOnStatus"])
+				then
+					injuryUserVar = nil
+
+					RemoveTrackers(character)
+				end
+
+				entity.Vars.Goon_Injuries = injuryUserVar
+
+				Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character)
 			end
 		end
 	end)

@@ -80,9 +80,6 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 ---@type number
 ConfigurationStructure.DynamicClassDefinitions.injury_class.chance_of_application = 100
 
----@type number?
-ConfigurationStructure.DynamicClassDefinitions.injury_class.stacks_to_remove = nil
-
 ---@class InjuryDamageTypeClass
 ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class = {
 	["multiplier"] = 1
@@ -99,7 +96,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type AbilityId|"No Save"
 	["ability"] = "No Save",
-	["difficulty_class"] = 15
+	["difficulty_class"] = 15,
+	---@type number?
+	stacks_to_remove = nil
 }
 
 ---@alias StatusName string
