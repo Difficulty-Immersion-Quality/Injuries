@@ -17,7 +17,7 @@ local function removeInjury(character, injury, injuryConfig, statusCausingRemova
 			injuryConfig["ability"],
 			DifficultyClassMap[injuryConfig["difficulty_class"]],
 			0,
-			"Goon_Injuries_Remove_Injury_" .. injury)
+			"Goon_Injuries_Remove_Injury_" .. injury .. "|" .. statusCausingRemoval)
 	end
 end
 
@@ -87,9 +87,9 @@ EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller
 		if resultType == 1 then
 			local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
 			injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
-			injuryVar["removedDueTo"][injury] = statusCausingRemoval
+			injuryVar["removedDueTo"][injuryName] = statusCausingRemoval
 			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
-			
+
 			Osi.RemoveStatus(roller, injuryName, statusCausingRemoval)
 		end
 	end

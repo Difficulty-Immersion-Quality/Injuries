@@ -162,7 +162,7 @@ if Ext.IsServer() then
 	--- If an eligible injury shares a stack with an applied injury, and is not the next injury in the stack, find the injury with the next
 	--- highest stackPriority (of the applied injury)
 	---@param character GUIDSTRING
-	---@param injury InjuryName
+	---@param injury InjuryName?
 	function InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
 		---@type StatusData
 		local injuryEntry = Ext.Stats.Get(injury)
@@ -188,6 +188,8 @@ if Ext.IsServer() then
 							return configuredInjuryName
 						end
 					end
+					-- If we're at the highest stack, don't bother continuing
+					return nil
 				end
 			end
 		end

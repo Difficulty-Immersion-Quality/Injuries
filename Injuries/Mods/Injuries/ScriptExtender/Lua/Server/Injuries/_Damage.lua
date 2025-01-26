@@ -49,7 +49,8 @@ local function ProcessDamageEvent(event)
 					local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 					local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
 
-					if Osi.HasActiveStatus(defender, nextStackInjury) == 0
+					if nextStackInjury
+						and Osi.HasActiveStatus(defender, nextStackInjury) == 0
 						and not injuryVar["injuryAppliedReason"][nextStackInjury]
 					then
 						local finalDamageWithPreviousDamage = finalDamageAmount
