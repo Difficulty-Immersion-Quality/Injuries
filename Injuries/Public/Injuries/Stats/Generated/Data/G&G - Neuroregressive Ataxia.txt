@@ -4,7 +4,7 @@ new entry "GOON_INJURY_PROXY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Neuroregressive Ataxia
-data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 //
 data "Description" "hc5551ef8g3666g41c8ga7fag7ae923bb8b1a"
 data "DescriptionParams" ""
@@ -30,7 +30,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Neuroregressive Ataxia
-data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "DescriptionParams" ""
@@ -64,7 +64,7 @@ data "SplatterSweatAmount" "1.0"
 new entry "Goon_Real_Injury_Grit_Glory_Neuroregressive_Ataxia_Removal_Technical_Passive"
 type "PassiveData"
 // Neuroregressive Ataxia
-data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "DescriptionParams" ""
@@ -79,7 +79,7 @@ data "Conditions" ""
 new entry "Goon_Real_Injury_Girt_Glory_Neuroregressive_Ataxia_Technical_Passive"
 type "PassiveData"
 // Neuroregressive Ataxia
-data "DisplayName" "h7308b348g02c8g4cf5gb5e0g2799cd0f2396"
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "Properties" "IsHidden"
