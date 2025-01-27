@@ -31,6 +31,11 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 		statusConfig["multiplier"] = slider.Value[1]
 	end
 
+	local guaranteeApplicationCheckbox = row:AddCell():AddCheckbox("", statusConfig["guarantee_application"])
+	guaranteeApplicationCheckbox.OnChange = function ()
+		statusConfig["guarantee_application"] = guaranteeApplicationCheckbox.Checked
+	end
+
 	local deleteRowButton = row:AddCell():AddButton("Delete")
 	deleteRowButton.OnClick = function()
 		statusConfig.delete = true
@@ -58,14 +63,14 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	statusTab:AddNewLine()
 
-	local statusTable = statusTab:AddTable("ApplyOnStatus", 3)
-	statusTable.BordersInnerH = true
+	local statusTable = statusTab:AddTable("ApplyOnStatus", 4)
 	statusTable.Resizable = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText("Status Name (ResourceID)")
 	headerRow:AddCell():AddText("Round # Multiplier")
+	headerRow:AddCell():AddText("Guarantee Injury Application (?)"):Tooltip():AddText("\t\t If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)").TextWrapPos = 600
 
 	DataSearchHelper:BuildSearch(statusTab,
 		Ext.Stats.GetStats("StatusData"),

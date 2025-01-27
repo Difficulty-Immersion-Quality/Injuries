@@ -31,7 +31,9 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	--#region Save Options
 	local saveOptions = {}
 	for _, ability in ipairs(Ext.Enums.AbilityId) do
-		table.insert(saveOptions, tostring(ability))
+		if ability ~= "Sentinel" then
+			table.insert(saveOptions, tostring(ability))
+		end
 	end
 	table.sort(saveOptions)
 	table.insert(saveOptions, 1, "No Save")
@@ -71,6 +73,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 			statusConfig.stacks_to_remove = stackRemovalSlider.Value[1]
 		end
 	end
+
 	--#endregion
 
 	local deleteRowButton = row:AddCell():AddButton("Delete")
@@ -107,8 +110,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow:AddCell():AddText("Status Name (ResourceID)")
 	headerRow:AddCell():AddText("Save Conditions")
 	if addStackRemovalAspect then
-		headerRow:AddCell():AddText("# of Stacks To Remove")
-		-- stackCell:AddText("i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"):SetStyle("Alpha", 0.7)
+		headerRow:AddCell():AddText("# of Stacks To Remove (?)"):Tooltip():AddText("i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied")
 	end
 
 	DataSearchHelper:BuildSearch(statusTab,
