@@ -39,7 +39,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 data "StackPriority" ""
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
 data "Boosts" "Disadvantage(Skill, Persuasion)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""

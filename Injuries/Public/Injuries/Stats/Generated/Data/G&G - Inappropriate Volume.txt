@@ -39,7 +39,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
 data "StackPriority" ""
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
 data "Boosts" "IF(HasSpellFlag(SpellFlags.Verbal)):Disadvantage(Skill,Stealth)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""

@@ -9,7 +9,7 @@ data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
 //
 data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
 data "DescriptionParams" ""
-data "Icon" "Status_Exhausted_7"
+data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_HOMEBREW_EXHAUSTION"
@@ -27,7 +27,7 @@ data "Passives" ""
 
 // ==================================== Incurable injury induced Exhaustion level 7 ====================================
 
-new entry "GOON_PERMANENT_HOMEBREW_EXHAUSTION_7"
+new entry "GOON_HOMEBREW_EXHAUSTION_7_UNRESTABLE"
 type "StatusData"
 data "StatusType" "BOOST"
 // Incurable Exhaustion: Level 7

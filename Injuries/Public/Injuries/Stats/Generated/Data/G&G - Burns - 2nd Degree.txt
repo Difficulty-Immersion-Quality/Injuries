@@ -39,7 +39,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BURNS"
 data "StackPriority" "2"
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
 data "Boosts" "Disadvantage(Ability,Strength);Disadvantage(Ability,Dexterity);Disadvantage(Ability,Constitution)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""

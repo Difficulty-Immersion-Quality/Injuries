@@ -39,7 +39,7 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
 data "StackPriority" ""
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
 data "Boosts" ""
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""

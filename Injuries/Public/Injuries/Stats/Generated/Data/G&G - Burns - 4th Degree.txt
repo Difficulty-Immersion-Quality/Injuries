@@ -115,7 +115,7 @@ data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BURNS"
 data "StackPriority" "5"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL,100,1);ApplyStatus(GOON_INJURY_PROXY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL,100,1)"
 data "RemoveConditions" "not HasStatus('GOONLOLTHISSTATUSDONTEXIST')"
 data "RemoveEvents" "OnStatusRemoved;OnStatusApplied"
 
