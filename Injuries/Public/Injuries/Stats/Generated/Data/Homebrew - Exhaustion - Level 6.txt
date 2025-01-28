@@ -46,7 +46,7 @@ data "StatusType" "BOOST"
 data "DisplayName" "hc6d7f590g7cf7g4301gadbfgd8bba540b71e"
 //
 data "Description" "hf2b439d8gec5eg41d8gb41bg3cc92363b41b"
-data "Icon" "Status_Exhausted_7"
+data "Icon" "Status_Exhausted_6"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL"

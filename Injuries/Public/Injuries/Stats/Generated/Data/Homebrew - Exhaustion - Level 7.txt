@@ -50,7 +50,7 @@ data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL"
-data "StackPriority" "6"
+data "StackPriority" "7"
 data "StackType" "Overwrite"
 data "Boosts" "Ability(Strength,-7);Ability(Dexterity,-7);Ability(Constitution,-7);Ability(Intelligence,-7);Ability(Wisdom,-7);Ability(Charisma,-7);ActionResourceConsumeMultiplier(Movement,1.7,0);CriticalHit(AttackTarget,Failure,Never)"
 data "RemoveConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_7') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_UNRESTABLE_7')"
