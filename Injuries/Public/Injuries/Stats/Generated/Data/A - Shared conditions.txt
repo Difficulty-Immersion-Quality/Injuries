@@ -1,0 +1,64 @@
+// ==================================== Custom Poisoned condition to ensure it's not overwritten by other Poisoned conditions ====================================
+// Green goop VFX are yucky and should probably be removed
+
+new entry "GOON_POISONED_KIDNEY_LIVER"
+type "StatusData"
+data "StatusType" "BOOST"
+using "POISONED"
+data "StackType" "Ignore"
+data "StackPriority" "20"
+
+// ==================================== Deafened, more of a buff than a debuff lmao ====================================
+// "Un-Deafening Silence - Silenced Status Fix" by DrKekyll should be looked into further, for now this is basic
+
+// Custom deafened condition
+new entry "GOON_DEAFENED"
+type "StatusData"
+data "StatusType" "BOOST"
+// Deafened
+data "DisplayName" "h4e08f2ffgbcadg43d0g87d7g64cdd42a1b29"
+//
+data "Description" "hc436e12dg197ag4186g8afcgf12b01de793b"
+data "Icon" "Spell_Illusion_Silence"
+data "SoundStart" "Misc_Status_Silence_Gameobject_Mute"
+data "SoundStop" "Misc_Status_Silence_Gameobject_Unmute"
+data "Boosts" "SoundsBlocked();Resistance(Thunder,Immune)"
+data "StatusPropertyFlags" "ApplyToDead"
+data "OnApplyFunctors" "RemoveStatus(LURING_SONG_AURA);RemoveStatus(LURING_SONG)"
+data "StatusGroups" "SG_Condition"
+data "ManagedStatusEffectType" "Negative"
+
+// ==================================== Custom sleeping conditions for exhaustion ====================================
+// Ought to figure out how to cram the charisma check stuff into the tick roll, can't be assed rn
+
+new entry "GOON_FALL_ASLEEP_EASY"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,5)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EASY)"
+
+new entry "GOON_FALL_ASLEEP_MEDIUM"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,10)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_MEDIUM)"
+
+new entry "GOON_FALL_ASLEEP_HARD"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,15)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_HARD)"
+
+new entry "GOON_FALL_ASLEEP_EXTREME"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,20)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EXTREME)"
