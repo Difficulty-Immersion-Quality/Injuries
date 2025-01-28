@@ -1,0 +1,11 @@
+// ==================================== Exhaustion ====================================
+
+// Main exhaustion system information
+new entry "GOON_INFORMATION_STATUS_EXHAUSTION_LEVELS"
+type "StatusData"
+data "StatusType" "BOOST"
+// Exhaustion
+data "DisplayName" "h48662068g7920g405dg9263gef8a2079d513"
+//
+data "Description" "h9ab1a295gf2cfg4ee8g850bgab1165b73e74"
+data "Icon" "Status_Exhaustion"
