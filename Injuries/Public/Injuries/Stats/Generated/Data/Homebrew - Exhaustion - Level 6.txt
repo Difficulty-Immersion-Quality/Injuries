@@ -15,50 +15,53 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "StackId" "GOON_HOMEBREW_EXHAUSTION"
 data "StackPriority" "6"
 data "StackType" "Overwrite"
-data "Boosts" "Ability(Strength,-6);Ability(Dexterity,-6);Ability(Constitution,-6);Ability(Intelligence,-6);Ability(Wisdom,-6);Ability(Charisma,-6);ActionResourceConsumeMultiplier(Movement,1.6,0);CriticalHit(AttackTarget,Success,Always,17)"
-data "OnApplyFunctors" ""
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL_6,100,-1)"
 data "OnRemoveFunctors" ""
 data "RemoveConditions" ""
 data "RemoveEvents" ""
-data "TickType" "EndTurn"
-data "TickFunctors" "IF(Goon_Fall_Asleep_Ability_Check()):ApplyStatus(GOON_SCALING_EXHAUSTION_FALL_ASLEEP_6_CHARISMA_TECHNICAL,100,0);IF(not Goon_Fall_Asleep_Ability_Check()):ApplyStatus(GOON_SCALING_EXHAUSTION_FALL_ASLEEP_6_CONSTITUTION_TECHNICAL,100,0)"
+data "TickType" ""
+data "TickFunctors" ""
 data "StatusGroups" "SG_Condition"
 data "Passives" ""
 
 // ==================================== Incurable injury induced Exhaustion level 6 ====================================
 
-new entry "GOON_HOMEBREW_EXHAUSTION_6_UNRESTABLE"
+new entry "GOON_HOMEBREW_EXHAUSTION_UNRESTABLE_6"
 type "StatusData"
 data "StatusType" "BOOST"
-// Incurable Exhaustion: Level 6
+using "GOON_HOMEBREW_EXHAUSTION_6"
+// Unrestable Exhaustion: Level 6
 data "DisplayName" "hfd589226g2343g4950g9228gb6dbebea838a"
 //
-using "GOON_HOMEBREW_EXHAUSTION_6"
-data "StackId" "GOON_PERMANENT_HOMEBREW_EXHAUSTION"
-data "StackPriority" "6"
-data "StackType" "Overwrite"
-data "Boosts" ""
-data "OnApplyFunctors" ""
+data "StackId" "GOON_HOMEBREW_EXHAUSTION_UNRESTABLE"
 data "OnRemoveFunctors" "IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_7')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_6,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_6')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_5,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_5')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_4,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_4')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_3,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_3')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_2,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_2')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_1')):RemoveStatus(GOON_HOMEBREW_EXHAUSTION_1)"
-data "Passives" "Goon_Permanent_Homebrew_Exhaustion_6_Technical_Passive"
 
-// Technical passive for boosts
-new entry "Goon_Permanent_Homebrew_Exhaustion_6_Technical_Passive"
-type "PassiveData"
-// Incurable Exhaustion: Level 6
-data "DisplayName" "hfd589226g2343g4950g9228gb6dbebea838a"
+// ==================================== Status for handling functionality shared between both exhaustion stacks ====================================
+
+new entry "GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL_6"
+type "StatusData"
+data "StatusType" "BOOST"
+// Exhaustion: Level 6
+data "DisplayName" "hc6d7f590g7cf7g4301gadbfgd8bba540b71e"
 //
 data "Description" "hf2b439d8gec5eg41d8gb41bg3cc92363b41b"
-data "Icon" "Status_Exhausted_6"
-data "Properties" "IsHidden"
+data "Icon" "Status_Exhausted_7"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
+data "StackId" "GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL"
+data "StackPriority" "6"
+data "StackType" "Overwrite"
 data "Boosts" "Ability(Strength,-6);Ability(Dexterity,-6);Ability(Constitution,-6);Ability(Intelligence,-6);Ability(Wisdom,-6);Ability(Charisma,-6);ActionResourceConsumeMultiplier(Movement,1.6,0);CriticalHit(AttackTarget,Success,Always,17)"
-data "BoostConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_7') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_6')"
+data "RemoveConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_6') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_UNRESTABLE_6')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_6,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_6,100,0)"
 
 // ==================================== Technicals for sleep mechanic ====================================
 
 // Technical statuses for falling asleep saving throws
-new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_6_CHARISMA_TECHNICAL"
+new entry "GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_6"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Exhaustion: Level 6
@@ -66,11 +69,11 @@ data "DisplayName" "hc6d7f590g7cf7g4301gadbfgd8bba540b71e"
 //
 data "Description" "hf2b439d8gec5eg41d8gb41bg3cc92363b41b"
 data "Icon" "Status_Exhausted_6"
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
-data "OnApplyFunctors" "IF(not SavingThrow(Charisma,12)):ApplyStatus(SLEEPING,100,1)"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,15)):ApplyStatus(GOON_FALL_ASLEEP_HARD,100,2)"
 
-new entry "GOON_SCALING_EXHAUSTION_FALL_ASLEEP_6_CONSTITUTION_TECHNICAL"
+new entry "GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_6"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Exhaustion: Level 6
@@ -78,6 +81,6 @@ data "DisplayName" "hc6d7f590g7cf7g4301gadbfgd8bba540b71e"
 //
 data "Description" "hf2b439d8gec5eg41d8gb41bg3cc92363b41b"
 data "Icon" "Status_Exhausted_6"
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
-data "OnApplyFunctors" "IF(not SavingThrow(Constitution,12)):ApplyStatus(SLEEPING,100,1)"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_FALL_ASLEEP_HARD,100,2)"
