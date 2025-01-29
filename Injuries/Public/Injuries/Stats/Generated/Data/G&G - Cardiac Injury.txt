@@ -83,7 +83,7 @@ data "DisplayName" "h7cd16257gd4a1g47cag8a06gb570c5e7d366"
 // 
 data "Description" "hffe88149g651ag445fg978dg6c2fceeda524"
 data "Properties" "IsHidden"
-data "StatsFunctors" "ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,1)"
+data "StatsFunctors" "ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,-1)"
 data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and StatusGroups('SG_Frightened')"
 
