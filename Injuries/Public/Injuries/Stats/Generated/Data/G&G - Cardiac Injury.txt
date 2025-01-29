@@ -1,0 +1,90 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_PROXY_GRIT_GLORY_CARDIAC_INJURY"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Cardiac Injury
+data "DisplayName" "h7cd16257gd4a1g47cag8a06gb570c5e7d366"
+//
+data "Description" "h86d09ed0gb063g4f4dgb875g3edbb6198d76"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_CARDIAC_INJURY"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_CARDIAC_INJURY,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_CARDIAC_INJURY')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_CARDIAC_INJURY"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Cardiac Injury
+data "DisplayName" "h7cd16257gd4a1g47cag8a06gb570c5e7d366"
+//
+data "Description" "hffe88149g651ag445fg978dg6c2fceeda524"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_CARDIAC_INJURY"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_HOMEBREW_EXHAUSTION_UNRESTABLE_1,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_CARDIAC_INJURY')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Condition"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Cardiac_Injury_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Cardiac_Injury_Technical_Passive"
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+
+// Technical passive for removal
+new entry "Goon_Real_Injury_Grit_Glory_Cardiac_Injury_Removal_Technical_Passive"
+type "PassiveData"
+// Cardiac Injury
+data "DisplayName" "h7cd16257gd4a1g47cag8a06gb570c5e7d366"
+// 
+data "Description" "hffe88149g651ag445fg978dg6c2fceeda524"
+data "DescriptionParams" ""
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_CARDIAC_INJURY)"
+data "StatsFunctorContext" "OnHeal"
+data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical passive for application
+new entry "Goon_Real_Injury_Grit_Glory_Cardiac_Injury_Technical_Passive"
+type "PassiveData"
+// Cardiac Injury
+data "DisplayName" "h7cd16257gd4a1g47cag8a06gb570c5e7d366"
+// 
+data "Description" "hffe88149g651ag445fg978dg6c2fceeda524"
+data "Properties" "IsHidden"
+data "StatsFunctors" "ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,1)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and StatusGroups('SG_Frightened')"
+
+// ==================================== Flavour Proxies ====================================
