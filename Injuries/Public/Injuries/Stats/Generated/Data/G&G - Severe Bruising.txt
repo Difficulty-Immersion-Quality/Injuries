@@ -83,7 +83,7 @@ data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "Properties" "IsHidden"
-data "StatsFunctors" "DealDamage(SELF,1, Bludgeoning)"
+data "StatsFunctors" "DealDamage(1,Bludgeoning)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeBludgeoning()"
 
@@ -94,7 +94,7 @@ data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "Properties" "IsHidden"
-data "StatsFunctors" "DealDamage(SELF,1, Force)"
+data "StatsFunctors" "DealDamage(1,Force)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeForce()"
 

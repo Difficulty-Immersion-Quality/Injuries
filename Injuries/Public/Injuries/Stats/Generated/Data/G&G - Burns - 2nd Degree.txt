@@ -83,7 +83,7 @@ data "DisplayName" "hdeef1c57g760cg473eg92edg2091f46ddb07"
 //
 data "Description" "haf797f25gd47dg44d6g8dc3g58715c7d08d2"
 data "Properties" "IsHidden"
-data "StatsFunctors" "DealDamage(SELF,1, Fire)"
+data "StatsFunctors" "DealDamage(1,Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"
 

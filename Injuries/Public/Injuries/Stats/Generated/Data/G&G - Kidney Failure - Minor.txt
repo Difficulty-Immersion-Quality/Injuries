@@ -83,8 +83,8 @@ data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
-data "StatsFunctorContext" "OnStatusApplied"
-data "Conditions" "HasStatus('LONG_REST')"
+data "StatsFunctorContext" "OnStatusRemoved"
+data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')"
 
 // ==================================== Flavour Proxies  ====================================
 

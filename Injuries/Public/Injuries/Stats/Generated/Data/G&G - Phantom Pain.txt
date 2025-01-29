@@ -88,7 +88,7 @@ data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN_TECHNICAL"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "DealDamage(SELF,0, Force)"
+data "OnApplyFunctors" "DealDamage(0,Force)"
 data "SoundVocalStart" "PAIN"
 
 // ==================================== Flavour Proxies ====================================

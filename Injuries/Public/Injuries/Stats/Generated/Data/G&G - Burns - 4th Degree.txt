@@ -83,7 +83,7 @@ data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "Properties" "IsHidden"
-data "StatsFunctors" "DealDamage(SELF,1, Fire)"
+data "StatsFunctors" "DealDamage(1, Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"
 
@@ -108,7 +108,7 @@ data "StatusType" "BOOST"
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
-data "DescriptionParams" "DealDamage(1, Fire)"
+data "DescriptionParams" "DealDamage(1,Fire)"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 //
 data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_BURNS"

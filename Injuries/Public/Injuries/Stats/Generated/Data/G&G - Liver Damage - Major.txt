@@ -96,8 +96,8 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
-data "Properties" "Highlighted"
-data "StatsFunctors" "DealDamage(SELF,1d6,Poison)"
+data "Properties" "IsHidden"
+data "StatsFunctors" "DealDamage(1d6,Poison)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypePoison()"
 
@@ -109,8 +109,8 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
-data "Properties" "Highlighted"
-data "StatsFunctors" "DealDamage(SELF,1d6,Poison)"
+data "Properties" "IsHidden"
+data "StatsFunctors" "DealDamage(1d6,Poison)"
 data "StatsFunctorContext" "OnStatusApplied;OnConsumed"
 data "Conditions" "(StatusId('DRUNK') or StatusId('GOB_FESTIVITIES_DRUNK') or StatusId('EPI_EPILOGUE_HALSIN_DRUNK') or StatusId('TWN_DISTILLERY_DRUNK_01') or StatusId('TWN_DISTILLERY_DRUNK_02') or StatusId('TWN_DISTILLERY_DRUNK_03') or StatusId('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or StatusId('TWN_DISTILLERY_DRANK_ONCE') or StatusId('DRINK_ALCOHOL') or StatusId('WYR_SHARESSCARESS_POTENTDRINK') or StatusId('CONS_DRUG_STIMULANT') or StatusId('DRUG_DREAMMIST_CONDITION') or StatusId('DRUG_ETHER_CONDITION') or StatusId('CONS_DRUG_EUPHORIC'))"
 
