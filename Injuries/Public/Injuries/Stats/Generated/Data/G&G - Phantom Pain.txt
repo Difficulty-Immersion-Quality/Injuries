@@ -21,7 +21,7 @@ data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 
 // ==================================== Real Injury ====================================
@@ -47,7 +47,7 @@ data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_PHANTOM_PAI
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "StartRound"
 data "TickFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN_TECHNICAL,100,0)"
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" "Goon_Real_Injury_Grit_Glory_Phantom_Pain_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""

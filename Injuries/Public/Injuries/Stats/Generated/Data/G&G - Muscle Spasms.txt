@@ -21,7 +21,7 @@ data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASM
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 
 // ==================================== Real Injury ====================================
@@ -47,7 +47,7 @@ data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MUSCLE_SPAS
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" "Goon_Real_Injury_Grit_Glory_Muscle_Spasms_Removal_Technical_Passive"
 //
 data "StillAnimationType" ""

@@ -21,7 +21,7 @@ data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAF
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 
 // ==================================== Real Injury ====================================
@@ -48,7 +48,7 @@ data "RemoveEvents" "OnStatusRemoved"
 data "OnRemoveFunctors" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" "Goon_Real_Injury_Grit_Glory_Partial_Deafness_Removal_Technical_Passive;Goon_Real_Injury_Grit_Glory_Partial_Deafness_Damage_Technical_Passive_Damage"
 //
 data "StillAnimationType" ""

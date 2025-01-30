@@ -21,7 +21,7 @@ data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURAL
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 
 // ==================================== Real Injury ====================================
@@ -47,7 +47,7 @@ data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_NEURA
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "StartTurn"
 data "TickFunctors" "IF(not Dead() and Combat()):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL,100,0)"
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" "Goon_Real_Injury_Grit_Glory_Major_Neuralgia_Removal_Technical_Passive"
 //
 data "StillAnimationType" "Weakened"
