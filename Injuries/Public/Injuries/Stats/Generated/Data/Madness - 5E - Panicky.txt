@@ -26,7 +26,7 @@ data "TickFunctors" ""
 data "StatusGroups" ""
 data "Passives" ""
 //
-data "StillAnimationType" "Feared"
+data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "FALL"
 data "SoundVocalEnd" "EXHAUSTED"

@@ -801,11 +801,29 @@ Major Organ Damage: Piercing damage.
 
 
 
+	<content contentuid="h145effdagac1bg44a3g84d8g67a9f56827a1" version="1">Madness</content>
+	<content contentuid="hdcbc303dg84b0g45fegb600gc8fba9f499c7" version="1">Madness conditions can be induced under different circumstances, be they from &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injuries&lt;/LSTag&gt;, such as &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRIT_GLORY_SHORTTERM_MADNESS"&gt;Short-term&lt;/LSTag&gt; and &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS"&gt;Long-term Madness&lt;/LSTag&gt;, curses or other unfavourable circumstances.
+&lt;br&gt;These effects are temporary and subject to the following:
+The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
+
+
+
 	<content contentuid="h621f16d3g85f4g4ca7ga8a3g241d3a490ddd" version="1">Madness: Codependant</content> Long-term madness.
 	-- The character becomes attached to a “lucky charm,” such as a person or an object, and has disadvantage on attack rolls, ability checks, and saving throws while more than 30 feet from it.
 
 	<content contentuid="ha0775b55g9c10g46ebga50dgb6411a0d17f0" version="1">You are dependant on your allies being close to feel safe and secure. When an ally is not within [1] of you, you suffer from &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on all &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;, &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt; and &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.
-&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
+
+
+
+	<content contentuid="hdf7b028egd002g4ba6gb109g5b3960b9ae9c" version="1">Madness Induced Coma</content>
+	--  The character falls unconscious. No amount of jostling or damage can wake the character.
+
+	<content contentuid="hf873f830gcee2g4980g9fa3g5423ca785f41" version="1">The character is unconscious, no amount of jostling or damage can wake the character.
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
 
 
 
@@ -813,7 +831,8 @@ Major Organ Damage: Piercing damage.
 	-- The character experiences vivid hallucinations and has disadvantage on ability checks.
 
 	<content contentuid="h3f8aa500ga086g4e3eg8d7cg4946652bb5bb" version="1">You experience vivid hallucinations and have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on all &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
-&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
 
 
 
@@ -821,7 +840,8 @@ Major Organ Damage: Piercing damage.
 	-- Whenever the character takes damage, he or she must succeed on a DC 15 Wisdom saving throws or be affected as though he or she failed a saving throw against the confusion spell. The confusion effect lasts for 1 minute.
 
 	<content contentuid="hef3e16aag711bg4f18gb443g2284bc7f218f" version="1">You easily lose your composure under stress. Whenever you take damage you must succeed a &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or be &lt;LSTag Type="Status" Tooltip="CONFUSION"&gt;Confused&lt;/LSTag&gt; for one minute.
-&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
 
 
 
@@ -829,7 +849,8 @@ Major Organ Damage: Piercing damage.
 	-- The character suffers extreme paranoia. The character has disadvantage on Wisdom and Charisma checks.
 
 	<content contentuid="h1aea20b8g504eg4805ga623gfcf9f5999b49" version="1">You suffer from extreme paranoia. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
-&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
 
 
 
@@ -837,5 +858,6 @@ Major Organ Damage: Piercing damage.
 	-- The character experiences uncontrollable tremors or tics, which impose disadvantage on attack rolls, ability checks, and saving throws that involve Strength or Dexterity.
 
 	<content contentuid="h6dbcca65g40f5g42f6g92deg7bea08ff0782" version="1">You experience uncontrollable tremors or tics. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on all &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; and &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;, as well as &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; using &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; or &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt;.
-&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
 </contentList>
