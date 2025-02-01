@@ -28,15 +28,21 @@ data "TickFunctors" ""
 data "StatusGroups" ""
 data "Passives" ""
 //
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "FALL"
 data "SoundVocalEnd" "EXHAUSTED"
 data "SoundLoop" ""
 data "SoundStop" ""
+data "FreezeTime" ""
 data "SplatterBloodAmount" "0.0"
 data "SplatterDirtAmount" "0.0"
 data "SplatterSweatAmount" "0.5"
+data "ApplyEffect" ""
+data "StatusEffect" ""
 
 // ==================================== Technicals for individual madness functionality ====================================
 
@@ -47,11 +53,12 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 // 
 data "Description" ""
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
 data "StackId" "GOON_CODEPENDANT_IN_RANGE"
 data "StackPriority" "10"
 data "AuraRadius" "10"
 data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE') and HasStatus('GOON_MADNESS_5E_PARANOIA')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL)"
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 
 new entry "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
 type "StatusData"
@@ -60,8 +67,9 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 // 
 data "Description" ""
-data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
 data "SoundVocalStart" "RELAXED"
 data "OnRemoveFunctors" "ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX,100,0)"
 
@@ -72,6 +80,7 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 // 
 data "Description" ""
-data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX"
 data "SoundVocalStart" "EFFORTS"

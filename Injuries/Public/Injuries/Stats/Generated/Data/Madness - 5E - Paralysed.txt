@@ -3,7 +3,7 @@
 // Short-term Madness
 new entry "GOON_MADNESS_5E_PARALYSED"
 type "StatusData"
-data "StatusType" "BOOST"
+data "StatusType" "INCAPACITATED"
 // Madness: Paralysed
 data "DisplayName" "h670d027cge632g4197gb341g6dffe2dcce73"
 //
@@ -15,6 +15,8 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting;OverheadOnTurn"
 data "StackId" "GOON_MADNESS_5E_PARALYSED"
 data "StackPriority" ""
 data "StackType" "Overwrite"
+data "AuraRadius" ""
+data "AuraStatuses" ""
 // A calm emotions spell can suppress the effects of madness
 data "Boosts" "AbilityFailedSavingThrow(Strength);AbilityFailedSavingThrow(Dexterity);CriticalHit(AttackTarget,Success,Always,3);CriticalHit(AttackTarget,Failure,Never,3);Advantage(AttackTarget);ActionResourceBlock(Movement);DetectDisturbancesBlock(true);"
 data "OnApplyFunctors" "BreakConcentration()"

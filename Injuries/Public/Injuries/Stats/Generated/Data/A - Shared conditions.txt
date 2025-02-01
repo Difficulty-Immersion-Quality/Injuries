@@ -7,6 +7,8 @@ data "StatusType" "BOOST"
 using "POISONED"
 data "StackType" "Ignore"
 data "StackPriority" "20"
+//data "ApplyEffect" "fa688204-319c-41b2-88d9-7b619d17aed4"
+data "StatusEffect" "ceeda0ca-0739-4588-a449-d024389f0c2a"
 
 // ==================================== Deafened, more of a buff than a debuff lmao ====================================
 // "Un-Deafening Silence - Silenced Status Fix" by DrKekyll should be looked into further, for now this is basic
@@ -63,11 +65,21 @@ data "TickType" "StartTurn"
 data "OnTickRoll" "SavingThrow(Ability.Constitution,20)"
 data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EXTREME)"
 
-// ==================================== Custom Confusion for better removal implementation given how easy it is to trigger ====================================
+// ==================================== Madness stuff ====================================
 
+// Custom Confusion for better removal implementation given how easy it is to trigger
 new entry "GOON_CONFUSION_MADNESS"
 type "StatusData"
 data "StatusType" "BOOST"
 using "CONFUSION"
 data "RemoveConditions" "SavingThrow(Ability.Wisdom,15) or ((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')))"
 data "StackType" "Ignore"
+
+// Custom Intimidating Presence for less wackiness
+new entry "GOON_INTIMIDATING_PRESENCE_MADNESS"
+type "StatusData"
+data "StatusType" "FEAR"
+using "INTIMIDATING_PRESENCE"
+data "StackPriority" "2"
+data "StackType" "Ignore"
+data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"
