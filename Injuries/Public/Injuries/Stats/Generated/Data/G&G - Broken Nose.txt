@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_BROKEN_NOSE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Broken Nose
-data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
+data "DisplayName" "hcefb8e20gc852g4332gac01g29ee9644e536"
 //
 data "Description" "h7f58fc9fgb4b7g4a88g907egdf9a379a1711"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_NOSE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Broken Nose
+// Injury: Broken Nose
 data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
 //
 data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Broken_Nose_Removal_Technical_Passive"
 type "PassiveData"
-// Broken Nose
+// Injury: Broken Nose
 data "DisplayName" "h326c979cg9497g4b46ga45fg36cafdc76db8"
 //
 data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_BROKEN_NOSE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

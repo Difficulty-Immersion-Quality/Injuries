@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Fourth Degree Burns
+// Burns - 4th Degree
 data "DisplayName" "h4a2652cfg6361g42e1g933cgdac23aced91c"
 // 
 data "Description" "h346b5aeeg82eag40adgb9e4ge16845a829f0"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Fourth Degree Burns
+// Injury: Fourth Degree Burns
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Fourth_Degree_Burns_Removal_Technical_Passive"
 type "PassiveData"
-// Fourth Degree Burns
+// Injury: Fourth Degree Burns
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -80,11 +81,12 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
 type "PassiveData"
-// Fourth Degree Burns
+// Injury: Fourth Degree Burns
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1, Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"
@@ -92,11 +94,12 @@ data "Conditions" "IsDamageTypeFire()"
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Third_Degree_Burn_Technical_Passive"
 type "PassiveData"
-// Fourth Degree Burns
+// Injury: Fourth Degree Burns
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypeFire()"
@@ -106,7 +109,7 @@ data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSav
 new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Fourth Degree Burns
+// Injury: Fourth Degree Burns
 data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
 //
 data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
@@ -126,6 +129,11 @@ new entry "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL"
 type "StatusData" 
 data "StatusType" "BOOST" 
 using "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL"
+// Injury: Fourth Degree Burns
+data "DisplayName" "h09a2c3c0gc012g4deeg9f4cgd0966025431d"
+//
+data "Description" "h6d564338g9e03g4452g9096g78b3409d194e"
+//
 data "StackId" "GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL"
 data "TickType" "EndTurn"
 data "TickFunctors" "Kill()"

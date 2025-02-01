@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Destroyed Foot
-data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
+data "DisplayName" "hae1dd6e1geb7cg4c16gb448g7a95b424203e"
 // 
 data "Description" "hfef4d455g444ag4669g8edeg4b13371f1ec0"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Destroyed Foot
+// Injury: Destroyed Foot
 data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
 // 
 data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Destroyed_Foot_Removal_Technical_Passive"
 type "PassiveData"
-// Destroyed Foot
+// Injury: Destroyed Foot
 data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
 // 
 data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -83,35 +84,35 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Broken Leg
+// Injury: Broken Leg
 data "DisplayName" "he2c12678gbf3bg43efgac5ag1068bf452b7f"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
-// Gangrene of the Foot
+// Injury: Gangrene of the Foot
 data "DisplayName" "h90ace1b3ga948g45e0ga139g25a5eb374b87"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
-// Explosive Grounding of the Foot
+// Injury: Explosive Grounding of the Foot
 data "DisplayName" "h002467ecg9b8dg43e4g8845g7e43225de74b"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_WITHERED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
-// Broken Leg
+// Injury: Broken Leg
 data "DisplayName" "h3c013c87g0972g4a94ga69cgbf96024818e3"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_PIERCED_GROIN"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
-// Pierced Groin
+// Injury: Pierced Groin
 data "DisplayName" "ha08cf168ge84ag4aeegb9ebgcb138e7071ff"
 // 
 data "Description" "h928ad7c1g98b7g40b9ga603g9ece9d6aa408"

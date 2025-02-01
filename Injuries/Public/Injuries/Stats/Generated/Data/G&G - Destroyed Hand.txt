@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_DESTROYED_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Destroyed Hand
-data "DisplayName" "hab934a8fg8d74g4227g9907gfbae49662d8a"
+data "DisplayName" "h8ab15022g3711g4a74gb820g6c4684daa066"
 // 
 data "Description" "h7d04fba0g3ca3g470cg9296gb8debb152f5d"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Destroyed Hand
+// Injury: Destroyed Hand
 data "DisplayName" "hab934a8fg8d74g4227g9907gfbae49662d8a"
 // 
 data "Description" "h71b43149gbf31g4237g81d3gd49581729036"
@@ -71,6 +71,7 @@ data "DisplayName" "hab934a8fg8d74g4227g9907gfbae49662d8a"
 data "Description" "h71b43149gbf31g4237g81d3gd49581729036"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_DESTROYED_HAND)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -83,26 +84,26 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_ARM"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Broken Arm
+// Injury: Broken Arm
 data "DisplayName" "ha3100bf8g8b25g4169g9682gddb0f2606e60"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Gangrene of the Hand
+// Injury: Gangrene of the Hand
 data "DisplayName" "h34796a02g9f5ag4718gbd3ag0db46988abef"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Explosive Grounding of the Hand
+// Injury: Explosive Grounding of the Hand
 data "DisplayName" "ha4e6d02fg6328g4072gbca4gfd3de57e6035"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_WITHERED_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Broken Arm
+// Injury: Broken Arm
 data "DisplayName" "h89422f20g4748g4b5egb4edg5f04f6a9449a"

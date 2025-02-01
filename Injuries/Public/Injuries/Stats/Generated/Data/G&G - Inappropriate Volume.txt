@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Inappropriate Volume
-data "DisplayName" "hd3ead466g847eg4eeag89bfg94447e15c9a7"
+data "DisplayName" "he97fceebgf739g4adbg81a7gdee1c5e952c2"
 //
 data "Description" "h2c28395ag79ceg4125gb432gfc7075bfc5d4"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Inappropriate Volume
+// Injury: Inappropriate Volume
 data "DisplayName" "hd3ead466g847eg4eeag89bfg94447e15c9a7"
 //
 data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Inappropriate_Volume_Removal_Technical_Passive"
 type "PassiveData"
-// Inappropriate Volume
+// Injury: Inappropriate Volume
 data "DisplayName" "hd3ead466g847eg4eeag89bfg94447e15c9a7"
 // 
 data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_INAPPROPRIATE_VOLUME)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

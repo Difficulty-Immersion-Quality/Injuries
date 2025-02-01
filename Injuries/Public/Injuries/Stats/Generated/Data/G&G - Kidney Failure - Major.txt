@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Kidney Failure
+// Kidney Failure - Major
 data "DisplayName" "ha160b3cag1a81g4a63g9b9fg7d0d251be976"
 //
 data "Description" "h767c5f1fg87d8g417bg8b9cg5ecac1a3a201"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Kidney Failure
+// Injury: Major Kidney Failure
 data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 //
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
@@ -65,11 +65,12 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Major_Kidney_Failure_Removal_Technical_Passive"
 type "PassiveData"
-// Kidney Failure
+// Injury: Major Kidney Failure
 data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -79,11 +80,12 @@ data "Conditions" ""
 // Technical passive for application
 new entry "Goon_Real_Injury_Grit_Glory_Major_Kidney_Failure_Technical_Passive"
 type "PassiveData"
-// Kidney Failure
+// Injury: Major Kidney Failure
 data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
 data "StatsFunctorContext" "OnStatusRemoved"
 data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')"

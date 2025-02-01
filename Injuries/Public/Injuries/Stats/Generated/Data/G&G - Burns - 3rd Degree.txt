@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Third Degree Burns
+// Burns - 3rd Degree
 data "DisplayName" "he918d108ge057g4970g8e6eg37e252de91cf"
 //
 data "Description" "h796256d9g56ecg4632g8d27g121f80b67351"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Third Degree Burns
+// Injury: Third Degree Burns
 data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 //
 data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Third_Degree_Burns_Removal_Technical_Passive"
 type "PassiveData"
-// Third Degree Burns
+// Injury: Third Degree Burns
 data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 //
 data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_THIRD_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -80,11 +81,12 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
 type "PassiveData"
-// Third Degree Burns
+// Injury: Third Degree Burns
 data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 //
 data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1,Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"
@@ -92,11 +94,12 @@ data "Conditions" "IsDamageTypeFire()"
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Third_Degree_Burn_Technical_Passive"
 type "PassiveData"
-// Third Degree Burns
+// Injury: Third Degree Burns
 data "DisplayName" "h5a24e12cg49a2g460bga698g6a7c1300b0d4"
 //
 data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypeFire()"

@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Long-term Madness
+// Madness - Long-term
 data "DisplayName" "h138ec949g81fcg480bg8917g8b1beabb2b1e"
 //
 data "Description" "h6e8f6094g3780g4f7ag8862ga3b3ce74d6e8"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Long-term Madness
+// Injury: Long-term Madness
 data "DisplayName" "h9b49eecag0de9g498fg8dbeg051f268d7daa"
 //
 data "Description" "he57aa4f3g8f26g4648gbd15gc1b7b45f87ee"

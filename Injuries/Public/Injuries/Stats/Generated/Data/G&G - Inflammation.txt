@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_INFLAMMATION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Inflammation
-data "DisplayName" "h13e3527eg72b5g4f74g948fg380ff8f1958e"
+data "DisplayName" "hc61fb51eg901fg4462gb8a8g35b4cbd811bc"
 //
 data "Description" "h220079bbg0610g4cc3gb2d9g951f00728f52"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_INFLAMMATION"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Inflammation
+// Injury: Inflammation
 data "DisplayName" "h13e3527eg72b5g4f74g948fg380ff8f1958e"
 //
 data "Description" "h95975bc2g5c4eg4bdega2e6g0a7cba290fbb"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Inflammation_Removal_Technical_Passive"
 type "PassiveData"
-// Inflammation
+// Injury: Inflammation
 data "DisplayName" "h13e3527eg72b5g4f74g948fg380ff8f1958e"
 // 
 data "Description" "h95975bc2g5c4eg4bdega2e6g0a7cba290fbb"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_INFLAMMATION)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_ANOSMIA"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Anosmia
-data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
+data "DisplayName" "he8057b9fgdb52g4f26gaf6cgf1a0c3b3bc7a"
 // 
 data "Description" "h361b72aag422fg4ec5g9f9cgc41d8575b5b0"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_ANOSMIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Anosmia
+// Injury: Anosmia
 data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
 // 
 data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Technical_Passive"
 type "PassiveData"
-// Anosmia
+// Injury: Anosmia
 data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
 // 
 data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_ANOSMIA)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

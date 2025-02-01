@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Frostbitten Foot
-data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+data "DisplayName" "hda98c4b5g41f9g42ffgbf37g86cfe6a7a47a"
 // 
 data "Description" "h3052f96cg1b54g4b7fgab6agef1c3a4362cb"
 data "DescriptionParams" "Distance(2)"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Frostbitten Foot
+// Injury: Frostbitten Foot
 data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
 // 
 data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Frostbitten_Foot_Technical_Passive"
 type "PassiveData"
-// Frostbitten Foot
+// Injury: Frostbitten Foot
 data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
 // 
 data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
 data "DescriptionParams" "Distance(2)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -81,12 +82,12 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
-// Major Neuralgia
+// Injury: Frostbitten Foot
 data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
 //
 data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "Boosts" ""
+//
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(PRONE,100,1)"
 data "SoundVocalStart" "DEATH"
 
@@ -96,5 +97,5 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
-// Damaged Hamstring
+// Injury: Damaged Hamstring
 data "DisplayName" "h1af91993ga6a8g4e35g98bfg93ae28ab7869"

@@ -3,8 +3,8 @@
 new entry "GOON_INJURY_GRIT_GLORY_BRAIN_INJURY"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Brain Injury
-data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
+// Brain Damage
+data "DisplayName" "h42766bbbgac6ag414eg989dg30d0b6817bdb"
 //
 data "Description" "h0d43077fg2adcg4133g9d0dgfb6a32237a75"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Brain Injury
+// Injury: Brain Damage
 data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
 //
 data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Brain_Injury_Removal_Technical_Passive"
 type "PassiveData"
-// Brain Injury
+// Injury: Brain Damage
 data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
 //
 data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_BRAIN_INJURY)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -80,11 +81,12 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Brain_Injury_Technical_Passive"
 type "PassiveData"
-// Brain Injury
+// Injury: Brain Damage
 data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
 //
 data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypePsychic() or IsDamageTypeForce() or IsDamageTypeBludgeoning()"
@@ -95,7 +97,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_PLANE_SPLITTING_BRAIN_INJURY"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
-// Plane Splitting Brain Injury
+// Injury: Plane Splitting Brain Damage
 data "DisplayName" "h15d0897bg5accg44f6g94d4gb79d3e6f5abe"
 // 
 data "Description" "h9f3f9585g5856g4dafg8a70g7a971dd7036e"
@@ -104,7 +106,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_SPIRITUAL_INJURY"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"
-// Spiritual Injury
+// Injury: Spiritual Afflication
 data "DisplayName" "h9080cd68gc75eg4e33g846fg105d18a5323f"
 // 
 data "Description" "h888b1204g85b7g43c1gb0d1gd4b4550d68e0"

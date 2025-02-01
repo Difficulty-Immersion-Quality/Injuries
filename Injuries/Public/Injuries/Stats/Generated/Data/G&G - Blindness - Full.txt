@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Blindness
+// Blindness - Full
 data "DisplayName" "h8faa1383gcc53g4befgb4c5ga1213d58edec"
 // 
 data "Description" "ha0f3dd5cgcb44g4dffgb445g89a63dbf428c"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Blindness
+// Injury: Blindness
 data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
 // 
 data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Blindness_Removal_Technical_Passive"
 type "PassiveData"
-// Blindness
+// Injury: Blindness
 data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
 // 
 data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
 data "DescriptionParams" "Distance(3)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_BLINDNESS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"

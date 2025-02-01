@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_LARGE_SKIN_TUMOURS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Large Skin Tumours
+// Skin Tumours - Large
 data "DisplayName" "h42d2a0f7g685cg469ag9965g9996386bf684"
 //
 data "Description" "h3d662c50g998ag498ag8c71g50b26b7a2bf1"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_LARGE_SKIN_TUMOURS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Large Skin Tumours
+// Injury: Large Skin Tumours
 data "DisplayName" "hbbd12dc1g97feg45a4g80cegfd0d9b1fcdf2"
 //
 data "Description" "hd030d900gf9c3g46b5g8d2fgf6db5047b100"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Large_Skin_Tumours_Removal_Technical_Passive"
 type "PassiveData"
-// Large Skin Tumours
+// Injury: Large Skin Tumours
 data "DisplayName" "hbbd12dc1g97feg45a4g80cegfd0d9b1fcdf2"
 // 
 data "Description" "hd030d900gf9c3g46b5g8d2fgf6db5047b100"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_LARGE_SKIN_TUMOURS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

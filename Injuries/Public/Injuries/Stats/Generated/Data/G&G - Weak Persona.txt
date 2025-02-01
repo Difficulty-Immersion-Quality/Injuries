@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_WEAK_PERSONA"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Weak Persona
-data "DisplayName" "h1808a7c7gf64eg479aga79fg0895ebdf94e3"
+data "DisplayName" "h06325b3fga12dg4b1dg8431g3fac09374b60"
 //
 data "Description" "hcdb67d48g7d7ag4a77g8fcbg9c973c201cd1"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_WEAK_PERSONA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Weak Persona
+// Injury: Weak Persona
 data "DisplayName" "h1808a7c7gf64eg479aga79fg0895ebdf94e3"
 //
 data "Description" "he73c8b3fg7abfg493eg84b7gdd8573b49faf"
@@ -63,12 +63,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Weak_Persona_Removal_Technical_Passive"
 type "PassiveData"
-// Weak Persona
+// Injury: Weak Persona
 data "DisplayName" "h1808a7c7gf64eg479aga79fg0895ebdf94e3"
 // 
 data "Description" "he73c8b3fg7abfg493eg84b7gdd8573b49faf"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_WEAK_PERSONA)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

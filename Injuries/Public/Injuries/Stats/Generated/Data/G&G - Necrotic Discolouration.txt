@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Necrotic Discolouration
-data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
+data "DisplayName" "h2ea560fdg626fg4d5bg8116g0ef0eb8dd6fa"
 //
 data "Description" "h16f03877g6dabg4f19g9f29g14acc374461f"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Necrotic Discolouration
+// Injury: Necrotic Discolouration
 data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
 //
 data "Description" "hfb72f78dgff01g49b4gb954ge378cee73e09"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Necrotic_Discolouration_Removal_Technical_Passive"
 type "PassiveData"
-// Necrotic Discolouration
+// Injury: Necrotic Discolouration
 data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
 // 
 data "Description" "hfb72f78dgff01g49b4gb954ge378cee73e09"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Frostbitten Hand
-data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
+data "DisplayName" "h04e993c4g5a4eg4f38g9b8ag9303a0d823b6"
 // 
 data "Description" "h48a9a49aga341g4bc0g98ceg73c12e4bdf1f"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Frostbitten Hand
+// Injury: Frostbitten Hand
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Frostbitten_Hand_Removal_Technical_Passive"
 type "PassiveData"
-// Frostbitten Hand
+// Injury: Frostbitten Hand
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FROSTBITTEN_HAND)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -81,13 +82,13 @@ data "Conditions" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
-// Frostbitten Hand
+// Injury: Frostbitten Hand
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "Boosts" ""
+//
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Dexterity,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL,100,1)"
 data "SoundVocalStart" ""
 
@@ -95,7 +96,12 @@ data "SoundVocalStart" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Injury: Frostbitten Hand
+data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
+// 
+data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL"
 data "StackPriority" ""
 data "StackType" "Overwrite"

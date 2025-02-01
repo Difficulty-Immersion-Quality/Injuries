@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_SEVERE_BRUISING"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Severe Bruising
-data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
+data "DisplayName" "hd434c593g8746g47f3g8bb6g8de776b0685d"
 //
 data "Description" "hc54e7debg648dg49c4gbb31gb700f574ce1d"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_SEVERE_BRUISING"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Severe Bruising
+// Injury: Severe Bruising
 data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Severe_Bruising_Removal_Technical_Passive"
 type "PassiveData"
-// Severe Bruising
+// Injury: Severe Bruising
 data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_SEVERE_BRUISING)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -80,22 +81,24 @@ data "Conditions" ""
 // Technical passives for damage
 new entry "Goon_Real_Injury_Grit_Glory_Severe_Bruising_Bludgeoning_Technical_Passive"
 type "PassiveData"
-// Severe Bruising
+// Injury: Severe Bruising
 data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1,Bludgeoning)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeBludgeoning()"
 
 new entry "Goon_Real_Injury_Grit_Glory_Severe_Bruising_Force_Technical_Passive"
 type "PassiveData"
-// Severe Bruising
+// Injury: Severe Bruising
 data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1,Force)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeForce()"

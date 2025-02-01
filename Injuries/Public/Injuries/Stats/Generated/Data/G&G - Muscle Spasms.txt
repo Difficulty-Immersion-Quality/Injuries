@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Muscle Spasms
-data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
+data "DisplayName" "haf761bd2g8266g4b26g870cgd7ede49f2505"
 //
 data "Description" "h01a4e10eg09f7g47faga37fgf537aedc3ce2"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Muscle Spasms
+// Injury: Muscle Spasms
 data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
 //
 data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Muscle_Spasms_Removal_Technical_Passive"
 type "PassiveData"
-// Muscle Spasms
+// Injury: Muscle Spasms
 data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
 // 
 data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -83,7 +84,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_VERTIGO"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
-// Vertigo
+// Injury: Vertigo
 data "DisplayName" "h3500cefcgf3cag4224g85b4gfc310ab4ae5e"
 // 
 data "Description" "h98e6f58fg1689g4010g9742g89b4f7505849"

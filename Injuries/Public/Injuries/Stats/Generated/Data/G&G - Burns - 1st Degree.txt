@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// First Degree Burns
+// Burns - 1st Degree
 data "DisplayName" "ha85631f2g62efg422bg987bg86369c9db2a8"
 //
 data "Description" "h0b74a561gcfa9g4665g9b82g5b1a353aef67"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// First Degree Burns
+// Injury: First Degree Burns
 data "DisplayName" "h4453d35eg5dd9g4e44g9ca3g3a63432dc937"
 //
 data "Description" "h3133cb5fg419dg4fb5g89c3g2c778cefd714"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Removal_Technical_Passive"
 type "PassiveData"
-// First Degree Burns
+// Injury: First Degree Burns
 data "DisplayName" "h4453d35eg5dd9g4e44g9ca3g3a63432dc937"
 //
 data "Description" "h3133cb5fg419dg4fb5g89c3g2c778cefd714"
 data "DescriptionParams" "DealDamage(1, Fire)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FIRST_DEGREE_BURNS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -80,11 +81,12 @@ data "Conditions" ""
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_First_Degree_Burns_Damage_Technical_Passive"
 type "PassiveData"
-// First Degree Burns
+// Injury: First Degree Burns
 data "DisplayName" "h4453d35eg5dd9g4e44g9ca3g3a63432dc937"
 //
 data "Description" "h3133cb5fg419dg4fb5g89c3g2c778cefd714"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1,Fire)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypeFire()"

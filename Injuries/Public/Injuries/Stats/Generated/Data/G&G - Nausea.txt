@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_NAUSEA"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Nausea
-data "DisplayName" "h2913e7e3gaaf0g4948ga908g92cde386014d"
+data "DisplayName" "h95f97ffagc6a3g4214g99c3gd117beddcf27"
 //
 data "Description" "h7aff03c3g1ec5g4469gaa08ge06a435392f5"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NAUSEA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Nausea
+// Injury: Nausea
 data "DisplayName" "h2913e7e3gaaf0g4948ga908g92cde386014d"
 //
 data "Description" "hd30000f0g6d22g4d77g958fg7f83de985ab6"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Nausea_Removal_Technical_Passive"
 type "PassiveData"
-// Nausea
+// Injury: Nausea
 data "DisplayName" "h2913e7e3gaaf0g4948ga908g92cde386014d"
 // 
 data "Description" "hd30000f0g6d22g4d77g958fg7f83de985ab6"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NAUSEA)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

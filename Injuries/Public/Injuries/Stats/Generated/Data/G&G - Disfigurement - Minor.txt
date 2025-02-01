@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Minor Disfigurement
+// Disfigurement - Minor
 data "DisplayName" "hc0ec1649g2409g4fbcg8b8dge9811cef3546"
 //
 data "Description" "h1aa75497g697fg4269gbbffga8e7eeeec2e5"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Minor Disfigurement
+// Injury: Minor Disfigurement
 data "DisplayName" "h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf"
 //
 data "Description" "hcd4c6a38ge62bg4f89g8e4bg41def2c557a5"
@@ -65,7 +65,7 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Disfigurement_Removal_Technical_Passive"
 type "PassiveData"
-// Minor Disfigurement
+// Injury: Minor Disfigurement
 data "DisplayName" "h7d0b7c4dgb78eg48e0g8c90g2a268613e7bf"
 //
 data "Description" "hcd4c6a38ge62bg4f89g8e4bg41def2c557a5"
@@ -90,5 +90,5 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_SCAR"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MINOR_DISFIGUREMENT"
-// Minor Scar
+// Injury: Minor Scar
 data "DisplayName" "ha64ced92g31d2g49cdgba91g284a263147ac"

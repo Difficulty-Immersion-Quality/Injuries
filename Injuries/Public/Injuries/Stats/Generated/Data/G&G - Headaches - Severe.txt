@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_SEVERE_HEADACHES"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Severe Headaches
+// Headaches - Severe
 data "DisplayName" "h45aaafddg2c12g48f8ga5f1g249fbbb3b205"
 //
 data "Description" "h61d833ffgd146g409egb735g9efbb7f1880a"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_SEVERE_HEADACHES"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Severe Headaches
+// Injury: Severe Headaches
 data "DisplayName" "hff207c7dg70a1g41d1ga9b4g01ef5ef64210"
 //
 data "Description" "ha93d8f3bg60a3g4e7dga4d9gf56f6896dd7b"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Severe_Headaches_Removal_Technical_Passive"
 type "PassiveData"
-// Severe Headaches
+// Injury: Severe Headaches
 data "DisplayName" "hff207c7dg70a1g41d1ga9b4g01ef5ef64210"
 // 
 data "Description" "ha93d8f3bg60a3g4e7dga4d9gf56f6896dd7b"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_SEVERE_HEADACHES)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -80,11 +81,12 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Severe_Headaches_Technical_Passive"
 type "PassiveData"
-// Severe Headaches
+// Injury: Severe Headaches
 data "DisplayName" "hff207c7dg70a1g41d1ga9b4g01ef5ef64210"
 // 
 data "Description" "ha93d8f3bg60a3g4e7dga4d9gf56f6896dd7b"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypePsychic() or IsDamageTypeForce() or IsDamageTypeBludgeoning()"

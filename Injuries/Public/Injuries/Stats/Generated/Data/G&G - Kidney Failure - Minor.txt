@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Kidney Failure
+// Kidney Failure - Minor
 data "DisplayName" "hc4a2a3a4ga8a7g411egb318g3f3bd1a4cb37"
 //
 data "Description" "h850143d8g0501g45f7ga74fg7bb9c3456d96"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Kidney Failure
+// Injury: Minor Kidney Failure
 data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 //
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
@@ -65,11 +65,12 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Kidney_Failure_Removal_Technical_Passive"
 type "PassiveData"
-// Kidney Failure
+// Injury: Minor Kidney Failure
 data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -79,11 +80,12 @@ data "Conditions" ""
 // Technical passive for application
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Kidney_Failure_Technical_Passive"
 type "PassiveData"
-// Kidney Failure
+// Injury: Minor Kidney Failure
 data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
 data "StatsFunctorContext" "OnStatusRemoved"
 data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')"
@@ -94,7 +96,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_PIERCED_STOMACH"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE"
-// Pierced Stomach
+// Injury: Pierced Stomach
 data "DisplayName" "h905dee36g1504g4471gad12gc37f4af93ecd"
 // 
 data "Description" "h8a14284eg959dg4147gb215g838219d2f3fb"

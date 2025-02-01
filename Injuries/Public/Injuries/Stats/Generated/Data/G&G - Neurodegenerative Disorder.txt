@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Neurodegenerative Disorder
-data "DisplayName" "haa2d89beg5169g43f4g88b6g6b1093266b24"
+data "DisplayName" "h3b0f83b8g30ddg4aaag8f91g3fddf3e0c938"
 //
 data "Description" "h64577567g70b7g4c4bgbaa0gc67ce7d4875d"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Neurodegenerative Disorder
+// Injury: Neurodegenerative Disorder
 data "DisplayName" "haa2d89beg5169g43f4g88b6g6b1093266b24"
 //
 data "Description" "h321e22ddg29b7g4464g881bgea4a6fde0b36"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Neurodegenerative_Disorder_Removal_Technical_Passive"
 type "PassiveData"
-// Neurodegenerative Disorder
+// Injury: Neurodegenerative Disorder
 data "DisplayName" "haa2d89beg5169g43f4g88b6g6b1093266b24"
 // 
 data "Description" "h321e22ddg29b7g4464g881bgea4a6fde0b36"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

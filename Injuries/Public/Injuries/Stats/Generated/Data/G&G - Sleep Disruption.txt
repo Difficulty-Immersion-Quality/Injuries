@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_SLEEP_DISRUPTION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Sleep Disruption
-data "DisplayName" "h6d702a99g20a4g4dd5gb1c2ga7b852eca0d5"
+data "DisplayName" "h6b36dc8eg133cg4075g9825g779915024bd0"
 //
 data "Description" "h33d2deedg1a5ag4102g8aedg251d02a38ffb"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_SLEEP_DISRUPTION"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Sleep Disruption
+// Injury: Sleep Disruption
 data "DisplayName" "h6d702a99g20a4g4dd5gb1c2ga7b852eca0d5"
 //
 data "Description" "h7f96e349g65f8g43f1g9c27g2fd915dde55a"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Sleep_Disruption_Removal_Technical_Passive"
 type "PassiveData"
-// Sleep Disruption
+// Injury: Sleep Disruption
 data "DisplayName" "h6d702a99g20a4g4dd5gb1c2ga7b852eca0d5"
 // 
 data "Description" "h7f96e349g65f8g43f1g9c27g2fd915dde55a"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_CARDIAC_INJURY)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -80,11 +81,12 @@ data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Sour
 // Technical passive for stun
 new entry "Goon_Real_Injury_Grit_Glory_Sleep_Disruption_Technical_Passive"
 type "PassiveData"
-// Sleep Disruption
+// Injury: Sleep Disruption
 data "DisplayName" "h6d702a99g20a4g4dd5gb1c2ga7b852eca0d5"
 // 
 data "Description" "h7f96e349g65f8g43f1g9c27g2fd915dde55a"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "not IsLastConditionRollSuccess(ConditionRollType.ConditionSavingThrow) and IsSavingThrow() and IsDamageTypePsychic() or IsDamageTypeForce() or IsDamageTypeBludgeoning()"

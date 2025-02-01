@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Skeletal Muscle Breakdown
-data "DisplayName" "ha4af6c1dgfe00g48ddg8fadg8096c257fa16"
+data "DisplayName" "h82cb9868g0f43g424cga723g634e3c4354ac"
 //
 data "Description" "h10a74e2cgc27dg4482ga3ddg7c12e2e7b441"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Skeletal Muscle Breakdown
+// Injury: Skeletal Muscle Breakdown
 data "DisplayName" "ha4af6c1dgfe00g48ddg8fadg8096c257fa16"
 //
 data "Description" "h145ce428gaa14g45bag8e79ga55a241f1ccc"
@@ -65,11 +65,12 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Skeletal_Muscle_Breakdown_Removal_Technical_Passive"
 type "PassiveData"
-// Skeletal Muscle Breakdown
+// Injury: Skeletal Muscle Breakdown
 data "DisplayName" "ha4af6c1dgfe00g48ddg8fadg8096c257fa16"
 // 
 data "Description" "h145ce428gaa14g45bag8e79ga55a241f1ccc"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

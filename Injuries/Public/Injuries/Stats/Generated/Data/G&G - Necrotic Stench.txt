@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Necrotic Stench
-data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
+data "DisplayName" "hb8b27597ge305g40c5gafeag7e1f3818da93"
 //
 data "Description" "h58cf14bbg108dg4da2g998cg925dd5816141"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Necrotic Stench
+// Injury: Necrotic Stench
 data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 //
 data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
@@ -65,11 +65,12 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Necrotic_Stench_Removal_Technical_Passive"
 type "PassiveData"
-// Necrotic Stench
+// Injury: Necrotic Stench
 data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 // 
 data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NECROTIC_STENCH)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

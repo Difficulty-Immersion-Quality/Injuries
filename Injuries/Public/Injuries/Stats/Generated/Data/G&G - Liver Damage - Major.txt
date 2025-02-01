@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Liver Damage
+// Liver Damage - Major
 data "DisplayName" "h71a5168bg4a05g49eag834dg84884c3b7ed1"
 //
 data "Description" "hc447cb3bg1880g46f9gb860g21b393acb508"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Liver Damage
+// Injury: Major Liver Damage
 data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 //
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Major_Liver_Damage_Removal_Technical_Passive"
 type "PassiveData"
-// Major Liver Damage
+// Injury: Major Liver Damage
 data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -80,12 +81,13 @@ data "Conditions" ""
 // Technical passive for application
 new entry "Goon_Real_Injury_Grit_Glory_Major_Liver_Damage_Technical_Passive"
 type "PassiveData"
-// Major Liver Damage
+// Injury: Major Liver Damage
 data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
 data "StatsFunctorContext" "OnStatusRemoved"
 data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')"
@@ -93,12 +95,13 @@ data "Conditions" "StatusId('LONG_REST') or StatusId('CAMP_ASTARION_DAISYDREAM')
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_Major_Liver_Damage_Technical_Passive_Damage"
 type "PassiveData"
-// Major Liver Damage
+// Injury: Major Liver Damage
 data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1d6,Poison)"
 data "StatsFunctorContext" "OnDamaged"
 data "Conditions" "IsDamageTypePoison()"
@@ -106,12 +109,13 @@ data "Conditions" "IsDamageTypePoison()"
 // Technical passive for damage
 new entry "Goon_Real_Injury_Grit_Glory_Major_Liver_Damage_Technical_Passive_Alcohol"
 type "PassiveData"
-// Major Liver Damage
+// Injury: Major Liver Damage
 data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "DealDamage(1d6,Poison)"
 data "StatsFunctorContext" "OnStatusApplied;OnConsumed"
 data "Conditions" "(StatusId('DRUNK') or StatusId('GOB_FESTIVITIES_DRUNK') or StatusId('EPI_EPILOGUE_HALSIN_DRUNK') or StatusId('TWN_DISTILLERY_DRUNK_01') or StatusId('TWN_DISTILLERY_DRUNK_02') or StatusId('TWN_DISTILLERY_DRUNK_03') or StatusId('CRE_BREWERYKOBOLDS_FIREWINEBELLY') or StatusId('TWN_DISTILLERY_DRANK_ONCE') or StatusId('DRINK_ALCOHOL') or StatusId('WYR_SHARESSCARESS_POTENTDRINK') or StatusId('CONS_DRUG_STIMULANT') or StatusId('DRUG_DREAMMIST_CONDITION') or StatusId('DRUG_ETHER_CONDITION') or StatusId('CONS_DRUG_EUPHORIC'))"

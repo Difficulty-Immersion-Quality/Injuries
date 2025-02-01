@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Neuralgia
+// Neuralgia - Major
 data "DisplayName" "h0251ef90g9d69g4179g8480ge58de2c960e4"
 //
 data "Description" "hfe21a6c2ge12dg4fa7g9ee6gb1463317e349"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Major Neuralgia
+// Injury: Major Neuralgia
 data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
@@ -65,11 +65,12 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Major_Neuralgia_Removal_Technical_Passive"
 type "PassiveData"
-// Major Neuralgia
+// Injury: Major Neuralgia
 data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_NEURALGIA)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -80,12 +81,12 @@ data "Conditions" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
-// Major Neuralgia
+// Injury: Major Neuralgia
 data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
-data "Boosts" ""
+//
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL,100,1)"
 data "SoundVocalStart" ""
 
@@ -93,9 +94,13 @@ data "SoundVocalStart" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Injury: Major Neuralgia
+data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
+//
+data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"
-data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" "ActionResource(ActionPoint,-1,0);ActionResourceBlock(ReactionActionPoint)"
 data "SoundVocalStart" "DEATH"
@@ -106,7 +111,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_INTERNAL_INJURY"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
-// Major Internal Injury
+// Injury: Major Internal Injury
 data "DisplayName" "h5486d5efga04bg4f58g9b38gfe7dd7656b8a"
 // 
 data "Description" "hdd0e0481g329cg4282ga8e4gb7484c9f37c6"
@@ -115,7 +120,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_INTERNAL_INJURY_FORCE"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
-// Major Internal Injury
+// Injury: Major Internal Injury
 data "DisplayName" "h5486d5efga04bg4f58g9b38gfe7dd7656b8a"
 // 
 data "Description" "h7ded237bgd646g42a1g96e4g64781638e7ce"
@@ -124,7 +129,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_ORGAN_NECROSIS"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
-// Major Organ Necrosis
+// Injury: Major Organ Necrosis
 data "DisplayName" "hf72803c9g3ca9g4221gb8e8g185366f6d0ee"
 // 
 data "Description" "h10a971eeg759ag4d3cgb19egce86d6bf117e"
@@ -133,7 +138,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_ORGAN_DAMAGE"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_MAJOR_NEURALGIA"
-// Major Organ Damage
+// Injury: Major Organ Damage
 data "DisplayName" "h89a2ec17gd015g46c2gac85g671659bb09db"
 // 
 data "Description" "h9505d5fbgcbb9g4056gb5b4gb819ddaf4f95"

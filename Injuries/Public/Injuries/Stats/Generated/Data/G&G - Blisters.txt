@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_BLISTERS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Blisters
-data "DisplayName" "h0bc85864g6ee0g4869gbd8age0510c02e0ed"
+data "DisplayName" "h6f7207b3gfb24g45a6g908fg8c01c0047719"
 //
 data "Description" "h3fcc33dfg2b46g427cg85f8g8e061550d70e"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BLISTERS"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Blisters
+// Injury: Blisters
 data "DisplayName" "h0bc85864g6ee0g4869gbd8age0510c02e0ed"
 //
 data "Description" "h4dda121fg7f26g4024ga953ge554d4eb82e1"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Blisters_Removal_Technical_Passive"
 type "PassiveData"
-// Blisters
+// Injury: Blisters
 data "DisplayName" "h0bc85864g6ee0g4869gbd8age0510c02e0ed"
 //
 data "Description" "h4dda121fg7f26g4024ga953ge554d4eb82e1"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_BLISTERS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""

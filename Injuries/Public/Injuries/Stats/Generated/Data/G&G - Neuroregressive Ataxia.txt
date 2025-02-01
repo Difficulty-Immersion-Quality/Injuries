@@ -4,7 +4,7 @@ new entry "GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Neuroregressive Ataxia
-data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
+data "DisplayName" "h9873ba92g191dg4c20g93d8g4443489cae6e"
 //
 data "Description" "hc5551ef8g3666g41c8ga7fag7ae923bb8b1a"
 data "DescriptionParams" ""
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Neuroregressive Ataxia
+// Injury: Neuroregressive Ataxia
 data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Neuroregressive_Ataxia_Removal_Technical_Passive"
 type "PassiveData"
-// Neuroregressive Ataxia
+// Injury: Neuroregressive Ataxia
 data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
@@ -80,11 +81,12 @@ data "Conditions" ""
 // Technical passive for stat functors
 new entry "Goon_Real_Injury_Girt_Glory_Neuroregressive_Ataxia_Technical_Passive"
 type "PassiveData"
-// Neuroregressive Ataxia
+// Injury: Neuroregressive Ataxia
 data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "Properties" "IsHidden"
+//
 data "StatsFunctorContext" "OnAttack"
 data "Conditions" "IsCriticalMiss()"
 data "StatsFunctors" "ApplyStatus(DISARM,100,1)"

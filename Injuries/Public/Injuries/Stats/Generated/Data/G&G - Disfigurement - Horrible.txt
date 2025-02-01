@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Horrible Disfigurement
+// Disfigurement - Horrible
 data "DisplayName" "h6fece6cagf1e4g4a82gaa56g5937de1f04a7"
 //
 data "Description" "h9ddc85a9g19a4g496bg8e8dgbe197296cb87"
@@ -23,7 +23,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Horrible Disfigurement
+// Injury: Horrible Disfigurement
 data "DisplayName" "hf9899dabg1cb4g4dd3gbd91gf74112304ee5"
 //
 data "Description" "hdcd8ef23g0678g43ffga877g57e954d5e81b"
@@ -65,12 +65,13 @@ data "StatusEffect" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Horrible_Disfigurement_Removal_Technical_Passive"
 type "PassiveData"
-// Horrible Disfigurement
+// Injury: Horrible Disfigurement
 data "DisplayName" "hf9899dabg1cb4g4dd3gbd91gf74112304ee5"
 //
 data "Description" "hdcd8ef23g0678g43ffga877g57e954d5e81b"
 data "DescriptionParams" ""
 data "Properties" "IsHidden"
+//
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
@@ -90,7 +91,7 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_SCAR"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT"
-// Horrible Scar
+// Injury: Horrible Scar
 data "DisplayName" "h37bf7bb7gfb44g4c0egba49ged6c3aa8d93a"
 //
 data "Description" "h79f0edf2gc42ag4209ga0e3g7e50582e6fcf"
