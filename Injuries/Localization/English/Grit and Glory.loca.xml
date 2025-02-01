@@ -801,6 +801,14 @@ Major Organ Damage: Piercing damage.
 
 
 
+	<content contentuid="h621f16d3g85f4g4ca7ga8a3g241d3a490ddd" version="1">Madness: Codependant</content> Long-term madness.
+	-- The character becomes attached to a “lucky charm,” such as a person or an object, and has disadvantage on attack rolls, ability checks, and saving throws while more than 30 feet from it.
+
+	<content contentuid="ha0775b55g9c10g46ebga50dgb6411a0d17f0" version="1">You are dependant on your allies being close to feel safe and secure. When an ally is not within [1] of you, you suffer from &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on all &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;, &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt; and &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+
+
+
 	<content contentuid="hb54d0fe5g4634g4cb0g9c70g90ce7dd5aab0" version="1">Madness: Hallucinations</content> Long-term and Short-term madness.
 	-- The character experiences vivid hallucinations and has disadvantage on ability checks.
 
@@ -814,4 +822,7 @@ Major Organ Damage: Piercing damage.
 
 	<content contentuid="h1aea20b8g504eg4805ga623gfcf9f5999b49" version="1">You suffer from extreme paranoia. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+
+
+
 </contentList>

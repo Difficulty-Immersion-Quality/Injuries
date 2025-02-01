@@ -1,0 +1,77 @@
+// ==================================== Madness ====================================
+
+// Long-term Madness
+new entry "GOON_MADNESS_5E_CODEPENDANT"
+type "StatusData"
+data "StatusType" "BOOST"
+// Madness: Codependent
+data "DisplayName" "h621f16d3g85f4g4ca7ga8a3g241d3a490ddd"
+//
+data "Description" "ha0775b55g9c10g46ebga50dgb6411a0d17f0"
+data "DescriptionParams" "Distance(10)"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_CODEPENDANT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "AuraRadius" "10"
+data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE)"
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AttackRoll);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllAbilities);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllSavingThrows)"
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" ""
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" "FALL"
+data "SoundVocalEnd" "EXHAUSTED"
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+
+// ==================================== Technicals for individual madness functionality ====================================
+
+new entry "GOON_CODEPENDANT_IN_RANGE"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StackId" "GOON_CODEPENDANT_IN_RANGE"
+data "StackPriority" "10"
+data "AuraRadius" "10"
+data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE') and HasStatus('GOON_MADNESS_5E_PARANOIA')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL)"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+
+new entry "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "SoundVocalStart" "RELAXED"
+data "OnRemoveFunctors" "ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX,100,0)"
+
+new entry "GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "SoundVocalStart" "EFFORTS"
