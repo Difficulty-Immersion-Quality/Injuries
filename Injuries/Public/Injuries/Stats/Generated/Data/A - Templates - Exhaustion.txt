@@ -14,15 +14,9 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "StackId" "GOON_EXHAUSTION_X"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
-data "Boosts" ""
 data "OnApplyFunctors" "ApplyStatus(GOON_BOOSTS_EXHAUSTION_X_TECHNICAL_X,100,-1)"
-data "OnRemoveFunctors" ""
 data "RemoveConditions" ""
 data "RemoveEvents" ""
-data "TickType" ""
-data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
-data "Passives" ""
 
 // ==================================== Incurable injury induced Exhaustion level X ====================================
 
