@@ -1,7 +1,7 @@
 // ==================================== Exhaustion level 2 ====================================
 
 // Main exhaustion status
-new entry "GOON_HOMEBREW_EXHAUSTION_2"
+new entry "GOON_EXHAUSTION_HOMEBREW_2"
 type "StatusData"
 data "StatusType" "BOOST"
 // Exhaustion: Level 2
@@ -12,11 +12,11 @@ data "DescriptionParams" ""
 data "Icon" "Status_Exhausted_2"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_HOMEBREW_EXHAUSTION"
+data "StackId" "GOON_EXHAUSTION_HOMEBREW"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
-data "OnApplyFunctors" "ApplyStatus(GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL_2,100,-1)"
+data "OnApplyFunctors" "ApplyStatus(GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2,100,-1)"
 data "OnRemoveFunctors" ""
 data "RemoveConditions" ""
 data "RemoveEvents" ""
@@ -27,19 +27,19 @@ data "Passives" ""
 
 // ==================================== Incurable injury induced Exhaustion level 2 ====================================
 
-new entry "GOON_HOMEBREW_EXHAUSTION_UNRESTABLE_2"
+new entry "GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_2"
 type "StatusData"
 data "StatusType" "BOOST"
-using "GOON_HOMEBREW_EXHAUSTION_2"
+using "GOON_EXHAUSTION_HOMEBREW_2"
 // Incurable Exhaustion: Level 2
 data "DisplayName" "hcc360b7eg2957g428eg852ag4977e5fe3de5"
 //
-data "StackId" "GOON_HOMEBREW_EXHAUSTION_UNRESTABLE"
-data "OnRemoveFunctors" "IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_7')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_6,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_6')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_5,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_5')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_4,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_4')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_3,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_3')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_2,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_2')):ApplyStatus(GOON_HOMEBREW_EXHAUSTION_1,100,-1);IF(HasStatus('GOON_HOMEBREW_EXHAUSTION_1')):RemoveStatus(GOON_HOMEBREW_EXHAUSTION_1)"
+data "StackId" "GOON_EXHAUSTION_HOMEBREW_UNRESTABLE"
+data "OnRemoveFunctors" "IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_7')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_6,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_6')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_5,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_5')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_4,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_4')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_3,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_3')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_2,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_2')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_1,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_1')):RemoveStatus(GOON_EXHAUSTION_HOMEBREW_1)"
 
 // ==================================== Status for handling functionality shared between both exhaustion stacks ====================================
 
-new entry "GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL_2"
+new entry "GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Exhaustion: Level 2
@@ -49,11 +49,11 @@ data "Description" "hf19cd4fag4074g4a8bga525g3186f1e4345f"
 data "Icon" "Status_Exhausted_2"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_BOOSTS_HOMEBREW_EXHAUSTION_TECHNICAL"
+data "StackId" "GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" "Ability(Strength,-2);Ability(Dexterity,-2);Ability(Constitution,-2);Ability(Intelligence,-2);Ability(Wisdom,-2);Ability(Charisma,-2);ActionResourceConsumeMultiplier(Movement,1.2,0);CriticalHit(AttackTarget,Success,Always,19)"
-data "RemoveConditions" "not HasStatus('GOON_HOMEBREW_EXHAUSTION_2') and not HasStatus('GOON_HOMEBREW_EXHAUSTION_UNRESTABLE_2')"
+data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_2') and not HasStatus('GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_2')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
 data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_2,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_2,100,0)"
