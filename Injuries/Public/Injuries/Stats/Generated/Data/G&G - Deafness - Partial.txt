@@ -1,6 +1,6 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_DEAFNESS"
+new entry "GOON_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Partial Deafness
@@ -11,7 +11,7 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_DEAFNESS"
+data "StackId" "GOON_INJURY_GRIT_GLORY_DEAFNESS"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
 data "Boosts" ""
@@ -43,7 +43,7 @@ data "StackType" "Ignore"
 data "Boosts" "Resistance(Thunder,Resistant)
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_DEAFNESS')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "OnRemoveFunctors" ""
 data "TickType" ""
@@ -69,7 +69,7 @@ data "DisplayName" "ha39a84a6g69bdg4bbfgad6eg53caf3c9041a"
 // 
 data "Description" "h9f1a9d89g7acdg4062ga7ecg4282a071e198"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_PARTIAL_DEAFNESS)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

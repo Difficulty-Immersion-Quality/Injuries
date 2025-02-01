@@ -1,6 +1,6 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE"
+new entry "GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Kidney Failure
@@ -11,7 +11,7 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_KIDNEY_FAILURE"
+data "StackId" "GOON_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
@@ -43,7 +43,7 @@ data "StackType" "Ignore"
 data "Boosts" ""
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -68,7 +68,7 @@ data "DisplayName" "h9392009egb2fbg407egbef6gdea8c81007f7"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

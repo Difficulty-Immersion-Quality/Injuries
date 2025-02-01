@@ -1,6 +1,6 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION"
+new entry "GOON_INJURY_GRIT_GLORY_MAJOR_CONCUSSION"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Major Concussion
@@ -11,7 +11,7 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_CONCUSSION"
+data "StackId" "GOON_INJURY_GRIT_GLORY_CONCUSSION"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
 data "Boosts" ""
@@ -43,7 +43,7 @@ data "StackType" "Ignore"
 data "Boosts" "Disadvantage(Concentration);Disadvantage(Ability,Intelligence);Disadvantage(Ability,Wisdom);Disadvantage(Ability,Charisma)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MAJOR_CONCUSSION')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -68,7 +68,7 @@ data "DisplayName" "h69d681d7gf0d5g4a87g8ffcgb85877d13fc4"
 // 
 data "Description" "h1758c8ceg6385g44b5g98d8g9ca2cad41361"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_MAJOR_CONCUSSION)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_CONCUSSION)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 

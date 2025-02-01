@@ -1,6 +1,6 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH"
+new entry "GOON_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 type "StatusData" 
 data "StatusType" "BOOST" 
 // Necrotic Stench
@@ -11,7 +11,7 @@ data "DescriptionParams" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH"
+data "StackId" "GOON_INJURY_GRIT_GLORY_NECROTIC_STENCH"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "Boosts" ""
@@ -43,7 +43,7 @@ data "StackType" "Ignore"
 data "Boosts" "Disadvantage(Skill, Persuasion)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH')"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_NECROTIC_STENCH')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
@@ -68,7 +68,7 @@ data "DisplayName" "h4d3a5cfeg3495g4cbfgadd0g79e406021bcb"
 // 
 data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
 data "Properties" "IsHidden"
-data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_NECROTIC_STENCH)"
+data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NECROTIC_STENCH)"
 data "StatsFunctorContext" "OnHeal"
 data "Conditions" ""
 
