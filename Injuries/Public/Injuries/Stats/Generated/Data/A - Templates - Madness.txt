@@ -8,7 +8,7 @@ data "DisplayName" ""
 //
 data "Description" ""
 data "DescriptionParams" ""
-data "Icon" "PassiveFeature_Generic_Blood"
+data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_X"

@@ -62,3 +62,11 @@ using "SLEEPING"
 data "TickType" "StartTurn"
 data "OnTickRoll" "SavingThrow(Ability.Constitution,20)"
 data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EXTREME)"
+
+// ==================================== Custom Confusion for better removal implementation given how easy it is to trigger ====================================
+
+new entry "GOON_CONFUSION_MADNESS"
+type "StatusData"
+data "StatusType" "BOOST"
+using "CONFUSION"
+data "RemoveConditions" "SavingThrow(Ability.Wisdom,15) or ((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')))"
