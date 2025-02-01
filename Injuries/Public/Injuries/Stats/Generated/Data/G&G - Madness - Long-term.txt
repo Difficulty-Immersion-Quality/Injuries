@@ -1,0 +1,61 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Long-term Madness
+data "DisplayName" "h138ec949g81fcg480bg8917g8b1beabb2b1e"
+//
+data "Description" "h6e8f6094g3780g4f7ag8862ga3b3ce74d6e8"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" ""
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Long-term Madness
+data "DisplayName" "h9b49eecag0de9g498fg8dbeg051f268d7daa"
+//
+data "Description" "he57aa4f3g8f26g4648gbd15gc1b7b45f87ee"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" ""
+//
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "SoundVocalStart" ""
+data "SoundVocalEnd" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.0"

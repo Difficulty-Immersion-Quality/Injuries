@@ -1,8 +1,8 @@
 // ==================================== Unlike Injuries, madness effects are just a main status that potentially has some technicals ====================================
 
 // new entry "GOON_MADNESS_5E_X"
-type "StatusData" 
-data "StatusType" "BOOST" 
+type "StatusData"
+data "StatusType" "BOOST"
 // 
 data "DisplayName" ""
 //
@@ -14,7 +14,8 @@ data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 data "StackId" "GOON_MADNESS_5E_X"
 data "StackPriority" ""
 data "StackType" "Overwrite"
-data "Boosts" ""
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" ""

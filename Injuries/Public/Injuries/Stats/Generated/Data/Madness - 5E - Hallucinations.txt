@@ -1,0 +1,38 @@
+// ==================================== Madness ====================================
+
+new entry "GOON_MADNESS_5E_HALLUCINATIONS"
+type "StatusData"
+data "StatusType" "BOOST"
+// Madness: Hallucinations
+data "DisplayName" "hb54d0fe5g4634g4cb0g9c70g90ce7dd5aab0"
+//
+data "Description" "h3f8aa500ga086g4e3eg8d7cg4946652bb5bb"
+data "DescriptionParams" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_HALLUCINATIONS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Strength);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Dexterity);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Constitution);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Intelligence);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Wisdom);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Charisma)"
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" ""
+//
+data "StillAnimationType" "Frightened"
+data "StillAnimationPriority" ""
+data "SoundVocalStart" "FALL"
+data "SoundVocalEnd" "EXHAUSTED"
+data "SoundLoop" ""
+data "SoundStop" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+
+// ==================================== Technicals for individual madness functionality ====================================
