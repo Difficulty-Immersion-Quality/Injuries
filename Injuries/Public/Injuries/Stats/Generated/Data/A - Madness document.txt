@@ -1,7 +1,7 @@
 // Short-Term Madness
 //d100    Effect (lasts 1d10 minutes)
 //01–20    The character retreats into his or her mind and becomes paralyzed. The effect ends if the character takes any damage.
-EZ
+DONE
 
 //21–30    The character becomes incapacitated and spends the duration screaming, laughing, or weeping.
 EZ - Random table for screaming or laughing?

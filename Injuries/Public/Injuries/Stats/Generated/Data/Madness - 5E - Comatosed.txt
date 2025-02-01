@@ -1,7 +1,7 @@
 // ==================================== Madness ====================================
 
 // Long-term Madness
-new entry "GOON_MADNESS_5E_PARANOIA"
+new entry "GOON_MADNESS_5E_COMATOSED"
 type "StatusData"
 data "StatusType" "BOOST"
 // Madness: Comatosed
@@ -12,7 +12,7 @@ data "DescriptionParams" ""
 data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_MADNESS_5E_PARANOIA"
+data "StackId" "GOON_MADNESS_5E_COMATOSED"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 // A calm emotions spell can suppress the effects of madness
@@ -20,7 +20,7 @@ data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('Mindless
 data "OnApplyFunctors" "RemoveStatus(SNEAKING);RemoveStatus(SLEEP);RemoveStatus(SLEEPING);RemoveStatus(SG_Sleeping);BreakConcentration()"
 data "OnRemoveFunctors" ""
 data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"
-data "RemoveEvents" ""
+data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Incapacitated;SG_Condition"
