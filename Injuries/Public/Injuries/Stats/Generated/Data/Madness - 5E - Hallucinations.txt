@@ -16,7 +16,7 @@ data "StackId" "GOON_MADNESS_5E_HALLUCINATIONS"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 // A calm emotions spell can suppress the effects of madness
-data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Strength);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Dexterity);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Constitution);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Intelligence);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Wisdom);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Charisma)"
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(AllAbilities)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" ""

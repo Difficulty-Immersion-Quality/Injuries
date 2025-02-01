@@ -48,13 +48,13 @@ X
 LOTS OF WORK - A random table of potion effects, but the duration must match the madness otherwise I have to create custom statuses that inherit from the potions using OnStatusRemoved RemoveConditions
 
 //46–55    The character becomes attached to a “lucky charm,” such as a person or an object, and has disadvantage on attack rolls, ability checks, and saving throws while more than 30 feet from it.
-LOTS OF WORK - adapt to just be if no friendlies are in X range - Reflavour as co-dependancy 
+DONE - adapt to just be if no friendlies are in X range - Reflavour as co-dependancy
 
 //56–65    The character is blinded (25%) or deafened (75%).
-We really doing more randomisation within randomisation
+X - We really doing more randomisation within randomisation
 
 //66–75    The character experiences uncontrollable tremors or tics, which impose disadvantage on attack rolls, ability checks, and saving throws that involve Strength or Dexterity.
-EZ
+DONE
 
 //76–85    The character suffers from partial amnesia. The character knows who he or she is and retains racial traits and class features, but doesn’t recognize other people or remember anything that happened before the madness took effect.
 X
