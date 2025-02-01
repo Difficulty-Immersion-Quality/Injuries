@@ -806,4 +806,12 @@ Major Organ Damage: Piercing damage.
 
 	<content contentuid="h3f8aa500ga086g4e3eg8d7cg4946652bb5bb" version="1">You experience vivid hallucinations and have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on all &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
+
+
+
+	<content contentuid="h66e7f05fgb751g48ecga0c5gcfd2d3882ee1" version="1">Madness: Paranoia</content> Long-term madness.
+	-- The character suffers extreme paranoia. The character has disadvantage on Wisdom and Charisma checks.
+
+	<content contentuid="h1aea20b8g504eg4805ga623gfcf9f5999b49" version="1">You suffer from extreme paranoia. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Wisdom"&gt;Wisdom&lt;/LSTag&gt; and &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.</content>
 </contentList>

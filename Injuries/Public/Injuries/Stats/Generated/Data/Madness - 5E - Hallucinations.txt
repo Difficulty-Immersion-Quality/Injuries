@@ -1,5 +1,6 @@
 // ==================================== Madness ====================================
 
+// Long-term and Short-term Madness
 new entry "GOON_MADNESS_5E_HALLUCINATIONS"
 type "StatusData"
 data "StatusType" "BOOST"
@@ -25,7 +26,7 @@ data "TickFunctors" ""
 data "StatusGroups" ""
 data "Passives" ""
 //
-data "StillAnimationType" "Frightened"
+data "StillAnimationType" "Feared"
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "FALL"
 data "SoundVocalEnd" "EXHAUSTED"
