@@ -8,6 +8,7 @@ data "DisplayName" "h563aa3bbg6ae2g4619g9551ga2f5fb155be3"
 //
 data "Description" "haa02e3a6g96edg48f2gbc1cg770c1b4a31ff"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h8ee2fc0fgbc08g4991g9a98g3dc9912fc004"
 //
 data "Description" "h62edf2d8g6e5ag4f8fg9c34gfc64922051d8"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h8ee2fc0fgbc08g4991g9a98g3dc9912fc004"
 // 
 data "Description" "h62edf2d8g6e5ag4f8fg9c34gfc64922051d8"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_HEADACHES)"

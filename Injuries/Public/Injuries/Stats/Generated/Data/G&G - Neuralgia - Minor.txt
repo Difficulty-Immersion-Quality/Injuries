@@ -8,6 +8,7 @@ data "DisplayName" "h48af877dg2d83g405agadd4g0eba375a38d2"
 //
 data "Description" "h6239ca1egb1f3g4cdeg97ddg46d397765ffc"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h1919463eg4e1ag465bg82ffg0c4648b2b60d"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" "Weakened"
 data "StillAnimationPriority" "Weakened"
 data "SoundVocalStart" "DEATH"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h1919463eg4e1ag465bg82ffg0c4648b2b60d"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_NEURALGIA)"
@@ -86,6 +91,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h1919463eg4e1ag465bg82ffg0c4648b2b60d"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "Boosts" ""
@@ -96,6 +103,12 @@ data "SoundVocalStart" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Injury: Minor Neuralgia
+data "DisplayName" "h1919463eg4e1ag465bg82ffg0c4648b2b60d"
+//
+data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"

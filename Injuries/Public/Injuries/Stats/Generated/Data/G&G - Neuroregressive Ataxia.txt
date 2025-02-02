@@ -8,6 +8,7 @@ data "DisplayName" "h9873ba92g191dg4c20g93d8g4443489cae6e"
 //
 data "Description" "hc5551ef8g3666g41c8ga7fag7ae923bb8b1a"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA)"
@@ -85,6 +90,8 @@ type "PassiveData"
 data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
 // 
 data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Properties" "IsHidden"
 //
 data "StatsFunctorContext" "OnAttack"

@@ -8,6 +8,7 @@ data "DisplayName" "h0251ef90g9d69g4179g8480ge58de2c960e4"
 //
 data "Description" "hfe21a6c2ge12dg4fa7g9ee6gb1463317e349"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" "Weakened"
 data "StillAnimationPriority" "Weakened"
 data "SoundVocalStart" "DEATH"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -69,6 +73,8 @@ type "PassiveData"
 data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_NEURALGIA)"
@@ -85,10 +91,11 @@ data "StatusType" "BOOST"
 data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL,100,1)"
-data "SoundVocalStart" ""
 
 // Technical status for boosts
 new entry "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"
@@ -98,6 +105,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h72857995g39acg494bg8c6dgf312f698c4ab"
 //
 data "Description" "he7892f2egac8ag4c9eg8c98g8d2a7d24f78f"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEURALGIA_BOOST_TECHNICAL"

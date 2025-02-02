@@ -8,6 +8,7 @@ data "DisplayName" "hd434c593g8746g47f3g8bb6g8de776b0685d"
 //
 data "Description" "hc54e7debg648dg49c4gbb31gb700f574ce1d"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "PAIN"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,8 @@ data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
+data "TooltipSave" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_SEVERE_BRUISING)"
@@ -85,6 +91,8 @@ type "PassiveData"
 data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
+data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
+data "TooltipSave" ""
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "DealDamage(1,Bludgeoning)"
@@ -97,6 +105,8 @@ type "PassiveData"
 data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
 //
 data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
+data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
+data "TooltipSave" ""
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "DealDamage(1,Force)"

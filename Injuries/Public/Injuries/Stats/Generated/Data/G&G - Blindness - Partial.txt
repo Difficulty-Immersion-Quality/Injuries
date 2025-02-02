@@ -8,6 +8,7 @@ data "DisplayName" "h8578aea7g7bd7g482ag8898ga573242a32dc"
 // 
 data "Description" "h889936c6gda61g4c68g957cg979b6a746205"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
 // 
 data "Description" "h7d6551ecgf53ag46b9g91b9g0ce90774a3b3"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "PAIN"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h018bedb4g6af1g4cb7gb45cg4eb95e09cf9f"
 // 
 data "Description" "h7d6551ecgf53ag46b9g91b9g0ce90774a3b3"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS)"

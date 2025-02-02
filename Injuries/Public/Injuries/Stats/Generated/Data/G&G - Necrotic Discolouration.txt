@@ -8,6 +8,7 @@ data "DisplayName" "h2ea560fdg626fg4d5bg8116g0ef0eb8dd6fa"
 //
 data "Description" "h16f03877g6dabg4f19g9f29g14acc374461f"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
 //
 data "Description" "hfb72f78dgff01g49b4gb954ge378cee73e09"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" ""
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h1c99cfaegf5d4g42dcgb39ag24a0c3725bdb"
 // 
 data "Description" "hfb72f78dgff01g49b4gb954ge378cee73e09"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_NECROTIC_DISCOLOURATION)"

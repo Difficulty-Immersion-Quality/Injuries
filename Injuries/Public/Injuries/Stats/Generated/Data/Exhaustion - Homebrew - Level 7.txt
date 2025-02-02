@@ -9,6 +9,7 @@ data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
 //
 data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -46,6 +47,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
 //
 data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -57,6 +60,9 @@ data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_7') and not Has
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
 data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_7,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7,100,0)"
+//
+data "SoundVocalStart" "EXHAUSTED"
+data "SoundVocalEnd" "RELAXED"
 
 // ==================================== Technicals for sleep mechanic ====================================
 
@@ -68,6 +74,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
 //
 data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" "Charisma"
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
@@ -80,6 +88,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
 //
 data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //

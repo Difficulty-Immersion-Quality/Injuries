@@ -4,10 +4,10 @@
 DONE
 
 //21–30    The character becomes incapacitated and spends the duration screaming, laughing, or weeping.
-EZ - Random table for screaming or laughing?
+DONE (just did laughing for now) - Random table for screaming or laughing?
 
 //31–40    The character becomes frightened and must use his or her action and movement each round to flee from the source of the fear.
-EZ - That's just fear aint it?
+DONE - Basically kinda sorta mirrors Codependent
 
 //41–50    The character begins babbling and is incapable of normal speech or spellcasting.
 EZ - Just do verbal disadvantage casting

@@ -8,6 +8,7 @@ data "DisplayName" "h71a5168bg4a05g49eag834dg84884c3b7ed1"
 //
 data "Description" "hc447cb3bg1880g46f9gb860g21b393acb508"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 //
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
+data "TooltipSave" "Constitution"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "PAIN"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" "Misc_Status_Poison_MO"
 data "SoundStop" "Misc_Status_Poison_MO_Stop"
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE)"
@@ -86,6 +91,7 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"
@@ -100,6 +106,7 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "DealDamage(1d6,Poison)"
@@ -114,6 +121,7 @@ data "DisplayName" "h5d67276cgfd6eg4598g8ef2gfb805b04e75b"
 // 
 data "Description" "hb4cc924cg0a9cg4ad6ga605gca52ddcfeff4"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "DealDamage(1d6,Poison)"

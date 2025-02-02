@@ -1,0 +1,50 @@
+// ==================================== Madness ====================================
+
+// Short-term Madness
+new entry "GOON_MADNESS_5E_HYSTERIA"
+type "StatusData"
+data "StatusType" "BOOST"
+// Madness: Hysteria
+data "DisplayName" "h11ddb0abg85d3g4767g960dgcadbda25c56d"
+//
+data "Description" "h2177c9ccg7a38g4771ga7eagd3c4b21e71da"
+data "DescriptionParams" ""
+data "TooltipSave" "Wisdom"
+data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_HYSTERIA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" "AbilityFailedSavingThrow(Strength);AbilityFailedSavingThrow(Dexterity);CriticalHit(AttackTarget,Success,Always,3);CriticalHit(AttackTarget,Failure,Never,3);Advantage(AttackTarget);ActionResourceBlock(Movement);DetectDisturbancesBlock(true)"
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "SavingThrow(Ability.Wisdom, 15)"
+data "RemoveEvents" "OnDamage;OnTurn"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" ""
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" "Laughing_Hideous"
+data "StillAnimationPriority" "Shouting"
+data "SoundVocalStart" "NONE"
+data "SoundVocalLoop" "LAUGHTERMANIACAL"
+data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
+data "SoundStart" "Misc_Status_HideousLaughter,HEAD;"
+data "SoundStop" "Misc_Status_HideousLaughter_Stop,HEAD;"
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.5"
+data "SplatterSweatAmount" "0.5"
+data "ApplyEffect" ""
+data "StatusEffect" "b89b7538-2cb3-400f-b1c9-378f61070abb"
+
+// ==================================== Technicals for individual madness functionality ====================================

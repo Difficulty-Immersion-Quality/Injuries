@@ -8,6 +8,7 @@ data "DisplayName" "h3f8e6b35ge4a1g491fg92feg98c77e9f3ec7"
 //
 data "Description" "h86d7091dg4408g4174g87c1g512f7fb2ea67"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 //
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 // 
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FESTERING_WOUND)"
@@ -85,6 +90,8 @@ type "PassiveData"
 data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 // 
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND_TECHNICAL,100,0)"
@@ -99,6 +106,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 // 
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FESTERING_WOUND_TECHNICAL"
@@ -116,6 +125,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 // 
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_FESTERING_WOUND_MAXHP"

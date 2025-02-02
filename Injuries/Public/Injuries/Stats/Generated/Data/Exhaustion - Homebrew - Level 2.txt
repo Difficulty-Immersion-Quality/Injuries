@@ -9,6 +9,7 @@ data "DisplayName" "he0329711g8337g4525g9b79ga77f455fc4d7"
 //
 data "Description" "hf19cd4fag4074g4a8bga525g3186f1e4345f"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "Status_Exhausted_2"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -46,6 +47,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "he0329711g8337g4525g9b79ga77f455fc4d7"
 //
 data "Description" "hf19cd4fag4074g4a8bga525g3186f1e4345f"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "Status_Exhausted_2"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -57,6 +60,9 @@ data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_2') and not Has
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
 data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_2,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_2,100,0)"
+//
+data "SoundVocalStart" "EXHAUSTED"
+data "SoundVocalEnd" "RELAXED"
 
 // ==================================== Technicals for sleep mechanic ====================================
 
@@ -68,6 +74,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "he0329711g8337g4525g9b79ga77f455fc4d7"
 //
 data "Description" "hf19cd4fag4074g4a8bga525g3186f1e4345f"
+data "DescriptionParams" ""
+data "TooltipSave" "Charisma"
 data "Icon" "Status_Exhausted_2"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
@@ -80,6 +88,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "he0329711g8337g4525g9b79ga77f455fc4d7"
 //
 data "Description" "hf19cd4fag4074g4a8bga525g3186f1e4345f"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhausted_2"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //

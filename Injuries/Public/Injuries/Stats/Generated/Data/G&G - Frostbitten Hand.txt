@@ -8,6 +8,7 @@ data "DisplayName" "h04e993c4g5a4eg4f38g9b8ag9303a0d823b6"
 // 
 data "Description" "h48a9a49aga341g4bc0g98ceg73c12e4bdf1f"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
+data "TooltipSave" "Dexterity"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FROSTBITTEN_HAND)"
@@ -87,6 +92,7 @@ data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
+data "TooltipSave" "Dexterity"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Dexterity,15)):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL,100,1)"
@@ -100,6 +106,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
+data "DescriptionParams" ""
+data "TooltipSave" "Dexterity"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL"

@@ -8,6 +8,7 @@ data "DisplayName" "h8faa1383gcc53g4befgb4c5ga1213d58edec"
 // 
 data "Description" "ha0f3dd5cgcb44g4dffgb445g89a63dbf428c"
 data "DescriptionParams" "Distance(3)"
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting;Blind"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
 // 
 data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
 data "DescriptionParams" "Distance(3)"
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting;Blind"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" "Blinded"
 data "StillAnimationPriority" "Blinded"
 data "SoundVocalStart" "DEATH"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" "Spell_Status_Blinded_MO"
 data "SoundStop" "Spell_Status_Blinded_MO_Stop"
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h88eb37b4g8863g4f9ag947eged6ebb27067a"
 // 
 data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
 data "DescriptionParams" "Distance(3)"
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_BLINDNESS)"

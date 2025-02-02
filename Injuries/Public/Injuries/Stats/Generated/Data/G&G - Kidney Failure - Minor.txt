@@ -8,6 +8,7 @@ data "DisplayName" "hc4a2a3a4ga8a7g411egb318g3f3bd1a4cb37"
 //
 data "Description" "h850143d8g0501g45f7ga74fg7bb9c3456d96"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 //
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "PAIN"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" "Misc_Status_Poison_MO"
 data "SoundStop" "Misc_Status_Poison_MO_Stop"
 data "FreezeTime" ""
@@ -69,6 +73,8 @@ type "PassiveData"
 data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source) and SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE)"
@@ -84,6 +90,8 @@ type "PassiveData"
 data "DisplayName" "h61c99903gd27dg4949g92eag2ef898be9bf9"
 // 
 data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_POISONED_KIDNEY_LIVER,100,-1)"

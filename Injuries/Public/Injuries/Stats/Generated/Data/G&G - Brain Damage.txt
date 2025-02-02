@@ -8,6 +8,7 @@ data "DisplayName" "h42766bbbgac6ag414eg989dg30d0b6817bdb"
 //
 data "Description" "h0d43077fg2adcg4133g9d0dgfb6a32237a75"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
 //
 data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" "Dazed"
 data "StillAnimationPriority" "Dazed"
 data "SoundVocalStart" "WEAK"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
 //
 data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
 data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,15)):RemoveStatus(GOON_INJURY_GRIT_GLORY_BRAIN_INJURY)"
@@ -85,6 +90,8 @@ type "PassiveData"
 data "DisplayName" "hdbad060ag6520g4f71ga58eg486c0bad4e82"
 //
 data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "ApplyStatus(STUNNED,100,1)"

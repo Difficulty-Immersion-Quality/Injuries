@@ -8,6 +8,7 @@ data "DisplayName" ""
 //
 data "Description" ""
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "Status_Exhausted_1"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -40,6 +41,8 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 //
 data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "Status_Exhausted_1"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -51,6 +54,9 @@ data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_X') and not HasStatus('G
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
 data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_EASY,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_EASY,100,0)"
+//
+data "SoundVocalStart" "EXHAUSTED"
+data "SoundVocalEnd" "RELAXED"
 
 // ==================================== Technicals for sleep mechanic ====================================
 
@@ -62,6 +68,8 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 //
 data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" "Charisma"
 data "Icon" "Status_Exhausted_1"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
@@ -75,6 +83,8 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 //
 data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhausted_1"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //

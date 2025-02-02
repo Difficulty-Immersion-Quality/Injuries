@@ -8,6 +8,7 @@ data "DisplayName" "hda98c4b5g41f9g42ffgbf37g86cfe6a7a47a"
 // 
 data "Description" "h3052f96cg1b54g4b7fgab6agef1c3a4362cb"
 data "DescriptionParams" "Distance(2)"
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -28,6 +29,7 @@ data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
 // 
 data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
 data "DescriptionParams" "Distance(2)"
+data "TooltipSave" "Constitution"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
@@ -52,7 +54,9 @@ data "AnimationEnd" ""
 data "StillAnimationType" ""
 data "StillAnimationPriority" ""
 data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
 data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
 data "SoundLoop" ""
 data "SoundStop" ""
 data "FreezeTime" ""
@@ -70,6 +74,7 @@ data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
 // 
 data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
 data "DescriptionParams" "Distance(2)"
+data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT)"
@@ -86,6 +91,8 @@ data "StatusType" "BOOST"
 data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
 //
 data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "DescriptionParams" "Distance(2)"
+data "TooltipSave" "Constitution"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(PRONE,100,1)"
