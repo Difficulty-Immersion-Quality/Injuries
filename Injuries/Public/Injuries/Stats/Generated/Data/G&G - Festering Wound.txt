@@ -113,6 +113,8 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_FESTERING_WOUND_MAXHP"
 data "StackType" "Additive"
 data "Boosts" "IncreaseMaxHP(-1)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_FESTERING_WOUND')"
+data "RemoveEvents" "OnStatusRemoved"
 //
 data "SoundVocalStart" "PAIN"
 
