@@ -11,6 +11,7 @@ data "Description" "h1aea20b8g504eg4805ga623gfcf9f5999b49"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_PARANOIA"

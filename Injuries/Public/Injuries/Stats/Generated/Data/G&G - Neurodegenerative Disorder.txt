@@ -31,6 +31,7 @@ data "Description" "h321e22ddg29b7g4464g881bgea4a6fde0b36"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEURODEGENERATIVE_DISORDER"

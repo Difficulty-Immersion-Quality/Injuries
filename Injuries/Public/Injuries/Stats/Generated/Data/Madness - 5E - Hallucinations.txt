@@ -11,6 +11,7 @@ data "Description" "h3f8aa500ga086g4e3eg8d7cg4946652bb5bb"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_HALLUCINATIONS"

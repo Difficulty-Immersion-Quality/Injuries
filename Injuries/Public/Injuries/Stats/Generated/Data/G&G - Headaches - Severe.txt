@@ -31,6 +31,7 @@ data "Description" "ha93d8f3bg60a3g4e7dga4d9gf56f6896dd7b"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_HEADACHES"

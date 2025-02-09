@@ -31,6 +31,7 @@ data "Description" "h54a18bcagd64bg4436g9483gc95a38d36511"
 data "DescriptionParams" ""
 data "TooltipSave" "Constitution"
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_KIDNEY_FAILURE"

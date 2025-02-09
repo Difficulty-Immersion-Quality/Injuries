@@ -31,6 +31,7 @@ data "Description" "h145ce428gaa14g45bag8e79ga55a241f1ccc"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SKELETAL_MUSCLE_BREAKDOWN"

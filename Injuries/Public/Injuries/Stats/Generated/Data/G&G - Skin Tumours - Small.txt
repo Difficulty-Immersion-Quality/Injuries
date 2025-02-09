@@ -31,6 +31,7 @@ data "Description" "ha637e8f0geedfg4e72ga368ga5e055e5802e"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SKIN_TUMOURS"

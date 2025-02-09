@@ -31,6 +31,7 @@ data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
 data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SEVERE_BRUISING"

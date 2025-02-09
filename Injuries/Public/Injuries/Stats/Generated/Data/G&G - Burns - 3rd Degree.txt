@@ -31,6 +31,7 @@ data "Description" "h884a4cccg258dg4fe8g9e9eg9f59173fe460"
 data "DescriptionParams" "DealDamage(1,Fire)"
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BURNS"

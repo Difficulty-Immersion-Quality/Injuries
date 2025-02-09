@@ -31,6 +31,7 @@ data "Description" "hba6c9190g4297g49dfg9cf8g2fc42c9b42b3"
 data "DescriptionParams" "Distance(3)"
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting;Blind"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS"

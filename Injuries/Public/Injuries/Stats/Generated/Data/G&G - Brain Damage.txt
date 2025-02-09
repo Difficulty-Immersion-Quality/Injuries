@@ -31,6 +31,7 @@ data "Description" "h349e6ff4g0427g4ec4gb259g01c20432b0f0"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_BRAIN_INJURY"

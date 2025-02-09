@@ -31,6 +31,7 @@ data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"

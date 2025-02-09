@@ -31,6 +31,7 @@ data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"

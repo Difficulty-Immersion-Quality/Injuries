@@ -10,6 +10,7 @@ data "Description" "h3060b0c1g6be8g498aga43ag7ab3b8aeb3f5"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting;LoseControl;OverheadOnTurn;InitiateCombat;BringIntoCombat"
 //
 data "StackId" "GOON_MADNESS_5E_HOMICIDAL"

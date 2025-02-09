@@ -11,6 +11,7 @@ data "Description" "hf873f830gcee2g4980g9fa3g5423ca785f41"
 data "DescriptionParams" "Distance(3)"
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_COMATOSED"

@@ -31,6 +31,7 @@ data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
 data "DescriptionParams" ""
 data "TooltipSave" "Dexterity"
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND"

@@ -31,6 +31,7 @@ data "Description" "h47f7e9begfb8dg4662gad98g3d03b67053e3"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN"

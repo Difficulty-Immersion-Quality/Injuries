@@ -31,6 +31,7 @@ data "Description" "h582f879fgf7a7g4040gb30dgac0021216b2b"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NECROTIC_STENCH"
