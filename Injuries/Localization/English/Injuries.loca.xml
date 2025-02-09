@@ -114,4 +114,27 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h3fcbb7dcbecd4a57a613931a57720e952ca7" version="1">Register a New Injury System</content>
 	<content contentuid="h4ad9acd0b0d2422184871ede9022f0b31c22" version="1">Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system. All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved</content>
 	<!-- END INJURY MAIN MENU -->
+
+	<!-- BEGIN INJURY REPORT -->
+    <content contentuid="hc8b5175f44b74b64987bad4f9dc5a92795cf" version="1">N/A</content>
+    <content contentuid="h69c86afe9aca452c99c22b622e132edb3faf" version="1">Tag</content>
+    <content contentuid="h00ffb5e8947a49a2809db7c6040a507c8720" version="1">NPC Category</content>
+    <content contentuid="h7e09d99860024b8fbd8cb4150e0a38f4b75b" version="1">Multiplier</content>
+    <content contentuid="h5043a3dc062140d18bb41f64e64919c53808" version="1">Before</content>
+    <content contentuid="h027c1850829a4110bd48020e5cc3568b07b6" version="1">After</content>
+    <content contentuid="hbeb89344fa92437bb90906a174e97422a41g" version="1">|| Applied Due To</content>
+    <content contentuid="h6a6c0cf5788a4c53bfa79f34f80c649855ge" version="1">Application Chance:</content>
+    <content contentuid="hbfc67df75c9c415984e82956001094eb36fe" version="1">| Number Of Attempted Applications:</content>
+    <content contentuid="h6c7f017278c34386ae1fe4810beaa30fa7d5" version="1">Injury Damage / Threshold</content>
+    <content contentuid="ha7b7cc41b59d406f93b7c4e8d6f99c50b7eb" version="1">Total Damage</content>
+    <content contentuid="h68f3d107a4e2413191eb6608c2758c9dfb52" version="1">Apply On Status: Cumulative Rounds / Threshold</content>
+    <content contentuid="h6d75e18a324a41cd9eca0f4d026a0391g4ab" version="1">Total # of Rounds</content>
+    <content contentuid="h16fe43f0f3bf460cafe41b643caf19a97gge" version="1">Viewing Live Injury Report</content>
+    <content contentuid="ha435e14fb43c4aae8ad3333e1a3629e931b0" version="1">Data for an injury will stop updating once that injury is applied, but will remain for transparency.</content>
+    <content contentuid="hc6ab9696c9b64211b720b3cf7758c6d17b5g" version="1">Characters will be removed from the report when they die or all injury information is removed from them, such as when:</content>
+    <content contentuid="h756f70ecde4f4f34a5948db95002cfa487g8" version="1">The Counters are reset</content>
+    <content contentuid="h4c2c9f6d81804c1ab25415e9930fde1c22f0" version="1">All Damage is Healed</content>
+    <content contentuid="hcc19224ba7234daeacec4ee2a68e044e86d6" version="1">All applied injuries are removed</content>
+    <content contentuid="he7a1ecba3c5e48e3bf3b992e949c802f497d" version="1">The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles.</content>
+	<!-- END INJURY REPORT -->
 </contentList>

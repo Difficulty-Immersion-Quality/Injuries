@@ -577,7 +577,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 )
 
 Translator:RegisterTranslation({
-	[""] = "",
 	["Universal Options"] = "h1ec71859ad9f44458110fb611c05f4d701ag",
 	["Who Can Receive Injuries?"] = "h00f45a44ab9345c1b1106d6852ebcc4d9cb3",
 	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",

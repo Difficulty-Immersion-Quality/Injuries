@@ -77,7 +77,7 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 
 		row:AddCell():AddText(string.format("%s (%s - %s)",
 			tagData.Name,
-			tagData.DisplayName:Get() or "N/A",
+			tagData.DisplayName:Get() or Translator:translate("N/A"),
 			string.sub(tagData.ResourceUUID, -5)
 		))
 	end
@@ -95,16 +95,16 @@ end
 local function AddMultiplierRows(reportTable, entity, injuryConfig, totalAmount, npcCategory, characterMultiplier)
 	local raceRow = reportTable:AddRow()
 	local raceMulti = AddRaceMultiplierText(raceRow:AddCell(), entity, injuryConfig)
-	raceRow:AddCell():AddText(raceMulti and ((raceMulti * 100) .. "%") or "N/A")
+	raceRow:AddCell():AddText(raceMulti and ((raceMulti * 100) .. "%") or Translator:translate("N/A"))
 	raceRow:AddCell():AddText("---")
 	totalAmount = totalAmount * (raceMulti or 1)
 	raceRow:AddCell():AddText(tostring(totalAmount))
 
 	local tagRow = reportTable:AddRow()
 	local tagDisplayCell = tagRow:AddCell()
-	tagDisplayCell:AddText("Tag")
+	tagDisplayCell:AddText(Translator:translate("Tag"))
 	local totalTagMultiplier = AddTagMultiplierText(tagDisplayCell, entity, injuryConfig)
-	tagRow:AddCell():AddText(totalTagMultiplier and ((totalTagMultiplier * 100) .. "%") or "N/A")
+	tagRow:AddCell():AddText(totalTagMultiplier and ((totalTagMultiplier * 100) .. "%") or Translator:translate("N/A"))
 	tagRow:AddCell():AddText("---")
 	totalAmount = totalAmount * (totalTagMultiplier or 1)
 	tagRow:AddCell():AddText(tostring(totalAmount))
@@ -112,7 +112,7 @@ local function AddMultiplierRows(reportTable, entity, injuryConfig, totalAmount,
 	if npcCategory then
 		local npcMulti = reportTable:AddRow()
 		local npcDisplay = npcMulti:AddCell()
-		npcDisplay:AddText("NPC Category")
+		npcDisplay:AddText(Translator:translate("NPC Category"))
 		local seeNpcButton = npcDisplay:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
 		seeNpcButton.SameLine = true
 		seeNpcButton:Tooltip():AddText("\t" .. npcCategory)
@@ -142,9 +142,9 @@ local function CreateReport(group)
 	local statusReportHeaders = reportTable:AddRow()
 	statusReportHeaders.Headers = true
 	statusReportHeaders:AddCell():AddText("")
-	statusReportHeaders:AddCell():AddText("Multiplier")
-	statusReportHeaders:AddCell():AddText("Before")
-	statusReportHeaders:AddCell():AddText("After")
+	statusReportHeaders:AddCell():AddText(Translator:translate("Multiplier"))
+	statusReportHeaders:AddCell():AddText(Translator:translate("Before"))
+	statusReportHeaders:AddCell():AddText(Translator:translate("After"))
 
 	reportTable.UserData = false
 	reportButton.OnHoverEnter = function()
@@ -212,13 +212,13 @@ local function BuildReport()
 				local keepGroup = false
 				if injuryReport["injuryAppliedReason"][injury] then
 					keepGroup = true
-					sepText = sepText .. " || Applied Due To " .. injuryReport["injuryAppliedReason"][injury]
+					sepText = sepText .. " " .. Translator:translate("|| Applied Due To") .. " " .. injuryReport["injuryAppliedReason"][injury]
 				end
 				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
 
 				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
-					injuryReportGroup:AddText(string.format("Application Chance: %s%%", injuryConfig.chance_of_application or 100))
-					injuryReportGroup:AddText(string.format(" | Number Of Attempted Applications: %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. "%s%% ", injuryConfig.chance_of_application or 100))
+					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. "%s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
 				end
 
 				--#region Damage Report
@@ -226,7 +226,7 @@ local function BuildReport()
 					local damageGroup = injuryReportGroup:AddGroup("Damage")
 					damageGroup.UserData = injury .. "damage"
 
-					local damageResultText = damageGroup:AddText("Injury Damage / Threshold")
+					local damageResultText = damageGroup:AddText(Translator:translate("Injury Damage / Threshold"))
 					local damageReportTable = CreateReport(damageGroup)
 
 					local totalDamage = 0
@@ -248,7 +248,7 @@ local function BuildReport()
 						damageGroup:Destroy()
 					else
 						local row = damageReportTable:AddRow()
-						row:AddCell():AddText("Total Damage")
+						row:AddCell():AddText(Translator:translate("Total Damage"))
 						row:AddCell():AddText("---")
 						row:AddCell():AddText("---")
 						row:AddCell():AddText(tostring(totalDamage))
@@ -270,7 +270,7 @@ local function BuildReport()
 					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
 					statusGroup.UserData = injury .. "applyOnStatus"
 
-					local statusText = statusGroup:AddText("Apply On Status: Cumulative Rounds / Threshold")
+					local statusText = statusGroup:AddText(Translator:translate("Apply On Status: Cumulative Rounds / Threshold"))
 					local statusReportTable = CreateReport(statusGroup)
 
 					local totalRounds = 0
@@ -290,7 +290,7 @@ local function BuildReport()
 						statusGroup:Destroy()
 					else
 						local row = statusReportTable:AddRow()
-						row:AddCell():AddText("Total # of Rounds")
+						row:AddCell():AddText(Translator:translate("Total # of Rounds"))
 						row:AddCell():AddText("---")
 						row:AddCell():AddText("---")
 						row:AddCell():AddText(tostring(totalRounds))
@@ -344,19 +344,19 @@ Ext.RegisterNetListener("Injuries_Update_Report", function(channel, character, u
 end)
 
 function InjuryReport:BuildReportWindow()
-	reportWindow = Ext.IMGUI.NewWindow("Viewing Live Injury Report")
+	reportWindow = Ext.IMGUI.NewWindow(Translator:translate("Viewing Live Injury Report"))
 	reportWindow.Closeable = true
 
 	local moreInfo = reportWindow:AddImageButton("More Info", "Action_Help", { 30, 30 })
 	local tooltip = moreInfo:Tooltip()
-	tooltip:AddText("Data for an injury will stop updating once that injury is applied, but will remain for transparency.")
+	tooltip:AddText(Translator:translate("Data for an injury will stop updating once that injury is applied, but will remain for transparency."))
 	tooltip:AddSeparator()
-	tooltip:AddText("Characters will be removed from the report when they die or all injury information is removed from them, such as when:").TextWrapPos = 0
-	tooltip:AddBulletText("The Counters are reset")
-	tooltip:AddBulletText("All Damage is Healed")
-	tooltip:AddBulletText("All applied injuries are removed")
+	tooltip:AddText(Translator:translate("Characters will be removed from the report when they die or all injury information is removed from them, such as when:")).TextWrapPos = 0
+	tooltip:AddBulletText(Translator:translate("The Counters are reset"))
+	tooltip:AddBulletText(Translator:translate("All Damage is Healed"))
+	tooltip:AddBulletText(Translator:translate("All applied injuries are removed"))
 	tooltip:AddSeparator()
-	tooltip:AddText("The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles.").TextWrapPos = 0
+	tooltip:AddText(Translator:translate("The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles.")).TextWrapPos = 0
 
 	reportWindow.OnClose = function()
 		reportWindow = nil
@@ -367,3 +367,26 @@ function InjuryReport:BuildReportWindow()
 
 	BuildReport()
 end
+
+Translator:RegisterTranslation({
+	["N/A"] = "hc8b5175f44b74b64987bad4f9dc5a92795cf",
+	["Tag"] = "h69c86afe9aca452c99c22b622e132edb3faf",
+	["NPC Category"] = "h00ffb5e8947a49a2809db7c6040a507c8720",
+	["Multiplier"] = "h7e09d99860024b8fbd8cb4150e0a38f4b75b",
+	["Before"] = "h5043a3dc062140d18bb41f64e64919c53808",
+	["After"] = "h027c1850829a4110bd48020e5cc3568b07b6",
+	["|| Applied Due To"] = "hbeb89344fa92437bb90906a174e97422a41g",
+	["Application Chance:"] = "h6a6c0cf5788a4c53bfa79f34f80c649855ge",
+	["| Number Of Attempted Applications:"] = "hbfc67df75c9c415984e82956001094eb36fe",
+	["Injury Damage / Threshold"] = "h6c7f017278c34386ae1fe4810beaa30fa7d5",
+	["Total Damage"] = "ha7b7cc41b59d406f93b7c4e8d6f99c50b7eb",
+	["Apply On Status: Cumulative Rounds / Threshold"] = "h68f3d107a4e2413191eb6608c2758c9dfb52",
+	["Total # of Rounds"] = "h6d75e18a324a41cd9eca0f4d026a0391g4ab",
+	["Viewing Live Injury Report"] = "h16fe43f0f3bf460cafe41b643caf19a97gge",
+	["Data for an injury will stop updating once that injury is applied, but will remain for transparency."] = "ha435e14fb43c4aae8ad3333e1a3629e931b0",
+	["Characters will be removed from the report when they die or all injury information is removed from them, such as when:"] = "hc6ab9696c9b64211b720b3cf7758c6d17b5g",
+	["The Counters are reset"] = "h756f70ecde4f4f34a5948db95002cfa487g8",
+	["All Damage is Healed"] = "h4c2c9f6d81804c1ab25415e9930fde1c22f0",
+	["All applied injuries are removed"] = "hcc19224ba7234daeacec4ee2a68e044e86d6",
+	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] = "he7a1ecba3c5e48e3bf3b992e949c802f497d",
+})
