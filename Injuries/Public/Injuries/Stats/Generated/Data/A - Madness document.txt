@@ -10,10 +10,10 @@ DONE (just did laughing for now) - Random table for screaming or laughing?
 DONE - Basically kinda sorta mirrors Codependent
 
 //41–50    The character begins babbling and is incapable of normal speech or spellcasting.
-EZ - Just do verbal disadvantage casting
+DONE - Just do verbal disadvantage casting
 
 //51–60    The character must use his or her action each round to attack the nearest creature.
-EZ
+DONE
 
 //61–70    The character experiences vivid hallucinations and has disadvantage on ability checks.
 DONE - on both tables
@@ -25,10 +25,10 @@ X
 X
 
 //81–90    The character is stunned.
-EZ
+DONE
 
 //91–100    The character falls unconscious.
-EZ
+DONE
 
 // Long-Term Madness
 //d100    Effect (lasts 1d10 × 10 hours)
