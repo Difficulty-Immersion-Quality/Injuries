@@ -892,6 +892,15 @@ The effects of madness are suppressed while under the effects of &lt;LSTag Type=
 
 
 
+	<content contentuid="h9d0be1d0g860ag43c8g8a5egb301606f505e" version="1">Madness: Stunned</content> Short-term madness.
+	-- The character is stunned.
+
+	<content contentuid="hd989ed0dg353ag4cf0g9a9ag203e084e555f" version="1">You are stunned. You cannot move or take &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Actions&lt;/LSTag&gt;, &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Actions&lt;/LSTag&gt; or &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt;.&lt;Br&gt;&lt;Br&gt;. Attacks against you are always &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt; if the attacker is within [1].
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
+
+
+
 	<content contentuid="h7a41a25fg2394g4525ga8c0g3a775a8aafed" version="1">Madness: Tremors</content> Long-term and Short-term madness.
 	-- The character experiences uncontrollable tremors or tics, which impose disadvantage on attack rolls, ability checks, and saving throws that involve Strength or Dexterity.
 
