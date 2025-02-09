@@ -65,6 +65,13 @@ data "SplatterDirtAmount" "0.0"
 data "SplatterSweatAmount" "1.0"
 data "ApplyEffect" ""
 data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
 
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Neurodegenerative_Disorder_Removal_Technical_Passive"

@@ -46,5 +46,12 @@ data "SplatterDirtAmount" "0.5"
 data "SplatterSweatAmount" "0.5"
 data "ApplyEffect" ""
 data "StatusEffect" "b89b7538-2cb3-400f-b1c9-378f61070abb"
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
 
 // ==================================== Technicals for individual madness functionality ====================================
