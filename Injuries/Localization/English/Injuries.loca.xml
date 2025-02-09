@@ -161,4 +161,35 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="h192362c2dca1421da023f113a75fa49dc485" version="1">Damage Type</content>
     <content contentuid="h3c6d9998781a457b88ff11c6d2376a0670ef" version="1">Injury Damage Multiplier %</content>
 	<!-- END Damage Tab -->
+
+	<!-- BEGIN Character Multipliers Tab -->
+    <content contentuid="h083eca37a9d64a499e02c746c60459ab97g2" version="1">Can't Translate</content>
+    <content contentuid="hc53c9e27bdff459a8fca5241b55e5ba8eg4f" version="1">Character Multipliers</content>
+    <content contentuid="ha53ab4a9feb24908bb820177c714ab0e8g00" version="1">Races</content>
+    <content contentuid="h274d07d40f19497bb2725503e284af1ac516" version="1">Race</content>
+    <content contentuid="hb70b79aad49b400f824161698ebc612c5d68" version="1">Multiplier (%)</content>
+    <content contentuid="h0cee4cf85a3b4c4580c7f6d396ed9b5c8609" version="1">Resource Name:</content>
+    <content contentuid="h652d5e5c916f4f20b9022f295bb7aa9345e2" version="1">UUID:</content>
+    <content contentuid="hed01418847b541ed8d7409f2005680ad457g" version="1">Description:</content>
+    <content contentuid="h8901bd2ebb8d4f4da8e4df70c44e83745b7f" version="1">Tags</content>
+    <content contentuid="he5e4f7e52a264633bfed00514a7c077ab506" version="1">If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)</content>
+    <content contentuid="h923d7335722f4c6589f8abb9761d124b47a1" version="1">Name (Display Name - ID)</content>
+    <content contentuid="h77b2a94cb0204e0c98ee08217f5098a28136" version="1">% Multiplier</content>
+    <content contentuid="h4dc4bb8bd0574f3790f38849055385955b50" version="1">N/A</content>
+    <content contentuid="h09cebe760b1d4e3f9df49ae1091f6bd14b7d" version="1">Display Name:</content>
+    <content contentuid="h7cf79c8770384e6b933ad9a7c5f17b2dcbd9" version="1">ResourceId:</content>
+    <content contentuid="h72738de2d12d41798d6780e4512bef70a9g1" version="1">Tag UUID:</content>
+    <content contentuid="h56eb6fe545af4fe3b335bc5483844b98be02" version="1">Display Description:</content>
+    <content contentuid="h55fb845d61da4b6ba21457c35b05edfc672g" version="1">Delete</content>
+	<!-- END Character Multipliers Tab -->
+
+	<!-- BEGIN Apply On Status Tab -->
+    <content contentuid="hc1c5dc21b84e4079ad868a8081c86a6301d3" version="1">Delete</content>
+    <content contentuid="hd32bf68edf8741eab48fa41ad6c76a8929g4" version="1">Apply On Status</content>
+    <content contentuid="h088d7c8b3587413f8f9a452ceb4d7e6984d4" version="1">How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?</content>
+    <content contentuid="ha54ea9b2153f4a95af1a5bbd99b23e9151cd" version="1">Status Name (ResourceID)</content>
+    <content contentuid="h937dd0c975ab4ff0acbdfc2cc6b3cf666f7d" version="1">Round # Multiplier</content>
+    <content contentuid="h58b6ebc929ff49bbba04e3f2e1a1dbe7b4e6" version="1">Guarantee Injury Application (?)</content>
+    <content contentuid="h79a85e2f12d44e72a2b4c42dc5e716c11e45" version="1">If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)</content>
+	<!-- END Apply On Status Tab -->
 </contentList>
