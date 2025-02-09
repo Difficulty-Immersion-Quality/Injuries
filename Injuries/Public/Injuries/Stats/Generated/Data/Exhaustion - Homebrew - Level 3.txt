@@ -11,6 +11,7 @@ data "Description" "hca30e832gcc44g433eg995dg0373164d4fbe"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "Status_Exhausted_3"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_EXHAUSTION_HOMEBREW"

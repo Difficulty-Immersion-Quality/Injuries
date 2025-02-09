@@ -10,6 +10,7 @@ data "Description" ""
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "Status_Exhausted_1"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_EXHAUSTION_X"
