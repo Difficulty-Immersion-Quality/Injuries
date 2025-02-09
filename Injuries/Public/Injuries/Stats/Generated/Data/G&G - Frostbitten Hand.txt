@@ -121,7 +121,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_BOOST_TECHNICAL"
 data "StackPriority" ""
 data "StackType" "Overwrite"
-data "Boosts" "IF(Goon_Injury_Offhand_Check(true)):Disadvantage(Ability,Strength);IF(Goon_Injury_Offhand_Check(true)):Disadvantage(Ability,Dexterity);IF(Goon_Injury_Offhand_Check(true)):Disadvantage(AttackRoll);IF(Goon_Injury_Offhand_Check(true)):UnlockSpellVariant(Goon_Injury_Spell_Check_Somatic(),IsSpell(),ModifySavingThrowAdvantage())"
+data "Boosts" "IF(Goon_Injury_Offhand_Check(true)):Disadvantage(Ability,Strength);IF(Goon_Injury_Offhand_Check(true)):Disadvantage(Ability,Dexterity);IF(Goon_Injury_Offhand_Check(true)):Disadvantage(AttackRoll);IF(Goon_Injury_Offhand_Check(true) and HasSpellFlag(SpellFlags.HasSomaticComponent)):SpellSaveDC(-5)"
 data "OnApplyFunctors" ""
 data "SoundVocalStart" "DEATH"
 
