@@ -27,7 +27,7 @@ data "RemoveConditions" "SavingThrow(Ability.Wisdom, 15)"
 data "RemoveEvents" "OnDamage;OnTurn"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" ""
+data "StatusGroups" "SG_Condition"
 data "Passives" ""
 //
 data "AnimationStart" ""
