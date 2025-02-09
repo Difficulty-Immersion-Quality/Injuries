@@ -36,7 +36,7 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 		statusConfig["guarantee_application"] = guaranteeApplicationCheckbox.Checked
 	end
 
-	local deleteRowButton = row:AddCell():AddButton("Delete")
+	local deleteRowButton = row:AddCell():AddButton(Translator:translate("Delete"))
 	deleteRowButton.OnClick = function()
 		statusConfig.delete = true
 		row:Destroy()
@@ -52,10 +52,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status)
 	end
 	local applyOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].apply_on_status
-	local statusTab = tabBar:AddTabItem("Apply On Status")
+	local statusTab = tabBar:AddTabItem(Translator:translate("Apply On Status"))
 	statusTab.TextWrapPos = 0
 
-	statusTab:AddText("How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?")
+	statusTab:AddText(Translator:translate("How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?"))
 	local statusRounds = statusTab:AddSliderInt("", applyOnConfig["number_of_rounds"], 1, 30)
 	statusRounds.OnChange = function()
 		applyOnConfig["number_of_rounds"] = statusRounds.Value[1]
@@ -68,9 +68,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Status Name (ResourceID)")
-	headerRow:AddCell():AddText("Round # Multiplier")
-	headerRow:AddCell():AddText("Guarantee Injury Application (?)"):Tooltip():AddText("\t\t If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)").TextWrapPos = 600
+	headerRow:AddCell():AddText(Translator:translate("Status Name (ResourceID)"))
+	headerRow:AddCell():AddText(Translator:translate("Round # Multiplier"))
+	headerRow:AddCell():AddText(Translator:translate("Guarantee Injury Application (?)")):Tooltip():AddText("\t\t " .. Translator:translate("If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)")).TextWrapPos = 600
 
 	DataSearchHelper:BuildSearch(statusTab,
 		Ext.Stats.GetStats("StatusData"),
@@ -85,3 +85,13 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		BuildRows(statusTable, status, applyOnConfig["applicable_statuses"])
 	end
 end)
+
+Translator:RegisterTranslation({
+	["Delete"] = "hc1c5dc21b84e4079ad868a8081c86a6301d3",
+	["Apply On Status"] = "hd32bf68edf8741eab48fa41ad6c76a8929g4",
+	["How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?"] = "h088d7c8b3587413f8f9a452ceb4d7e6984d4",
+	["Status Name (ResourceID)"] = "ha54ea9b2153f4a95af1a5bbd99b23e9151cd",
+	["Round # Multiplier"] = "h937dd0c975ab4ff0acbdfc2cc6b3cf666f7d",
+	["Guarantee Injury Application (?)"] = "h58b6ebc929ff49bbba04e3f2e1a1dbe7b4e6",
+	["If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)"] = "h79a85e2f12d44e72a2b4c42dc5e716c11e45",
+})
