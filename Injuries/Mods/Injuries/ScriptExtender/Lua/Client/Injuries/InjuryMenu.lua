@@ -31,9 +31,14 @@ Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
 Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
 Ext.Require("Client/Injuries/Tabs/RemoveOnStatusTab.lua")
 
+local initialized = false
 Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 	--- @param tabHeader ExtuiTreeParent
 	function(tabHeader)
+		if initialized then
+			return
+		end
+		initialized = true
 		tabHeader.TextWrapPos = 0
 
 		--#region Universal Options
