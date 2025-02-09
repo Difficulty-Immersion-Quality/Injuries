@@ -901,6 +901,15 @@ The effects of madness are suppressed while under the effects of &lt;LSTag Type=
 
 
 
+	<content contentuid="hde8bbce9gc7f4g4794g8c8egd6ca4a2b118a" version="1">Madness: Tongue Tied</content> Short-term madness.
+	-- The character begins babbling and is incapable of normal speech or spellcasting.
+
+	<content contentuid="hd3b35a90gf6e9g4fbdg9ebdgb1cc4d678772" version="1">You struggle with normal speech. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on spell &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; and a -5 penalty to your &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt; for spells with verbal components.
+&lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
+&lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
+
+
+
 	<content contentuid="h7a41a25fg2394g4525ga8c0g3a775a8aafed" version="1">Madness: Tremors</content> Long-term and Short-term madness.
 	-- The character experiences uncontrollable tremors or tics, which impose disadvantage on attack rolls, ability checks, and saving throws that involve Strength or Dexterity.
 
