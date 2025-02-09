@@ -10,7 +10,7 @@ data "DisplayName" "h2ec0764bg89efg4e43gab54g56089ed58cab"
 data "Description" "hef3e16aag711bg4f18gb443g2284bc7f218f"
 data "DescriptionParams" ""
 data "TooltipSave" "Wisdom"
-data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
+data "Icon" "statIcons_Madness"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_PANICKY"

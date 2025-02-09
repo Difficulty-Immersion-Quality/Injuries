@@ -10,7 +10,7 @@ data "DisplayName" "hdf7b028egd002g4ba6gb109g5b3960b9ae9c"
 data "Description" "hf873f830gcee2g4980g9fa3g5423ca785f41"
 data "DescriptionParams" "Distance(3)"
 data "TooltipSave" ""
-data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
+data "Icon" "statIcons_Madness"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_COMATOSED"

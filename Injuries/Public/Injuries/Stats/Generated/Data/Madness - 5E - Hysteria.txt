@@ -10,7 +10,7 @@ data "DisplayName" "h11ddb0abg85d3g4767g960dgcadbda25c56d"
 data "Description" "h2177c9ccg7a38g4771ga7eagd3c4b21e71da"
 data "DescriptionParams" ""
 data "TooltipSave" "Wisdom"
-data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
+data "Icon" "statIcons_Madness"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_HYSTERIA"
