@@ -349,7 +349,7 @@ function InjuryReport:BuildReportWindow()
 
 	local moreInfo = reportWindow:AddImageButton("More Info", "Action_Help", { 30, 30 })
 	local tooltip = moreInfo:Tooltip()
-	tooltip:AddText(Translator:translate("Data for an injury will stop updating once that injury is applied, but will remain for transparency."))
+	tooltip:AddText("\t\t " .. Translator:translate("Data for an injury will stop updating once that injury is applied, but will remain for transparency."))
 	tooltip:AddSeparator()
 	tooltip:AddText(Translator:translate("Characters will be removed from the report when they die or all injury information is removed from them, such as when:")).TextWrapPos = 0
 	tooltip:AddBulletText(Translator:translate("The Counters are reset"))

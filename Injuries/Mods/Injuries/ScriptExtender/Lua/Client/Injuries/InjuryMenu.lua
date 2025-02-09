@@ -41,7 +41,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		local universal = InjuryMenu.ConfigurationSlice.universal
 
 		--#region Who Can Receive Injuries
-		universalOptions:AddText(Translator:translate("Who Can Receive Injuries?"))
+		universalOptions:AddText(Translator:translate("Who Can Receive Injuries?")).Font = "Large"
 		local partyCheckbox = universalOptions:AddCheckbox(Translator:translate("Party Members"), universal.who_can_receive_injuries["Party Members"])
 		partyCheckbox.OnChange = function()
 			universal.who_can_receive_injuries["Party Members"] = partyCheckbox.Checked
@@ -63,7 +63,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#region Injury Removal
 		universalOptions:AddNewLine()
 
-		universalOptions:AddText(Translator:translate("How Many Different Injuries Can Be Removed At Once?"))
+		universalOptions:AddText(Translator:translate("How Many Different Injuries Can Be Removed At Once?")).Font = "Large"
 		universalOptions:AddText(Translator:translate("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."))
 			:SetStyle("Alpha", 0.90)
 
@@ -122,7 +122,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		--#region Damage Counter
 		universalOptions:AddNewLine()
-		universalOptions:AddText(Translator:translate("When Does the Damage/Status Tick Counter Reset?"))
+		universalOptions:AddText(Translator:translate("When Does the Damage/Status Tick Counter Reset?")).Font = "Large"
 		universalOptions:AddText(Translator:translate("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")):SetStyle("Alpha", 0.90)
 
 		local cumulationCombo = universalOptions:AddCombo("")
@@ -170,7 +170,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		end
 
 		universalOptions:AddNewLine()
-		universalOptions:AddText(Translator:translate("Customize Damage + Status Multipliers For NPCs"))
+		universalOptions:AddText(Translator:translate("Customize Damage + Status Multipliers For NPCs")).Font = "Large"
 		local enemyDesc = universalOptions:AddText(
 			Translator:translate("These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
 			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"))
