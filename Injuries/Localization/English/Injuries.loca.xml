@@ -137,4 +137,13 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="hcc19224ba7234daeacec4ee2a68e044e86d6" version="1">All applied injuries are removed</content>
     <content contentuid="he7a1ecba3c5e48e3bf3b992e949c802f497d" version="1">The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles.</content>
 	<!-- END INJURY REPORT -->
+
+	<!-- BEGIN RemoveOnStatus Tab -->
+    <content contentuid="hce2116065bec41b5a7ce75c39e627a302842" version="1">Delete</content>
+    <content contentuid="h5aafe7131cb74ee4a0a8df3093386146edf5" version="1">Remove On Status</content>
+    <content contentuid="h17af04db98664960a5d485740a86f4bb4517" version="1">Status Name (ResourceID)</content>
+    <content contentuid="hbe9455faa0784cb99616e5098fd5247dgcg2" version="1">Save Conditions</content>
+    <content contentuid="h125c3399732d41a4a300eee966450e16e61f" version="1"># of Stacks To Remove (?)</content>
+    <content contentuid="he6354d4907a7431b82c7ebde28275f9a7eae" version="1">i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied</content>
+	<!-- END RemoveOnStatus Tab -->
 </contentList>
