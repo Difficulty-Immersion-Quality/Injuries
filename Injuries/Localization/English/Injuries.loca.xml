@@ -152,4 +152,13 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="h311816e774904290af50dc14cd5dec8bf0a5" version="1">What's the % chance of this Injury being applied when conditions are met?</content>
     <content contentuid="h3baac0fbaf3846399a8f49ebf893fe490891" version="1">Due to technical limitations, this can't be a save - it's just a flat roll out of 100</content>
 	<!-- END General Rules Tab -->
+
+	<!-- BEGIN Damage Tab -->
+    <content contentuid="h77732ab1f47b48599d1583e8f57932aad0a2" version="1">10 points of %s damage contributes %s points of Injury Damage</content>
+    <content contentuid="h95a95752c92647a8a9c2c6eb130e1696b6gb" version="1">Damage</content>
+    <content contentuid="hdf110c00af5c447782a7bf5e7e3e35c954e6" version="1">Applied after total damage from all configured DamageTypes is >= the following % of Health:</content>
+    <content contentuid="h942494a3f05b4795be91c7d83536346f8g72" version="1">What Damage Types Contribute to Injury Damage?</content>
+    <content contentuid="h192362c2dca1421da023f113a75fa49dc485" version="1">Damage Type</content>
+    <content contentuid="h3c6d9998781a457b88ff11c6d2376a0670ef" version="1">Injury Damage Multiplier %</content>
+	<!-- END Damage Tab -->
 </contentList>
