@@ -16,7 +16,7 @@ data "StackId" "GOON_MADNESS_5E_HOMICIDAL"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 // A calm emotions spell can suppress the effects of madness
-data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):"
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):AiArchetypeOverride(madness,99)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" ""
