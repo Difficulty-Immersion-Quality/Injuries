@@ -378,7 +378,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					end
 
 					local buttonCell = newRow:AddCell()
-					local customizeButton = buttonCell:AddButton("Customize")
+					local customizeButton = buttonCell:AddButton(Translator:translate("Customize"))
 
 					local statCountTooltip = customizeButton:Tooltip()
 
@@ -406,7 +406,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 					local injuryPopup
 					customizeButton.OnClick = function()
-						injuryPopup = Ext.IMGUI.NewWindow(Translator:translate("Customizing ") .. displayName)
+						injuryPopup = Ext.IMGUI.NewWindow(Translator:translate("Customizing") .. " " .. displayName)
 						injuryPopup.Closeable = true
 						injuryPopup.OnClose = function()
 							statCountTooltip:OnHoverEnter()
@@ -449,7 +449,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						copyPopup.AlwaysAutoResize = true
 						copyPopup.Closeable = true
 
-						copyPopup:AddText(Translator:translate("Copying from: ") .. displayName).Font = "Large"
+						copyPopup:AddText(Translator:translate("Copying from:") .. " " .. displayName).Font = "Large"
 						copyPopup:AddText(Translator:translate("Close any Customizing windows you have open - they'll show stale data after this runs")).TextWrapPos = 0
 						copyPopup:AddNewLine()
 
@@ -544,7 +544,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 			buildTable(Translator:translate("Miscellaneous"), miscInjuriesDisplayMap)
 			for stackId, nameMap in TableUtils:OrderedPairs(stackedInjuriesDisplayMap) do
-				buildTable(Translator:translate("Stack: ") .. stackId, nameMap)
+				buildTable(Translator:translate("Stack:") .. " " .. stackId, nameMap)
 			end
 		end
 
@@ -612,16 +612,17 @@ Translator:RegisterTranslation({
 	["Severity"] = "h7231e1d605ce400ea608fb8d4079e8f493bg",
 	["Actions"] = "h6786d51c543e4530a8c2ac7847bce8dd5ce6",
 	["Customize (%s)"] = "h1a8bc7c8138d427ba215ad25773655b69f2d",
+	["Customize"] = "h44056242a4db4cf3a274eb9d84ef8ae6a1f8",
 	["Apply On Status: %d"] = "h2fa3b2dc429e40f9934dfc1da4c9af927ac9",
 	["Damage: %d"] = "h9e5903752a86420d83eb9ebfd034a4ae70ga",
 	["Remove On Status: %d"] = "h417c2180e95c4b58bf778ab09e9c479d4a9d",
 	["Races: %d"] = "h2a4ca5118d19495a922958a7e23b4d18e94d",
 	["Tags: %d"] = "h8f02176203414eda9441035b56a5bd855100",
-	["Customizing "] = "h38ca8120073446a380df1f13774a09496ab7",
+	["Customizing"] = "h38ca8120073446a380df1f13774a09496ab7",
 	["Reset"] = "h28fd5e874c854e1c89f87b6a9f526f592ac1",
 	["Copy"] = "h75fc356630954ffb866066e2ba5403a3bd02",
 	["Copying Injury Configs"] = "he6ca7f6689b442d6b0c69c76701a3acaf37a",
-	["Copying from: "] = "h5562bfc3427d49188b12c54e1de1b6877dcd",
+	["Copying from:"] = "h5562bfc3427d49188b12c54e1de1b6877dcd",
 	["Close any Customizing windows you have open - they'll show stale data after this runs"] = "h74cf05e59dec40a5bbe71883c53ea77bfd2c",
 	["Which Configs Should Be Copied?"] = "h646529ff207d4d87b9ac0ab39eaa076dbd57",
 	["ApplyOnStatus"] = "h6dbf73a197664327ada890532dfd9447772a",
@@ -633,7 +634,7 @@ Translator:RegisterTranslation({
 	["Copy Configs"] = "h0f39712a0c144d05878d26a28b85c2c20c03",
 	["Search"] = "h82b51d5ccffd4a6b8749867ec3896b803dc8",
 	["Miscellaneous"] = "hb9e2a626d6c146a4976bc1241023dda8b7b6",
-	["Stack: "] = "hb484765355a94e1e8dce9a1061e33de4ge73",
+	["Stack:"] = "hb484765355a94e1e8dce9a1061e33de4ge73",
 	["Case-insensitive - only specify the prefix (e.g. Goon_Injury_Homebrew)"] = "h876d8a018fd6472ba406fcd48ab7761e686c",
 	["Register a New Injury System"] = "h3fcbb7dcbecd4a57a613931a57720e952ca7",
 	["Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..

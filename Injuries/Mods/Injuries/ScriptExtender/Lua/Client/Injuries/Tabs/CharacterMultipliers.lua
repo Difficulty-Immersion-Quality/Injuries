@@ -72,9 +72,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local raceSelect = racePopop:AddSelectable(raceName, "DontClosePopups")
 
 		local raceTooltip = raceSelect:Tooltip()
-		raceTooltip:AddText(string.format(Translator:translate("Resource Name:") .. "%s", raceData.Name))
-		raceTooltip:AddText(string.format(Translator:translate("UUID:") ..  "%s", raceUUID))
-		raceTooltip:AddText(string.format(Translator:translate("Description:") .. "%s", raceData.Description:Get())).TextWrapPos = 600
+		raceTooltip:AddText(string.format(Translator:translate("Resource Name:") .. " %s", raceData.Name))
+		raceTooltip:AddText(string.format(Translator:translate("UUID:") ..  " %s", raceUUID))
+		raceTooltip:AddText(string.format(Translator:translate("Description:") .. " %s", raceData.Description:Get())).TextWrapPos = 600
 
 		raceSelect.OnActivate = function()
 			if raceSelect.UserData then
