@@ -79,17 +79,27 @@ data "MaterialParameters" ""
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_Minor_Concussion_Removal_Technical_Passive"
 type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "ApplyStatus(GOON_MINOR_CONCUSSION_REMOVAL_TECHNICAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL')"
+
+// Technical passive for removal otherwise the saving throw overhead and tooltip are innacurate
+new entry "GOON_MINOR_CONCUSSION_REMOVAL_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
 // Injury: Minor Concussion
 data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
 // 
 data "Description" "h75a67443gffdfg4d69g99eag808e91e7a982"
 data "DescriptionParams" ""
 data "TooltipSave" "Constitution"
-data "Properties" "IsHidden"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION)"
-data "StatsFunctorContext" "OnHeal"
-data "Conditions" "HasStatus('GOON_TARGET_REGENERATE_INJURY_REMOVE',context.Source) or HasStatus('GOON_TARGET_HEAL_INJURY_REMOVE',context.Source)"
+data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION)"
 
 // ==================================== Technicals for individual injury functionality ====================================
 
