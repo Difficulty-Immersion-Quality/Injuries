@@ -36,8 +36,7 @@ local ShortTermMadnessTable = {
     "GOON_MADNESS_5E_UNCONSCIOUS"
 }
 
--- Helper function to get a random status from a given table
-local function GetRandomStatus(statusTable, object)
+local function GetRandomStatus(statusTable, object, isShortTerm)
     local characterStatusManager = Ext.Entity.Get(object).ServerCharacter.StatusManager
     local activeStatuses = {}
 
@@ -57,16 +56,22 @@ local function GetRandomStatus(statusTable, object)
     -- If there are valid statuses, apply one randomly
     if #validStatuses > 0 then
         local selectedStatus = validStatuses[math.random(#validStatuses)]
-        Osi.ApplyStatus(object, selectedStatus, -1, 1)
+        
+        -- Adjust duration: Multiply by 10 if game scales it down
+        local duration = isShortTerm and math.random(10, 500) or -1  -- Adjusted scaling
+        
+        print("Applying status: " .. selectedStatus .. " with duration: " .. duration)  -- Debugging
+
+        Osi.ApplyStatus(object, selectedStatus, duration, 1)
     end
 end
 
 -- StatusApplied Listener
 Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status, causee, storyActionID)
     if status == "GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS" then
-        GetRandomStatus(LongTermMadnessTable, object)
+        GetRandomStatus(LongTermMadnessTable, object, false) -- Long-term: Permanent duration
     
     elseif status == "GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS" then
-        GetRandomStatus(ShortTermMadnessTable, object)
+        GetRandomStatus(ShortTermMadnessTable, object, true) -- Short-term: 1-50 turns
     end
 end)
