@@ -1,5 +1,6 @@
 // ==================================== Unlike Injuries, madness effects are just a main status that potentially has some technicals ====================================
 
+// Short-term Madness
 new entry "GOON_MADNESS_5E_STUNNED"
 type "StatusData"
 data "StatusType" "BOOST"
@@ -24,7 +25,7 @@ data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('Mindless
 data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "TickType" "EndTurn"
 data "TickFunctors" ""
-data "StatusGroups" "SG_Stunned;SG_Condition"
+data "StatusGroups" "SG_Stunned"
 data "Passives" ""
 //
 data "AnimationStart" "b554aad5-6f39-4406-b248-e82084d01b1f(STAT_Dazed_Combat_01_Start)"

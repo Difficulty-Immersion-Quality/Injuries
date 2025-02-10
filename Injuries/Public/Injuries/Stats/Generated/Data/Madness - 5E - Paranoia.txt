@@ -27,7 +27,7 @@ data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 //
 data "AnimationStart" ""

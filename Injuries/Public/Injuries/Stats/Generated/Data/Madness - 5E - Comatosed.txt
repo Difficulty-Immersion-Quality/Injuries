@@ -3,7 +3,7 @@
 // Long-term Madness
 new entry "GOON_MADNESS_5E_COMATOSED"
 type "StatusData"
-data "StatusType" "BOOST"
+data "StatusType" "INCAPACITATED"
 // Madness: Comatosed
 data "DisplayName" "hdf7b028egd002g4ba6gb109g5b3960b9ae9c"
 //
@@ -27,7 +27,7 @@ data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('Mindless
 data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Incapacitated;SG_Condition"
+data "StatusGroups" "SG_Incapacitated"
 data "Sheathing" "Sheathed"
 data "Passives" ""
 //

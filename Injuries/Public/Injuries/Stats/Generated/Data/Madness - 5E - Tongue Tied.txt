@@ -1,5 +1,6 @@
 // ==================================== Unlike Injuries, madness effects are just a main status that potentially has some technicals ====================================
 
+// Short-term Madness
 new entry "GOON_MADNESS_5E_TONGUE_TIED"
 type "StatusData"
 data "StatusType" "BOOST"
@@ -24,7 +25,7 @@ data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 //
 data "AnimationStart" ""

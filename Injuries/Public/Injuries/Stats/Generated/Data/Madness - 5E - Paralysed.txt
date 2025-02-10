@@ -27,7 +27,7 @@ data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('Mindless
 data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Incapacitated;SG_Condition;SG_Paralyzed"
+data "StatusGroups" "SG_Incapacitated;SG_Paralyzed"
 data "Passives" ""
 //
 data "AnimationStart" "b554aad5-6f39-4406-b248-e82084d01b1f(STAT_Dazed_Combat_01_Start)"

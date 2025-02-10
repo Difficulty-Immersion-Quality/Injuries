@@ -1,13 +1,14 @@
 // ==================================== Unlike Injuries, madness effects are just a main status that potentially has some technicals ====================================
 
+// Short-term Madness
 new entry "GOON_MADNESS_5E_UNCONSCIOUS"
 type "StatusData"
-data "StatusType" "BOOST"
+data "StatusType" "INCAPACITATED"
 // Madness: Unconscious
 data "DisplayName" "h1ebd5511g7cbfg4b95gaa7fgd3463ab007a4"
 //
 data "Description" "hfdcd9b49ged8bg44deg9216gd53a680166f1"
-data "DescriptionParams" ""
+data "DescriptionParams" "Distance(3)"
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
@@ -24,7 +25,7 @@ data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Unconscious;SG_Condition"
+data "StatusGroups" "SG_Unconscious"
 data "Passives" ""
 //
 data "AnimationStart" ""
