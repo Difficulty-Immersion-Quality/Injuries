@@ -27,7 +27,7 @@ data "StatusType" "BOOST"
 // Injury: Anosmia
 data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
 // 
-data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
+data "Description" "h7fe0b3c5g65fag4cd8g86cbgab9656edc802"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
@@ -82,13 +82,13 @@ type "PassiveData"
 // Injury: Anosmia
 data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
 // 
-data "Description" "h7df433adg98bag42c0ga299g3ce91f3f521f"
+data "Description" "h7fe0b3c5g65fag4cd8g86cbgab9656edc802"
 data "DescriptionParams" ""
 data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_ANOSMIA)"
-data "StatsFunctorContext" "OnHeal"
+data "StatsFunctorContext" "OnHealed"
 data "Conditions" ""
 
 // ==================================== Technicals for individual injury functionality ====================================
