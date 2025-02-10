@@ -27,7 +27,7 @@ data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "Passives" ""
 //
 data "AnimationStart" ""
@@ -71,15 +71,17 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_CODEPENDANT_IN_RANGE"
 data "StackPriority" "10"
 data "AuraRadius" "10"
-data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE') and HasStatus('GOON_MADNESS_5E_PARANOIA')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL)"
+data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE') and HasStatus('GOON_MADNESS_5E_CODEPENDANT')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL)"
 
 new entry "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
+// Comforted
+data "DisplayName" "h136db323gc0f7g4d7bgad12gba4502f1af26"
 // 
-data "DisplayName" ""
-// 
-data "Description" ""
+data "Description" "h94378b16gc1ccg4345gab0eg145e80aae405"
+data "DescriptionParams" "Distance(10)"
+data "Icon" "Spell_Enchantment_Friends"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
@@ -96,4 +98,6 @@ data "Description" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL_SFX"
-data "SoundVocalStart" "EFFORTS"
+data "StillAnimationType" "Frightened"
+data "StillAnimationPriority" "Frightened"
+data "SoundVocalStart" "FALL"

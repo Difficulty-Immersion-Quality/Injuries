@@ -817,6 +817,9 @@ The effects of madness are suppressed while under the effects of &lt;LSTag Type=
 &lt;br&gt;The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
 &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt; can cure the &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt;.</content>
 
+	<content contentuid="h136db323gc0f7g4d7bgad12gba4502f1af26" version="1">Madness: Comforted</content>
+
+	<content contentuid="h94378b16gc1ccg4345gab0eg145e80aae405" version="1">Within [1] of your allies you do not suffer from the negative effects of being &lt;LSTag Type="Status" Tooltip="GOON_MADNESS_5E_CODEPENDANT"&gt;Codependant&lt;/LSTag&gt;.</content>
 
 
 	<content contentuid="hdf7b028egd002g4ba6gb109g5b3960b9ae9c" version="1">Madness: Comatosed</content>
