@@ -1,58 +1,21 @@
-// ==================================== Greater Restoration ====================================
+// ==================================== Statuses ====================================
 
-new entry "Target_GreaterRestoration"
-type "SpellData"
-data "SpellType" "Target"
-using "Target_GreaterRestoration"
-data "SpellProperties" "RemoveStatus(SG_Charmed);RemoveStatus(SG_Petrified);RemoveStatus(SG_Cursed);RemoveStatus(SG_Stunned);ApplyStatus(GOON_TARGET_GREATER_RESTORATION_INJURY_REMOVE,100,0)"
-
-new entry "GOON_TARGET_GREATER_RESTORATION_INJURY_REMOVE"
+new entry "GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL"
 type "StatusData" 
-data "StatusType" "BOOST" 
+data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-// ==================================== Lesser Restoration ====================================
-
-new entry "Target_LesserRestoration"
-type "SpellData"
-data "SpellType" "Target"
-using "Target_LesserRestoration"
-data "SpellProperties" "RemoveStatus(SG_Poisoned);RemoveStatus(SG_Disease);RemoveStatus(SG_Paralyzed);RemoveStatus(SG_Blinded);RemoveStatus(ASTARION_WEAK);ApplyStatus(GOON_TARGET_LESSER_RESTORATION_INJURY_REMOVE,100,0)"
-
-new entry "GOON_TARGET_LESSER_RESTORATION_INJURY_REMOVE"
+new entry "GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL"
 type "StatusData" 
-data "StatusType" "BOOST" 
+data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-// ==================================== Heal ====================================
-
-new entry "Target_Heal"
-type "SpellData"
-data "SpellType" "Target"
-using "Target_Heal"
-data "SpellProperties" "RegainHitPoints(70);RemoveStatus(SG_Blinded);RemoveStatus(SG_Disease);ApplyStatus(GOON_TARGET_HEAL_INJURY_REMOVE,100,0)"
-
-new entry "GOON_TARGET_HEAL_INJURY_REMOVE"
+new entry "GOON_HEAL_INJURY_REMOVAL_TECHNICAL"
 type "StatusData" 
-data "StatusType" "BOOST" 
+data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-// ==================================== Regenerate from 5E Spells ====================================
-
-new entry "Target_Regenerate"
-type "SpellData"
-data "SpellType" "Target"
-using "Target_Regenerate"
-data "SpellProperties" "RegainHitPoints(4d8+15);ApplyStatus(REGENERATE,100,600);RemoveStatus(CAMP_VOLO_LOBOTOMY);RemoveStatus(HAG_HAGEYED);RemoveStatus(CAMP_VOLO_NEEDLE);ApplyStatus(GOON_TARGET_REGENERATE_INJURY_REMOVE,100,0)"
-
-//new entry "REGENERATE"
-//type "StatusData"
-//data "StatusType" "BOOST"
-//using "REGENERATE"
-//data "TickFunctors" "IF(not Dead()):RegainHitPoints(1);IF(not Dead()):ApplyStatus(GOON_TARGET_REGENERATE_INJURY_REMOVE,100,0)"
-
-new entry "GOON_TARGET_REGENERATE_INJURY_REMOVE"
+new entry "GOON_REGENERATE_INJURY_REMOVAL_TECHNICAL"
 type "StatusData" 
-data "StatusType" "BOOST" 
+data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
-//data "RemoveConditions" "not HasStatus('REGENERATE')"
