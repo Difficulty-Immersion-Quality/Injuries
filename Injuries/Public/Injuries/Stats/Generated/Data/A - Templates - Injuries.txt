@@ -75,19 +75,52 @@ data "MaterialApplyNormalMap" ""
 data "MaterialFadeAmount" ""
 data "MaterialParameters" ""
 
+// ==================================== Removal system ====================================
+
 // Technical passive for removal
 new entry "Goon_Real_Injury_Grit_Glory_X_Removal_Technical_Passive"
 type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_X_REMOVAL_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_X_LONG_REST_TRACKER,100,1);"
+data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnCast) and StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved))"
+
+// Technical passive for removal otherwise the saving throw overhead and tooltip are innacurate
+new entry "GOON_X_REMOVAL_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Minor Concussion
+data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
 // 
-data "DisplayName" ""
+data "Description" "h75a67443gffdfg4d69g99eag808e91e7a982"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION)"
+
+// Long rest tracker for natural injury recovery
+new entry "GOON_X_LONG_REST_TRACKER"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Injury: Festering Wound
+data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
 // 
-data "Description" ""
+data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
 data "DescriptionParams" ""
 data "TooltipSave" ""
-data "Properties" "IsHidden"
-data "StatsFunctors" "IF(SavingThrow(Ability.Constitution,X)):RemoveStatus(GOON_INJURY_PROXY_GRIT_GLORY_X)"
-data "StatsFunctorContext" "OnHeal"
-data "Conditions" ""
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting;FreezeDuration;MultiplyEffectsByDuration"
+//
+data "StackId" "GOON_FESTERING_WOUND_MAXHP"
+data "StackType" "Additive"
+data "Boosts" "IncreaseMaxHP(-1)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_FESTERING_WOUND')"
+data "RemoveEvents" "OnStatusRemoved"
+//
+data "SoundVocalStart" "PAIN"
 
 // ==================================== Technicals for individual injury functionality ====================================
 
