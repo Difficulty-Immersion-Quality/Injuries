@@ -25,7 +25,7 @@ local function trackRestStacks(entity, restVar, InjuryName)
 end
 
 -- StatusApplied Listener for Rest Tracking (Handling multiple injury names)
-Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status)
+Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(object, status)
     if status == "LONG_REST" or status == "CAMP_ASTARION_DAISYDREAM" then
         local entity = Ext.Entity.Get(object)
         local restVar = ConfigHelper:GetCharacterRestVar(object)
