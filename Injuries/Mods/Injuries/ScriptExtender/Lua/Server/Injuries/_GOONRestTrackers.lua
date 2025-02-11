@@ -1,8 +1,10 @@
-local function GetNextRestStack(character, InjuryName)
+local sharedPrefix = "GOON_INJURY_GRIT_GLORY_"
+
+local function GetNextRestStack(character, shortInjuryName)
     -- Loop to find the highest stack for the given injury name
     for i = 1, 100 do  -- Safety limit
-        local currentStatus = "GOON_" .. shortInjuryName .. "_REST_TRACKER_" .. i
-        local nextStatus = "GOON_" .. shortInjuryName .. "_REST_TRACKER_" .. (i + 1)
+        local currentStatus = "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_" .. i
+        local nextStatus = "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_" .. (i + 1)
 
         if Osi.HasActiveStatus(character, currentStatus) == 1 then
             print("Current status found: " .. currentStatus)
@@ -11,12 +13,12 @@ local function GetNextRestStack(character, InjuryName)
     end
 
     -- If no stack is found, start at 1
-    return InjuryName .. "_REST_TRACKER_1"
+    return "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_1"
 end
 
-local function trackRestStacks(entity, InjuryName)
+local function trackRestStacks(entity, shortInjuryName)
     local character = entity.Uuid.EntityUuid
-    local nextRestStack = GetNextRestStack(character, InjuryName)
+    local nextRestStack = GetNextRestStack(character, shortInjuryName)
 
     -- Apply the next stack if it's not already present
     if Osi.HasActiveStatus(character, nextRestStack) == 0 then
@@ -26,9 +28,6 @@ local function trackRestStacks(entity, InjuryName)
         print("Status already present: " .. nextRestStack)
     end
 end
-
-local sharedPrefix = "GOON_INJURY_GRIT_GLORY_"
-local fullInjuryName = sharedPrefix .. shortInjuryName
 
 -- StatusApplied Listener for Rest Tracking (Handling multiple injury names)
 Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(object, status)
@@ -92,9 +91,10 @@ Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(object, status
             }
 
             -- Track stacks separately for each injury name
-            for _, InjuryName in ipairs(InjuryNames) do
-                if Osi.HasActiveStatus(entity.Uuid.EntityUuid, InjuryName) == 1 then
-                    trackRestStacks(entity, InjuryName)
+            for _, injury in ipairs(InjuryNames) do
+                local shortInjuryName = string.gsub(injury, sharedPrefix, "")
+                if Osi.HasActiveStatus(entity.Uuid.EntityUuid, injury) == 1 then
+                    trackRestStacks(entity, shortInjuryName)
                 end
             end
         end
