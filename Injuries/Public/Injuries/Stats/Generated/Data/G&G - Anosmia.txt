@@ -83,11 +83,11 @@ new entry "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Technical_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_ANOSMIA_REMOVAL_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_ANOSMIA_REMOVAL_TECHNICAL,100,0)"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_ANOSMIA_REMOVAL_HEALING_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_ANOSMIA_REMOVAL_TECHNICAL,100,0)"
 data "StatsFunctorContext" "OnHealed;OnStatusApplied"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL'))"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL'))"
 
-// Technical status for removal otherwise the saving throw overhead and tooltip are innacurate
+// Technical status for removal otherwise the saving throw overhead and tooltip are innacurate, this is allows for setting up in configuration
 new entry "GOON_ANOSMIA_REMOVAL_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST" 
@@ -101,6 +101,13 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
+data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_ANOSMIA)"
+
+// Different status to handle healing removed injuries for the sake of setting up different saving throws
+new entry "GOON_ANOSMIA_REMOVAL_HEALING_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+using new entry "GOON_ANOSMIA_REMOVAL_TECHNICAL"
 data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_ANOSMIA)"
 
 // Status stack for tracking long rests, and handling natural injury recovery
