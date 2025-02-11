@@ -2,7 +2,7 @@
 <contentList>
 	<content contentuid="h75c1e760gb522g4e20ga3deg82b913cdc2c4" version="1">Injury Kit</content>
 	<content contentuid="h96a8b954g1fffg4bc7gb339g4e9f26aea2f0" version="1">Otherwise referred to as a "Surgery kit", this collection of medical tools and remedies can be used to treat ailments of all kinds; magic is less common than a tourniquet after all.</content>
-	<content contentuid="h62284180g527dg4a39g8800gef4b8f59baaa" version="1">With a successful &lt;LSTag Tooltip="Medicine"&gt;Medicine&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Check&lt;/LSTag&gt; this injury kit can be used to treat &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injuries&lt;/LSTag&gt;.</content>
+	<content contentuid="h62284180g527dg4a39g8800gef4b8f59baaa" version="1">This kit enables you to treat &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injuries&lt;/LSTag&gt;, based on a &lt;LSTag Tooltip="Medicine"&gt;Medicine&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Check&lt;/LSTag&gt;. The kit is still consumed on an unsuccessful attempt.</content>
 	<content contentuid="h4947f295g590fg4ab3ga0adg8c89ae8da184" version="1">Operate</content>
 
 
@@ -685,10 +685,10 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 	-- Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer disadvantage to all Dexterity checks to manipulate items and you must make Dexterity saving throws against breaking fragile items you are holding. Magic such as the regenerate spell can restore your coordination.
 
 	<content contentuid="h64577567g70b7g4c4bgbaa0gc67ce7d4875d" version="1">Neurodegenerative Disorder is intended for Force damage.&lt;br&gt;Intended severity: Low. 
-&lt;br&gt;Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Checks&lt;/LSTag&gt;.
+&lt;br&gt;Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Checks&lt;/LSTag&gt;.
 &lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content>
 
-	<content contentuid="h321e22ddg29b7g4464g881bgea4a6fde0b36" version="1">Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Checks&lt;/LSTag&gt;.
+	<content contentuid="h321e22ddg29b7g4464g881bgea4a6fde0b36" version="1">Your hands are jittery and coordination is impeded by frequent muscle jolts that make you grab or squeeze hard on whatever you are holding. You suffer &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; to all &lt;LSTag Tooltip="SleightOfHand"&gt;Sleight of Hand&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Checks&lt;/LSTag&gt;.
 &lt;br&gt;Magical healing of 6th level or higher, such as the &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; spells can cure the degeneration.</content>
 
 
