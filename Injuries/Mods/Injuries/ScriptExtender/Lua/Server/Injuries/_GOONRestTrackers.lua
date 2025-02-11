@@ -1,19 +1,35 @@
 local sharedPrefix = "GOON_INJURY_GRIT_GLORY_"
 
 local function GetNextRestStack(character, shortInjuryName)
-    -- Loop to find the highest stack for the given injury name
-    for i = 1, 100 do  -- Safety limit
-        local currentStatus = "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_" .. i
-        local nextStatus = "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_" .. (i + 1)
+    local fullInjuryName = sharedPrefix .. shortInjuryName
+    local highestPriority = 0
+    local nextStack = nil
 
-        if Osi.HasActiveStatus(character, currentStatus) == 1 then
-            print("Current status found: " .. currentStatus)
-            return nextStatus  -- Move to the next stack
+    -- Loop to find the highest stack priority for the given injury name
+    local entity = Ext.Entity.Get(character)
+    for _, status in Osi.HasActiveStatus(character, currentStatus) do
+        local statusData = Ext.Stats.Get(status.StatusId)
+        if statusData and statusData.StackId == nextStackName then
+            local priority = tonumber(statusData.StackPriority)
+            print("Current status: " .. status.StatusId .. ", Priority: " .. priority)
+            if priority and priority > highestPriority then
+                highestPriority = priority
+                nextStack = statusData.Name
+            end
         end
     end
 
-    -- If no stack is found, start at 1
-    return "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_1"
+    -- Return the next stack
+    if nextStack then
+        local nextPriority = highestPriority + 1
+        local nextStackName = "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_" .. nextPriority
+        print("Next stack: " .. nextStackName)
+        return nextStackName
+    else
+        local firstStackName = "GOON_" .. shortInjuryName .. "_LONG_REST_TRACKER_1"
+        print("First stack: " .. firstStackName)
+        return firstStackName
+    end
 end
 
 local function trackRestStacks(entity, shortInjuryName)
@@ -29,7 +45,7 @@ local function trackRestStacks(entity, shortInjuryName)
     end
 end
 
--- StatusApplied Listener for Rest Tracking (Handling multiple injury names)
+-- StatusRemoved Listener for Rest Tracking (Handling multiple injury names)
 Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(object, status)
     if status == "LONG_REST" or status == "CAMP_ASTARION_DAISYDREAM" then
         local entity = Ext.Entity.Get(object)
@@ -51,7 +67,6 @@ Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(object, status
                 "GOON_INJURY_GRIT_GLORY_MAJOR_CONCUSSION",
                 "GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION",
                 "GOON_INJURY_GRIT_GLORY_DEAFNESS",
-                "GOON_INJURY_GRIT_GLORY_PARTIAL_BLINDNESS",
                 "GOON_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS",
                 "GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT",
                 "GOON_INJURY_GRIT_GLORY_DESTROYED_HAND",
