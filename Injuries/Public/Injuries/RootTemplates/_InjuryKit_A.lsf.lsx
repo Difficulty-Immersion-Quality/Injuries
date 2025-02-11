@@ -8,10 +8,12 @@
 					<attribute id="CanBeMoved" type="bool" value="True" />
 					<attribute id="CanBePickedUp" type="bool" value="True" />
 					<attribute id="CanShootThrough" type="bool" value="False" />
-					<attribute id="DisplayName" type="TranslatedString" handle="hc9bdcbeeg8749g4b40gbcd3g326972f41d92" version="1" />
+					<attribute id="DisplayName" type="TranslatedString" handle="h75c1e760gb522g4e20ga3deg82b913cdc2c4" version="1" />
+					<attribute id="Description" type="TranslatedString" handle="h96a8b954g1fffg4bc7gb339g4e9f26aea2f0" version="1" />
+					<attribute id="TechnicalDescription" type="TranslatedString" handle="h62284180g527dg4a39g8800gef4b8f59baaa" version="1" />
+					<attribute id="OnUseDescription" type="TranslatedString" handle="h4947f295g590fg4ab3ga0adg8c89ae8da184" version="1" />
 					<attribute id="Faction" type="guid" value="00000000-0000-0000-0000-000000000000" />
 					<attribute id="Icon" type="FixedString" value="Item_TOOL_Hospital_Surgery_Kit_B" />
-					<attribute id="Stats" type="FixedString" value="Goon_Injury_Kit" />
 					<attribute id="IsInspector" type="bool" value="False" />
 					<attribute id="LevelName" type="FixedString" value="" />
 					<attribute id="LevelOverride" type="int32" value="0" />
@@ -19,8 +21,9 @@
 					<attribute id="Name" type="LSString" value="TOOL_Hospital_Surgery_Kit_A" />
 					<attribute id="ParentTemplateId" type="FixedString" value="c9e45e5a-f089-480b-ab3a-7f5f76dccc3b" />
 					<attribute id="PhysicsTemplate" type="FixedString" value="7948c351-5715-ca4f-9e2d-7b05c1d7b1d9" />
+					<attribute id="Stats" type="FixedString" value="OBJ_Generic_Light" />
 					<attribute id="RecieveDecal" type="bool" value="True" />
-					<attribute id="Tooltip" type="uint8" value="1" />
+					<attribute id="Tooltip" type="uint8" value="2" />
 					<attribute id="TreasureOnDestroy" type="bool" value="True" />
 					<attribute id="maxStackAmount" type="int32" value="100" />
 					<attribute id="Type" type="FixedString" value="item" />
@@ -56,20 +59,27 @@
 								</node>
 							</children>
 						</node>
-						<node id="InventoryList" />
-						<node id="OnDestroyActions" />
 						<node id="OnUsePeaceActions">
 							<children>
 								<node id="Action">
-									<attribute id="ActionType" type="int32" value="7" />
+									<attribute id="ActionType" type="int32" value="12" />
 									<children>
 										<node id="Attributes">
 											<attribute id="Animation" type="FixedString" value="" />
 											<attribute id="Conditions" type="LSString" value="" />
 											<attribute id="Consume" type="bool" value="True" />
 											<attribute id="IsHiddenStatus" type="bool" value="True" />
-											<attribute id="StatsId" type="FixedString" value="GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL" />
-											<attribute id="StatusDuration" type="int32" value="0" />
+											<attribute id="SkillID" type="FixedString" value="Goon_Injury_Kit_Use" />
+										</node>
+									</children>
+								</node>
+								<node id="Action">
+									<attribute id="ActionType" type="int32" value="33" />
+									<children>
+										<node id="Attributes">
+											<attribute id="Animation" type="FixedString" value="" />
+											<attribute id="Consume" type="bool" value="True" />
+											<attribute id="SpellId" type="FixedString" value="Goon_Injury_Kit_Use" />
 										</node>
 									</children>
 								</node>
