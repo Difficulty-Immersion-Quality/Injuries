@@ -46,7 +46,7 @@ data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_BLINDNESS')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Blinded"
+data "StatusGroups" ""
 data "Passives" "Goon_Real_Injury_Grit_Glory_Blindness_Removal_Passive"
 //
 data "AnimationStart" ""
@@ -85,7 +85,7 @@ data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_BLINDNESS_REMOVAL_TECHNICAL,100,0)"
 data "StatsFunctorContext" "OnStatusApplied"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_HEAL_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL_TECHNICAL'))"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_HEAL_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL_TECHNICAL'))"
 
 // Technical status for removal otherwise the saving throw overhead and tooltip are innacurate, this also streamlines configuration for applying default values if stat based removal via "OnApplyFunctors" is yeeted
 new entry "GOON_BLINDNESS_REMOVAL_TECHNICAL"
