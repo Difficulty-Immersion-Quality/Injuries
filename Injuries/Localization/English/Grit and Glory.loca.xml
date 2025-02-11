@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
+	<content contentuid="h75c1e760gb522g4e20ga3deg82b913cdc2c4" version="1">Injury Kit</content>
+	<content contentuid="h96a8b954g1fffg4bc7gb339g4e9f26aea2f0" version="1">Otherwise referred to as a "Surgery kit", this collection of medical tools and remedies can be used to treat ailments of all kinds; magic is less common than a tourniquet after all.</content>
+	<content contentuid="h62284180g527dg4a39g8800gef4b8f59baaa" version="1">With a successful &lt;LSTag Tooltip="Medicine"&gt;Medicine&lt;/LSTag&gt; &lt;LSTag Tooltip="SkillChecks"&gt;Check&lt;/LSTag&gt; this injury kit can be used to treat &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injuries&lt;/LSTag&gt;.</content>
+	<content contentuid="h4947f295g590fg4ab3ga0adg8c89ae8da184" version="1">Operate</content>
+
+
+
 	<content contentuid="h4e08f2ffgbcadg43d0g87d7g64cdd42a1b29" version="1">Deafened</content>
 	<content contentuid="hc436e12dg197ag4186g8afcgf12b01de793b" version="1">A deafened creature can't hear and automatically fails any &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; that requires hearing.</content>
 
@@ -51,6 +58,12 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 	<content contentuid="h4a9be0bagffb0g45eagb145gab0f78c62711" version="1">Unrestable Exhaustion: Level 7</content>
 	<content contentuid="h634ff61dgcd3fg41acgb603g7a759516ace0" version="1">You are exhausted. At the end of your turn you must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; or &lt;LSTag Tooltip="Charisma"&gt;Charisma&lt;/LSTag&gt; DC 15 &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;, whichever is higher, to resist the urge to &lt;LSTag Type="Status" Tooltip="SLEEPING"&gt;sleep&lt;/LSTag&gt;.
 &lt;br&gt;All &lt;LSTag Tooltip="Abilities"&gt;Ability Scores&lt;/LSTag&gt; are reduced by 7. &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; cost is increased by 70%. Attacks against you are guaranteed to be a &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hit&lt;/LSTag&gt;.</content>
+
+
+
+	<content contentuid="ha3bf49e3gd891g4a19g9424geeda30463eb6" version="1">Injuries</content>
+	<content contentuid="hac7adc44g995fg433bg8e06g898f397a29f3" version="1">Injuries can be applied from many sources, be they severe or mild, ailing or easily remedied, the life of an adventurer, hero or villain is strife with dangers.</content>
+
 
 
 	<content contentuid="he8057b9fgdb52g4f26gaf6cgf1a0c3b3bc7a" version="1">Anosmia</content>
