@@ -5,6 +5,9 @@
 		<node id="Templates">
 			<children>
 				<node id="GameObjects">
+					<attribute id="DropSound" type="FixedString" value="8f0b7aab-eb2d-b47f-e321-b68067fc0c3b" />
+					<attribute id="InventoryMoveSound" type="FixedString" value="8f0b7aab-eb2d-b47f-e321-b68067fc0c3b" />
+					<attribute id="PickupSound" type="FixedString" value="7cf23f22-d323-9653-b1aa-4ee31ca28579" />
 					<attribute id="CanBeMoved" type="bool" value="True" />
 					<attribute id="CanBePickedUp" type="bool" value="True" />
 					<attribute id="CanShootThrough" type="bool" value="False" />
@@ -21,7 +24,7 @@
 					<attribute id="Name" type="LSString" value="TOOL_Hospital_Surgery_Kit_B" />
 					<attribute id="ParentTemplateId" type="FixedString" value="c9e45e5a-f089-480b-ab3a-7f5f76dccc3b" />
 					<attribute id="PhysicsTemplate" type="FixedString" value="0e4769cf-7eae-7f42-613e-9afe78b1a54f" />
-					<attribute id="Stats" type="FixedString" value="OBJ_Generic_Light" />
+					<attribute id="Stats" type="FixedString" value="Goon_OBJ_Injury_Kit_B" />
 					<attribute id="RecieveDecal" type="bool" value="True" />
 					<attribute id="Tooltip" type="uint8" value="2" />
 					<attribute id="TreasureOnDestroy" type="bool" value="True" />
