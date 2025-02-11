@@ -131,9 +131,9 @@ new entry "Goon_Real_Injury_Grit_Glory_X_Removal_Technical_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_X_REMOVAL_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_X_REMOVAL_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_X_LONG_REST_TRACKER_1,100,1);"
-data "StatsFunctorContext" "OnHealed;OnStatusApplied;OnStatusRemoved"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnCast) and StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved))"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_X_REMOVAL_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_X_REMOVAL_TECHNICAL,100,0)"
+data "StatsFunctorContext" "OnHealed;OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_HEAL_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL_TECHNICAL'))"
 
 // Technical status for removal otherwise the saving throw overhead and tooltip are innacurate
 new entry "GOON_X_REMOVAL_TECHNICAL"
