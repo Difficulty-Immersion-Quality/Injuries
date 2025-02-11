@@ -1,7 +1,7 @@
 // ==================================== Filter Proxy ====================================
 
 new entry "GOON_INJURY_GRIT_GLORY_ANOSMIA"
-type "StatusData" 
+type "StatusData"
 data "StatusType" "BOOST"
 // Anosmia
 data "DisplayName" "he8057b9fgdb52g4f26gaf6cgf1a0c3b3bc7a"
@@ -47,7 +47,7 @@ data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" ""
-data "Passives" "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Technical_Passive"
+data "Passives" "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Passive"
 //
 data "AnimationStart" ""
 data "AnimationLoop" ""
@@ -79,18 +79,18 @@ data "MaterialParameters" ""
 // ==================================== Removal system ====================================
 
 // Technical passive for removal
-new entry "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Technical_Passive"
+new entry "Goon_Real_Injury_Grit_Glory_Anosmia_Removal_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_ANOSMIA_REMOVAL_HEALING_TECHNICAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_ANOSMIA_REMOVAL_TECHNICAL,100,0)"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_ANOSMIA_REMOVAL_TECHNICAL_HEALING,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_ANOSMIA_REMOVAL_TECHNICAL,100,0)"
 data "StatsFunctorContext" "OnHealed;OnStatusApplied"
 data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL'))"
 
-// Technical status for removal otherwise the saving throw overhead and tooltip are innacurate, this is allows for setting up in configuration
+// Technical status for removal otherwise the saving throw overhead and tooltip are innacurate, this also streamlines configuration for applying default values if stat based removal via "OnApplyFunctors" is yeeted
 new entry "GOON_ANOSMIA_REMOVAL_TECHNICAL"
-type "StatusData" 
-data "StatusType" "BOOST" 
+type "StatusData"
+data "StatusType" "BOOST"
 // Injury: Anosmia
 data "DisplayName" "h622dd1e8g6eb9g4433g90f1g3e33876428a4"
 // 
@@ -104,11 +104,13 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_ANOSMIA)"
 
 // Different status to handle healing removed injuries for the sake of setting up different saving throws
-new entry "GOON_ANOSMIA_REMOVAL_HEALING_TECHNICAL"
+new entry "GOON_ANOSMIA_REMOVAL_TECHNICAL_HEALING"
 type "StatusData" 
 data "StatusType" "BOOST"
-using new entry "GOON_ANOSMIA_REMOVAL_TECHNICAL"
+using "GOON_ANOSMIA_REMOVAL_TECHNICAL"
 data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):RemoveStatus(GOON_INJURY_GRIT_GLORY_ANOSMIA)"
+
+// ==================================== Long rest tracking ====================================
 
 // Status stack for tracking long rests, and handling natural injury recovery
 new entry "GOON_ANOSMIA_LONG_REST_TRACKER_TEMPLATE"

@@ -8,6 +8,7 @@ data "DisplayName" "ha3bf49e3gd891g4a19g9424geeda30463eb6"
 //
 data "Description" "hac7adc44g995fg433bg8e06g898f397a29f3"
 data "Icon" "PassiveFeature_Generic_Blood"
+
 // ==================================== Exhaustion ====================================
 
 // Main exhaustion system information
