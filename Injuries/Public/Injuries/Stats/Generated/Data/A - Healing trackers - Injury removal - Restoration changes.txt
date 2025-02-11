@@ -47,7 +47,7 @@ using "_Kit"
 data "RootTemplate" "55fb2f34-00d7-4149-8b52-e189e05ba0ca"
 data "UseCosts" "ActionPoint:1"
 
-new entry "Goon_Injury_Kit_Use"
+new entry "Goon_Target_Injury_Kit_Use"
 type "SpellData"
 data "SpellType" "Target"
 // Injury Kit
