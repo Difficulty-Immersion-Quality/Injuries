@@ -1,0 +1,165 @@
+// ==================================== Generic tables ====================================
+
+new treasuretable "Exploration_Minor_Tools"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+new treasuretable "ST_Tools"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+
+new treasuretable "Supply_Tools_Small"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Generic bad guy cannon fodder table?
+new treasuretable "BG_Bandit"
+CanMerge 1
+new subtable "0,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// ==================================== Trader tables ====================================
+
+// Withers - Camp
+new treasuretable "DIQ_OBJ_Important_Container_TT"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Arron - Druid Grove
+new treasuretable "DEN_Entrance_Trade"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Dammon - Is this really the same table across acts?
+new treasuretable "DEN_Weaponsmith_Trade"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Cyrel (Fake Paladin of Tyr) - Tollhouse
+new treasuretable "PLA_Tollhouse_SuppliesTrader"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Roah Moonglow - Goblin Camp
+new treasuretable "GOB_Quartermaster"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Derryth Bonecloak - Myconoid Colony
+new treasuretable "UND_MycoVillage_AlchemistDwarf_Trade"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Stonemason Kith - Grymforge
+new treasuretable "UND_KC_Trader_Utility"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Lady Esther - Rosymorn Monastery Trail
+new treasuretable "CRE_Expeditioner_Trade"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Assuming: A'jak'nir Jeera - Creche
+new treasuretable "CRE_GithQuartermistress_Trade"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Quartermaster Talli - Last Light Inn
+new treasuretable "HAV_HarperQuarterMaster"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Sister Lidwin - House of Healing
+new treasuretable "TWN_Hospital_CorpseTender"
+CanMerge 1
+new subtable "10,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Lann Tarv - Moonrise Towers
+new treasuretable "MOO_BugBearvendor_Trade"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Roah Moonglow (second appearance) - Moonrise Towers
+new treasuretable "MOO_ZhentQuartermaster"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Popper - Wyrm's Crossing	(Circus of the Last Days)
+new treasuretable "WYR_Circus_KoboldMerchant_Magic"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Entharl Danthelon - Wyrm's Crossing (Danthelon's Dancing Axe)
+new treasuretable "WYR_Danthelon_Trader"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Either: Griska - Wyrm's Crossing (Fraygo's Flophouse) OR Stylin' Horst - Wyrm's Crossing (The Velveteen Elixir)
+new treasuretable "WYR_AlchemyTrader"
+CanMerge 1
+new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Helsik - Lower City (Devil's Fee)
+new treasuretable "LOW_DevilsFee_Diabolist_Trade_Magic"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Fytz - Lower City (Stormshore Armoury)
+new treasuretable "LOW_SteepsTrader_Weapons"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// ==================================== Other tables ====================================
+
+// ?
+new treasuretable "FOR_DeadAdventurer_Elf"
+CanMerge 1
+new subtable "2,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Gandrel - Ethel Swamp
+new treasuretable "HAG_GurHunter_Backpack"
+CanMerge 1
+new subtable "3,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// I dunno, something to do with Zhents
+new treasuretable "FOR_ZhentSupplyStash"
+CanMerge 1
+new subtable "2,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// A gobpack
+new treasuretable "GOB_AdventurerScoutBackpack"
+CanMerge 1
+new subtable "2,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Edgy man with rude bird
+new treasuretable "SCL_ServantOfTheRaven_Inventory"
+CanMerge 1
+new subtable "2,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
