@@ -6,7 +6,7 @@ data "StatusType" "BOOST"
 // Short-term Madness: Hallucinations
 data "DisplayName" "hb3742b65gb3f4g4391g8913g3e46fa1f38f0"
 //
-data "Description" "h3f8aa500ga086g4e3eg8d7cg4946652bb5bb"
+data "Description" "hfb0b247fgacfag446agaf3bga13860589ce8"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
