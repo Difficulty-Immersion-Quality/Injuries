@@ -1,26 +1,26 @@
 // ==================================== Statuses ====================================
 
-new entry "GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL"
+new entry "GOON_LESSER_RESTORATION_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-new entry "GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL"
+new entry "GOON_GREATER_RESTORATION_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-new entry "GOON_HEAL_INJURY_REMOVAL_TECHNICAL"
+new entry "GOON_HEAL_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-new entry "GOON_REGENERATE_INJURY_REMOVAL_TECHNICAL"
+new entry "GOON_REGENERATE_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-new entry "GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL"
+new entry "GOON_INJURY_KIT_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
@@ -65,7 +65,7 @@ data "TargetCeiling" "0"
 data "TargetFloor" ".25"
 data "TargetRadius" "1.5"
 data "SpellRoll" "SkillCheck(Skill.Medicine, 10)"
-data "SpellSuccess" "IF(IsDowned()):RegainHitPoints(1,Guaranteed);ApplyStatus(GOON_INJURY_KIT_INJURY_REMOVAL_TECHNICAL)"
+data "SpellSuccess" "IF(IsDowned()):RegainHitPoints(1,Guaranteed);ApplyStatus(GOON_INJURY_KIT_INJURY_REMOVAL)"
 data "SpellFail" "IF(IsDowned()):Stabilize()"
 data "TargetConditions" "Character() and not Dead()"
 //
