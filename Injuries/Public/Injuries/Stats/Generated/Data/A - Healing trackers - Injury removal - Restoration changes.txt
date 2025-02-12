@@ -3,31 +3,60 @@
 new entry "GOON_LESSER_RESTORATION_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Lesser Restoration
+data "DisplayName" "h22bac5c4gd2a7g4e3bgb852gd61759c426c1;1"
+// Cure a creature from disease, poison, paralysis or blindness.
+data "Description" "h3691c671gd321g4f64g9591g020d69232017;4"
+data "Icon" "Spell_Abjuration_LesserRestoration"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
 new entry "GOON_GREATER_RESTORATION_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Greater Restoration
+data "DisplayName" "hcb427756g6947g43b0g80c3gf17b4b3ac64e;2"
+// Touch a creature and negate any Charm, Petrification, Stun, or curse afflicting it.
+data "Description" "h9fc6ec82g6ba9g415eg8ff2g7fe00698f877;8"
+data "Icon" "Spell_Abjuration_GreaterRestoration"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
 new entry "GOON_HEAL_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Heal
+data "DisplayName" "h7a21df63g02c2g4e24gbfddgd0e8b289b956;2"
+// Heal a target's wounds and remove Blindness and any diseases.
+data "Icon" "Spell_Evocation_Heal"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
 new entry "GOON_REGENERATE_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Regenerate
+data "DisplayName" "h437392edga97eg4c24gaa05gfaa0b8c161c0"
+// Touch a creature to stimulate its natural healing ability.
+data "Description" "h50912191g0c8ag4be2g8b98gb9dd74df1a0e;1"
+data "Icon" "Spell_Evocation_Heal"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
 new entry "GOON_INJURY_KIT_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Injury Kit
+data "DisplayName" "h75c1e760gb522g4e20ga3deg82b913cdc2c4"
+// 
+data "Description" "h62284180g527dg4a39g8800gef4b8f59baaa"
+data "Icon" "Item_TOOL_Hospital_Surgery_Kit_B"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
 new entry "GOON_SONG_OF_REST_INJURY_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
+// Song of Rest
+data "DisplayName" "h6664033bge8b7g48c8g8fc6g18986baa0bae;1"
+// You and your allies are revitalised as though you would have taken a Short Rest.
+data "Description" "h004d056bga0c0g4211g864fgd0a167f0cf2d;4"
+data "Icon" "Action_Bard_SongOfRest"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
 // ==================================== Lesser Restoration target changes so it can be used to remove injuries ====================================
