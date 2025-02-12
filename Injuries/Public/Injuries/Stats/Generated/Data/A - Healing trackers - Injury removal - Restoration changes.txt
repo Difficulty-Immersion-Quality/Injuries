@@ -59,6 +59,17 @@ data "Description" "h004d056bga0c0g4211g864fgd0a167f0cf2d;4"
 data "Icon" "Action_Bard_SongOfRest"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
+// Holdover status for handling unrestable exhaustion removing stacks of restable exhaustion, pending OnStatusRemoved configuration options
+new entry "GOON_UNRESTABLE_EXHAUSTION_NORMAL_EXHAUSTION_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion
+data "DisplayName" "h48662068g7920g405dg9263gef8a2079d513"
+//
+data "Description" "h9ab1a295gf2cfg4ee8g850bgab1165b73e74"
+data "Icon" "Status_Exhaustion"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
 // ==================================== Lesser Restoration target changes so it can be used to remove injuries ====================================
 
 new entry "Target_LesserRestoration"
