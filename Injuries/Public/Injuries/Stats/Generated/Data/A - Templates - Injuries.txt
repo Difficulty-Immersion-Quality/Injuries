@@ -173,6 +173,7 @@ data "StatusType" "BOOST"
 data "DisplayName" ""
 // 
 data "Description" ""
+data "Icon" "Status_Sleep"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_X"
