@@ -114,7 +114,7 @@ data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_SHORTTERM_MADNESS_5E_REMOVAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_SHORTTERM_MADNESS_5E_REMOVAL,100,0)"
 data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS'))"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS'))"
 
 // Status for use in configuration to disable/enable default removal system
 new entry "GOON_SHORTTERM_MADNESS_5E_REMOVAL"
