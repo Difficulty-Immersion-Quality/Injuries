@@ -1,10 +1,9 @@
 // ==================================== Madness ====================================
 
-// Long-term Madness
-new entry "GOON_MADNESS_5E_TREMORS"
+new entry "GOON_MADNESS_5E_LONGTERM_TREMORS"
 type "StatusData"
 data "StatusType" "BOOST"
-// Madness: Tremors
+// Long-term Madness: Tremors
 data "DisplayName" "h7a41a25fg2394g4525ga8c0g3a775a8aafed"
 //
 data "Description" "h6dbcca65g40f5g42f6g92deg7bea08ff0782"
@@ -14,7 +13,7 @@ data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_MADNESS_5E_TREMORS"
+data "StackId" "GOON_MADNESS_5E_LONGTERM_TREMORS"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "AuraRadius" ""

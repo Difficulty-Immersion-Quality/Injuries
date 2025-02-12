@@ -1,10 +1,9 @@
 // ==================================== Madness ====================================
 
-// Short-term Madness
-new entry "GOON_MADNESS_5E_INTIMIDATED"
+new entry "GOON_MADNESS_5E_SHORTTERM_INTIMIDATED"
 type "StatusData"
 data "StatusType" "BOOST"
-// Madness: Frightened
+// Short-term Madness: Frightened
 data "DisplayName" "ha9baeff3gbbd8g46a4gbf0fg3a390646d63b"
 //
 data "Description" "he7d1c9b9gf338g4057gbda1g2c6bbdbbf7b5"
@@ -14,7 +13,7 @@ data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_MADNESS_5E_INTIMIDATED"
+data "StackId" "GOON_MADNESS_5E_SHORTTERM_INTIMIDATED"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "AuraRadius" "3"

@@ -1,10 +1,9 @@
 // ==================================== Madness ====================================
 
-// Long-term and Short-term Madness
-new entry "GOON_MADNESS_5E_HALLUCINATIONS"
+new entry "GOON_MADNESS_5E_LONGTERM_HALLUCINATIONS"
 type "StatusData"
 data "StatusType" "BOOST"
-// Madness: Hallucinations
+// Long-term Madness: Hallucinations
 data "DisplayName" "hb54d0fe5g4634g4cb0g9c70g90ce7dd5aab0"
 //
 data "Description" "h3f8aa500ga086g4e3eg8d7cg4946652bb5bb"
@@ -14,7 +13,7 @@ data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_MADNESS_5E_HALLUCINATIONS"
+data "StackId" "GOON_MADNESS_5E_LONGTERM_HALLUCINATIONS"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "AuraRadius" ""
