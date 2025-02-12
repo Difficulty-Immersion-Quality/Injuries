@@ -33,15 +33,21 @@ function Goon_Regenerate_Check(spell)
         or spell == 'Target_Regenerate_9'
 end
 
+function Goon_Song_Of_Rest_Check(spell)
+    return spell == 'Shout_SongOfRest'
+end
+
 -- UsingSpellOnTarget Listener
 Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target, spell, spellType, spellElement, storyActionID)
     if Goon_Lesser_Restoration_Check(spell) then
-        Osi.ApplyStatus(target, "GOON_LESSER_RESTORATION_INJURY_REMOVAL_TECHNICAL", 1, 1, caster)
+        Osi.ApplyStatus(target, "GOON_LESSER_RESTORATION_INJURY_REMOVAL", 1, 1, caster)
     elseif Goon_Greater_Restoration_Check(spell) then
-        Osi.ApplyStatus(target, "GOON_GREATER_RESTORATION_INJURY_REMOVAL_TECHNICAL", 1, 1, caster)
+        Osi.ApplyStatus(target, "GOON_GREATER_RESTORATION_INJURY_REMOVAL", 1, 1, caster)
     elseif Goon_Heal_Check(spell) then
-        Osi.ApplyStatus(target, "GOON_HEAL_INJURY_REMOVAL_TECHNICAL", 1, 1, caster)
+        Osi.ApplyStatus(target, "GOON_HEAL_INJURY_REMOVAL", 1, 1, caster)
     elseif Goon_Regenerate_Check(spell) then
-        Osi.ApplyStatus(target, "GOON_REGENERATE_INJURY_REMOVAL_TECHNICAL", 1, 1, caster)
+        Osi.ApplyStatus(target, "GOON_REGENERATE_INJURY_REMOVAL", 1, 1, caster)
+    elseif Goon_Song_Of_Rest_Check(spell) then
+        Osi.ApplyStatus(target, "GOON_SONG_OF_REST_INJURY_REMOVAL", 1, 1, caster)
     end
 end)

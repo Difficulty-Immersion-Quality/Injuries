@@ -25,6 +25,11 @@ type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
+new entry "GOON_SONG_OF_REST_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
 // ==================================== Lesser Restoration target changes so it can be used to remove injuries ====================================
 
 new entry "Target_LesserRestoration"
