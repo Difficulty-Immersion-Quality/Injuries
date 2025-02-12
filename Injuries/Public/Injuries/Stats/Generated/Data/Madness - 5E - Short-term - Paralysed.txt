@@ -27,7 +27,7 @@ data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Incapacitated;SG_Paralyzed"
-data "Passives" ""
+data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive"
 //
 data "AnimationStart" "b554aad5-6f39-4406-b248-e82084d01b1f(STAT_Dazed_Combat_01_Start)"
 data "AnimationLoop" "06cff5ab-1705-403a-b20f-d5c9defbece5(STAT_Dazed_Combat_01_Loop)"

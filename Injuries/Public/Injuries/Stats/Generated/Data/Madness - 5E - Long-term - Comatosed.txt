@@ -28,7 +28,7 @@ data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Incapacitated"
 data "Sheathing" "Sheathed"
-data "Passives" ""
+data "Passives" "Goon_Longterm_Madness_5E_Removal_Passive"
 //
 data "AnimationStart" ""
 data "AnimationLoop" ""

@@ -31,4 +31,4 @@ data "StatusType" "BOOST"
 data "DisplayName" "h145effdagac1bg44a3g84d8g67a9f56827a1"
 //
 data "Description" "hdcbc303dg84b0g45fegb600gc8fba9f499c7"
-data "Icon" "statIcons_BoonOfBhaal_MarkedForMurder"
+data "Icon" "statIcons_Madness"

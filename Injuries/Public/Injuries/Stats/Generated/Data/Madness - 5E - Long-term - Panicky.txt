@@ -27,7 +27,7 @@ data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" ""
-data "Passives" "Goon_Panicky_Technical_Passive"
+data "Passives" "Goon_Longterm_Madness_5E_Removal_Passive;Goon_Panicky_Technical_Passive"
 //
 data "AnimationStart" ""
 data "AnimationLoop" ""

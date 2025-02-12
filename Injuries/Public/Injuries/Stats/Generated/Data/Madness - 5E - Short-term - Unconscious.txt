@@ -25,7 +25,7 @@ data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Unconscious"
-data "Passives" ""
+data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive"
 //
 data "AnimationStart" ""
 data "AnimationLoop" ""
