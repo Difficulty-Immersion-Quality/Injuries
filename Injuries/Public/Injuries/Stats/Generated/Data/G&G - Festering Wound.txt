@@ -129,9 +129,9 @@ new entry "Goon_Grit_Glory_Festering_Wound_Removal_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL_SAVINGTHROW,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL,100,0)"
-data "StatsFunctorContext" "OnHealed;OnStatusApplied"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
 
 // Status for use in configuration to disable/enable default removal system
 new entry "GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL"
@@ -139,7 +139,7 @@ type "StatusData"
 data "StatusType" "BOOST" 
 // Injury: Festering Wound
 data "DisplayName" "h2461454bgbb5eg4fc0g9686g747c2c16c036"
-//
+// 
 data "Description" "hc56ff4cdg1473g410bg9845g8f5cafc85ed5"
 data "DescriptionParams" ""
 data "TooltipSave" "Constitution"
@@ -148,18 +148,6 @@ data "FormatColor" "Red"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 //data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_FESTERING_WOUND)"
-
-// Different statuses to handle healing removing injuries after a saving throw, saving throws will still be rolled even if status is removed from configuration
-new entry "GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL_SAVINGTHROW"
-type "StatusData" 
-data "StatusType" "BOOST"
-using "GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL"
-data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL_HEALING)"
-
-new entry "GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL_HEALING"
-type "StatusData" 
-data "StatusType" "BOOST"
-using "GOON_GRIT_GLORY_FESTERING_WOUND_REMOVAL"
 
 // ==================================== Long rest tracking ====================================
 
