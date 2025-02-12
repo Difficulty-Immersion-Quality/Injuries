@@ -22,7 +22,7 @@ local function BuildRow(damageTable, damageType, damageConfig)
 	local damageTypeThreshold = row:AddCell():AddSliderInt("", damageTypeConfig["multiplier"] * 100, 1, 500)
 
 	local thresholdTooltip = damageTypeThreshold:Tooltip()
-	local tooltipText = thresholdTooltip:AddText(string.format("\t\t10 points of %s damage contributes %s points of Injury Damage",
+	local tooltipText = thresholdTooltip:AddText(string.format("\t\t" .. Translator:translate("10 points of %s damage contributes %s points of Injury Damage"),
 		damageType,
 		10 * damageTypeConfig["multiplier"]))
 
@@ -30,7 +30,7 @@ local function BuildRow(damageTable, damageType, damageConfig)
 		-- Rounding, according to ChatGPT
 		damageTypeConfig["multiplier"] = math.floor(damageTypeThreshold.Value[1] * 100 + 0.5) / 10000
 
-		tooltipText.Label = string.format("\t\t10 points of %s damage contributes %s points of Injury Damage",
+		tooltipText.Label = string.format("\t\t" .. Translator:translate("10 points of %s damage contributes %s points of Injury Damage"),
 			damageType,
 			10 * damageTypeConfig["multiplier"])
 	end
@@ -47,24 +47,24 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 	local damageConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].damage
 
-	local damageTab = tabBar:AddTabItem("Damage")
+	local damageTab = tabBar:AddTabItem(Translator:translate("Damage"))
 	damageTab.TextWrapPos = 0
 
-	damageTab:AddText("Applied after total damage from all configured DamageTypes is >= the following % of Health:")
+	damageTab:AddText(Translator:translate("Applied after total damage from all configured DamageTypes is >= the following % of Health:"))
 	local damageThreshold = damageTab:AddSliderInt("", damageConfig["threshold"], 0, 100)
 	damageThreshold.OnChange = function()
 		damageConfig["threshold"] = damageThreshold.Value[1]
 	end
 
-	damageTab:AddSeparatorText("What Damage Types Contribute to Injury Damage?")
+	damageTab:AddSeparatorText(Translator:translate("What Damage Types Contribute to Injury Damage?"))
 
 	local damageTable = damageTab:AddTable("DamageTypes", 3)
 	damageTable.BordersInnerH = true
 
 	local headerRow = damageTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Damage Type")
-	headerRow:AddCell():AddText("Injury Damage Multiplier %")
+	headerRow:AddCell():AddText(Translator:translate("Damage Type"))
+	headerRow:AddCell():AddText(Translator:translate("Injury Damage Multiplier %"))
 
 	local damageTypes = {}
 	for _, damageType in ipairs(Ext.Enums.DamageType) do
@@ -102,3 +102,12 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		damageTypePopup:Open()
 	end
 end)
+
+Translator:RegisterTranslation({
+	["10 points of %s damage contributes %s points of Injury Damage"] = "h77732ab1f47b48599d1583e8f57932aad0a2",
+	["Damage"] = "h95a95752c92647a8a9c2c6eb130e1696b6gb",
+	["Applied after total damage from all configured DamageTypes is >= the following % of Health:"] = "hdf110c00af5c447782a7bf5e7e3e35c954e6",
+	["What Damage Types Contribute to Injury Damage?"] = "h942494a3f05b4795be91c7d83536346f8g72",
+	["Damage Type"] = "h192362c2dca1421da023f113a75fa49dc485",
+	["Injury Damage Multiplier %"] = "h3c6d9998781a457b88ff11c6d2376a0670ef",
+})

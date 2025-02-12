@@ -76,7 +76,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 
 	--#endregion
 
-	local deleteRowButton = row:AddCell():AddButton("Delete")
+	local deleteRowButton = row:AddCell():AddButton(Translator:translate("Delete"))
 
 	deleteRowButton.OnClick = function()
 		-- hack to allow us to monitor table deletion
@@ -94,7 +94,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 	local removeOnConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].remove_on_status
 
-	local statusTab = tabBar:AddTabItem("Remove On Status")
+	local statusTab = tabBar:AddTabItem(Translator:translate("Remove On Status"))
 	statusTab.TextWrapPos = 0
 
 	---@type StatusData
@@ -107,10 +107,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Status Name (ResourceID)")
-	headerRow:AddCell():AddText("Save Conditions")
+	headerRow:AddCell():AddText(Translator:translate("Status Name (ResourceID)"))
+	headerRow:AddCell():AddText(Translator:translate("Save Conditions"))
 	if addStackRemovalAspect then
-		headerRow:AddCell():AddText("# of Stacks To Remove (?)"):Tooltip():AddText("i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied")
+		headerRow:AddCell():AddText(Translator:translate("# of Stacks To Remove (?)")):Tooltip():AddText(Translator:translate("i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
 	end
 
 	DataSearchHelper:BuildSearch(statusTab,
@@ -126,3 +126,12 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		BuildRows(statusTable, status, injury, removeOnConfig)
 	end
 end)
+
+Translator:RegisterTranslation({
+	["Delete"] = "hce2116065bec41b5a7ce75c39e627a302842",
+	["Remove On Status"] = "h5aafe7131cb74ee4a0a8df3093386146edf5",
+	["Status Name (ResourceID)"] = "h17af04db98664960a5d485740a86f4bb4517",
+	["Save Conditions"] = "hbe9455faa0784cb99616e5098fd5247dgcg2",
+	["# of Stacks To Remove (?)"] = "h125c3399732d41a4a300eee966450e16e61f",
+	["i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"] = "he6354d4907a7431b82c7ebde28275f9a7eae",
+})

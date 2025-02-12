@@ -6,7 +6,7 @@ for _, raceUUID in pairs(Ext.StaticData.GetAll("Race")) do
 	local raceData = Ext.StaticData.Get(raceUUID, "Race")
 
 	local displayName = string.format("%s (%s)",
-		(raceData.DisplayName:Get() or ("Can't Translate")),
+		(raceData.DisplayName:Get() or (Translator:translate("Can't Translate"))),
 		string.sub(raceUUID, -5))
 
 	raceNameToUUID[displayName] = raceUUID
@@ -26,11 +26,11 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 	local charMultiplierConfig = InjuryMenu.ConfigurationSlice.injury_specific[injury].character_multipliers
 
-	local multiplierTab = tabBar:AddTabItem("Character Multipliers")
+	local multiplierTab = tabBar:AddTabItem(Translator:translate("Character Multipliers"))
 	multiplierTab.TextWrapPos = 0
 
 	--#region Races
-	local raceHeader = multiplierTab:AddCollapsingHeader("Races")
+	local raceHeader = multiplierTab:AddCollapsingHeader(Translator:translate("Races"))
 	raceHeader.DefaultOpen = true
 
 	local raceTable = raceHeader:AddTable("Races", 2)
@@ -40,8 +40,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local headerRow = raceTable:AddRow()
 	headerRow.Headers = true
-	headerRow:AddCell():AddText("Race")
-	headerRow:AddCell():AddText("Multiplier (%)")
+	headerRow:AddCell():AddText(Translator:translate("Race"))
+	headerRow:AddCell():AddText(Translator:translate("Multiplier (%)"))
 
 	local function buildRaceSlider(raceUUID, raceName)
 		local newRow = raceTable:AddRow()
@@ -72,9 +72,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local raceSelect = racePopop:AddSelectable(raceName, "DontClosePopups")
 
 		local raceTooltip = raceSelect:Tooltip()
-		raceTooltip:AddText(string.format("Resource Name: %s", raceData.Name))
-		raceTooltip:AddText(string.format("UUID: %s", raceUUID))
-		raceTooltip:AddText(string.format("Description: %s", raceData.Description:Get())).TextWrapPos = 600
+		raceTooltip:AddText(string.format(Translator:translate("Resource Name:") .. " %s", raceData.Name))
+		raceTooltip:AddText(string.format(Translator:translate("UUID:") ..  " %s", raceUUID))
+		raceTooltip:AddText(string.format(Translator:translate("Description:") .. " %s", raceData.Description:Get())).TextWrapPos = 600
 
 		raceSelect.OnActivate = function()
 			if raceSelect.UserData then
@@ -99,10 +99,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	--#region Tags
 	multiplierTab:AddNewLine()
-	local tagsHeader = multiplierTab:AddCollapsingHeader("Tags")
+	local tagsHeader = multiplierTab:AddCollapsingHeader(Translator:translate("Tags"))
 	tagsHeader.DefaultOpen = true
 
-	tagsHeader:AddText("If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)").TextWrapPos = 0
+	tagsHeader:AddText(Translator:translate("If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)")).TextWrapPos = 0
 
 	local tagTable = tagsHeader:AddTable("TagTable", 3)
 	tagTable.BordersInnerH = true
@@ -111,8 +111,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	local tagHeaderRow = tagTable:AddRow()
 	tagHeaderRow.Headers = true
-	tagHeaderRow:AddCell():AddText("Name (Display Name - ID)")
-	tagHeaderRow:AddCell():AddText("% Multiplier")
+	tagHeaderRow:AddCell():AddText(Translator:translate("Name (Display Name - ID)"))
+	tagHeaderRow:AddCell():AddText(Translator:translate("% Multiplier"))
 
 	local function buildTagRow(tagUUID, ignoreExistingRecord)
 		---@type ResourceTag
@@ -129,7 +129,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local tagNameCell = row:AddCell()
 		tagNameCell:AddText(string.format("%s (%s - %s)",
 			tagData.Name,
-			tagData.DisplayName:Get() or "N/A",
+			tagData.DisplayName:Get() or Translator:translate("N/A"),
 			string.sub(tagData.ResourceUUID, -5)
 		))
 
@@ -137,18 +137,18 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		if tagData.Icon ~= "" then
 			toolTip:AddImage(tagData.Icon, { 30, 30 })
 		end
-		toolTip:AddText("Display Name: " .. (tagData.DisplayName:Get() or "N/A")).SameLine = true
-		toolTip:AddText("ResourceId: " .. tagUUID)
-		toolTip:AddText("Tag UUID: " .. tagData.ResourceUUID)
-		toolTip:AddText("Description: " .. (tagData.Description ~= "" and tagData.Description or "N/A"))
-		toolTip:AddText("Display Description: " .. (tagData.DisplayDescription:Get() or "N/A"))
+		toolTip:AddText(Translator:translate("Display Name:") .. " " .. (tagData.DisplayName:Get() or Translator:translate("N/A"))).SameLine = true
+		toolTip:AddText(Translator:translate("ResourceId:") .. " " .. tagUUID)
+		toolTip:AddText(Translator:translate("Tag UUID:") .. " " .. tagData.ResourceUUID)
+		toolTip:AddText(Translator:translate("Description:") .. " " .. (tagData.Description ~= "" and tagData.Description or Translator:translate("N/A")))
+		toolTip:AddText(Translator:translate("Display Description:") .. " " .. (tagData.DisplayDescription:Get() or Translator:translate("N/A")))
 
 		local multiplier = row:AddCell():AddSliderInt("", charMultiplierConfig["tags"][tagUUID] * 100, 0, 500)
 		multiplier.OnChange = function()
 			charMultiplierConfig["tags"][tagUUID] = tonumber(string.format("%.2f", multiplier.Value[1] / 100))
 		end
 
-		row:AddCell():AddButton("Delete").OnClick = function()
+		row:AddCell():AddButton(Translator:translate("Delete")).OnClick = function()
 			charMultiplierConfig["tags"][tagUUID] = nil
 			row:Destroy()
 		end
@@ -168,3 +168,28 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	end
 	--#endregion
 end)
+
+Translator:RegisterTranslation({
+	["Can't Translate"] = "h083eca37a9d64a499e02c746c60459ab97g2",
+	["Character Multipliers"] = "hc53c9e27bdff459a8fca5241b55e5ba8eg4f",
+	["Races"] = "ha53ab4a9feb24908bb820177c714ab0e8g00",
+	["Race"] = "h274d07d40f19497bb2725503e284af1ac516",
+	["Multiplier (%)"] = "hb70b79aad49b400f824161698ebc612c5d68",
+	["Resource Name:"] = "h0cee4cf85a3b4c4580c7f6d396ed9b5c8609",
+	["UUID:"] = "h652d5e5c916f4f20b9022f295bb7aa9345e2",
+	["Description:"] = "hed01418847b541ed8d7409f2005680ad457g",
+	["Tags"] = "h8901bd2ebb8d4f4da8e4df70c44e83745b7f",
+	["If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)"] = "he5e4f7e52a264633bfed00514a7c077ab506",
+	["Name (Display Name - ID)"] = "h923d7335722f4c6589f8abb9761d124b47a1",
+	["% Multiplier"] = "h77b2a94cb0204e0c98ee08217f5098a28136",
+	["N/A"] = "h4dc4bb8bd0574f3790f38849055385955b50",
+	["Display Name:"] = "h09cebe760b1d4e3f9df49ae1091f6bd14b7d",
+	["ResourceId:"] = "h7cf79c8770384e6b933ad9a7c5f17b2dcbd9",
+	["Tag UUID:"] = "h72738de2d12d41798d6780e4512bef70a9g1",
+	["Display Description:"] = "h56eb6fe545af4fe3b335bc5483844b98be02",
+	["Delete"] = "h55fb845d61da4b6ba21457c35b05edfc672g",
+	[""] = "",
+	[""] = "",
+	[""] = "",
+	[""] = "",
+})
