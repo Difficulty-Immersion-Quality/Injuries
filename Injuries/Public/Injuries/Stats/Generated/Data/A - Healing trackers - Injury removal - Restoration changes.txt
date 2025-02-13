@@ -114,13 +114,6 @@ data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed) and Has
 new entry "GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW"
 type "StatusData"
 data "StatusType" "BOOST"
-using "GOON_HEALING_INJURY_REMOVAL"
-//
-data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL,100,0)"
-
-new entry "GOON_HEALING_INJURY_REMOVAL"
-type "StatusData" 
-data "StatusType" "BOOST"
 // Healing Injury Removal
 data "DisplayName" "he12358ebg18cag4fb4gbd3eg76da9ce3e752"
 //
@@ -130,6 +123,15 @@ data "TooltipSave" "Constitution"
 data "Icon" "PassiveFeature_Generic_Blood"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL,100,0)"
+
+new entry "GOON_HEALING_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW"
+//
+data "OnApplyFunctors" ""
 
 // ==================================== Long-term Madness shared removal system ====================================
 
