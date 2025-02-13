@@ -39,7 +39,7 @@ data "StackPriority" "1"
 data "StackType" "Ignore"
 data "AuraRadius" ""
 data "AuraStatuses" ""
-data "Boosts" "Resistance(Thunder,Resistant)
+data "Boosts" "Resistance(Thunder,Resistant)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS')"

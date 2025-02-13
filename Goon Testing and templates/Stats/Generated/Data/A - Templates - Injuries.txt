@@ -131,7 +131,7 @@ new entry "Goon_Grit_Glory_X_Removal_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_GRIT_GLORY_X_REMOVAL_SAVINGTHROW,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_X_REMOVAL,100,0)"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_GRIT_GLORY_X_REMOVAL_HEALING,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_X_REMOVAL,100,0)"
 data "StatsFunctorContext" "OnHealed;OnStatusApplied"
 data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
 
@@ -151,17 +151,11 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 //
 //data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_X)"
 
-// Different statuses to handle healing removing injuries after a saving throw, saving throws will still be rolled even if status is removed from configuration
-new entry "GOON_GRIT_GLORY_X_REMOVAL_SAVINGTHROW"
-type "StatusData" 
-data "StatusType" "BOOST"
-using "GOON_GRIT_GLORY_X_REMOVAL"
-data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_GRIT_GLORY_X_REMOVAL_HEALING)"
-
 new entry "GOON_GRIT_GLORY_X_REMOVAL_HEALING"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_GRIT_GLORY_X_REMOVAL"
+data "OnApplyFunctors" "ApplyStatus(GOON_HEALING_INJURY_REMOVAL,100,0)"
 
 // ==================================== Long rest tracking ====================================
 

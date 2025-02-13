@@ -17,7 +17,7 @@ data "StackPriority" "4"
 data "StackType" "Overwrite"
 data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS')"
-data "RemoveEvents" "OnStatusRemoved""
+data "RemoveEvents" "OnStatusRemoved"
 
 // ==================================== Real Injury ====================================
 

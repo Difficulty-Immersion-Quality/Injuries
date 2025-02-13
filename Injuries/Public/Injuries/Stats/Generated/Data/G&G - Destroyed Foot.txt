@@ -81,7 +81,7 @@ data "MaterialParameters" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG"
 type "StatusData" 
 data "StatusType" "BOOST"
-using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 // Injury: Broken Leg
 data "DisplayName" "he2c12678gbf3bg43efgac5ag1068bf452b7f"
 

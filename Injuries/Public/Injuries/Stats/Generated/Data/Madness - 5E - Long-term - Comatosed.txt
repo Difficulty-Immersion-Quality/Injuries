@@ -56,5 +56,3 @@ data "MaterialApplyWeapon" ""
 data "MaterialApplyNormalMap" ""
 data "MaterialFadeAmount" ""
 data "MaterialParameters" ""
-
-// ==================================== Technicals for individual madness functionality ====================================
