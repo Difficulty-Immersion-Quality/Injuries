@@ -183,12 +183,13 @@ if Ext.IsServer() then
 						---@type StatusData
 						local configuredInjuryEntry = Ext.Stats.Get(configuredInjuryName)
 
-						if existingInjuryEntry.StackId == configuredInjuryEntry.StackId
-							and (tonumber(existingInjuryEntry.StackPriority) + 1) == tonumber(configuredInjuryEntry.StackPriority)
-						then
-							Logger:BasicDebug("Original injury %s was upgraded to %s due to stack logic", injury, configuredInjuryName)
-							return configuredInjuryName
-						end
+						if configuredInjuryEntry 
+						and existingInjuryEntry.StackId == configuredInjuryEntry.StackId
+						and (tonumber(existingInjuryEntry.StackPriority) + 1) == tonumber(configuredInjuryEntry.StackPriority)
+					then
+						Logger:BasicDebug("Original injury %s was upgraded to %s due to stack logic", injury, configuredInjuryName)
+						return configuredInjuryName
+					end
 					end
 					-- If we're at the highest stack, don't bother continuing
 					return nil
