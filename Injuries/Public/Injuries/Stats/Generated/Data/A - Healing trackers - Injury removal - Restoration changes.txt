@@ -34,6 +34,7 @@ data "StatusType" "BOOST"
 // Heal
 data "DisplayName" "h7a21df63g02c2g4e24gbfddgd0e8b289b956;2"
 // Heal a target's wounds and remove Blindness and any diseases.
+data "Description" "h2d8f7d2eg13c3g415cgb000gb81a59ae1f32;4"
 data "Icon" "Spell_Evocation_Heal"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
