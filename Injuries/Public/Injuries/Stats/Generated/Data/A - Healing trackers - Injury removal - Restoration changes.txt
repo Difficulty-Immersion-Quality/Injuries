@@ -1,3 +1,11 @@
+// ==================================== Lesser Restoration target changes so it can be used to remove injuries ====================================
+
+new entry "Target_LesserRestoration"
+type "SpellData"
+data "SpellType" "Target"
+using "Target_LesserRestoration"
+data "TargetConditions" "Character() and not Dead()"
+
 // ==================================== Statuses for tracking spells etc via SE ====================================
 
 new entry "GOON_LESSER_RESTORATION_INJURY_REMOVAL"
@@ -59,7 +67,8 @@ data "Description" "h004d056bga0c0g4211g864fgd0a167f0cf2d;4"
 data "Icon" "Action_Bard_SongOfRest"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-// Holdover status for handling unrestable exhaustion removing stacks of restable exhaustion, pending OnStatusRemoved configuration options
+// ==================================== Holdover status for handling unrestable exhaustion removing stacks of restable exhaustion, pending OnStatusRemoved configuration options ====================================
+
 new entry "GOON_UNRESTABLE_EXHAUSTION_NORMAL_EXHAUSTION_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST"
@@ -70,13 +79,57 @@ data "Description" "h9ab1a295gf2cfg4ee8g850bgab1165b73e74"
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
-// ==================================== Lesser Restoration target changes so it can be used to remove injuries ====================================
+// ==================================== Healing based injury removal system ====================================
 
-new entry "Target_LesserRestoration"
-type "SpellData"
-data "SpellType" "Target"
-using "Target_LesserRestoration"
-data "TargetConditions" "Character() and not Dead()"
+// A dummy Passive for seeing if a relevant injury is applied/if the saving throw should be rolled
+new entry "Goon_Healing_Injury_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(not HasStatus('GOON_HEALING_INJURY_REMOVAL_TECHNICAL')):ApplyStatus(GOON_HEALING_INJURY_REMOVAL_TECHNICAL,100,-1)"
+data "StatsFunctorContext" "OnRound;OnTurn;OnStatusApplied;OnStatusApply;OnStatusRemove;OnStatusRemoved"
+data "Conditions" ""
+
+// For Passive application
+new entry "GOON_HEALING_INJURY_REMOVAL_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackType" "Ignore"
+data "StackId" "GOON_HEALING_INJURY_REMOVAL_TECHNICAL"
+data "RemoveConditions" "not HasPassive('Goon_Healing_Injury_Removal_Technical_Passive', context.Source)"
+data "RemoveEvents" "OnTurn;OnStatusApplied;OnStatusRemoved"
+data "Passives" "Goon_Healing_Injury_Removal_Passive"
+
+// Passive
+new entry "Goon_Healing_Injury_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW,100,0)"
+data "StatsFunctorContext" "OnHealed"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed) and HasPassive('Goon_Healing_Injury_Removal_Technical_Passive', context.Source))"
+
+// Status for saving throw
+new entry "GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_HEALING_INJURY_REMOVAL"
+//
+data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL,100,0)"
+
+new entry "GOON_HEALING_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Healing Injury Removal
+data "DisplayName" "he12358ebg18cag4fb4gbd3eg76da9ce3e752"
+//
+data "Description" "hfa1d7d68geb26g4b80gb774g21cf41c5e1d4"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 
 // ==================================== Long-term Madness shared removal system ====================================
 

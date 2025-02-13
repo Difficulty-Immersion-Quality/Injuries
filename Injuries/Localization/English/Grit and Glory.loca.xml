@@ -2,6 +2,8 @@
 <contentList>
 	<content contentuid="h437392edga97eg4c24gaa05gfaa0b8c161c0" version="1">Regenerate</content>
 	<content contentuid="h50912191g0c8ag4be2g8b98gb9dd74df1a0e" version="1">Touch a creature to stimulate its natural healing ability.</content>
+	<content contentuid="he12358ebg18cag4fb4gbd3eg76da9ce3e752" version="1">Healing Injury Removal</content>
+	<content contentuid="hfa1d7d68geb26g4b80gb774g21cf41c5e1d4" version="1">You have an &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injury&lt;/LSTag&gt; that can be cured by healing, if you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt;.</content>
 
 
 
@@ -124,7 +126,7 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 	<content contentuid="h0bc85864g6ee0g4869gbd8age0510c02e0ed" version="1">Injury: Blisters</content> -- Acid, Fire and Radiant damage
 	-- You have severe blisters. You have disadvantage on Dexterity checks. The blisters heal if you receive magical healing. Alternatively, someone can tend to the blisters and make a DC 15 Wisdom (Medicine) check once every 24 hours. After seven successes, the blisters heal.
 
-	<content contentuid="h3fcc33dfg2b46g427cg85f8g8e061550d70e" version="1">Blindness is intended for Acid, Fire and Radiant damage.
+	<content contentuid="h3fcc33dfg2b46g427cg85f8g8e061550d70e" version="1">Blisters is intended for Acid, Fire and Radiant damage.
 &lt;br&gt;Intended severity: Low. 
 &lt;br&gt;You have severe blisters. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.
 &lt;br&gt;By default, this &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injury&lt;/LSTag&gt; can be cured when you succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; after receiving any healing, when &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 3 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
