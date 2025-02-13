@@ -67,7 +67,7 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 
 
 	<content contentuid="ha3bf49e3gd891g4a19g9424geeda30463eb6" version="1">Injuries</content>
-	<content contentuid="hac7adc44g995fg433bg8e06g898f397a29f3" version="1">Injuries can be applied from many sources, be they severe or mild, ailing or easily remedied, the life of an adventurer, hero or villain is strife with dangers.</content>
+	<content contentuid="hac7adc44g995fg433bg8e06g898f397a29f3" version="1">The life of an adventurer is demanding and strife with dangers; be it &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_EXHAUSTION_LEVELS"&gt;Exhaustion&lt;/LSTag&gt;, a &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG"&gt;Broken Leg&lt;/LSTag&gt;, or going &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Mad&lt;/LSTag&gt;... something is eventually going to give in.</content>
 
 
 
@@ -892,7 +892,7 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 	<content contentuid="hdcbc303dg84b0g45fegb600gc8fba9f499c7" version="1">Madness conditions can be induced under different circumstances, be they from &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injuries&lt;/LSTag&gt;, such as &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRIT_GLORY_SHORTTERM_MADNESS"&gt;Short-term&lt;/LSTag&gt; and &lt;LSTag Type="Status" Tooltip="GOON_REAL_INJURY_GRIT_GLORY_LONGTERM_MADNESS"&gt;Long-term Madness&lt;/LSTag&gt;, curses or other unfavourable circumstances.
 &lt;br&gt;These effects are temporary and subject to the following:
 The effects of madness are suppressed while under the effects of &lt;LSTag Type="Status" Tooltip="CALM_EMOTIONS"&gt;Calm Emotions&lt;/LSTag&gt;, or while &lt;LSTag Type="Status" Tooltip="RAGE"&gt;Raging&lt;/LSTag&gt;, if the character possesses &lt;LSTag Type="Passive" Tooltip="MindlessRage"&gt;Mindless Rage&lt;/LSTag&gt;.
-&lt;br&gt;By default, &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Madness&lt;/LSTag&gt; can be cured when &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; (only for &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_MADNESS"&gt;Short-term Madness&lt;/LSTag&gt;), &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 7 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
+&lt;br&gt;By default, Madness can be cured when &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser&lt;/LSTag&gt; (only Short-term Madness), &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 7 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
 
 
 
