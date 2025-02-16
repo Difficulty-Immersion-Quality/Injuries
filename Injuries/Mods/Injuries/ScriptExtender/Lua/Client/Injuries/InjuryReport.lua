@@ -208,7 +208,7 @@ local function BuildReport()
 
 				local sepText = Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury)
 				sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
-
+				Logger:BasicError(injury)
 				local keepGroup = false
 				if injuryReport["injuryAppliedReason"][injury] then
 					keepGroup = true
