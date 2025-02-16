@@ -101,6 +101,10 @@ if Ext.IsServer() then
 				Osi.AddPassive(character, "Goon_Attack_Detect")
 			end
 
+			if Osi.HasPassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction") == 0 then
+				Osi.AddPassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction")
+			end
+
 			return true
 		else
 			return false

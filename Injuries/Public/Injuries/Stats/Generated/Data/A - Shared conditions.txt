@@ -8,7 +8,11 @@ using "POISONED"
 data "StackType" "Ignore"
 data "StackPriority" "20"
 //data "ApplyEffect" "fa688204-319c-41b2-88d9-7b619d17aed4"
+data "StatusGroups" "SG_Surface;SG_Poisoned"
 data "StatusEffect" "ceeda0ca-0739-4588-a449-d024389f0c2a"
+
+data "RemoveConditions" "not HasStatus(GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE) and not HasStatus(GOON_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE) and not HasStatus(GOON_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE) and not HasStatus(GOON_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE)"
+
 
 // ==================================== Deafened, more of a buff than a debuff lmao ====================================
 // "Un-Deafening Silence - Silenced Status Fix" by DrKekyll should be looked into further, for now this is basic
@@ -27,7 +31,7 @@ data "SoundStop" "Misc_Status_Silence_Gameobject_Unmute"
 data "Boosts" "SoundsBlocked();Resistance(Thunder,Immune)"
 data "StatusPropertyFlags" "ApplyToDead"
 data "OnApplyFunctors" "RemoveStatus(LURING_SONG_AURA);RemoveStatus(LURING_SONG)"
-data "StatusGroups" "SG_Condition"
+data "StatusGroups" ""
 data "ManagedStatusEffectType" "Negative"
 
 // ==================================== Custom sleeping conditions for exhaustion ====================================

@@ -1,3 +1,20 @@
+// ==================================== Detect exhaustion and reduce crit threshold when attacking the target ====================================
+
+new entry "Goon_Exhaustion_Detect_Critical_Threshold_Reduction"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnAttack"
+data "StatsFunctors" "IF(not HasStatus('GOON_EXHAUSTION_DETECT_CRITICAL_THRESHOLD_REDUCTION_BOOSTS')):ApplyStatus(GOON_EXHAUSTION_DETECT_CRITICAL_THRESHOLD_REDUCTION_BOOSTS,100,-1)"
+data "StatsFunctorContext" "OnRound;OnTurn;OnStatusApplied;OnStatusApply;OnStatusRemove;OnStatusRemoved"
+
+new entry "GOON_EXHAUSTION_DETECT_CRITICAL_THRESHOLD_REDUCTION_BOOSTS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_EXHAUSTION_DETECT_CRITICAL_THRESHOLD_REDUCTION_BOOSTS"
+data "Boosts" "IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_1',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2',context.Target)):ReduceCriticalAttackThreshold(1);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_3',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_4',context.Target)):ReduceCriticalAttackThreshold(2);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_5',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_6',context.Target)):ReduceCriticalAttackThreshold(3)"
+
 // ==================================== Damage detection ====================================
 
 // Unlike vanilla's tracking this includes Necrotic damage and they all share a stack so last application wins.

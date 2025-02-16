@@ -24,7 +24,7 @@ data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" ""
+data "StatusGroups" "SG_Exhausted"
 data "Passives" ""
 
 // ==================================== Incurable injury induced Exhaustion level 7 ====================================

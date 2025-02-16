@@ -24,7 +24,7 @@ data "RemoveConditions" ""
 data "RemoveEvents" ""
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" ""
+data "StatusGroups" "SG_Exhausted"
 data "Passives" ""
 
 // ==================================== Incurable injury induced Exhaustion level 5 ====================================
@@ -56,7 +56,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL"
 data "StackPriority" "5"
 data "StackType" "Overwrite"
-data "Boosts" "Ability(Strength,-5);Ability(Dexterity,-5);Ability(Constitution,-5);Ability(Intelligence,-5);Ability(Wisdom,-5);Ability(Charisma,-5);ActionResourceConsumeMultiplier(Movement,1.5,0);CriticalHit(AttackTarget,Success,Always,17)"
+data "Boosts" "Ability(Strength,-5);Ability(Dexterity,-5);Ability(Constitution,-5);Ability(Intelligence,-5);Ability(Wisdom,-5);Ability(Charisma,-5);ActionResourceConsumeMultiplier(Movement,1.5,0)"
 data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_5') and not HasStatus('GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_5')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
