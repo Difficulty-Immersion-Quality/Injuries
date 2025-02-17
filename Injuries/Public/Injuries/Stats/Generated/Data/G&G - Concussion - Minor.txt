@@ -1,0 +1,308 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Concussion - Minor
+data "DisplayName" "h24ca675egb7b6g470fga43dg5f220e6f4dba"
+// 
+data "Description" "hb854d70cg0b6cg43acg9d36g903a9ee88e61"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_GRIT_GLORY_CONCUSSION"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MAJOR_CONCUSSION')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MINOR_CONCUSSION"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Minor Concussion
+data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
+// 
+data "Description" "h75a67443gffdfg4d69g99eag808e91e7a982"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_CONCUSSION"
+data "StackPriority" "1"
+data "StackType" "Ignore"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+data "Boosts" "Disadvantage(Ability,Intelligence)"
+data "OnApplyFunctors" "ApplyStatus(GOON_HEALING_INJURY_REMOVAL_TECHNICAL,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Healing_Injury_Removal_Technical_Passive;Goon_Grit_Glory_Minor_Concussion_Removal_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "WEAK"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.2"
+data "SplatterDirtAmount" "0.2"
+data "SplatterSweatAmount" "0.25"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Grit_Glory_Minor_Concussion_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_REMOVAL_HEALING,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_MINOR_CONCUSSION_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnHealed;OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_GRIT_GLORY_MINOR_CONCUSSION_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Minor Concussion
+data "DisplayName" "h5e1ce73bg0a4ag4984g910ag7423c23cbf3e"
+// 
+data "Description" "h75a67443gffdfg4d69g99eag808e91e7a982"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION)"
+
+new entry "GOON_GRIT_GLORY_MINOR_CONCUSSION_REMOVAL_HEALING"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_MINOR_CONCUSSION_REMOVAL"
+
+// ==================================== Long rest tracking ====================================
+
+// Status stack for tracking long rests, and handling natural injury recovery
+new entry "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "Icon" "Status_Sleep"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackType" "Overwrite"
+data "OnApplyConditions" "HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION',context.Source)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_CONCUSSION')"
+data "RemoveEvents" "OnStatusRemoved"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_1"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "1"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_2"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "2"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_3"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "3"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_4"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "4"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_5"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "5"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_6"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "6"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "7"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_8"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "8"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_9"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "9"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_10"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "10"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_11"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "11"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_12"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "12"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_13"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "13"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_14"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "14"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_15"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "15"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_16"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "16"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_17"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "17"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_18"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "18"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_19"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "19"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_20"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "20"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_21"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "21"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_22"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "22"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_23"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "23"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_24"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "24"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_25"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "25"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_26"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "26"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_27"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "27"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_28"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "28"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_29"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "29"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MINOR_CONCUSSION_30"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MINOR_CONCUSSION"
+data "StackPriority" "30"

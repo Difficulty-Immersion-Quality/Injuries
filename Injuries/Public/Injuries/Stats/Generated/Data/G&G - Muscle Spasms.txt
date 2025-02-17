@@ -1,0 +1,319 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Muscle Spasms
+data "DisplayName" "haf761bd2g8266g4b26g870cgd7ede49f2505"
+//
+data "Description" "h01a4e10eg09f7g47faga37fgf537aedc3ce2"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_POISON')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_VERTIGO,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_VERTIGO')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Muscle Spasms
+data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
+//
+data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+data "StackPriority" ""
+data "StackType" "Ignore"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+data "Boosts" "Disadvantage(Ability, Dexterity)"
+data "OnApplyFunctors" "ApplyStatus(GOON_HEALING_INJURY_REMOVAL_TECHNICAL,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Healing_Injury_Removal_Technical_Passive;Goon_Grit_Glory_Muscle_Spasms_Removal_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.69"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Flavour Proxies ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_VERTIGO"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_MUSCLE_SPASMS"
+// Injury: Vertigo
+data "DisplayName" "h3500cefcgf3cag4224g85b4gfc310ab4ae5e"
+// 
+data "Description" "h98e6f58fg1689g4010g9742g89b4f7505849"
+
+// ==================================== Removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Grit_Glory_Muscle_Spasms_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_GRIT_GLORY_MUSCLE_SPASMS_REMOVAL_HEALING,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_MUSCLE_SPASMS_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnHealed;OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_GRIT_GLORY_MUSCLE_SPASMS_REMOVAL"
+type "StatusData"
+data "StatusType" "BOOST"
+// Injury: Muscle Spasms
+data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
+//
+data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS)"
+
+new entry "GOON_GRIT_GLORY_MUSCLE_SPASMS_REMOVAL_HEALING"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_MUSCLE_SPASMS_REMOVAL"
+
+// ==================================== Long rest tracking ====================================
+
+// Status stack for tracking long rests, and handling natural injury recovery
+new entry "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "Icon" "Status_Sleep"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackType" "Overwrite"
+data "OnApplyConditions" "HasStatus('GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS',context.Source)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MUSCLE_SPASMS')"
+data "RemoveEvents" "OnStatusRemoved"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_1"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "1"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_2"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "2"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_3"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "3"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_4"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "4"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_5"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "5"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_6"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "6"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "7"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_8"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "8"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_9"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "9"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_10"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "10"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_11"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "11"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_12"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "12"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_13"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "13"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_14"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "14"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_15"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "15"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_16"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "16"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_17"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "17"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_18"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "18"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_19"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "19"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_20"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "20"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_21"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "21"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_22"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "22"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_23"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "23"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_24"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "24"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_25"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "25"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_26"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "26"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_27"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "27"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_28"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "28"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_29"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "29"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_MUSCLE_SPASMS_30"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_MUSCLE_SPASMS"
+data "StackPriority" "30"

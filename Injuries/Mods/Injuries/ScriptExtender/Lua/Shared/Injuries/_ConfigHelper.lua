@@ -101,6 +101,10 @@ if Ext.IsServer() then
 				Osi.AddPassive(character, "Goon_Attack_Detect")
 			end
 
+			if Osi.HasPassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction") == 0 then
+				Osi.AddPassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction")
+			end
+
 			return true
 		else
 			return false
@@ -183,7 +187,8 @@ if Ext.IsServer() then
 						---@type StatusData
 						local configuredInjuryEntry = Ext.Stats.Get(configuredInjuryName)
 
-						if existingInjuryEntry.StackId == configuredInjuryEntry.StackId
+						if configuredInjuryEntry
+							and existingInjuryEntry.StackId == configuredInjuryEntry.StackId
 							and (tonumber(existingInjuryEntry.StackPriority) + 1) == tonumber(configuredInjuryEntry.StackPriority)
 						then
 							Logger:BasicDebug("Original injury %s was upgraded to %s due to stack logic", injury, configuredInjuryName)

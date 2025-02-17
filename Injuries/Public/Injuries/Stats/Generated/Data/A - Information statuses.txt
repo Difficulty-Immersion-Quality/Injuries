@@ -1,0 +1,34 @@
+// ==================================== Injuries ====================================
+
+new entry "GOON_INFORMATION_STATUS_INJURIES"
+type "StatusData"
+data "StatusType" "BOOST"
+// Injuries
+data "DisplayName" "ha3bf49e3gd891g4a19g9424geeda30463eb6"
+//
+data "Description" "hac7adc44g995fg433bg8e06g898f397a29f3"
+data "Icon" "PassiveFeature_Generic_Blood"
+
+// ==================================== Exhaustion ====================================
+
+// Main exhaustion system information
+new entry "GOON_INFORMATION_STATUS_EXHAUSTION_LEVELS"
+type "StatusData"
+data "StatusType" "BOOST"
+// Exhaustion
+data "DisplayName" "h48662068g7920g405dg9263gef8a2079d513"
+//
+data "Description" "h9ab1a295gf2cfg4ee8g850bgab1165b73e74"
+data "Icon" "Status_Exhaustion"
+
+// ==================================== Madness ====================================
+
+// Madness
+new entry "GOON_INFORMATION_STATUS_MADNESS"
+type "StatusData"
+data "StatusType" "BOOST"
+// Madness
+data "DisplayName" "h145effdagac1bg44a3g84d8g67a9f56827a1"
+//
+data "Description" "hdcbc303dg84b0g45fegb600gc8fba9f499c7"
+data "Icon" "statIcons_Madness"

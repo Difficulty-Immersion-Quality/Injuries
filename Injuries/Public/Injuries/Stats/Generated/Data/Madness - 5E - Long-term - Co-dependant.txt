@@ -1,0 +1,102 @@
+// ==================================== Madness ====================================
+
+new entry "GOON_MADNESS_5E_LONGTERM_CODEPENDANT"
+type "StatusData"
+data "StatusType" "BOOST"
+// Long-term Madness: Codependent
+data "DisplayName" "h621f16d3g85f4g4ca7ga8a3g241d3a490ddd"
+//
+data "Description" "ha0775b55g9c10g46ebga50dgb6411a0d17f0"
+data "DescriptionParams" "Distance(10)"
+data "TooltipSave" ""
+data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_LONGTERM_CODEPENDANT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "AuraRadius" "10"
+data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE)"
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AttackRoll);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllAbilities);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllSavingThrows)"
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Longterm_Madness_5E_Removal_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "FALL"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "EXHAUSTED"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Technicals for individual madness functionality ====================================
+
+new entry "GOON_CODEPENDANT_IN_RANGE"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_CODEPENDANT_IN_RANGE"
+data "StackPriority" "10"
+data "AuraRadius" "10"
+data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE') and HasStatus('GOON_MADNESS_5E_CODEPENDANT')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE_TECHNICAL)"
+
+new entry "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+// Comforted
+data "DisplayName" "h136db323gc0f7g4d7bgad12gba4502f1af26"
+// 
+data "Description" "h94378b16gc1ccg4345gab0eg145e80aae405"
+data "DescriptionParams" "Distance(10)"
+data "Icon" "Spell_Enchantment_Friends"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
+data "SoundVocalStart" "RELAXED"
+data "OnRemoveFunctors" "ApplyStatus(GOON_CODEPENDANT_OUT_RANGE_SFX,100,0)"
+
+new entry "GOON_CODEPENDANT_OUT_RANGE_SFX"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_CODEPENDANT_OUT_RANGE_SFX"
+data "StillAnimationType" "Frightened"
+data "StillAnimationPriority" "Frightened"
+data "SoundVocalStart" "FALL"

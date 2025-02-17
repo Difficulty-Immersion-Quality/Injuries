@@ -1,72 +1,343 @@
 // ==================================== Filter Proxy ====================================
 
-new entry "GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT"
+new entry "GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 // Destroyed Foot
-data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
+data "DisplayName" "hae1dd6e1geb7cg4c16gb448g7a95b424203e"
 // 
-data "Description" "h293bdfafg7bdeg4067gb1eag2a20fbe3a899"
+data "Description" "hfef4d455g444ag4669g8edeg4b13371f1ec0"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_INJURY_PROXY_GRIT_GLORY_DESTROYED_FOOT"
+data "StackId" "GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 data "StackPriority" ""
 data "StackType" "Overwrite"
-data "Boosts" ""
-data "OnApplyFunctors" "IF(not HasStatus(GOON_DAMAGE_DEALT_COLD) and not HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT',100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_COLD)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT',100,-1);IF(HasStatus(GOON_DAMAGE_DEALT_LIGHTNING)):ApplyStatus('GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT',100,-1);"
-data "RemoveConditions" "not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT) and not HasStatus(GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT)"
+data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING') and not HasStatus('GOON_DAMAGE_DEALT_COLD') and not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') and not HasStatus('GOOND_DAMAGE_DEALT_NECROTIC') and not HasStatus('GOOND_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT,100,-1);IF(HasStatus('GOOND_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_WITHERED_FOOT);IF(HasStatus('GOOND_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PIERCED_GROIN)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_WITHERED_FOOT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PIERCED_GROIN')"
 data "RemoveEvents" "OnStatusRemoved"
-data "TickType" ""
-data "TickFunctors" ""
-data "StatusGroups" "SG_Condition"
-data "Passives" ""
 
 // ==================================== Real Injury ====================================
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Destroyed Foot
+// Injury: Destroyed Foot
 data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
 // 
-data "Description" "h293bdfafg7bdeg4067gb1eag2a20fbe3a899"
+data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
 data "DescriptionParams" ""
+data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
 data "StackPriority" ""
-data "StackType" "Overwrite"
+data "StackType" "Ignore"
+data "AuraRadius" ""
+data "AuraStatuses" ""
 data "Boosts" "ActionResourceConsumeMultiplier(Movement,1.5,0);Disadvantage(Skill,Acrobatics)"
 data "OnApplyFunctors" ""
-data "RemoveConditions" "IF(HasPassive(GOON_REGENERATE_INJURY_REMOVE)):SavingThrow(Ability.Constitution,15)"
-data "RemoveEvents" "OnHeal"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT')"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
-data "TickFunctors" "IF(HasStatus(DASH)):ApplyStatus(PRONE,100,1)"
-data "StatusGroups" "SG_Condition"
-data "Passives" ""
+data "TickFunctors" "IF(HasStatus('DASH')):ApplyStatus(PRONE,100,1)"
+data "StatusGroups" ""
+data "Passives" "Goon_Grit_Glory_Destroyed_Foot_Removal_Passive"
 //
-data "StillAnimationType" "Sitting"
-data "StillAnimationPriority" "Sitting"
-data "SoundVocalStart" "PAIN"
-data "SoundVocalEnd" "EFFORTS"
-data "SplatterBloodAmount" "0.69"
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" "Snared"
+data "StillAnimationPriority" "Snared"
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "DEATH"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "1.0"
 data "SplatterDirtAmount" "0.5"
+data "SplatterSweatAmount" "0.25"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
 
 // ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_LEG"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+// Injury: Broken Leg
+data "DisplayName" "he2c12678gbf3bg43efgac5ag1068bf452b7f"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
-// Gangrene of the Foot
+// Injury: Gangrene of the Foot
 data "DisplayName" "h90ace1b3ga948g45e0ga139g25a5eb374b87"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_FOOT"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
-// Explosive Grounding of the Foot
+// Injury: Explosive Grounding of the Foot
 data "DisplayName" "h002467ecg9b8dg43e4g8845g7e43225de74b"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_WITHERED_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+// Injury: Broken Leg
+data "DisplayName" "h3c013c87g0972g4a94ga69cgbf96024818e3"
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_PIERCED_GROIN"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+// Injury: Pierced Groin
+data "DisplayName" "ha08cf168ge84ag4aeegb9ebgcb138e7071ff"
+// 
+data "Description" "h928ad7c1g98b7g40b9ga603g9ece9d6aa408"
+
+// ==================================== Removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Grit_Glory_Destroyed_Foot_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_DESTROYED_FOOT_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_GRIT_GLORY_DESTROYED_FOOT_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Destroyed Foot
+data "DisplayName" "h403d8304gdd4ag465eg831dg7ce094d5dd97"
+// 
+data "Description" "hb6eeb333g0bc8g450fg8dbbg96e6fc25ea8a"
+data "DescriptionParams" ""
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT)"
+
+// ==================================== Long rest tracking ====================================
+
+// Status stack for tracking long rests, and handling natural injury recovery
+new entry "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "Icon" "Status_Sleep"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackType" "Overwrite"
+data "OnApplyConditions" "HasStatus('GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT',context.Source)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_DESTROYED_FOOT')"
+data "RemoveEvents" "OnStatusRemoved"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_1"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "1"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_2"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "2"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_3"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "3"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_4"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "4"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_5"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "5"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_6"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "6"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "7"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_8"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "8"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_9"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "9"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_10"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "10"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_11"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "11"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_12"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "12"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_13"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "13"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_14"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "14"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_15"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "15"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_16"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "16"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_17"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "17"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_18"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "18"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_19"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "19"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_20"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "20"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_21"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "21"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_22"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "22"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_23"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "23"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_24"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "24"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_25"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "25"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_26"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "26"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_27"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "27"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_28"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "28"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_29"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "29"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_DESTROYED_FOOT_30"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_DESTROYED_FOOT"
+data "StackPriority" "30"

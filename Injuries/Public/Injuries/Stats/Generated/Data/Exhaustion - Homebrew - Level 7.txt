@@ -1,0 +1,97 @@
+// ==================================== Exhaustion level 7 ====================================
+
+// Main exhaustion status
+new entry "GOON_EXHAUSTION_HOMEBREW_7"
+type "StatusData"
+data "StatusType" "BOOST"
+// Exhaustion: Level 7
+data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
+//
+data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "Status_Exhaustion"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_EXHAUSTION_HOMEBREW"
+data "StackPriority" "7"
+data "StackType" "Overwrite"
+data "Boosts" ""
+data "OnApplyFunctors" "ApplyStatus(GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_7,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" "SG_Exhausted"
+data "Passives" ""
+
+// ==================================== Incurable injury induced Exhaustion level 7 ====================================
+
+new entry "GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_EXHAUSTION_HOMEBREW_7"
+// Unrestable Exhaustion: Level 7
+data "DisplayName" "h4a9be0bagffb0g45eagb145gab0f78c62711"
+//
+data "StackId" "GOON_EXHAUSTION_HOMEBREW_UNRESTABLE"
+//data "OnRemoveFunctors" "IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_7') or HasStatus('GOON_EXHAUSTION_HOMEBREW_6') or HasStatus('GOON_EXHAUSTION_HOMEBREW_5') or HasStatus('GOON_EXHAUSTION_HOMEBREW_4') or HasStatus('GOON_EXHAUSTION_HOMEBREW_3') or HasStatus('GOON_EXHAUSTION_HOMEBREW_2') or HasStatus('GOON_EXHAUSTION_HOMEBREW_1')):ApplyStatus(GOON_UNRESTABLE_EXHAUSTION_NORMAL_EXHAUSTION_REMOVAL,100,0)"
+
+// ==================================== Status for handling functionality shared between both exhaustion stacks ====================================
+
+new entry "GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_7"
+type "StatusData"
+data "StatusType" "BOOST"
+// Exhaustion: Level 7
+data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
+//
+data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "Status_Exhaustion"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL"
+data "StackPriority" "7"
+data "StackType" "Overwrite"
+data "Boosts" "Ability(Strength,-7);Ability(Dexterity,-7);Ability(Constitution,-7);Ability(Intelligence,-7);Ability(Wisdom,-7);Ability(Charisma,-7);ActionResourceConsumeMultiplier(Movement,1.7,0);CriticalHit(AttackTarget,Failure,Never)"
+data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_7') and not HasStatus('GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_7')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_7,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7,100,0)"
+//
+data "SoundVocalStart" "EXHAUSTED"
+data "SoundVocalEnd" "RELAXED"
+
+// ==================================== Technicals for sleep mechanic ====================================
+
+// Technical statuses for falling asleep saving throws
+new entry "GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_7"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion: Level 7
+data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
+//
+data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" "Charisma"
+data "Icon" "Status_Exhaustion"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,15)):ApplyStatus(GOON_FALL_ASLEEP_HARD,100,2)"
+
+new entry "GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion: Level 7
+data "DisplayName" "h6cc6529ag532bg4d84g8f52g41cac2e778b6"
+//
+data "Description" "h634ff61dgcd3fg41acgb603g7a759516ace0"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "Status_Exhaustion"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_FALL_ASLEEP_HARD,100,2)"

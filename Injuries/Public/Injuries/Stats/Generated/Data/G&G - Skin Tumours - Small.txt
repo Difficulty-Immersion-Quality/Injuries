@@ -1,0 +1,308 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Skin Tumours - Small
+data "DisplayName" "hbaee9f3fg4bd2g4c72g9534g83bb3b79da51"
+//
+data "Description" "h65edc3e4g51cfg46b0g8e71ga34de0acd04e"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_GRIT_GLORY_SKIN_TUMOURS"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Small Skin Tumours
+data "DisplayName" "h21e9c90agf1c0g4431g9499gdb97d0122013"
+//
+data "Description" "ha637e8f0geedfg4e72ga368ga5e055e5802e"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_SKIN_TUMOURS"
+data "StackPriority" "1"
+data "StackType" "Ignore"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+data "Boosts" "Disadvantage(Ability,Charisma)"
+data "OnApplyFunctors" "ApplyStatus(GOON_HEALING_INJURY_REMOVAL_TECHNICAL,100,-1)"
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Healing_Injury_Removal_Technical_Passive;Goon_Grit_Glory_Small_Skin_Tumours_Removal_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" ""
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.2"
+data "SplatterDirtAmount" "0.2"
+data "SplatterSweatAmount" "0.5"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Grit_Glory_Small_Skin_Tumours_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_GRIT_GLORY_SMALL_SKIN_TUMOURS_REMOVAL_HEALING,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_SMALL_SKIN_TUMOURS_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnHealed;OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed)) or (context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_GRIT_GLORY_SMALL_SKIN_TUMOURS_REMOVAL"
+type "StatusData"
+data "StatusType" "BOOST"
+// Injury: Severe Bruising
+data "DisplayName" "hb9b656deg732cg4b1eg8957gf2daba2aa2b8"
+//
+data "Description" "h9046416fg1d3dg42acg9761gd3bc088082d6"
+data "DescriptionParams" "DealDamage(1, Bludgeoning);DealDamage(1, Force)"
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS)"
+
+new entry "GOON_GRIT_GLORY_SMALL_SKIN_TUMOURS_REMOVAL_HEALING"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_SMALL_SKIN_TUMOURS_REMOVAL"
+
+// ==================================== Long rest tracking ====================================
+
+// Status stack for tracking long rests, and handling natural injury recovery
+new entry "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "Icon" "Status_Sleep"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackType" "Overwrite"
+data "OnApplyConditions" "HasStatus('GOON_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS',context.Source)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SMALL_SKIN_TUMOURS')"
+data "RemoveEvents" "OnStatusRemoved"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_1"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "1"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_2"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "2"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_3"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "3"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_4"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "4"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_5"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "5"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_6"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "6"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "7"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_8"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "8"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_9"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "9"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_10"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "10"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_11"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "11"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_12"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "12"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_13"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "13"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_14"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "14"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_15"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "15"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_16"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "16"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_17"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "17"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_18"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "18"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_19"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "19"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_20"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "20"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_21"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "21"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_22"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "22"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_23"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "23"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_24"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "24"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_25"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "25"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_26"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "26"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_27"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "27"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_28"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "28"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_29"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "29"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS_30"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_SMALL_SKIN_TUMOURS"
+data "StackPriority" "30"

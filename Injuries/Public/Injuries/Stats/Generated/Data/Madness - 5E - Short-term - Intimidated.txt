@@ -1,0 +1,88 @@
+// ==================================== Madness ====================================
+
+new entry "GOON_MADNESS_5E_SHORTTERM_INTIMIDATED"
+type "StatusData"
+data "StatusType" "BOOST"
+// Short-term Madness: Frightened
+data "DisplayName" "ha9baeff3gbbd8g46a4gbf0fg3a390646d63b"
+//
+data "Description" "he7d1c9b9gf338g4057gbda1g2c6bbdbbf7b5"
+data "DescriptionParams" "Distance(3)"
+data "TooltipSave" ""
+data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_SHORTTERM_INTIMIDATED"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "AuraRadius" "3"
+data "AuraStatuses" "IF(Enemy() and not Tagged('INANIMATE') and not Dead()):ApplyStatus(GOON_INTIMIDATED_IN_RANGE)"
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" ""
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RELAXED"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Technicals for individual madness functionality ====================================
+
+new entry "GOON_INTIMIDATED_IN_RANGE"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INTIMIDATED_IN_RANGE"
+data "StackPriority" "10"
+data "AuraRadius" "3"
+data "AuraStatuses" "IF((Enemy() and not Tagged('INANIMATE') and HasStatus('GOON_MADNESS_5E_INTIMIDATED')) and ((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')))):ApplyStatus(GOON_INTIMIDATED_IN_RANGE_TECHNICAL)"
+
+new entry "GOON_INTIMIDATED_IN_RANGE_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INTIMIDATED_IN_RANGE_TECHNICAL"
+data "StackType" "Ignore"
+data "OnApplyFunctors" "ApplyStatus(GOON_INTIMIDATING_PRESENCE_MADNESS,100,-1)"
+data "OnRemoveFunctors" "RemoveStatus(GOON_INTIMIDATING_PRESENCE_MADNESS)"
+data "TickType" "StartTurn"

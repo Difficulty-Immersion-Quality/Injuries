@@ -1,0 +1,93 @@
+// ==================================== Exhaustion level X ====================================
+
+// new entry "GOON_EXHAUSTION_X"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "Status_Exhausted_1"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_EXHAUSTION_X"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "ApplyStatus(GOON_BOOSTS_EXHAUSTION_X_TECHNICAL_X,100,-1)"
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+
+// ==================================== Incurable injury induced Exhaustion level X ====================================
+
+// new entry "GOON_EXHAUSTION_X_UNRESTABLE_X"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_EXHAUSTION_X"
+// 
+data "DisplayName" ""
+//
+data "StackId" "GOON_EXHAUSTION_X_UNRESTABLE_X"
+// below can be handled with a future update of SE config
+//data "OnRemoveFunctors" "IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_7')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_6,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_6')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_5,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_5')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_4,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_4')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_3,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_3')):ApplyStatus(GOON_EXHAUSTION_HOMEBREW_2,100,-1);IF(HasStatus('GOON_EXHAUSTION_HOMEBREW_2')):ApplyStatus(GOON_EXHAUSTION_X,100,-1);IF(HasStatus('GOON_EXHAUSTION_X')):RemoveStatus(GOON_EXHAUSTION_X)"
+
+// ==================================== Status for handling functionality shared between both exhaustion stacks ====================================
+
+new entry "GOON_BOOSTS_EXHAUSTION_X_TECHNICAL_X"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// 
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "Status_Exhausted_1"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_BOOSTS_EXHAUSTION_X_TECHNICAL"
+data "StackPriority" "1"
+data "StackType" "Overwrite"
+data "Boosts" "Ability(Strength,-1);Ability(Dexterity,-1);Ability(Constitution,-1);Ability(Intelligence,-1);Ability(Wisdom,-1);Ability(Charisma,-1);;ActionResourceConsumeMultiplier(Movement,1.1,0);CriticalHit(AttackTarget,Success,Always,19)"
+data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_X') and not HasStatus('GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_1')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_EASY,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_EASY,100,0)"
+//
+data "SoundVocalStart" "EXHAUSTED"
+data "SoundVocalEnd" "RELAXED"
+
+// ==================================== Technicals for sleep mechanic ====================================
+
+// Technical statuses for falling asleep saving throws
+new entry "GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_EASY"
+type "StatusData" 
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" "Charisma"
+data "Icon" "Status_Exhausted_1"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
+//
+// Refer to "A - Shared conditions.txt"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,5)):ApplyStatus(GOON_FALL_ASLEEP_EASY,100,2)"
+
+new entry "GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_EASY"
+type "StatusData" 
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+//
+data "Description" ""
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "Status_Exhausted_1"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
+//
+// Refer to "A - Shared conditions.txt"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,5)):ApplyStatus(GOON_FALL_ASLEEP_EASY,100,2)"

@@ -1,0 +1,329 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Frostbitten Foot
+data "DisplayName" "hda98c4b5g41f9g42ffgbf37g86cfe6a7a47a"
+// 
+data "Description" "h3052f96cg1b54g4b7fgab6agef1c3a4362cb"
+data "DescriptionParams" "Distance(2)"
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Frostbitten Foot
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+// 
+data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "DescriptionParams" "Distance(2)"
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+data "StackPriority" ""
+data "StackType" "Ignore"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+data "Boosts" "ActionResource(Movement,-2,0)"
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" "EndTurn"
+data "TickFunctors" "IF(HasStatus('DASH')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL,100,0)"
+data "StatusGroups" ""
+data "Passives" "Goon_Grit_Glory_Frostbitten_Foot_Removal_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.25"
+data "SplatterDirtAmount" "0.1"
+data "SplatterSweatAmount" "0.5"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical status for application
+new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Injury: Frostbitten Foot
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+//
+data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "DescriptionParams" "Distance(2)"
+data "TooltipSave" "Constitution"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(PRONE,100,1)"
+data "SoundVocalStart" "DEATH"
+
+// ==================================== Flavour Proxies  ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
+// Injury: Damaged Hamstring
+data "DisplayName" "h1af91993ga6a8g4e35g98bfg93ae28ab7869"
+
+// ==================================== Removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Grit_Glory_Frostbitten_Foot_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_FROSTBITTEN_FOOT_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_GRIT_GLORY_FROSTBITTEN_FOOT_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Frostbitten Foot
+data "DisplayName" "h7b65727bgf511g454fga094gfb246a8f5ad6"
+// 
+data "Description" "h1b478e2dg0e85g4839g9780gf541ab767efb"
+data "DescriptionParams" "Distance(2)"
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT)"
+
+// ==================================== Long rest tracking ====================================
+
+// Status stack for tracking long rests, and handling natural injury recovery
+new entry "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "Icon" "Status_Sleep"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackType" "Overwrite"
+data "OnApplyConditions" "HasStatus('GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT',context.Source)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT')"
+data "RemoveEvents" "OnStatusRemoved"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_1"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "1"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_2"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "2"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_3"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "3"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_4"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "4"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_5"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "5"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_6"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "6"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "7"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_8"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "8"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_9"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "9"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_10"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "10"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_11"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "11"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_12"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "12"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_13"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "13"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_14"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "14"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_15"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "15"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_16"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "16"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_17"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "17"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_18"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "18"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_19"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "19"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_20"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "20"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_21"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "21"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_22"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "22"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_23"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "23"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_24"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "24"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_25"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "25"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_26"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "26"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_27"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "27"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_28"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "28"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_29"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "29"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_FROSTBITTEN_FOOT_30"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_FROSTBITTEN_FOOT"
+data "StackPriority" "30"

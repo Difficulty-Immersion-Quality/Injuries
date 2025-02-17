@@ -1,0 +1,320 @@
+// ==================================== Filter Proxy ====================================
+
+new entry "GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Neuroregressive Ataxia
+data "DisplayName" "h9873ba92g191dg4c20g93d8g4443489cae6e"
+//
+data "Description" "hc5551ef8g3666g41c8ga7fag7ae923bb8b1a"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Real Injury ====================================
+
+new entry "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Neuroregressive Ataxia
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
+// 
+data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" ""
+data "StackType" "Ignore"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+data "Boosts" ""
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA')"
+data "RemoveEvents" "OnStatusRemoved"
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Grit_Glory_Neuroregressive_Ataxia_Removal_Passive;Goon_Real_Injury_Girt_Glory_Neuroregressive_Ataxia_Technical_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "EFFORTS"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "RECOVER"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "1.0"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Technicals for individual injury functionality ====================================
+
+// Technical passive for stat functors
+new entry "Goon_Real_Injury_Girt_Glory_Neuroregressive_Ataxia_Technical_Passive"
+type "PassiveData"
+// Injury: Neuroregressive Ataxia
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
+// 
+data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Properties" "IsHidden"
+//
+data "StatsFunctorContext" "OnAttack"
+data "Conditions" "IsCriticalMiss()"
+data "StatsFunctors" "ApplyStatus(DISARM,100,1)"
+
+// ==================================== Removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Grit_Glory_Neuroregressive_Ataxia_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST" 
+// Injury: Neuroregressive Ataxia
+data "DisplayName" "h8c9f0da5g78e9g41a0gb824gdcc88aa7776c"
+// 
+data "Description" "h0ca5fd78g9fc8g46b5g91d1g031e613c47a1"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA)"
+
+// ==================================== Long rest tracking ====================================
+
+// Status stack for tracking long rests, and handling natural injury recovery
+new entry "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+type "StatusData"
+data "StatusType" "BOOST"
+// 
+data "DisplayName" ""
+// 
+data "Description" ""
+data "Icon" "Status_Sleep"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackType" "Overwrite"
+data "OnApplyConditions" "HasStatus('GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA',context.Source)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_NEUROREGRESSIVE_ATAXIA')"
+data "RemoveEvents" "OnStatusRemoved"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_1"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "1"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_2"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "2"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_3"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "3"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_4"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "4"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_5"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "5"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_6"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "6"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_7"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "7"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_8"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "8"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_9"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "9"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_10"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "10"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_11"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "11"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_12"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "12"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_13"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "13"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_14"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "14"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_15"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "15"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_16"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "16"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_17"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "17"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_18"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "18"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_19"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "19"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_20"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "20"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_21"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "21"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_22"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "22"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_23"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "23"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_24"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "24"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_25"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "25"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_26"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "26"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_27"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "27"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_28"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "28"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_29"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "29"
+
+new entry "GOON_GRIT_GLORY_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA_30"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GRIT_GLORY_TEMPLATE_LONG_REST_TRACKER_NEUROREGRESSIVE_ATAXIA"
+data "StackPriority" "30"

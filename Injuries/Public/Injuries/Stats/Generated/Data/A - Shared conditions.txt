@@ -1,0 +1,94 @@
+// ==================================== Custom Poisoned condition to ensure it's not overwritten by other Poisoned conditions ====================================
+// Green goop VFX are yucky and should probably be removed
+
+new entry "GOON_POISONED_KIDNEY_LIVER"
+type "StatusData"
+data "StatusType" "BOOST"
+using "POISONED"
+data "StatusPropertyFlags" "InitiateCombat;ApplyToDead"
+//
+data "StackType" "Ignore"
+data "StackPriority" "20"
+//data "ApplyEffect" "fa688204-319c-41b2-88d9-7b619d17aed4"
+data "StatusGroups" "SG_Surface;SG_Poisoned"
+data "StatusEffect" "ceeda0ca-0739-4588-a449-d024389f0c2a"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE') and not HasStatus('GOON_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE') and not HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE') and not HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE')"
+data "RemoveEvents" "OnStatusRemoved"
+
+// ==================================== Deafened, more of a buff than a debuff lmao ====================================
+// "Un-Deafening Silence - Silenced Status Fix" by DrKekyll should be looked into further, for now this is basic
+
+// Custom deafened condition
+new entry "GOON_DEAFENED"
+type "StatusData"
+data "StatusType" "BOOST"
+// Deafened
+data "DisplayName" "h4e08f2ffgbcadg43d0g87d7g64cdd42a1b29"
+//
+data "Description" "hc436e12dg197ag4186g8afcgf12b01de793b"
+data "Icon" "Spell_Illusion_Silence"
+data "SoundStart" "Misc_Status_Silence_Gameobject_Mute"
+data "SoundStop" "Misc_Status_Silence_Gameobject_Unmute"
+data "Boosts" "SoundsBlocked();Resistance(Thunder,Immune)"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+data "OnApplyFunctors" "RemoveStatus(LURING_SONG_AURA);RemoveStatus(LURING_SONG)"
+data "StatusGroups" ""
+data "ManagedStatusEffectType" "Negative"
+
+// ==================================== Custom sleeping conditions for exhaustion ====================================
+// Ought to figure out how to cram the charisma check stuff into the tick roll, can't be assed rn
+
+new entry "GOON_FALL_ASLEEP_EASY"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,5)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EASY)"
+
+new entry "GOON_FALL_ASLEEP_MEDIUM"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,10)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_MEDIUM)"
+
+new entry "GOON_FALL_ASLEEP_HARD"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,15)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_HARD)"
+
+new entry "GOON_FALL_ASLEEP_EXTREME"
+type "StatusData"
+data "StatusType" "INCAPACITATED"
+using "SLEEPING"
+data "TickType" "StartTurn"
+data "OnTickRoll" "SavingThrow(Ability.Constitution,20)"
+data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EXTREME)"
+
+// ==================================== Madness stuff ====================================
+
+// Custom Confusion for better removal implementation given how easy it is to trigger
+new entry "GOON_CONFUSION_MADNESS"
+type "StatusData"
+data "StatusType" "BOOST"
+using "CONFUSION"
+data "StatusPropertyFlags" "LoseControl;OverheadOnTurn;InitiateCombat;BringIntoCombat;ApplyToDead"
+//
+data "RemoveConditions" "SavingThrow(Ability.Wisdom,15) or ((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')))"
+data "StackType" "Ignore"
+
+// Custom Intimidating Presence for less wackiness
+new entry "GOON_INTIMIDATING_PRESENCE_MADNESS"
+type "StatusData"
+data "StatusType" "FEAR"
+using "INTIMIDATING_PRESENCE"
+data "StatusPropertyFlags" "InitiateCombat;OverheadOnTurn;ApplyToDead"
+//
+data "StackPriority" "2"
+data "StackType" "Ignore"
+data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"

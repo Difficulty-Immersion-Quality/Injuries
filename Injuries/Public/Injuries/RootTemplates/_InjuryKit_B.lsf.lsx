@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<save>
+	<version major="4" minor="7" revision="1" build="3" lslib_meta="v1,bswap_guids,lsf_keys_adjacency" />
+	<region id="Templates">
+		<node id="Templates">
+			<children>
+				<node id="GameObjects">
+					<attribute id="DropSound" type="FixedString" value="8f0b7aab-eb2d-b47f-e321-b68067fc0c3b" />
+					<attribute id="InventoryMoveSound" type="FixedString" value="8f0b7aab-eb2d-b47f-e321-b68067fc0c3b" />
+					<attribute id="PickupSound" type="FixedString" value="7cf23f22-d323-9653-b1aa-4ee31ca28579" />
+					<attribute id="CanBeMoved" type="bool" value="True" />
+					<attribute id="CanBePickedUp" type="bool" value="True" />
+					<attribute id="CanShootThrough" type="bool" value="False" />
+					<attribute id="DisplayName" type="TranslatedString" handle="h75c1e760gb522g4e20ga3deg82b913cdc2c4" version="1" />
+					<attribute id="Description" type="TranslatedString" handle="h96a8b954g1fffg4bc7gb339g4e9f26aea2f0" version="1" />
+					<attribute id="TechnicalDescription" type="TranslatedString" handle="h62284180g527dg4a39g8800gef4b8f59baaa" version="1" />
+					<attribute id="OnUseDescription" type="TranslatedString" handle="h4947f295g590fg4ab3ga0adg8c89ae8da184" version="1" />
+					<attribute id="Faction" type="guid" value="00000000-0000-0000-0000-000000000000" />
+					<attribute id="Icon" type="FixedString" value="Item_TOOL_Hospital_Surgery_Kit_B" />
+					<attribute id="IsInspector" type="bool" value="False" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="LevelOverride" type="int32" value="0" />
+					<attribute id="MapKey" type="FixedString" value="55fb2f34-00d7-4149-8b52-e189e05ba0ca" />
+					<attribute id="Name" type="LSString" value="TOOL_Hospital_Surgery_Kit_B" />
+					<attribute id="ParentTemplateId" type="FixedString" value="c9e45e5a-f089-480b-ab3a-7f5f76dccc3b" />
+					<attribute id="PhysicsTemplate" type="FixedString" value="0e4769cf-7eae-7f42-613e-9afe78b1a54f" />
+					<attribute id="Stats" type="FixedString" value="Goon_OBJ_Injury_Kit_B" />
+					<attribute id="RecieveDecal" type="bool" value="True" />
+					<attribute id="Tooltip" type="uint8" value="2" />
+					<attribute id="TreasureOnDestroy" type="bool" value="True" />
+					<attribute id="maxStackAmount" type="int32" value="100" />
+					<attribute id="Type" type="FixedString" value="item" />
+					<attribute id="VisualTemplate" type="FixedString" value="26ea21db-2478-4bcc-2601-e88b169df29c" />
+					<attribute id="WalkThrough" type="bool" value="False" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209020" />
+					<children>
+						<node id="Bounds">
+							<children>
+								<node id="Bound">
+									<attribute id="Height" type="float" value="0.10512268" />
+									<attribute id="Max" type="fvec3" value="0.26977655 0.10019668 0.29459918" />
+									<attribute id="Min" type="fvec3" value="-0.22784224 -0.004925996 -0.22564697" />
+									<attribute id="Radius" type="float" value="0.26012307" />
+									<attribute id="Shape" type="uint8" value="1" />
+									<attribute id="Type" type="uint8" value="0" />
+								</node>
+								<node id="Bound">
+									<attribute id="Height" type="float" value="0.10512268" />
+									<attribute id="Max" type="fvec3" value="0.26977655 0.10019668 0.29459918" />
+									<attribute id="Min" type="fvec3" value="-0.22784224 -0.004925996 -0.22564697" />
+									<attribute id="Radius" type="float" value="0.26012307" />
+									<attribute id="Shape" type="uint8" value="1" />
+									<attribute id="Type" type="uint8" value="1" />
+								</node>
+								<node id="Bound">
+									<attribute id="Height" type="float" value="0.10512268" />
+									<attribute id="Max" type="fvec3" value="0.26977655 0.10019668 0.29459918" />
+									<attribute id="Min" type="fvec3" value="-0.22784224 -0.004925996 -0.22564697" />
+									<attribute id="Radius" type="float" value="0.26012307" />
+									<attribute id="Shape" type="uint8" value="1" />
+									<attribute id="Type" type="uint8" value="2" />
+								</node>
+							</children>
+						</node>
+						<node id="OnUsePeaceActions">
+							<children>
+								<node id="Action">
+									<attribute id="ActionType" type="int32" value="12" />
+									<children>
+										<node id="Attributes">
+											<attribute id="Animation" type="FixedString" value="" />
+											<attribute id="Conditions" type="LSString" value="" />
+											<attribute id="Consume" type="bool" value="True" />
+											<attribute id="IsHiddenStatus" type="bool" value="True" />
+											<attribute id="SkillID" type="FixedString" value="Goon_Target_Injury_Kit_Use" />
+										</node>
+									</children>
+								</node>
+								<node id="Action">
+									<attribute id="ActionType" type="int32" value="33" />
+									<children>
+										<node id="Attributes">
+											<attribute id="Animation" type="FixedString" value="" />
+											<attribute id="Consume" type="bool" value="True" />
+											<attribute id="SpellId" type="FixedString" value="Goon_Target_Injury_Kit_Use" />
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+			</children>
+		</node>
+	</region>
+</save>

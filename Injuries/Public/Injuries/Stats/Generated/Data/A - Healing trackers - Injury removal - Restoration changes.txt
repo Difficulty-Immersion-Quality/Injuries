@@ -1,0 +1,258 @@
+// ==================================== Lesser Restoration target changes so it can be used to remove injuries ====================================
+
+new entry "Target_LesserRestoration"
+type "SpellData"
+data "SpellType" "Target"
+using "Target_LesserRestoration"
+data "TargetConditions" "Character() and not Dead()"
+
+// ==================================== Statuses for tracking spells etc via SE ====================================
+
+new entry "GOON_LESSER_RESTORATION_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Lesser Restoration
+data "DisplayName" "h22bac5c4gd2a7g4e3bgb852gd61759c426c1;1"
+// Cure a creature from disease, poison, paralysis or blindness.
+data "Description" "h3691c671gd321g4f64g9591g020d69232017;4"
+data "Icon" "Spell_Abjuration_LesserRestoration"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+new entry "GOON_GREATER_RESTORATION_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Greater Restoration
+data "DisplayName" "hcb427756g6947g43b0g80c3gf17b4b3ac64e;2"
+// Touch a creature and negate any Charm, Petrification, Stun, or curse afflicting it.
+data "Description" "h9fc6ec82g6ba9g415eg8ff2g7fe00698f877;8"
+data "Icon" "Spell_Abjuration_GreaterRestoration"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+new entry "GOON_HEAL_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Heal
+data "DisplayName" "h7a21df63g02c2g4e24gbfddgd0e8b289b956;2"
+// Heal a target's wounds and remove Blindness and any diseases.
+data "Description" "h2d8f7d2eg13c3g415cgb000gb81a59ae1f32;4"
+data "Icon" "Spell_Evocation_Heal"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+new entry "GOON_REGENERATE_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Regenerate
+data "DisplayName" "h437392edga97eg4c24gaa05gfaa0b8c161c0"
+// Touch a creature to stimulate its natural healing ability.
+data "Description" "h50912191g0c8ag4be2g8b98gb9dd74df1a0e;1"
+data "Icon" "Spell_Evocation_Heal"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+new entry "GOON_INJURY_KIT_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Injury Kit
+data "DisplayName" "h75c1e760gb522g4e20ga3deg82b913cdc2c4"
+// 
+data "Description" "h62284180g527dg4a39g8800gef4b8f59baaa"
+data "Icon" "Item_TOOL_Hospital_Surgery_Kit_B"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+new entry "GOON_SONG_OF_REST_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Song of Rest
+data "DisplayName" "h6664033bge8b7g48c8g8fc6g18986baa0bae;1"
+// You and your allies are revitalised as though you would have taken a Short Rest.
+data "Description" "h004d056bga0c0g4211g864fgd0a167f0cf2d;4"
+data "Icon" "Action_Bard_SongOfRest"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+// ==================================== Restable vs Unrestable Exhaustion ====================================
+
+// Holdover status for handling unrestable exhaustion removing stacks of restable exhaustion, pending OnStatusRemoved configuration options
+// Not in use, decided against it
+new entry "GOON_UNRESTABLE_EXHAUSTION_NORMAL_EXHAUSTION_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion
+data "DisplayName" "h48662068g7920g405dg9263gef8a2079d513"
+//
+data "Description" "h9ab1a295gf2cfg4ee8g850bgab1165b73e74"
+data "Icon" "Status_Exhaustion"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+// Shared status for removal of Unrestable Exhaustion, pending OnStatusRemoved configuration options
+new entry "GOON_UNRESTABLE_EXHAUSTION_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Exhaustion
+data "DisplayName" "h48662068g7920g405dg9263gef8a2079d513"
+//
+data "Description" "h9ab1a295gf2cfg4ee8g850bgab1165b73e74"
+data "Icon" "Status_Exhaustion"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+// ==================================== Healing based injury removal system ====================================
+
+// A dummy Passive for seeing if a relevant injury is applied/if the saving throw should be rolled
+new entry "Goon_Healing_Injury_Removal_Technical_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctors" "IF(not HasStatus('GOON_HEALING_INJURY_REMOVAL_TECHNICAL')):ApplyStatus(GOON_HEALING_INJURY_REMOVAL_TECHNICAL,100,-1)"
+data "StatsFunctorContext" "OnRound;OnTurn;OnStatusApplied;OnStatusApply;OnStatusRemove;OnStatusRemoved"
+data "Conditions" ""
+
+// For Passive application
+new entry "GOON_HEALING_INJURY_REMOVAL_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackType" "Ignore"
+data "StackId" "GOON_HEALING_INJURY_REMOVAL_TECHNICAL"
+data "RemoveConditions" "not HasPassive('Goon_Healing_Injury_Removal_Technical_Passive', context.Source)"
+data "RemoveEvents" "OnTurn;OnStatusApplied;OnStatusRemoved"
+data "Passives" "Goon_Healing_Injury_Removal_Passive"
+
+// Passive
+new entry "Goon_Healing_Injury_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW,100,0)"
+data "StatsFunctorContext" "OnHealed"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed) and HasPassive('Goon_Healing_Injury_Removal_Technical_Passive', context.Source))"
+
+// Status for saving throw
+new entry "GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW"
+type "StatusData"
+data "StatusType" "BOOST"
+// Healing Injury Removal
+data "DisplayName" "he12358ebg18cag4fb4gbd3eg76da9ce3e752"
+//
+data "Description" "hfa1d7d68geb26g4b80gb774g21cf41c5e1d4"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "OnApplyFunctors" "IF(SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL,100,0)"
+
+new entry "GOON_HEALING_INJURY_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+using "GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW"
+//
+data "OnApplyFunctors" ""
+
+// ==================================== Long-term Madness shared removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Longterm_Madness_5E_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_LONGTERM_MADNESS_5E_REMOVAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_LONGTERM_MADNESS_5E_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_LONGTERM_MADNESS_5E_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Madness
+data "DisplayName" "h145effdagac1bg44a3g84d8g67a9f56827a1"
+//
+data "Description" "hdcbc303dg84b0g45fegb600gc8fba9f499c7"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "statIcons_Madness"
+data "FormatColor" "DarkGray"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS)"
+
+// ==================================== Short-term Madness shared removal system ====================================
+
+// Technical passive for removal
+new entry "Goon_Shortterm_Madness_5E_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_SHORTTERM_MADNESS_5E_REMOVAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_SHORTTERM_MADNESS_5E_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS'))"
+
+// Status for use in configuration to disable/enable default removal system
+new entry "GOON_SHORTTERM_MADNESS_5E_REMOVAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+// Madness
+data "DisplayName" "h145effdagac1bg44a3g84d8g67a9f56827a1"
+//
+data "Description" "hdcbc303dg84b0g45fegb600gc8fba9f499c7"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Icon" "statIcons_Madness"
+data "FormatColor" "DarkGray"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS)"
+
+// ==================================== Surgery kit - Injury Kit ====================================
+
+new entry "Goon_OBJ_Injury_Kit_A"
+type "Object"
+using "_Kit"
+data "RootTemplate" "70b86e8f-06b1-4eb2-8211-17f1d850086d"
+data "UseCosts" "ActionPoint:1"
+data "DefaultBoosts" "Tag(Tool)"
+
+new entry "Goon_OBJ_Injury_Kit_B"
+type "Object"
+using "_Kit"
+data "RootTemplate" "55fb2f34-00d7-4149-8b52-e189e05ba0ca"
+data "UseCosts" "ActionPoint:1"
+data "DefaultBoosts" "Tag(Tool)"
+
+new entry "Goon_Target_Injury_Kit_Use"
+type "SpellData"
+data "SpellType" "Target"
+// Injury Kit
+data "DisplayName" "h75c1e760gb522g4e20ga3deg82b913cdc2c4"
+// 
+data "Description" "h62284180g527dg4a39g8800gef4b8f59baaa"
+// 
+data "ExtraDescription" "h96a8b954g1fffg4bc7gb339g4e9f26aea2f0"
+data "Icon" "Spell_Evocation_Heal"
+//
+data "SpellProperties" "RemoveStatus(SG_Sleeping);RemoveStatus(SG_Helpable_Condition);RemoveStatus(BURNING);RemoveStatus(SG_Prone);RemoveStatus(SG_Restrained);RemoveStatus(PRONE);RemoveStatus(SLEEPING);RemoveStatus(SLEEP);RemoveStatus(ENSNARING_STRIKE);RemoveStatus(WEB);RemoveStatus(HYPNOTIC_PATTERN)"
+data "TargetCeiling" "0"
+data "TargetFloor" ".25"
+data "TargetRadius" "1.5"
+data "SpellRoll" "SkillCheck(Skill.Medicine, 10)"
+data "SpellSuccess" "IF(IsDowned()):RegainHitPoints(1,Guaranteed);ApplyStatus(GOON_INJURY_KIT_INJURY_REMOVAL)"
+data "SpellFail" "IF(IsDowned()):Stabilize()"
+data "TargetConditions" "Character() and not Dead()"
+//
+data "PrepareSound" "Generic_GeneralAction_Start"
+data "PrepareLoopSound" "Generic_GeneralAction_Loop"
+data "CastSound" "Action_Cast_Help"
+data "TargetSound" "Action_Impact_Help"
+data "PreviewCursor" "Melee"
+data "CastTextEvent" "Cast"
+data "CycleConditions" ""
+data "UseCosts" "ActionPoint:1"
+data "SpellAnimation" "5e57443f-284e-47b2-915e-5b6417db269c,,;,,;e404fe07-9d44-433d-be31-b05d7e5d907f,c7f76fb4-9775-4c4c-8179-3f08a2e18c78,e24fddf7-6ad6-4bd1-831e-4bcc76d6906b;,,;5bcdefbb-2194-46c2-ac77-0b2d8472a5f7,,;,,;eadedcce-d01b-4fbb-a1ae-d218f13aa5d6,,;,,;,,"
+data "DualWieldingSpellAnimation" "5e57443f-284e-47b2-915e-5b6417db269c,,;,,;e404fe07-9d44-433d-be31-b05d7e5d907f,c7f76fb4-9775-4c4c-8179-3f08a2e18c78,e24fddf7-6ad6-4bd1-831e-4bcc76d6906b;d172e037-7041-4352-9a20-5f4b185f9ef1,,;5bcdefbb-2194-46c2-ac77-0b2d8472a5f7,,;,,;,,;,,;,,"
+data "VerbalIntent" "Utility"
+data "SpellFlags" "IsMelee"
+data "SpellActionType" "Help"
+data "SpellAnimationType" "Assisting"
+data "SpellAnimationIntentType" "Peaceful"
+data "PrepareEffect" "810a605a-8a5f-4f67-8407-505267f0b1f2"
+data "TargetEffect" "0f7dfee5-ad45-4cc4-908c-06f6bd06acab"
+data "SpellSoundMagnitude" "Small"
+data "Sheathing" "Sheathed"

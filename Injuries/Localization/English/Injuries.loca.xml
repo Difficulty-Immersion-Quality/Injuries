@@ -187,7 +187,8 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<!-- BEGIN Apply On Status Tab -->
     <content contentuid="hc1c5dc21b84e4079ad868a8081c86a6301d3" version="1">Delete</content>
     <content contentuid="hd32bf68edf8741eab48fa41ad6c76a8929g4" version="1">Apply On Status</content>
-    <content contentuid="h088d7c8b3587413f8f9a452ceb4d7e6984d4" version="1">How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?</content>
+    <content contentuid="h088d7c8b3587413f8f9a452ceb4d7e6984d4" version="1">How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?
+NOTE: This section does not currently handle ticks, it is only handling initial application of statuses for the moment. These configurations will be split in two in the future, the system was discovered to have problems at the 11th hour.</content>
     <content contentuid="ha54ea9b2153f4a95af1a5bbd99b23e9151cd" version="1">Status Name (ResourceID)</content>
     <content contentuid="h937dd0c975ab4ff0acbdfc2cc6b3cf666f7d" version="1">Round # Multiplier</content>
     <content contentuid="h58b6ebc929ff49bbba04e3f2e1a1dbe7b4e6" version="1">Guarantee Injury Application (?)</content>

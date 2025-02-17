@@ -1,0 +1,73 @@
+// ==================================== Madness ====================================
+
+new entry "GOON_MADNESS_5E_LONGTERM_PANICKY"
+type "StatusData"
+data "StatusType" "BOOST"
+// Long-term Madness: Panicky
+data "DisplayName" "h2ec0764bg89efg4e43gab54g56089ed58cab"
+//
+data "Description" "hef3e16aag711bg4f18gb443g2284bc7f218f"
+data "DescriptionParams" ""
+data "TooltipSave" "Wisdom"
+data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_LONGTERM_PANICKY"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "AuraRadius" ""
+data "AuraStatuses" ""
+// A calm emotions spell can suppress the effects of madness
+data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Wisdom);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):Disadvantage(Ability,Charisma)"
+data "OnApplyFunctors" ""
+data "OnRemoveFunctors" ""
+data "RemoveConditions" ""
+data "RemoveEvents" ""
+data "TickType" ""
+data "TickFunctors" ""
+data "StatusGroups" ""
+data "Passives" "Goon_Longterm_Madness_5E_Removal_Passive;Goon_Panicky_Technical_Passive"
+//
+data "AnimationStart" ""
+data "AnimationLoop" ""
+data "AnimationEnd" ""
+data "StillAnimationType" ""
+data "StillAnimationPriority" ""
+data "UseLyingPickingState" ""
+data "SoundVocalStart" "FALL"
+data "SoundVocalLoop" ""
+data "SoundVocalEnd" "EXHAUSTED"
+data "SoundStart" ""
+data "SoundLoop" ""
+data "SoundStop" ""
+data "FreezeTime" ""
+data "SplatterBloodAmount" "0.0"
+data "SplatterDirtAmount" "0.0"
+data "SplatterSweatAmount" "0.5"
+data "Sheathing" ""
+data "ApplyEffect" ""
+data "StatusEffect" ""
+data "MaterialType" ""
+data "MaterialApplyBody" ""
+data "MaterialApplyArmor" ""
+data "MaterialApplyWeapon" ""
+data "MaterialApplyNormalMap" ""
+data "MaterialFadeAmount" ""
+data "MaterialParameters" ""
+
+// ==================================== Technicals for individual madness functionality ====================================
+
+// Technical passive for stat functors
+new entry "Goon_Panicky_Technical_Passive"
+type "PassiveData"
+// Madness: Panicky
+data "DisplayName" "h2ec0764bg89efg4e43gab54g56089ed58cab"
+//
+data "Description" "hef3e16aag711bg4f18gb443g2284bc7f218f"
+data "TooltipSave" "Wisdom"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(not SavingThrow(Ability.Wisdom,15)):ApplyStatus(GOON_CONFUSION_MADNESS,100,10)"
+data "StatsFunctorContext" "OnDamaged"
+data "Conditions" "(not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))"
