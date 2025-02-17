@@ -60,7 +60,7 @@ data "Boosts" "Ability(Strength,-1);Ability(Dexterity,-1);Ability(Constitution,-
 data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_1') and not HasStatus('GOON_EXHAUSTION_HOMEBREW_UNRESTABLE_1')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
-data "TickFunctors" "IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_1,100,0);IF(not Dead() and Combat() and ConditionResult(context.Source.Charisma <= context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_1,100,0)"
+data "TickFunctors" "IF(Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_1,100,0);IF(Combat() and ConditionResult(context.Source.Constitution >= context.Source.Charisma)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_1,100,0)"
 //
 data "SoundVocalStart" "EXHAUSTED"
 data "SoundVocalEnd" "RELAXED"
