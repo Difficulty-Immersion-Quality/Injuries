@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
+	<content contentuid="h6f2f299dgce78g4e46gbe1dg18a3e1921f77" version="1">Triage Kit</content>
+	<content contentuid="ha7930679g7090g4390g9136gdbf730456f69" version="1">A collection of tools used for treating wounds in the field.</content>
+	<content contentuid="h9feab2e7g52b5g4455ga485g021f03b0811d" version="1">Tend Injuries</content>
+	<content contentuid="h4addf87dg5166g40cfg9467gd2110e037825" version="1">Tend to a creatures wounds, healing them. The target must wait before they can be tended to again.</content>
+	<content contentuid="h92d55a11g15efg413dgb442g169c11e4ef68" version="1">Tender Loving Care</content>
+	<content contentuid="h6d894e2cgd309g4fceg8d28ge1d055a6b53e" version="1">You've recently been medically tended to.</content>
+
+
+
 	<content contentuid="h437392edga97eg4c24gaa05gfaa0b8c161c0" version="1">Regenerate</content>
 	<content contentuid="h50912191g0c8ag4be2g8b98gb9dd74df1a0e" version="1">Touch a creature to stimulate its natural healing ability.</content>
 	<content contentuid="he12358ebg18cag4fb4gbd3eg76da9ce3e752" version="1">Healing Injury Removal</content>
