@@ -9,9 +9,9 @@ data "StatusPropertyFlags" "InitiateCombat;ApplyToDead"
 //
 data "StackType" "Ignore"
 data "StackPriority" "20"
-//data "ApplyEffect" "fa688204-319c-41b2-88d9-7b619d17aed4"
+data "ApplyEffect" "fa688204-319c-41b2-88d9-7b619d17aed4"
 data "StatusGroups" "SG_Surface;SG_Poisoned"
-data "StatusEffect" "ceeda0ca-0739-4588-a449-d024389f0c2a"
+//data "StatusEffect" "ceeda0ca-0739-4588-a449-d024389f0c2a"
 data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_MAJOR_KIDNEY_FAILURE') and not HasStatus('GOON_INJURY_GRIT_GLORY_MAJOR_LIVER_DAMAGE') and not HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE') and not HasStatus('GOON_INJURY_GRIT_GLORY_MINOR_LIVER_DAMAGE')"
 data "RemoveEvents" "OnStatusRemoved"
 
@@ -38,6 +38,12 @@ data "ManagedStatusEffectType" "Negative"
 // ==================================== Custom sleeping conditions for exhaustion ====================================
 // Ought to figure out how to cram the charisma check stuff into the tick roll, can't be assed rn
 
+// Easy
+new entry "GOON_FALL_ASLEEP_EASY_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+
 new entry "GOON_FALL_ASLEEP_EASY"
 type "StatusData"
 data "StatusType" "INCAPACITATED"
@@ -45,6 +51,12 @@ using "SLEEPING"
 data "TickType" "StartTurn"
 data "OnTickRoll" "SavingThrow(Ability.Constitution,5)"
 data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EASY)"
+
+// Medium
+new entry "GOON_FALL_ASLEEP_MEDIUM_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 
 new entry "GOON_FALL_ASLEEP_MEDIUM"
 type "StatusData"
@@ -54,6 +66,12 @@ data "TickType" "StartTurn"
 data "OnTickRoll" "SavingThrow(Ability.Constitution,10)"
 data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_MEDIUM)"
 
+// Hard
+new entry "GOON_FALL_ASLEEP_HARD_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+
 new entry "GOON_FALL_ASLEEP_HARD"
 type "StatusData"
 data "StatusType" "INCAPACITATED"
@@ -62,6 +80,12 @@ data "TickType" "StartTurn"
 data "OnTickRoll" "SavingThrow(Ability.Constitution,15)"
 data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_HARD)"
 
+// Extreme
+new entry "GOON_FALL_ASLEEP_EXTREME_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+
 new entry "GOON_FALL_ASLEEP_EXTREME"
 type "StatusData"
 data "StatusType" "INCAPACITATED"
@@ -69,6 +93,22 @@ using "SLEEPING"
 data "TickType" "StartTurn"
 data "OnTickRoll" "SavingThrow(Ability.Constitution,20)"
 data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EXTREME)"
+
+// Cooldown
+new entry "GOON_FALL_ASLEEP_COOLDOWN"
+type "StatusData"
+data "StatusType" "BOOST"
+// Deafened
+data "DisplayName" "h4e08f2ffgbcadg43d0g87d7g64cdd42a1b29"
+//
+data "Description" "hc436e12dg197ag4186g8afcgf12b01de793b"
+data "Icon" "Action_DivineIntervention_Attack"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_FALL_ASLEEP_COOLDOWN"
+data "StackType" "Ignore"
+//data "Conditions" "SpellId('Rush_MAG_Mobility_SprintForMomentum_Action')"
+//data "StatsFunctors" "SetStatusDuration(GOON_FALL_ASLEEP_COOLDOWN,-1,Add)"
 
 // ==================================== Madness stuff ====================================
 
