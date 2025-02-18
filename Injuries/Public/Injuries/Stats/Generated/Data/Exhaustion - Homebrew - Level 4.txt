@@ -9,7 +9,7 @@ data "DisplayName" "hc824f3a1g14dfg4fe9g9d18g070d5238a25e"
 //
 data "Description" "h15e87135g69f7g403eg9740g09ca779acb2c"
 data "DescriptionParams" ""
-data "TooltipSave" ""
+data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhausted_4"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
@@ -49,7 +49,7 @@ data "DisplayName" "hc824f3a1g14dfg4fe9g9d18g070d5238a25e"
 //
 data "Description" "h15e87135g69f7g403eg9740g09ca779acb2c"
 data "DescriptionParams" ""
-data "TooltipSave" ""
+data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhausted_4"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
@@ -61,10 +61,26 @@ data "RemoveConditions" "not HasStatus('GOON_EXHAUSTION_HOMEBREW_4') and not Has
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "EndTurn"
 //data "TickFunctors" "IF(Combat() and ConditionResult(context.Source.Charisma > context.Source.Constitution)):ApplyStatus(GOON_FALL_ASLEEP_CHARISMA_TECHNICAL_4,100,0);IF(Combat() and ConditionResult(context.Source.Constitution >= context.Source.Charisma)):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_4,100,0)"
-data "TickFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_FALL_ASLEEP_MEDIUM,100,2)"
+//data "TickFunctors" "IF(not HasStatus('GOON_FALL_ASLEEP_COOLDOWN')):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_4,100,2)"
+data "Passives" "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_4"
 //
 data "SoundVocalStart" "EXHAUSTED"
 data "SoundVocalEnd" "RELAXED"
+
+// Technical passive for application
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_4"
+type "PassiveData"
+// Exhaustion: Level 4
+data "DisplayName" "hc824f3a1g14dfg4fe9g9d18g070d5238a25e"
+//
+data "Description" "h15e87135g69f7g403eg9740g09ca779acb2c"
+data "DescriptionParams" ""
+data "TooltipSave" "Constitution"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(not HasStatus('GOON_FALL_ASLEEP_COOLDOWN')):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_4,100,0)"
+data "StatsFunctorContext" "OnTurn;OnMovedDistance;OnAttack;OnDamaged;OnStatusApplied;OnStatusRemoved"
+data "Conditions" "HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_4')"
 
 // ==================================== Technicals for sleep mechanic ====================================
 
@@ -81,7 +97,7 @@ data "TooltipSave" "Charisma"
 data "Icon" "Status_Exhausted_4"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
-data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,10)):ApplyStatus(GOON_FALL_ASLEEP_MEDIUM,100,2)"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,10)):ApplyStatus(GOON_FALL_ASLEEP_MEDIUM_TECHNICAL,100,0)"
 
 new entry "GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_4"
 type "StatusData" 
@@ -95,4 +111,4 @@ data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhausted_4"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
-data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_FALL_ASLEEP_MEDIUM,100,2)"
+data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,10)):ApplyStatus(GOON_FALL_ASLEEP_MEDIUM_TECHNICAL,100,0)"
