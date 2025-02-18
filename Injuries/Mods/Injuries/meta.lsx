@@ -18,7 +18,7 @@
         <node id="ModuleInfo">
           <attribute id="Author" type="LSString" value="Goonsack and osirisofinternet" />
           <attribute id="CharacterCreationLevelName" type="FixedString" value="" />
-          <attribute id="Description" type="LSString" value="Goon wounds." />
+          <attribute id="Description" type="LSString" value="The life of an adventurer is demanding and strife with dangers; be it exhaustion, a broken leg, or going mad... it's inevitable." />
           <attribute id="Folder" type="LSString" value="Injuries" />
           <attribute id="GMTemplate" type="FixedString" value="" />
           <attribute id="LobbyLevelName" type="FixedString" value="" />
