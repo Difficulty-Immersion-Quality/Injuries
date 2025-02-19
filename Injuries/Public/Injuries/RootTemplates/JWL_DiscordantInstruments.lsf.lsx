@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<save>
+	<version major="4" minor="0" revision="9" build="0" lslib_meta="v1,bswap_guids" />
+	<region id="Templates">
+		<node id="Templates">
+			<children>
+				<node id="GameObjects">
+					<attribute id="DisplayName" type="TranslatedString" handle="ha50abb3cg00deg41d0g8acegc12258b60088" version="1" />
+					<attribute id="Description" type="TranslatedString" handle="h529bf12eg518dg4e7fg9f46gf91c7e3b2863" version="1" />
+					<attribute id="TechnicalDescription" type="TranslatedString" handle="h4dd1352eg57c8g47ffg8aeeg51d8b61a4601" version="1" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="MapKey" type="FixedString" value="69106843-75e0-4d7d-889a-aff684bf7313" />
+					<attribute id="Icon" type="FixedString" value="Item_TOOL_Hospital_Surgery_Kit_B" />
+					<attribute id="Name" type="LSString" value="JWL_DiscordantInstruments_TriageKit" />
+					<attribute id="Stats" type="FixedString" value="JWL_DiscordantInstruments_TriageKit" />
+					<attribute id="ParentTemplateId" type="FixedString" value="c9e45e5a-f089-480b-ab3a-7f5f76dccc3b" />
+					<attribute id="VisualTemplate" type="FixedString" value="26ea21db-2478-4bcc-2601-e88b169df29c" />
+					<attribute id="PhysicsTemplate" type="FixedString" value="0e4769cf-7eae-7f42-613e-9afe78b1a54f" />
+					<attribute id="Tooltip" type="uint8" value="2" />
+					<attribute id="Type" type="FixedString" value="item" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209022" />
+					<attribute id="maxStackAmount" type="int32" value="1" />
+					<children>
+						<node id="Bounds">
+							<children>
+								<node id="Bound">
+									<attribute id="Height" type="float" value="0.1051227" />
+									<attribute id="Max" type="fvec3" value="0.2697766 0.1001967 0.2945992" />
+									<attribute id="Min" type="fvec3" value="-0.2278422 -0.004925996 -0.225647" />
+									<attribute id="Radius" type="float" value="0.2601231" />
+									<attribute id="Shape" type="uint8" value="1" />
+									<attribute id="Type" type="uint8" value="0" />
+								</node>
+								<node id="Bound">
+									<attribute id="Height" type="float" value="0.1051227" />
+									<attribute id="Max" type="fvec3" value="0.2697766 0.1001967 0.2945992" />
+									<attribute id="Min" type="fvec3" value="-0.2278422 -0.004925996 -0.225647" />
+									<attribute id="Radius" type="float" value="0.2601231" />
+									<attribute id="Shape" type="uint8" value="1" />
+									<attribute id="Type" type="uint8" value="1" />
+								</node>
+								<node id="Bound">
+									<attribute id="Height" type="float" value="0.1051227" />
+									<attribute id="Max" type="fvec3" value="0.2697766 0.1001967 0.2945992" />
+									<attribute id="Min" type="fvec3" value="-0.2278422 -0.004925996 -0.225647" />
+									<attribute id="Radius" type="float" value="0.2601231" />
+									<attribute id="Shape" type="uint8" value="1" />
+									<attribute id="Type" type="uint8" value="2" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+			</children>
+		</node>
+	</region>
+</save>
