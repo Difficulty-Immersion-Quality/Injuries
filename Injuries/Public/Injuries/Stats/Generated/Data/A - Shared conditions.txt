@@ -98,10 +98,10 @@ data "OnTickSuccess" "RemoveStatus(GOON_FALL_ASLEEP_EXTREME)"
 new entry "GOON_FALL_ASLEEP_COOLDOWN"
 type "StatusData"
 data "StatusType" "BOOST"
-// Deafened
-data "DisplayName" "h4e08f2ffgbcadg43d0g87d7g64cdd42a1b29"
+// 
+data "DisplayName" ""
 //
-data "Description" "hc436e12dg197ag4186g8afcgf12b01de793b"
+data "Description" ""
 data "Icon" "Action_DivineIntervention_Attack"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //

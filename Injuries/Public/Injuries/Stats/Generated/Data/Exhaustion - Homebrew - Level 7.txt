@@ -78,7 +78,7 @@ data "DescriptionParams" ""
 data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(not HasStatus('GOON_FALL_ASLEEP_COOLDOWN')):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7,100,0)"
+data "StatsFunctors" "IF(not HasStatus('GOON_FALL_ASLEEP_COOLDOWN')):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7,100,1)"
 data "StatsFunctorContext" "OnTurn;OnMovedDistance;OnAttack;OnDamaged;OnStatusApplied;OnStatusRemoved"
 data "Conditions" "HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_7')"
 
@@ -97,6 +97,9 @@ data "TooltipSave" "Charisma"
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
+data "StackId" "GOON_FALL_ASLEEP_TECHNICAL"
+data "StackPriority" "7"
+data "StackType" "Ignore"
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Charisma,15)):ApplyStatus(GOON_FALL_ASLEEP_EXTREME_TECHNICAL,100,0)"
 
 new entry "GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7"
@@ -111,4 +114,7 @@ data "TooltipSave" "Constitution"
 data "Icon" "Status_Exhaustion"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 //
+data "StackId" "GOON_FALL_ASLEEP_TECHNICAL"
+data "StackPriority" "7"
+data "StackType" "Ignore"
 data "OnApplyFunctors" "IF(not SavingThrow(Ability.Constitution,15)):ApplyStatus(GOON_FALL_ASLEEP_EXTREME_TECHNICAL,100,0)"
