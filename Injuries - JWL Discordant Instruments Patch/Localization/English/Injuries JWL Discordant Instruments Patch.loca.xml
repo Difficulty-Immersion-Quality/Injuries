@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentList>
+	<content contentuid="ha50abb3cg00deg41d0g8acegc12258b60088" version="1">Triage Kit</content>
+	<content contentuid="h529bf12eg518dg4e7fg9f46gf91c7e3b2863" version="1">A collection of tools used for treating wounds in the field. Not as robust as an Injury Kit, lacking salves, tinctures and other important remedies, but a reliable collection of implements that stand the test of time nonetheless.</content>
+	<content contentuid="h81cf0405gc28bg44a1gbc24ga5e9530d6a45" version="1">Tend Injuries</content>
+	<content contentuid="h4dd1352eg57c8g47ffg8aeeg51d8b61a4601" version="1">Tend to a creatures wounds, healing them. The target must wait before they can be tended to again.
+&lt;br&gt;This kit enables you to treat &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injuries&lt;/LSTag&gt;, based on a &lt;LSTag Tooltip="Medicine"&gt;Medicine&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Check&lt;/LSTag&gt;. The kit is not consumed on an unsuccessful attempt, though it can only be used once per day on any individual creature.</content>
+	<content contentuid="h59b8c631g38b3g4c18g9b5dgd2d03da4470b" version="1">Recovering from Medical Attention</content>
+	<content contentuid="hccfafbccg8777g4df1gbb5fgf6deb3db2b15" version="1">The Triage Kit has been used on you today, your body must rest and recover before it can be used again.</content>
+</contentList>
