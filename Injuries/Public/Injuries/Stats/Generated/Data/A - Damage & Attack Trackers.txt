@@ -14,13 +14,14 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 //
 data "StackId" "GOON_EXHAUSTION_DETECT_CRITICAL_THRESHOLD_REDUCTION_BOOSTS"
 data "Boosts" "IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_1',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2',context.Target)):ReduceCriticalAttackThreshold(1);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_3',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_4',context.Target)):ReduceCriticalAttackThreshold(2);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_5',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_6',context.Target)):ReduceCriticalAttackThreshold(3)"
+data "RemoveConditions" "not HasPassive('Goon_Exhaustion_Detect_Critical_Threshold_Reduction')"
+data "RemoveEvents" "OnTurn;OnStatusApplied;OnStatusRemoved"
 
 // ==================================== Damage detection ====================================
 
 // Unlike vanilla's tracking this includes Necrotic damage and they all share a stack so last application wins.
 
 // Passive
-
 new entry "Goon_Damage_Detect"
 type "PassiveData"
 data "Properties" "IsHidden"
@@ -28,7 +29,6 @@ data "StatsFunctorContext" "OnDamaged"
 data "StatsFunctors" "IF(IsDamageTypeAcid()):ApplyStatus(GOON_DAMAGE_DEALT_ACID,100,1);IF(IsDamageTypeCold()):ApplyStatus(GOON_DAMAGE_DEALT_COLD,100,1);IF(IsDamageTypeFire()):ApplyStatus(GOON_DAMAGE_DEALT_FIRE,100,1);IF(IsDamageTypeLightning()):ApplyStatus(GOON_DAMAGE_DEALT_LIGHTNING,100,1);IF(IsDamageTypeThunder()):ApplyStatus(GOON_DAMAGE_DEALT_THUNDER,100,1);IF(IsDamageTypeRadiant()):ApplyStatus(GOON_DAMAGE_DEALT_RADIANT,100,1);IF(IsDamageTypePoison()):ApplyStatus(GOON_DAMAGE_DEALT_POISON,100,1);IF(IsDamageTypePsychic()):ApplyStatus(GOON_DAMAGE_DEALT_PSYCHIC,100,1);IF(IsDamageTypeForce()):ApplyStatus(GOON_DAMAGE_DEALT_FORCE,100,1);IF(IsDamageTypeSlashing()):ApplyStatus(GOON_DAMAGE_DEALT_SLASHING,100,1);IF(IsDamageTypePiercing()):ApplyStatus(GOON_DAMAGE_DEALT_PIERCING,100,1);IF(IsDamageTypeBludgeoning()):ApplyStatus(GOON_DAMAGE_DEALT_BLUDGEONING,100,1);IF(IsDamageTypeNecrotic()):ApplyStatus(GOON_DAMAGE_DEALT_NECROTIC,100,1)"
 
 // Template 
-
 new entry "GOON_DAMAGE_DEALT_TEMPLATE"
 type "StatusData" 
 data "StatusType" "BOOST" 
@@ -38,7 +38,6 @@ data "TickType" "StartTurn"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;TickingWithSource"
 
 // Statuses
-
 new entry "GOON_DAMAGE_DEALT_NECROTIC"
 type "StatusData" 
 data "StatusType" "BOOST" 
@@ -107,7 +106,6 @@ using "GOON_DAMAGE_DEALT_TEMPLATE"
 // ==================================== Attack detection ====================================
 
 // Passive
-
 new entry "Goon_Attack_Detect"
 type "PassiveData"
 data "Properties" "IsHidden"
@@ -115,7 +113,6 @@ data "StatsFunctorContext" "OnDamaged"
 data "StatsFunctors" "IF(IsMeleeWeaponAttack()):ApplyStatus(GOON_ATTACKED_MELEE_WEAPON,100,1);IF(IsRangedWeaponAttack()):ApplyStatus(GOON_ATTACKED_RANGED_WEAPON,100,1);IF(IsMeleeUnarmedAttack()):ApplyStatus(GOON_ATTACKED_MELEE_UNARMED,100,1);IF(IsRangedUnarmedAttack()):ApplyStatus(GOON_ATTACKED_RANGED_UNARMED,100,1);IF(IsMeleeSpellAttack()):ApplyStatus(GOON_ATTACKED_MELEE_SPELL,100,1);IF(IsRangedSpellAttack()):ApplyStatus(GOON_ATTACKED_RANGED_SPELL,100,1);IF(NotMeleeSpellAttack() and not RangedSpellAttack() and is Spell()):ApplyStatus(GOON_ATTACKED_SPELL_SPELL,100,1)"
 
 // Template 
-
 new entry "GOON_ATTACKED_TEMPLATE"
 type "StatusData" 
 data "StatusType" "BOOST" 
@@ -125,7 +122,6 @@ data "TickType" "StartTurn"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;TickingWithSource"
 
 // Statuses
-
 new entry "GOON_ATTACKED_MELEE_WEAPON"
 type "StatusData" 
 data "StatusType" "BOOST" 

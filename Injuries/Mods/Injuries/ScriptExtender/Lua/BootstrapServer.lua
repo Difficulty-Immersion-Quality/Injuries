@@ -28,5 +28,7 @@ Ext.Require("Server/Injuries/_RandomInjuryOnCondition.lua")
 Ext.Require("Server/Injuries/_Healing.lua")
 Ext.Require("Server/Injuries/_ApplyOnStatus.lua")
 Ext.Require("Server/Injuries/_RemoveOnStatus.lua")
+
 Ext.Require("Server/Injuries/_GOONMadnessTables.lua")
+Ext.Require("Server/Injuries/_GOONExhaustionTables.lua")
 Ext.Require("Server/Injuries/_GOONUsingSpellOnTargetRemoval.lua")
