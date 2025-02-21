@@ -83,9 +83,9 @@ new entry "Goon_Grit_Glory_Shorterm_Madness_Removal_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):ApplyStatus(GOON_GRIT_GLORY_SHORTTERM_MADNESS_REMOVAL,100,0);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_GRIT_GLORY_SHORTTERM_MADNESS_REMOVAL,100,0);"
-data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('GOON_INJURY_KIT_INJURY_REMOVAL') or StatusId('GOON_LESSER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_GREATER_RESTORATION_INJURY_REMOVAL') or StatusId('GOON_HEAL_INJURY_REMOVAL') or StatusId('GOON_REGENERATE_INJURY_REMOVAL')) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and not HasStatus('GOON_MADNESS_5E_SHORTTERM_HALLUCINATIONS') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_HOMICIDAL') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_HYSTERIA') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_INTIMIDATED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_PARALYSED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_STUNNED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_TONGUE_TIED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_UNCONSCIOUS'))"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_GRIT_GLORY_SHORTTERM_MADNESS_REMOVAL,100,0)"
+data "StatsFunctorContext" "OnStatusRemoved"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and not HasStatus('GOON_MADNESS_5E_SHORTTERM_HALLUCINATIONS') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_HOMICIDAL') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_HYSTERIA') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_INTIMIDATED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_PARALYSED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_STUNNED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_TONGUE_TIED') and not HasStatus('GOON_MADNESS_5E_SHORTTERM_UNCONSCIOUS'))"
 
 // Status for use in configuration to disable/enable default removal system
 new entry "GOON_GRIT_GLORY_SHORTTERM_MADNESS_REMOVAL"
@@ -101,7 +101,7 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
-//data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS)"
+// data "OnApplyFunctors" "RemoveStatus(GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS)"
 
 // ==================================== Long rest tracking ====================================
 
