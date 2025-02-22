@@ -180,7 +180,7 @@ function ConfigurationStructure:InitializeConfig()
 	end
 
 	initialized = true
-	
+
 	cleanEmptyTables()
 	Logger:BasicInfo("Successfully loaded the config!")
 end

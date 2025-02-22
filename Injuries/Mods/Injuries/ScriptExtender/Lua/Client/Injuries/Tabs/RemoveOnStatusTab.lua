@@ -52,7 +52,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	end
 
 	local saveSlider = saveCell:AddSliderInt("",
-		statusConfig["difficulty_class"],
+		statusConfig["difficulty_class"] or 15,
 		1,
 		30)
 
@@ -69,6 +69,8 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 		saveSlider.Visible = selectedIndex ~= 0
 		if not saveSlider.Visible then
 			statusConfig["difficulty_class"] = nil
+		else
+			statusConfig["difficulty_class"] = statusConfig["difficulty_class"] or 15
 		end
 		statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
 	end
@@ -77,10 +79,10 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	local injuryStat = Ext.Stats.Get(injury)
 	if injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1 then
 		local stackCell = row:AddCell()
-		statusConfig.stacks_to_remove = statusConfig.stacks_to_remove or injuryStat.StackPriority
-		local stackRemovalSlider = stackCell:AddSliderInt("", statusConfig.stacks_to_remove, 1, injuryStat.StackPriority)
+		statusConfig["stacks_to_remove"] = statusConfig["stacks_to_remove"] or injuryStat.StackPriority
+		local stackRemovalSlider = stackCell:AddSliderInt("", statusConfig["stacks_to_remove"], 1, injuryStat.StackPriority)
 		stackRemovalSlider.OnChange = function()
-			statusConfig.stacks_to_remove = stackRemovalSlider.Value[1]
+			statusConfig["stacks_to_remove"] = stackRemovalSlider.Value[1]
 		end
 	end
 
@@ -199,14 +201,14 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 				end
 
 				local saveSlider = statusGroupSection:AddSliderInt("",
-					statusConfig["difficulty_class"],
+					statusConfig["difficulty_class"] or 15,
 					1,
 					30)
 				saveSlider.SameLine = true
 
 				saveSlider.Visible = saveCombo.SelectedIndex ~= 0
 				if not saveSlider.Visible then
-					statusConfig["ability"] = nil
+					statusConfig["difficulty_class"] = nil
 				end
 
 				saveSlider.OnChange = function()
@@ -215,10 +217,12 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 				saveCombo.OnChange = function(combo, selectedIndex)
 					saveSlider.Visible = selectedIndex ~= 0
+					statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+
 					if not saveSlider.Visible then
-						statusConfig["ability"] = nil
+						statusConfig["difficulty_class"] = nil
 					else
-						statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+						statusConfig["difficulty_class"] = statusConfig["difficulty_class"] or 15
 					end
 				end
 
@@ -255,7 +259,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 						if statusConfig["excluded_statuses"] then
 							local isInList, index = TableUtils:ListContains(statusConfig["excluded_statuses"], status)
 							if isInList then
-								statusConfig["excluded_statuses"][index] = nil
+								table.remove(statusConfig["excluded_statuses"], index)
 								statusName:SetStyle("Alpha", 1.0)
 								excludeButton.Label = "Exclude"
 								return
