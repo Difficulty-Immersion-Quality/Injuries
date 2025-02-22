@@ -48,7 +48,7 @@ local function generate_recursive_metatable(proxy_table, real_table)
 					end
 				end
 
-				ConfigurationStructure:ClearEmptyTablesInProxyTree(proxy_table)
+				-- ConfigurationStructure:ClearEmptyTablesInProxyTree(proxy_table)
 			end
 
 			if initialized then
@@ -86,7 +86,7 @@ function ConfigurationStructure:ClearEmptyTablesInProxyTree(proxyTable)
 	end
 end
 
-Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearTables", function(cmd, ...)
+local function cleanEmptyTables()
 	local function iterateTable(proxy_table)
 		for key, value in pairs(proxy_table) do
 			local proxy_value = proxy_table[key]
@@ -98,6 +98,10 @@ Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearTables", function(cmd, ...
 	end
 
 	iterateTable(ConfigurationStructure.config)
+end
+
+Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearTables", function(cmd, ...)
+	cleanEmptyTables()
 end)
 
 Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearMissingInjuries", function(cmd, ...)
@@ -176,6 +180,8 @@ function ConfigurationStructure:InitializeConfig()
 	end
 
 	initialized = true
+	
+	cleanEmptyTables()
 	Logger:BasicInfo("Successfully loaded the config!")
 end
 

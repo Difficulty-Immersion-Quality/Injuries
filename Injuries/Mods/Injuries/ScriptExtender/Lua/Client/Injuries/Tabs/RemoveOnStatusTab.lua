@@ -160,6 +160,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	for statusGroup, statuses in TableUtils:OrderedPairs(statusGroupIndex) do
 		---@type ExtuiSelectable
 		local statusGroupSelectable = sgPopup:AddSelectable(statusGroup, "DontClosePopups")
+		statusGroupSelectable.IDContext = statusGroup .. injury
 
 		if removeOnConfig[statusGroup] then
 			statusGroupSelectable.Selected = true
@@ -168,6 +169,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		statusGroupSelectable.OnClick = function()
 			if statusGroupSelectable.Selected then
 				local statusGroupSection = statusTab:AddCollapsingHeader(statusGroup)
+				statusGroupSection.IDContext = statusGroup .. injury
 				statusGroupSection.UserData = statusGroup
 				if not removeOnConfig[statusGroup] then
 					removeOnConfig[statusGroup] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class)
@@ -238,6 +240,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 				table.sort(statuses)
 				for _, status in ipairs(statuses) do
 					local excludeButton = statusGroupSection:AddButton("Exclude")
+					excludeButton.IDContext = statusGroup .. injury .. status
 
 					local statusName = statusGroupSection:AddText(status)
 					statusName.SameLine = true
@@ -253,9 +256,6 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 							local isInList, index = TableUtils:ListContains(statusConfig["excluded_statuses"], status)
 							if isInList then
 								statusConfig["excluded_statuses"][index] = nil
-								if not statusConfig["excluded_statuses"]() then
-									statusConfig["excluded_statuses"].delete = true
-								end
 								statusName:SetStyle("Alpha", 1.0)
 								excludeButton.Label = "Exclude"
 								return
