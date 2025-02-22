@@ -204,9 +204,17 @@ local function BuildReport()
 			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
 			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
+				---@type StatusData?
+				local injuryStat = Ext.Stats.Get(injury)
+
+				if not injuryStat then
+					Logger:BasicWarning("Injury %s is in the config, but does not exist in the game - should delete from the config.json!", injury)
+					goto continue
+				end
+
 				local injuryReportGroup = charReport:AddGroup(injury)
 
-				local sepText = Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury)
+				local sepText = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury)
 				sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
 
 				local keepGroup = false
@@ -307,12 +315,12 @@ local function BuildReport()
 				end
 				--#endregion
 
-
 				if not keepGroup then
 					injuryReportGroup:Destroy()
 				else
 					injuryReportGroup:AddNewLine()
 				end
+				::continue::
 			end
 		end
 	end
@@ -388,5 +396,6 @@ Translator:RegisterTranslation({
 	["The Counters are reset"] = "h756f70ecde4f4f34a5948db95002cfa487g8",
 	["All Damage is Healed"] = "h4c2c9f6d81804c1ab25415e9930fde1c22f0",
 	["All applied injuries are removed"] = "hcc19224ba7234daeacec4ee2a68e044e86d6",
-	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] = "he7a1ecba3c5e48e3bf3b992e949c802f497d",
+	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] =
+	"he7a1ecba3c5e48e3bf3b992e949c802f497d",
 })
