@@ -60,7 +60,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	if not saveSlider.Visible then
 		statusConfig["difficulty_class"] = nil
 	end
-	
+
 	saveSlider.OnChange = function()
 		statusConfig["difficulty_class"] = saveSlider.Value[1]
 	end
@@ -203,13 +203,21 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 				saveSlider.SameLine = true
 
 				saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+				if not saveSlider.Visible then
+					statusConfig["ability"] = nil
+				end
+
 				saveSlider.OnChange = function()
 					statusConfig["difficulty_class"] = saveSlider.Value[1]
 				end
 
 				saveCombo.OnChange = function(combo, selectedIndex)
 					saveSlider.Visible = selectedIndex ~= 0
-					statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+					if not saveSlider.Visible then
+						statusConfig["ability"] = nil
+					else
+						statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+					end
 				end
 
 				if injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1 then

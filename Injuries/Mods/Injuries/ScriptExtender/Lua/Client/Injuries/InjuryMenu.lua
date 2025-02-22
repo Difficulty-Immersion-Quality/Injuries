@@ -1,7 +1,7 @@
 ---@type {[string] : StatusData}
 local cachedStats = {}
 
----@param configToCount table
+---@param configToCount table?
 ---@return number
 local function countInjuryConfig(configToCount)
 	local count = 0
@@ -193,10 +193,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				universal.npc_multipliers[npcType] = 1
 			end
 
-			local newSlider = newRow:AddCell():AddSliderInt("", universal.npc_multipliers[npcType] * 100, 0, 500)
+			local newSlider = newRow:AddCell():AddSliderInt("", math.floor(universal.npc_multipliers[npcType] * 100), 0, 500)
 			newSlider.OnChange = function(slider)
 				---@cast slider ExtuiSliderInt
-				universal.npc_multipliers[npcType] = math.floor(slider.Value[1] * 100 + 0.5) / 10000
+				universal.npc_multipliers[npcType] = slider.Value[1] / 100
 			end
 
 			return newRow
@@ -395,8 +395,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						local applyOnStatusCount = countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])
 						local damageCount = countInjuryConfig(injury_config.damage["damage_types"])
 						local removeOnStatusCount = countInjuryConfig(injury_config.remove_on_status)
-						local racesCount = countInjuryConfig(injury_config.character_multipliers["races"])
-						local tagsCount = countInjuryConfig(injury_config.character_multipliers["tags"])
+						local racesCount = countInjuryConfig(injury_config.character_multipliers and injury_config.character_multipliers["races"])
+						local tagsCount = countInjuryConfig(injury_config.character_multipliers and injury_config.character_multipliers["tags"])
 
 						customizeButton.Label = string.format(Translator:translate("Customize (%s)"), applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
 
