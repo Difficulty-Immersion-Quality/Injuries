@@ -6,7 +6,7 @@ local cachedStats = {}
 local function countInjuryConfig(configToCount)
 	local count = 0
 
-	if next(configToCount) then
+	if configToCount and next(configToCount) then
 		for _, _ in pairs(configToCount) do
 			count = count + 1
 		end

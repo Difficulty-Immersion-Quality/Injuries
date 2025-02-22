@@ -98,7 +98,8 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type AbilityId|"No Save"
 	["ability"] = "No Save",
-	["difficulty_class"] = 15,
+	---@type number?
+	["difficulty_class"] = nil,
 	---@type number?
 	["stacks_to_remove"] = nil,
 	---@type string[]?
@@ -126,10 +127,10 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
 
 ---@class InjuryCharacterMultiplierClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.character_multipliers = {
-	---@type {[TAG] : number}
-	["tags"] = {},
-	---@type {[GUIDSTRING] : number}
-	["races"] = {}
+	---@type {[TAG] : number}?
+	["tags"] = nil,
+	---@type {[GUIDSTRING] : number}?
+	["races"] = nil
 }
 
 ---@alias InjuryName string

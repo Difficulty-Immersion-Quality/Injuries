@@ -57,12 +57,19 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 		30)
 
 	saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+	if not saveSlider.Visible then
+		statusConfig["difficulty_class"] = nil
+	end
+	
 	saveSlider.OnChange = function()
 		statusConfig["difficulty_class"] = saveSlider.Value[1]
 	end
 
 	saveCombo.OnChange = function(combo, selectedIndex)
 		saveSlider.Visible = selectedIndex ~= 0
+		if not saveSlider.Visible then
+			statusConfig["difficulty_class"] = nil
+		end
 		statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
 	end
 

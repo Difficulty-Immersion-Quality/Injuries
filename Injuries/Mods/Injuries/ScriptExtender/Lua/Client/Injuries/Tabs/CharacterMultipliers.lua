@@ -47,12 +47,16 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local newRow = raceTable:AddRow()
 		newRow:AddCell():AddText(raceName)
 
-		if not charMultiplierConfig["races"][raceUUID] then
+		if not charMultiplierConfig["races"] or not charMultiplierConfig["races"][raceUUID] then
 			charMultiplierConfig["races"][raceUUID] = 1
 		end
 
 		local newSlider = newRow:AddCell():AddSliderInt("", charMultiplierConfig["races"][raceUUID] * 100, 0, 500)
 		newSlider.OnChange = function(slider)
+			if not charMultiplierConfig["races"] then
+				charMultiplierConfig["races"] = {}
+			end
+			
 			---@cast slider ExtuiSliderInt
 			charMultiplierConfig["races"][raceUUID] = tonumber(string.format("%.2f", slider.Value[1] / 100))
 		end
