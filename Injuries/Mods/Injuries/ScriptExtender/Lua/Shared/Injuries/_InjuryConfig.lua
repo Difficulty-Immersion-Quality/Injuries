@@ -100,7 +100,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	["ability"] = "No Save",
 	["difficulty_class"] = 15,
 	---@type number?
-	stacks_to_remove = nil
+	["stacks_to_remove"] = nil,
+	---@type string[]?
+	["excluded_statuses"] = nil
 }
 
 ---@alias StatusName string
@@ -112,12 +114,14 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
 	["multiplier"] = 1,
 	["guarantee_application"] = false,
+	---@type string[]?
+	["excluded_statuses"] = nil
 }
 ---@class InjuryApplyOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
 	["number_of_rounds"] = 3,
 	---@type { [StatusName] : InjuryApplyOnStatusModifierClass }
-	["applicable_statuses"] = {}
+	["applicable_statuses"] = {},
 }
 
 ---@class InjuryCharacterMultiplierClass

@@ -83,30 +83,34 @@ function DataSearchHelper:BuildSearch(parent, dataTable, displayNameFunc, onClic
 end
 
 ---@param tooltip ExtuiTooltip
----@param status StatsObject
+---@param status StatusData
 function DataSearchHelper:BuildStatusTooltip(tooltip, status)
 	tooltip:AddText("\n")
 	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
 
-	if status.Using ~= "" then
+	if status.Using and status.Using ~= "" then
 		tooltip:AddText("Using: " .. status.Using)
 	end
 
 	tooltip:AddText("StatusType: " .. status.StatusType)
 
-	if status.TooltipDamage ~= "" then
+	if status.TooltipDamage and status.TooltipDamage ~= "" then
 		tooltip:AddText("Damage: " .. status.TooltipDamage)
 	end
 
-	if status.HealValue ~= "" then
+	if status.StatusGroups and next(status.StatusGroups) then
+		tooltip:AddText("Status Groups: " .. table.concat(status.StatusGroups, ", "))
+	end
+
+	if status.HealValue and status.HealValue ~= "" then
 		tooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
 	end
 
-	if status.TooltipSave ~= "" then
+	if status.TooltipSave and status.TooltipSave ~= "" then
 		tooltip:AddText("Save: " .. status.TooltipSave)
 	end
 
-	if status.TickType ~= "" then
+	if status.TickType and status.TickType ~= "" then
 		tooltip:AddText("TickType: " .. status.TickType)
 	end
 
