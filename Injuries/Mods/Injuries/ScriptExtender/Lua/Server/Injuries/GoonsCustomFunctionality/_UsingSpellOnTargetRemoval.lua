@@ -38,7 +38,7 @@ function Goon_Song_Of_Rest_Check(spell)
 end
 
 -- UsingSpellOnTarget Listener
-Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target, spell, spellType, spellElement, storyActionID)
+EventCoordinator:RegisterEventProcessor("UsingSpellOnTarget", function(caster, target, spell, spellType, spellElement, storyActionID)
     if Goon_Lesser_Restoration_Check(spell) then
         Osi.ApplyStatus(target, "GOON_LESSER_RESTORATION_INJURY_REMOVAL", 1, 1, caster)
     elseif Goon_Greater_Restoration_Check(spell) then

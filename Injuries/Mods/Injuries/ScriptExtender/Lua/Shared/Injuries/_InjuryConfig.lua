@@ -98,9 +98,12 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type AbilityId|"No Save"
 	["ability"] = "No Save",
-	["difficulty_class"] = 15,
 	---@type number?
-	stacks_to_remove = nil
+	["difficulty_class"] = nil,
+	---@type number?
+	["stacks_to_remove"] = nil,
+	---@type string[]?
+	["excluded_statuses"] = nil
 }
 
 ---@alias StatusName string
@@ -112,20 +115,22 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
 	["multiplier"] = 1,
 	["guarantee_application"] = false,
+	---@type string[]?
+	["excluded_statuses"] = nil
 }
 ---@class InjuryApplyOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
 	["number_of_rounds"] = 3,
 	---@type { [StatusName] : InjuryApplyOnStatusModifierClass }
-	["applicable_statuses"] = {}
+	["applicable_statuses"] = {},
 }
 
 ---@class InjuryCharacterMultiplierClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.character_multipliers = {
-	---@type {[TAG] : number}
-	["tags"] = {},
-	---@type {[GUIDSTRING] : number}
-	["races"] = {}
+	---@type {[TAG] : number}?
+	["tags"] = nil,
+	---@type {[GUIDSTRING] : number}?
+	["races"] = nil
 }
 
 ---@alias InjuryName string

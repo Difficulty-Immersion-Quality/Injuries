@@ -33,7 +33,7 @@ local function AddRaceMultiplierText(parent, entity, injuryConfig)
 		(raceResource.DisplayName:Get() or ("Can't Translate")),
 		string.sub(raceResource.ResourceUUID, -5)))
 
-	return injuryConfig.character_multipliers["races"][raceResource.ResourceUUID]
+	return (injuryConfig.character_multipliers and injuryConfig.character_multipliers["races"]) and injuryConfig.character_multipliers["races"][raceResource.ResourceUUID] or nil
 end
 
 ---@param parent ExtuiTableCell
@@ -61,7 +61,7 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 
 		local row = tagTable:AddRow()
 
-		local tagMulti = injuryConfig.character_multipliers["tags"][tagUUID]
+		local tagMulti = (injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"]) and injuryConfig.character_multipliers["tags"][tagUUID]
 		if tagMulti then
 			totalTagMultiplier = totalTagMultiplier * tagMulti
 			row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
@@ -203,10 +203,22 @@ local function BuildReport()
 
 			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
-			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
+			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
+				---@type StatusData?
+				local status = Ext.Stats.Get(key)
+				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
+			end) do
+				---@type StatusData?
+				local injuryStat = Ext.Stats.Get(injury)
+
+				if not injuryStat then
+					Logger:BasicWarning("Injury %s is in the config, but does not exist in the game - should delete from the config.json!", injury)
+					goto continue
+				end
+
 				local injuryReportGroup = charReport:AddGroup(injury)
 
-				local sepText = Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury)
+				local sepText = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury)
 				sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
 
 				local keepGroup = false
@@ -222,7 +234,7 @@ local function BuildReport()
 				end
 
 				--#region Damage Report
-				if next(injuryConfig.damage["damage_types"]) then
+				if injuryConfig.damage and injuryConfig.damage["damage_types"] and next(injuryConfig.damage["damage_types"]) then
 					local damageGroup = injuryReportGroup:AddGroup("Damage")
 					damageGroup.UserData = injury .. "damage"
 
@@ -266,7 +278,7 @@ local function BuildReport()
 				--#endregion
 
 				--#region ApplyOnStatus report
-				if next(injuryConfig.apply_on_status["applicable_statuses"]) then
+				if injuryConfig.apply_on_status and injuryConfig.apply_on_status["applicable_statuses"] and next(injuryConfig.apply_on_status["applicable_statuses"]) then
 					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
 					statusGroup.UserData = injury .. "applyOnStatus"
 
@@ -274,12 +286,28 @@ local function BuildReport()
 					local statusReportTable = CreateReport(statusGroup)
 
 					local totalRounds = 0
-					for status, statusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
-						local numRoundsApplied = injuryReport["applyOnStatus"][status]
-						if numRoundsApplied and numRoundsApplied[injury] then
+					for status, numRoundsApplied in pairs(injuryReport["applyOnStatus"]) do
+						---@type StatusData
+						local statusData = Ext.Stats.Get(status)
+
+						local statusConfig = injuryConfig.apply_on_status["applicable_statuses"][status]
+						local configuredGroup
+						if not statusConfig then
+							if next(statusData.StatusGroups) then
+								for _, statusGroup in pairs(statusData.StatusGroups) do
+									if injuryConfig.apply_on_status["applicable_statuses"][statusGroup] then
+										statusConfig = injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
+										configuredGroup = statusGroup
+										break
+									end
+								end
+							end
+						end
+
+						if statusConfig and numRoundsApplied and numRoundsApplied[injury] then
 							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
 							local row = statusReportTable:AddRow()
-							row:AddCell():AddText(status)
+							StatusHelper:BuildStatusTooltip(row:AddCell():AddText(status .. (configuredGroup and string.format(" (%s)", configuredGroup) or "")):Tooltip(), statusData)
 							row:AddCell():AddText(string.format("%d%%", statusConfig["multiplier"] * 100))
 							row:AddCell():AddText(tostring(numRoundsApplied[injury]))
 							row:AddCell():AddText(tostring(numRoundsApplied[injury] * statusConfig["multiplier"]))
@@ -307,12 +335,12 @@ local function BuildReport()
 				end
 				--#endregion
 
-
 				if not keepGroup then
 					injuryReportGroup:Destroy()
 				else
 					injuryReportGroup:AddNewLine()
 				end
+				::continue::
 			end
 		end
 	end
@@ -388,5 +416,6 @@ Translator:RegisterTranslation({
 	["The Counters are reset"] = "h756f70ecde4f4f34a5948db95002cfa487g8",
 	["All Damage is Healed"] = "h4c2c9f6d81804c1ab25415e9930fde1c22f0",
 	["All applied injuries are removed"] = "hcc19224ba7234daeacec4ee2a68e044e86d6",
-	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] = "he7a1ecba3c5e48e3bf3b992e949c802f497d",
+	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] =
+	"he7a1ecba3c5e48e3bf3b992e949c802f497d",
 })

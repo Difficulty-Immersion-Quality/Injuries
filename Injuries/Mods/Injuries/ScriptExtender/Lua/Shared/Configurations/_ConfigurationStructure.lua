@@ -20,7 +20,10 @@ local function generate_recursive_metatable(proxy_table, real_table)
 			return real_table[key]
 		end,
 		__len = function(this_table)
-			return #real_table
+			return real_table and #real_table
+		end,
+		__call = function(this_table, state, index)
+			return next(real_table, index)
 		end,
 		__newindex = function(this_table, key, value)
 			if key == "delete" then
@@ -44,8 +47,9 @@ local function generate_recursive_metatable(proxy_table, real_table)
 						end
 					end
 				end
-			end
 
+				-- ConfigurationStructure:ClearEmptyTablesInProxyTree(proxy_table)
+			end
 
 			if initialized then
 				if updateTimer then
@@ -70,12 +74,62 @@ local function generate_recursive_metatable(proxy_table, real_table)
 	})
 end
 
+function ConfigurationStructure:ClearEmptyTablesInProxyTree(proxyTable)
+	if type(proxyTable) == "table" then
+		local parentTable = proxyTable._parent_proxy
+		if not proxyTable() then
+			proxyTable.delete = true
+			if parentTable then
+				ConfigurationStructure:ClearEmptyTablesInProxyTree(parentTable)
+			end
+		end
+	end
+end
+
+local function cleanEmptyTables()
+	local function iterateTable(proxy_table)
+		for key, value in pairs(proxy_table) do
+			local proxy_value = proxy_table[key]
+			if type(value) == "table" then
+				iterateTable(proxy_value)
+				ConfigurationStructure:ClearEmptyTablesInProxyTree(proxy_value)
+			end
+		end
+	end
+
+	iterateTable(ConfigurationStructure.config)
+end
+
+Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearTables", function(cmd, ...)
+	cleanEmptyTables()
+end)
+
+Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearMissingInjuries", function(cmd, ...)
+	for injury, config in pairs(ConfigurationStructure.config.injuries.injury_specific) do
+		if not Ext.Stats.Get(injury) then
+			ConfigurationStructure.config.injuries.injury_specific[injury].delete = true
+			Logger:BasicInfo("Deleted %s!", injury)
+		end
+	end
+end)
+
+Ext.RegisterConsoleCommand("Injuries_CleanConfig_CleanUp", function(cmd, ...)
+	for injury, config in pairs(ConfigurationStructure.config.injuries.injury_specific) do
+		if config.remove_on_status then
+			for status, statusconfig in pairs(config.remove_on_status) do
+				if statusconfig["ability"] == "No Save" then
+					ConfigurationStructure.config.injuries.injury_specific[injury].remove_on_status[status]["difficulty_class"] = nil
+				end
+			end
+		end
+	end
+end)
+
 ConfigurationStructure.DynamicClassDefinitions = {}
 
 --- @class Configuration
 ConfigurationStructure.config = generate_recursive_metatable({}, real_config_table)
 Ext.Require("Shared/Injuries/_InjuryConfig.lua")
-
 
 local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	for key, value in pairs(table_from_file) do
@@ -126,6 +180,8 @@ function ConfigurationStructure:InitializeConfig()
 	end
 
 	initialized = true
+
+	cleanEmptyTables()
 	Logger:BasicInfo("Successfully loaded the config!")
 end
 

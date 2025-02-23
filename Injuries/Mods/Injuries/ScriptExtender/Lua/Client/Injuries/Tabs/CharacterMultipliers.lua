@@ -47,14 +47,18 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		local newRow = raceTable:AddRow()
 		newRow:AddCell():AddText(raceName)
 
-		if not charMultiplierConfig["races"][raceUUID] then
+		if not charMultiplierConfig["races"] or not charMultiplierConfig["races"][raceUUID] then
 			charMultiplierConfig["races"][raceUUID] = 1
 		end
 
-		local newSlider = newRow:AddCell():AddSliderInt("", charMultiplierConfig["races"][raceUUID] * 100, 0, 500)
+		local newSlider = newRow:AddCell():AddSliderInt("", math.floor(charMultiplierConfig["races"][raceUUID] * 100), 0, 500)
 		newSlider.OnChange = function(slider)
+			if not charMultiplierConfig["races"] then
+				charMultiplierConfig["races"] = {}
+			end
+
 			---@cast slider ExtuiSliderInt
-			charMultiplierConfig["races"][raceUUID] = tonumber(string.format("%.2f", slider.Value[1] / 100))
+			charMultiplierConfig["races"][raceUUID] = slider.Value[1] / 100
 		end
 
 		return newRow
@@ -73,7 +77,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 		local raceTooltip = raceSelect:Tooltip()
 		raceTooltip:AddText(string.format(Translator:translate("Resource Name:") .. " %s", raceData.Name))
-		raceTooltip:AddText(string.format(Translator:translate("UUID:") ..  " %s", raceUUID))
+		raceTooltip:AddText(string.format(Translator:translate("UUID:") .. " %s", raceUUID))
 		raceTooltip:AddText(string.format(Translator:translate("Description:") .. " %s", raceData.Description:Get())).TextWrapPos = 600
 
 		raceSelect.OnActivate = function()
@@ -86,7 +90,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			end
 		end
 
-		if charMultiplierConfig["races"][raceUUID] then
+		if charMultiplierConfig["races"] and charMultiplierConfig["races"][raceUUID] then
 			raceSelect.Selected = true
 			raceSelect:OnActivate()
 		end
@@ -143,9 +147,9 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		toolTip:AddText(Translator:translate("Description:") .. " " .. (tagData.Description ~= "" and tagData.Description or Translator:translate("N/A")))
 		toolTip:AddText(Translator:translate("Display Description:") .. " " .. (tagData.DisplayDescription:Get() or Translator:translate("N/A")))
 
-		local multiplier = row:AddCell():AddSliderInt("", charMultiplierConfig["tags"][tagUUID] * 100, 0, 500)
+		local multiplier = row:AddCell():AddSliderInt("", math.floor(charMultiplierConfig["tags"][tagUUID] * 100), 0, 500)
 		multiplier.OnChange = function()
-			charMultiplierConfig["tags"][tagUUID] = tonumber(string.format("%.2f", multiplier.Value[1] / 100))
+			charMultiplierConfig["tags"][tagUUID] = multiplier.Value[1] / 100
 		end
 
 		row:AddCell():AddButton(Translator:translate("Delete")).OnClick = function()
@@ -154,7 +158,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		end
 	end
 
-	DataSearchHelper:BuildSearch(tagsHeader,
+	StatusHelper:BuildSearch(tagsHeader,
 		Ext.StaticData.GetAll("Tag"),
 		function(id)
 			return Ext.StaticData.Get(id, "Tag").DisplayName:Get()
@@ -163,8 +167,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			buildTagRow(tagUUID, true)
 		end)
 
-	for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
-		buildTagRow(tagUUID, false)
+	if charMultiplierConfig["tags"] then
+		for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
+			buildTagRow(tagUUID, false)
+		end
 	end
 	--#endregion
 end)
@@ -179,7 +185,8 @@ Translator:RegisterTranslation({
 	["UUID:"] = "h652d5e5c916f4f20b9022f295bb7aa9345e2",
 	["Description:"] = "hed01418847b541ed8d7409f2005680ad457g",
 	["Tags"] = "h8901bd2ebb8d4f4da8e4df70c44e83745b7f",
-	["If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)"] = "he5e4f7e52a264633bfed00514a7c077ab506",
+	["If multiple tags are present on a character, their multipliers will be multiplied together - e.g. (100% * 30% == 30% final multiplier)"] =
+	"he5e4f7e52a264633bfed00514a7c077ab506",
 	["Name (Display Name - ID)"] = "h923d7335722f4c6589f8abb9761d124b47a1",
 	["% Multiplier"] = "h77b2a94cb0204e0c98ee08217f5098a28136",
 	["N/A"] = "h4dc4bb8bd0574f3790f38849055385955b50",

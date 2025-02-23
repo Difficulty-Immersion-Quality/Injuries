@@ -96,6 +96,10 @@ end
 ---@param str string
 ---@return boolean, any?
 function TableUtils:ListContains(list, str)
+	if not list then
+		return false
+	end
+	
 	for i, value in pairs(list) do
 		if value == str then
 			return true, i

@@ -20,25 +20,31 @@ Ext.RegisterNetListener(ModuleUUID .. "_UpdateConfiguration", function(_, _, _)
 	ConfigManager.Injuries.RemoveOnStatus = {}
 
 	for injury, config in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
-		for damageType, damageConfig in pairs(config.damage["damage_types"]) do
-			if not ConfigManager.Injuries.Damage[damageType] then
-				ConfigManager.Injuries.Damage[damageType] = {}
+		if config.damage and config.damage["damage_types"] then
+			for damageType, damageConfig in pairs(config.damage["damage_types"]) do
+				if not ConfigManager.Injuries.Damage[damageType] then
+					ConfigManager.Injuries.Damage[damageType] = {}
+				end
+				ConfigManager.Injuries.Damage[damageType][injury] = damageConfig
 			end
-			ConfigManager.Injuries.Damage[damageType][injury] = damageConfig
 		end
 
-		for applyOnStatusName, statusConfig in pairs(config.apply_on_status["applicable_statuses"]) do
-			if not ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName] then
-				ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName] = {}
+		if config.apply_on_status and config.apply_on_status["applicable_statuses"] then
+			for applyOnStatusName, statusConfig in pairs(config.apply_on_status["applicable_statuses"]) do
+				if not ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName] then
+					ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName] = {}
+				end
+				ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName][injury] = statusConfig
 			end
-			ConfigManager.Injuries.ApplyOnStatus[applyOnStatusName][injury] = statusConfig
 		end
 
-		for removeOnStatusName, statusConfig in pairs(config.remove_on_status) do
-			if not ConfigManager.Injuries.RemoveOnStatus[removeOnStatusName] then
-				ConfigManager.Injuries.RemoveOnStatus[removeOnStatusName] = {}
+		if config.remove_on_status then
+			for removeOnStatusName, statusConfig in pairs(config.remove_on_status) do
+				if not ConfigManager.Injuries.RemoveOnStatus[removeOnStatusName] then
+					ConfigManager.Injuries.RemoveOnStatus[removeOnStatusName] = {}
+				end
+				ConfigManager.Injuries.RemoveOnStatus[removeOnStatusName][injury] = statusConfig
 			end
-			ConfigManager.Injuries.RemoveOnStatus[removeOnStatusName][injury] = statusConfig
 		end
 	end
 end)
