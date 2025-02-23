@@ -5,6 +5,9 @@
 local function BuildRow(damageTable, damageType, damageConfig)
 	local row = damageTable:AddRow()
 
+	if not damageConfig["damage_types"] then
+		damageConfig["damage_types"] = {}
+	end
 	if not damageConfig["damage_types"][damageType] then
 		damageConfig["damage_types"][damageType] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class)
 	end
@@ -91,7 +94,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			end
 		end
 
-		if damageConfig["damage_types"][damageType] then
+		if damageConfig["damage_types"] and damageConfig["damage_types"][damageType] then
 			damageSelect.Selected = true
 			damageSelect:OnActivate()
 		end

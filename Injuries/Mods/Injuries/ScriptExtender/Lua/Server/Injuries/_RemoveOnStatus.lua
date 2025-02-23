@@ -55,6 +55,10 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 			end
 		end
 
+		if not next(injuriesToRemove) then
+			return
+		end
+
 		local numInjuriesToRemove = ConfigManager.ConfigCopy.injuries.universal.how_many_injuries_can_be_removed_at_once
 		if numInjuriesToRemove == "All" then
 			for injuryToRemove, injuryConfig in pairs(injuriesToRemove) do

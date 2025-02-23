@@ -90,7 +90,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			end
 		end
 
-		if charMultiplierConfig["races"][raceUUID] then
+		if charMultiplierConfig["races"] and charMultiplierConfig["races"][raceUUID] then
 			raceSelect.Selected = true
 			raceSelect:OnActivate()
 		end
@@ -167,8 +167,10 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			buildTagRow(tagUUID, true)
 		end)
 
-	for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
-		buildTagRow(tagUUID, false)
+	if charMultiplierConfig["tags"] then
+		for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
+			buildTagRow(tagUUID, false)
+		end
 	end
 	--#endregion
 end)

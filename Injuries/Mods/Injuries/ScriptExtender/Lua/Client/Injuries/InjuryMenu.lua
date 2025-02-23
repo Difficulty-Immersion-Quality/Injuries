@@ -69,7 +69,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		universalOptions:AddNewLine()
 
 		universalOptions:AddText(Translator:translate("How Many Different Injuries Can Be Removed At Once?")).Font = "Large"
-		universalOptions:AddText(Translator:translate("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."))
+		universalOptions:AddText(Translator:translate(
+		"If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."))
 			:SetStyle("Alpha", 0.90)
 
 		local oneRadio = universalOptions:AddRadioButton(Translator:translate("One"), universal.how_many_injuries_can_be_removed_at_once == "One")
@@ -128,7 +129,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		--#region Damage Counter
 		universalOptions:AddNewLine()
 		universalOptions:AddText(Translator:translate("When Does the Damage/Status Tick Counter Reset?")).Font = "Large"
-		universalOptions:AddText(Translator:translate("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")):SetStyle("Alpha", 0.90)
+		universalOptions:AddText(Translator:translate("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")):SetStyle("Alpha",
+			0.90)
 
 		local cumulationCombo = universalOptions:AddCombo("")
 		cumulationCombo.WidthFitPreview = true
@@ -177,8 +179,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		universalOptions:AddNewLine()
 		universalOptions:AddText(Translator:translate("Customize Damage + Status Multipliers For NPCs")).Font = "Large"
 		local enemyDesc = universalOptions:AddText(
-			Translator:translate("These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"))
+			Translator:translate(
+				"These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
+				.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"))
 		enemyDesc.TextWrapPos = 0
 		enemyDesc:SetStyle("Alpha", 0.9)
 
@@ -236,7 +239,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		--#region Severity
 		local severityHeader = tabHeader:AddCollapsingHeader(Translator:translate("Severity"))
-		severityHeader:AddText(Translator:translate("When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"))
+		severityHeader:AddText(Translator:translate(
+		"When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"))
 		local downedCheckbox = severityHeader:AddCheckbox(Translator:translate("Downed"), universal.random_injury_conditional["Downed"])
 		downedCheckbox.OnChange = function()
 			universal.random_injury_conditional["Downed"] = downedCheckbox.Checked
@@ -291,7 +295,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		local damageFilterDesc = severityHeader:AddText(
 			Translator:translate("If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
-			.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"))
+				.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"))
 		damageFilterDesc.TextWrapPos = 0
 		damageFilterDesc:SetStyle("Alpha", 0.9)
 
@@ -505,7 +509,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 								if child.Checked then
 									local otherInjuryName = child.UserData
 									for _, configToCopy in pairs(configsToCopy) do
-										InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+										if InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName] and InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] then
+											InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+										end
 										InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] = TableUtils:DeeplyCopyTable(configCopy[configToCopy])
 									end
 								end
@@ -588,7 +594,8 @@ Translator:RegisterTranslation({
 	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
 	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
 	["How Many Different Injuries Can Be Removed At Once?"] = "hf09a78e9f67d4f6ebd69b1831b16bc7e00cf",
-	["If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."] = "h917674e930d34cc8a28ecc9051066f4f332f",
+	["If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."] =
+	"h917674e930d34cc8a28ecc9051066f4f332f",
 	["One"] = "hfe2ed92d7923481b97a60edf916e5b03d5g7",
 	["All"] = "he8141a6f94e24224a4cdd5f198aca85703b6",
 	["What Severity Should Be Prioritized?"] = "h4e5210014bf44629b4a8125da7b191158c4a",
@@ -600,15 +607,17 @@ Translator:RegisterTranslation({
 	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
 	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
 	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
-	["When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"] = "h49d19708c1bb43ddbcbf5a671e2719aa7f46",
+	.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
+	["When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"] =
+	"h49d19708c1bb43ddbcbf5a671e2719aa7f46",
 	["Downed"] = "hd0fdb6dcced94e8ab2b0d7a8ca6fe1c46082",
 	["Suffered a Critical Hit"] = "h84d4a31ea8014224beac0fe256eba20ad728",
 	["The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%"] = "hd4d2189ac8cc4d6bbd0b68dd6825ff9fc26e",
 	["Error: Values must add up to 100%!"] = "h4983f15cdb6d439b8d7f3e3770b8244997d3",
 	["Only consider Injuries that are configured to apply on the relevant damage type"] = "h2a6602e74767415f8bf66edc7a3595e82852",
 	["If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
-			.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"] = "h5c3d63b7169d42deaba68a041fde636aab0b",
+	.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"] =
+	"h5c3d63b7169d42deaba68a041fde636aab0b",
 	["Injury-Specific Options"] = "hc273eb7f41304b7a9e3a4f783cf28b7470c2",
 	["Open Injury Report"] = "hd04225c38388437caa4670faf1b5cbea2bb7",
 	["Systems"] = "h8c9bbb728c8f407aaa7a886ae05ff4e8cc9b",
@@ -643,5 +652,6 @@ Translator:RegisterTranslation({
 	["Case-insensitive - only specify the prefix (e.g. Goon_Injury_Homebrew)"] = "h876d8a018fd6472ba406fcd48ab7761e686c",
 	["Register a New Injury System"] = "h3fcbb7dcbecd4a57a613931a57720e952ca7",
 	["Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..
-			" All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved"] = "h4ad9acd0b0d2422184871ede9022f0b31c22",
+	" All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved"] =
+	"h4ad9acd0b0d2422184871ede9022f0b31c22",
 })

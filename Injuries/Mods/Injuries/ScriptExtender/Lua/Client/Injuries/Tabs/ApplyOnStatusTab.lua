@@ -32,7 +32,7 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 	end
 
 	local guaranteeApplicationCheckbox = row:AddCell():AddCheckbox("", statusConfig["guarantee_application"])
-	guaranteeApplicationCheckbox.OnChange = function ()
+	guaranteeApplicationCheckbox.OnChange = function()
 		statusConfig["guarantee_application"] = guaranteeApplicationCheckbox.Checked
 	end
 
@@ -78,11 +78,16 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
 		end,
 		function(status)
+			if not applyOnConfig["applicable_statuses"] then
+				applyOnConfig["applicable_statuses"] = {}
+			end
 			BuildRows(statusTable, status, applyOnConfig["applicable_statuses"], true)
 		end)
 
-	for status, _ in pairs(applyOnConfig["applicable_statuses"]) do
-		BuildRows(statusTable, status, applyOnConfig["applicable_statuses"])
+	if applyOnConfig["applicable_statuses"] then
+		for status, _ in pairs(applyOnConfig["applicable_statuses"]) do
+			BuildRows(statusTable, status, applyOnConfig["applicable_statuses"])
+		end
 	end
 end)
 
@@ -93,5 +98,6 @@ Translator:RegisterTranslation({
 	["Status Name (ResourceID)"] = "ha54ea9b2153f4a95af1a5bbd99b23e9151cd",
 	["Round # Multiplier"] = "h937dd0c975ab4ff0acbdfc2cc6b3cf666f7d",
 	["Guarantee Injury Application (?)"] = "h58b6ebc929ff49bbba04e3f2e1a1dbe7b4e6",
-	["If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)"] = "h79a85e2f12d44e72a2b4c42dc5e716c11e45",
+	["If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)"] =
+	"h79a85e2f12d44e72a2b4c42dc5e716c11e45",
 })
