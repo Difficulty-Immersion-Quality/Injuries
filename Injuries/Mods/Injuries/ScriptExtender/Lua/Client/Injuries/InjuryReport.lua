@@ -33,7 +33,7 @@ local function AddRaceMultiplierText(parent, entity, injuryConfig)
 		(raceResource.DisplayName:Get() or ("Can't Translate")),
 		string.sub(raceResource.ResourceUUID, -5)))
 
-	return injuryConfig.character_multipliers["races"][raceResource.ResourceUUID]
+	return (injuryConfig.character_multipliers and injuryConfig.character_multipliers["races"]) and injuryConfig.character_multipliers["races"][raceResource.ResourceUUID] or nil
 end
 
 ---@param parent ExtuiTableCell
@@ -61,7 +61,7 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 
 		local row = tagTable:AddRow()
 
-		local tagMulti = injuryConfig.character_multipliers["tags"][tagUUID]
+		local tagMulti = (injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"]) and injuryConfig.character_multipliers["tags"][tagUUID]
 		if tagMulti then
 			totalTagMultiplier = totalTagMultiplier * tagMulti
 			row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
@@ -203,7 +203,11 @@ local function BuildReport()
 
 			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateNpcMultiplier(entity)
 
-			for injury, injuryConfig in pairs(ConfigurationStructure.config.injuries.injury_specific) do
+			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function (key)
+				---@type StatusData?
+				local status = Ext.Stats.Get(key)
+				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
+			end) do
 				---@type StatusData?
 				local injuryStat = Ext.Stats.Get(injury)
 
@@ -230,7 +234,7 @@ local function BuildReport()
 				end
 
 				--#region Damage Report
-				if next(injuryConfig.damage["damage_types"]) then
+				if injuryConfig.damage and injuryConfig.damage["damage_types"] and next(injuryConfig.damage["damage_types"]) then
 					local damageGroup = injuryReportGroup:AddGroup("Damage")
 					damageGroup.UserData = injury .. "damage"
 
@@ -274,7 +278,7 @@ local function BuildReport()
 				--#endregion
 
 				--#region ApplyOnStatus report
-				if next(injuryConfig.apply_on_status["applicable_statuses"]) then
+				if injuryConfig.apply_on_status and injuryConfig.apply_on_status["applicable_statuses"] and next(injuryConfig.apply_on_status["applicable_statuses"]) then
 					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
 					statusGroup.UserData = injury .. "applyOnStatus"
 

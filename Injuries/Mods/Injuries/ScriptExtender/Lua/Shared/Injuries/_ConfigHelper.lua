@@ -62,13 +62,15 @@ end
 function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfig)
 	local finalMultiplier = 1
 
-	if injuryConfig.character_multipliers["races"][character.Race.Race] then
+	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["races"] and injuryConfig.character_multipliers["races"][character.Race.Race] then
 		finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["races"][character.Race.Race]
 	end
 
-	for _, tagUUID in pairs(character.Tag.Tags) do
-		if injuryConfig.character_multipliers["tags"][tagUUID] then
-			finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"] then
+		for _, tagUUID in pairs(character.Tag.Tags) do
+			if injuryConfig.character_multipliers["tags"][tagUUID] then
+				finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+			end
 		end
 	end
 

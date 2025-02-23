@@ -222,7 +222,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 					if not saveSlider.Visible then
 						statusConfig["difficulty_class"] = nil
 					else
-						statusConfig["difficulty_class"] = statusConfig["difficulty_class"] or 15
+						statusConfig["difficulty_class"] = saveSlider.Value[1]
 					end
 				end
 
@@ -248,11 +248,26 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 					local statusName = statusGroupSection:AddText(status)
 					statusName.SameLine = true
-					DataSearchHelper:BuildStatusTooltip(statusName:Tooltip(), Ext.Stats.Get(status))
+					---@type StatusData
+					local statusData = Ext.Stats.Get(status)
+					DataSearchHelper:BuildStatusTooltip(statusName:Tooltip(), statusData)
 
 					if statusConfig["excluded_statuses"] and TableUtils:ListContains(statusConfig["excluded_statuses"], status) then
 						excludeButton.Label = "Include"
 						statusName:SetStyle("Alpha", 0.65)
+					elseif #statusData.StatusGroups > 1 then
+						statusName:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
+						statusName.Label = status
+
+						for _, statusSG in ipairs(statusData.StatusGroups) do
+							if statusSG ~= statusGroup then
+								if removeOnConfig[statusSG] and removeOnConfig[statusSG]["excluded_statuses"] and not TableUtils:ListContains(removeOnConfig[statusSG]["excluded_statuses"], status) then
+									statusName:SetColor("Text", { 1, 0.02, 0, 1 })
+									statusName.Label = statusName.Label .. string.format(" (ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)", statusSG)
+									break
+								end
+							end
+						end
 					end
 
 					excludeButton.OnClick = function()
@@ -262,6 +277,19 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 								table.remove(statusConfig["excluded_statuses"], index)
 								statusName:SetStyle("Alpha", 1.0)
 								excludeButton.Label = "Exclude"
+
+								statusName:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
+								statusName.Label = status
+
+								for _, statusSG in ipairs(statusData.StatusGroups) do
+									if statusSG ~= statusGroup then
+										if removeOnConfig[statusSG] and removeOnConfig[statusSG]["excluded_statuses"] and not TableUtils:ListContains(removeOnConfig[statusSG]["excluded_statuses"], status) then
+											statusName:SetColor("Text", { 1, 0.02, 0, 1 })
+											statusName.Label = statusName.Label .. string.format(" (ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)", statusSG)
+											break
+										end
+									end
+								end
 								return
 							end
 						end
@@ -271,6 +299,8 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 						end
 						table.insert(statusConfig["excluded_statuses"], status)
 						statusName:SetStyle("Alpha", 0.65)
+						statusName:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
+						statusName.Label = status
 						excludeButton.Label = "Include"
 					end
 				end
