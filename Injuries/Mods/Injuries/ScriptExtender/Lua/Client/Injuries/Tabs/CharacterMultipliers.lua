@@ -158,7 +158,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		end
 	end
 
-	DataSearchHelper:BuildSearch(tagsHeader,
+	StatusHelper:BuildSearch(tagsHeader,
 		Ext.StaticData.GetAll("Tag"),
 		function(id)
 			return Ext.StaticData.Get(id, "Tag").DisplayName:Get()

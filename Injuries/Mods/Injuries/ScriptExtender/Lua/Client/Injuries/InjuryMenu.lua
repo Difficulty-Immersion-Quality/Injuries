@@ -365,7 +365,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					displayCell:AddImage(injuryStat.Icon, { 36, 36 })
 					displayCell:AddText(displayName).SameLine = true
 
-					DataSearchHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
+					StatusHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
 
 					local severityCombo = newRow:AddCell():AddCombo("")
 					severityCombo.Options = {

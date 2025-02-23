@@ -28,7 +28,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	local statusNameText = statusNameRow:AddText(statusObj.Name)
 	statusNameText.SameLine = true
 
-	DataSearchHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
+	StatusHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
 	--#endregion
 
 	--#region Save Options
@@ -126,7 +126,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			"i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
 	end
 
-	DataSearchHelper:BuildSearch(statusTab,
+	StatusHelper:BuildSearch(statusTab,
 		Ext.Stats.GetStats("StatusData"),
 		function(resourceId)
 			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
@@ -139,189 +139,74 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		BuildRows(statusTable, status, injury, removeOnConfig)
 	end
 
-	statusTab:AddNewLine()
-	statusTab:AddSeparatorText("By Status Group").Font = "Large"
-	statusTab:AddText("If a status belonging to a configured group is configured above, those settings will take precedence"):SetStyle("Alpha", 0.65)
-
-	local sgButton = statusTab:AddButton("Manage Status Groups")
-	local sgPopup = statusTab:AddPopup("Status Group Picker")
-	local statusGroupIndex = {}
-	for _, status in pairs(Ext.Stats.GetStats("StatusData")) do
-		---@type StatusData
-		local statusData = Ext.Stats.Get(status)
-		if statusData.StatusGroups and next(statusData.StatusGroups) then
-			for _, statusGroup in pairs(statusData.StatusGroups) do
-				if not statusGroupIndex[statusGroup] then
-					statusGroupIndex[statusGroup] = {}
+	StatusHelper:BuildStatusGroupSection(statusTab:AddGroup("removeOnstatusGroups" .. injury),
+		injuryStat,
+		removeOnConfig,
+		ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class,
+		function(statusGroupSection, statusConfig)
+			--#region Save Options
+			local saveOptions = {}
+			for _, ability in ipairs(Ext.Enums.AbilityId) do
+				if ability ~= "Sentinel" then
+					table.insert(saveOptions, tostring(ability))
 				end
-				table.insert(statusGroupIndex[statusGroup], status)
 			end
-		end
-	end
+			table.sort(saveOptions)
+			table.insert(saveOptions, 1, "No Save")
 
-	for statusGroup, statuses in TableUtils:OrderedPairs(statusGroupIndex) do
-		---@type ExtuiSelectable
-		local statusGroupSelectable = sgPopup:AddSelectable(statusGroup, "DontClosePopups")
-		statusGroupSelectable.IDContext = statusGroup .. injury
-
-		if removeOnConfig[statusGroup] then
-			statusGroupSelectable.Selected = true
-		end
-
-		statusGroupSelectable.OnClick = function()
-			if statusGroupSelectable.Selected then
-				local statusGroupSection = statusTab:AddCollapsingHeader(statusGroup)
-				statusGroupSection.IDContext = statusGroup .. injury
-				statusGroupSection.UserData = statusGroup
-				if not removeOnConfig[statusGroup] then
-					removeOnConfig[statusGroup] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class)
+			statusGroupSection:AddText(Translator:translate("Save Conditions"))
+			local saveCombo = statusGroupSection:AddCombo("")
+			saveCombo.WidthFitPreview = true
+			saveCombo.SameLine = true
+			saveCombo.Options = saveOptions
+			for index, option in pairs(saveCombo.Options) do
+				if option == statusConfig["ability"] then
+					saveCombo.SelectedIndex = index - 1
+					break
 				end
-				local statusConfig = removeOnConfig[statusGroup]
+			end
 
-				--#region Save Options
-				local saveOptions = {}
-				for _, ability in ipairs(Ext.Enums.AbilityId) do
-					if ability ~= "Sentinel" then
-						table.insert(saveOptions, tostring(ability))
-					end
-				end
-				table.sort(saveOptions)
-				table.insert(saveOptions, 1, "No Save")
+			local saveSlider = statusGroupSection:AddSliderInt("",
+				statusConfig["difficulty_class"] or 15,
+				1,
+				30)
+			saveSlider.SameLine = true
 
-				statusGroupSection:AddText(Translator:translate("Save Conditions"))
-				local saveCombo = statusGroupSection:AddCombo("")
-				saveCombo.WidthFitPreview = true
-				saveCombo.SameLine = true
-				saveCombo.Options = saveOptions
-				for index, option in pairs(saveCombo.Options) do
-					if option == statusConfig["ability"] then
-						saveCombo.SelectedIndex = index - 1
-						break
-					end
-				end
+			saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+			if not saveSlider.Visible then
+				statusConfig["difficulty_class"] = nil
+			end
 
-				local saveSlider = statusGroupSection:AddSliderInt("",
-					statusConfig["difficulty_class"] or 15,
-					1,
-					30)
-				saveSlider.SameLine = true
+			saveSlider.OnChange = function()
+				statusConfig["difficulty_class"] = saveSlider.Value[1]
+			end
 
-				saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+			saveCombo.OnChange = function(combo, selectedIndex)
+				saveSlider.Visible = selectedIndex ~= 0
+				statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+
 				if not saveSlider.Visible then
 					statusConfig["difficulty_class"] = nil
-				end
-
-				saveSlider.OnChange = function()
+				else
 					statusConfig["difficulty_class"] = saveSlider.Value[1]
 				end
+			end
 
-				saveCombo.OnChange = function(combo, selectedIndex)
-					saveSlider.Visible = selectedIndex ~= 0
-					statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
-
-					if not saveSlider.Visible then
-						statusConfig["difficulty_class"] = nil
-					else
-						statusConfig["difficulty_class"] = saveSlider.Value[1]
-					end
-				end
-
-				if injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1 then
-					statusGroupSection:AddText(Translator:translate("# of Stacks To Remove (?)")):Tooltip():AddText(Translator:translate(
-						"i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
-					statusConfig["stacks_to_remove"] = statusConfig["stacks_to_remove"] or injuryStat.StackPriority
-					local stackRemovalSlider = statusGroupSection:AddSliderInt("", statusConfig["stacks_to_remove"], 1, injuryStat.StackPriority)
-					stackRemovalSlider.SameLine = true
-					stackRemovalSlider.OnChange = function()
-						statusConfig["stacks_to_remove"] = stackRemovalSlider.Value[1]
-					end
-				end
-
-				--#endregion
-
-				statusGroupSection:AddNewLine()
-
-				table.sort(statuses)
-				for _, status in ipairs(statuses) do
-					local excludeButton = statusGroupSection:AddButton("Exclude")
-					excludeButton.IDContext = statusGroup .. injury .. status
-
-					local statusName = statusGroupSection:AddText(status)
-					statusName.SameLine = true
-					---@type StatusData
-					local statusData = Ext.Stats.Get(status)
-					DataSearchHelper:BuildStatusTooltip(statusName:Tooltip(), statusData)
-
-					if statusConfig["excluded_statuses"] and TableUtils:ListContains(statusConfig["excluded_statuses"], status) then
-						excludeButton.Label = "Include"
-						statusName:SetStyle("Alpha", 0.65)
-					elseif #statusData.StatusGroups > 1 then
-						statusName:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
-						statusName.Label = status
-
-						for _, statusSG in ipairs(statusData.StatusGroups) do
-							if statusSG ~= statusGroup then
-								if removeOnConfig[statusSG] and removeOnConfig[statusSG]["excluded_statuses"] and not TableUtils:ListContains(removeOnConfig[statusSG]["excluded_statuses"], status) then
-									statusName:SetColor("Text", { 1, 0.02, 0, 1 })
-									statusName.Label = statusName.Label .. string.format(" (ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)", statusSG)
-									break
-								end
-							end
-						end
-					end
-
-					excludeButton.OnClick = function()
-						if statusConfig["excluded_statuses"] then
-							local isInList, index = TableUtils:ListContains(statusConfig["excluded_statuses"], status)
-							if isInList then
-								table.remove(statusConfig["excluded_statuses"], index)
-								statusName:SetStyle("Alpha", 1.0)
-								excludeButton.Label = "Exclude"
-
-								statusName:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
-								statusName.Label = status
-
-								for _, statusSG in ipairs(statusData.StatusGroups) do
-									if statusSG ~= statusGroup then
-										if removeOnConfig[statusSG] and removeOnConfig[statusSG]["excluded_statuses"] and not TableUtils:ListContains(removeOnConfig[statusSG]["excluded_statuses"], status) then
-											statusName:SetColor("Text", { 1, 0.02, 0, 1 })
-											statusName.Label = statusName.Label .. string.format(" (ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)", statusSG)
-											break
-										end
-									end
-								end
-								return
-							end
-						end
-
-						if not statusConfig["excluded_statuses"] then
-							statusConfig["excluded_statuses"] = {}
-						end
-						table.insert(statusConfig["excluded_statuses"], status)
-						statusName:SetStyle("Alpha", 0.65)
-						statusName:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
-						statusName.Label = status
-						excludeButton.Label = "Include"
-					end
-				end
-			else
-				for _, element in pairs(statusTab.Children) do
-					if element.UserData == statusGroup then
-						removeOnConfig[statusGroup].delete = true
-						element:Destroy()
-					end
+			if injury.StackId and injury.StackId ~= "" and injury.StackPriority > 1 then
+				statusGroupSection:AddText(Translator:translate("# of Stacks To Remove (?)")):Tooltip():AddText(Translator:translate(
+					"i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
+				statusConfig["stacks_to_remove"] = statusConfig["stacks_to_remove"] or injury.StackPriority
+				local stackRemovalSlider = statusGroupSection:AddSliderInt("", statusConfig["stacks_to_remove"], 1, injury.StackPriority)
+				stackRemovalSlider.SameLine = true
+				stackRemovalSlider.OnChange = function()
+					statusConfig["stacks_to_remove"] = stackRemovalSlider.Value[1]
 				end
 			end
-		end
 
-		if statusGroupSelectable.Selected then
-			statusGroupSelectable.OnClick()
-		end
-	end
-	sgButton.OnClick = function()
-		sgPopup:Open()
-	end
+			--#endregion
 
+			statusGroupSection:AddNewLine()
+		end)
 	-- local sgTable = statusTab:AddTable("statusGroup" .. injury, 3)
 end)
 
