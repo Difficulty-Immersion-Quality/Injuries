@@ -54,18 +54,19 @@ function StatusHelper:BuildSearch(parent, dataTable, displayNameFunc, onClick)
 	parent:AddText("Add New Row")
 
 	local statusInput = parent:AddInputText("")
-	statusInput.Hint = "Case-insensitive - use * to wildcard. Example: *ing*trap* for BURNING_TRAPWALL"
+	statusInput.Hint = Translator:translate("Case-insensitive - use * to wildcard. Example: *ing*trap* for BURNING_TRAPWALL")
 	statusInput.AutoSelectAll = true
 	statusInput.EscapeClearsAll = true
 
-	local searchId = parent:AddButton("Search by Resource ID (e.g. BURNING_TRAPWALL)")
+	local searchId = parent:AddButton(Translator:translate("Search by Resource ID (e.g. BURNING_TRAPWALL)"))
 	searchId.UserData = "ResourceId"
 
-	local searchDisplayName = parent:AddButton("Search by Display Name (e.g. Burning)")
+	local searchDisplayName = parent:AddButton(Translator:translate("Search by Display Name (e.g. Burning)"))
 	searchDisplayName.UserData = "DisplayName"
-	searchDisplayName:Tooltip():AddText("Depends on the resource having a Display Name set in the game resources and localization being implemented for your language")
+	searchDisplayName:Tooltip():AddText(Translator:translate(
+		"Depends on the resource having a Display Name set in the game resources and localization being implemented for your language"))
 
-	local errorText = parent:AddText("Error: Search returned no results")
+	local errorText = parent:AddText(Translator:translate("Error: Search returned no results"))
 	errorText:SetColor("Text", { 1, 0.02, 0, 1 })
 	errorText.Visible = false
 
@@ -86,47 +87,43 @@ end
 ---@param status StatusData
 function StatusHelper:BuildStatusTooltip(tooltip, status)
 	tooltip:AddText("\n")
-	tooltip:AddText("Display Name: " .. Ext.Loca.GetTranslatedString(status.DisplayName, "N/A"))
+	tooltip:AddText(Translator:translate("Display Name:") .. " " .. Ext.Loca.GetTranslatedString(status.DisplayName, Translator:translate("N/A")))
 
 	if status.Using and status.Using ~= "" then
-		tooltip:AddText("Using: " .. status.Using)
+		tooltip:AddText(Translator:translate("Using:") .. " " .. status.Using)
 	end
 
-	tooltip:AddText("StatusType: " .. status.StatusType)
+	tooltip:AddText(Translator:translate("StatusType:") .. " " .. status.StatusType)
 
 	if status.TooltipDamage and status.TooltipDamage ~= "" then
-		tooltip:AddText("Damage: " .. status.TooltipDamage)
+		tooltip:AddText(Translator:translate("Damage:") .. " " .. status.TooltipDamage)
 	end
 
 	if status.StatusGroups and next(status.StatusGroups) then
-		tooltip:AddText("Status Groups: " .. table.concat(status.StatusGroups, ", "))
-	end
-
-	if status.HealValue and status.HealValue ~= "" then
-		tooltip:AddText("Healing: |Value: " .. status.HealthValue .. " |Stat: " .. status.HealStat .. "|Multiplier: " .. status.HealMultiplier .. "|")
+		tooltip:AddText(Translator:translate("Status Groups:") .. " " .. table.concat(status.StatusGroups, ", "))
 	end
 
 	if status.TooltipSave and status.TooltipSave ~= "" then
-		tooltip:AddText("Save: " .. status.TooltipSave)
+		tooltip:AddText(Translator:translate("Save:") .. " " .. status.TooltipSave)
 	end
 
 	if status.TickType and status.TickType ~= "" then
-		tooltip:AddText("TickType: " .. status.TickType)
+		tooltip:AddText(Translator:translate("TickType:") .. " " .. status.TickType)
 	end
 
 	local description = Ext.Loca.GetTranslatedString(status.Description, "N/A")
 	description = string.gsub(description, "<br>", "\n")
 	-- Getting rid of all content contained in <>, like <LsTags../> and <br/>
 	description = string.gsub(description, "<.->", "")
-	local desc = tooltip:AddText("Description: " .. description)
+	local desc = tooltip:AddText(Translator:translate("Description:") .. " " .. description)
 	desc.TextWrapPos = 600
 
 	if status.DescriptionParams ~= "" then
-		tooltip:AddText("Description Params: " .. status.DescriptionParams)
+		tooltip:AddText(Translator:translate("Description Params:") .. " " .. status.DescriptionParams)
 	end
 
 	if status.Boosts ~= "" then
-		tooltip:AddText("Boosts: " .. status.Boosts).TextWrapPos = 600
+		tooltip:AddText(Translator:translate("Boosts:") .. " " .. status.Boosts).TextWrapPos = 600
 	end
 end
 
@@ -147,10 +144,9 @@ local function MarkDuplicatedStatuses(group, injuryStatusConfig)
 					if statusSG ~= header.UserData then
 						if injuryStatusConfig[statusSG] and injuryStatusConfig[statusSG]["excluded_statuses"] and not TableUtils:ListContains(injuryStatusConfig[statusSG]["excluded_statuses"], statusData.Name) then
 							statusNameText:SetColor("Text", { 1, 0.02, 0, 1 })
-							statusNameText.Label = statusNameText.Label .. string.format(" (ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)", statusSG)
+							statusNameText.Label = statusNameText.Label .. string.format(" " .. Translator:translate("(ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)"), statusSG)
 							break
 						end
-
 					end
 				end
 			end
@@ -180,10 +176,10 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 	end
 
 	group:AddNewLine()
-	group:AddSeparatorText("By Status Group").Font = "Large"
+	group:AddSeparatorText(Translator:translate("By Status Group")).Font = "Large"
 	group:AddText("If a status belonging to a configured group is configured above, those settings will take precedence"):SetStyle("Alpha", 0.65)
 
-	local sgButton = group:AddButton("Manage Status Groups")
+	local sgButton = group:AddButton(Translator:translate("Manage Status Groups"))
 	local sgPopup = group:AddPopup("Status Group Picker")
 
 	local headerGroup = group:AddGroup("Headers" .. group.Label)
@@ -210,7 +206,7 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 
 				table.sort(statuses)
 				for _, status in ipairs(statuses) do
-					local excludeButton = statusGroupSection:AddButton("Exclude")
+					local excludeButton = statusGroupSection:AddButton(Translator:translate("Exclude"))
 					excludeButton.IDContext = statusGroup .. injury.Name .. status
 
 					local statusName = statusGroupSection:AddText(status)
@@ -221,7 +217,7 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 					StatusHelper:BuildStatusTooltip(statusName:Tooltip(), statusData)
 
 					if statusConfig["excluded_statuses"] and TableUtils:ListContains(statusConfig["excluded_statuses"], status) then
-						excludeButton.Label = "Include"
+						excludeButton.Label = Translator:translate("Include")
 						statusName:SetStyle("Alpha", 0.65)
 					end
 
@@ -231,7 +227,7 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 							if isInList then
 								table.remove(statusConfig["excluded_statuses"], index)
 								statusName:SetStyle("Alpha", 1.0)
-								excludeButton.Label = "Exclude"
+								excludeButton.Label = Translator:translate("Exclude")
 								MarkDuplicatedStatuses(headerGroup, injuryStatusConfig)
 								return
 							end
@@ -246,7 +242,7 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 						statusName.Label = status
 						MarkDuplicatedStatuses(headerGroup, injuryStatusConfig)
 
-						excludeButton.Label = "Include"
+						excludeButton.Label = Translator:translate("Include")
 					end
 				end
 			else
@@ -269,3 +265,27 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 
 	MarkDuplicatedStatuses(headerGroup, injuryStatusConfig)
 end
+
+Translator:RegisterTranslation({
+	["Case-insensitive - use * to wildcard. Example: *ing*trap* for BURNING_TRAPWALL"] = "h2e88b0710ceb4251857a20baa5db708518ga",
+	["Search by Resource ID (e.g. BURNING_TRAPWALL)"] = "hb175759ba6364cbd8541f78ed5e57dfcb88g",
+	["Search by Display Name (e.g. Burning)"] = "hcccdc9d4c968484face6cafe1c4fc85dg976",
+	["Depends on the resource having a Display Name set in the game resources and localization being implemented for your language"] = "h4dc34140f4b04942bda08d46f466084e70cb",
+	["Error: Search returned no results"] = "heaca690f1a234dd0b638f94759ee45ebaf1d",
+	["Display Name:"] = "hb1d97de1b6f84157ab633ddcb6619e734241",
+	["N/A"] = "h71758e3e9cda46e89585505ba804f9e70e74",
+	["Using:"] = "hc9c2632641fe40cf8f1bcdefa6c05e4324e2",
+	["StatusType:"] = "h372bdafe25ef4cb4b8cd5ccf2b43c53c1bgc",
+	["Damage:"] = "h2c5f4e6578684f76a3ef34eb3ff61cd27471",
+	["Status Groups:"] = "h365e5e8db0d745dcbc83c4eaee60eb3df64g",
+	["Save:"] = "h7b8807a109ac4d8c91e0845cfb133abee843",
+	["TickType:"] = "h69b7b3d364594f018016d204da59e45b3040",
+	["Description:"] = "h7890abcdef1234567890abcdef1234567890",
+	["Description Params:"] = "h890abcdef1234567890abcdef12345678901",
+	["Boosts:"] = "h90abcdef1234567890abcdef123456789012",
+	["(ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)"] = "hafed135d7dc945e18fa3dbfa8bb3eb946e5e",
+	["By Status Group"] = "ha92c7ebfd29545b284d4dc46c5638b4d7245",
+	["Manage Status Groups"] = "h0485ebba5acb4e9aa422bbe9163b13cbgd7b",
+	["Include"] = "he1723b1c477144bd9e4c69594b60f64f6a9b",
+	["Exclude"] = "hcfc9c68627ac4cd9a365d94a32e48c0cc4fd",
+})
