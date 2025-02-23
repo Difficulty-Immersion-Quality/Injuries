@@ -31,9 +31,7 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 	if not statusConfig then
 		---@type StatusData
 		local statusData = Ext.Stats.Get(status)
-		if not statusData then
-			Logger:BasicWarning("Status %s does not exist in the game?", status)
-		else
+		if statusData then
 			if statusData.StatusGroups and next(statusData.StatusGroups) then
 				for _, statusGroup in ipairs(statusData.StatusGroups) do
 					if ConfigManager.Injuries.RemoveOnStatus[statusGroup] then

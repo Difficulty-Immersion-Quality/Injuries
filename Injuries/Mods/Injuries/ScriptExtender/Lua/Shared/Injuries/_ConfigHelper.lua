@@ -153,7 +153,9 @@ if Ext.IsServer() then
 	function InjuryConfigHelper:RollForApplication(injuryName, existingInjuryVar, status)
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
 		local chanceOfApplication = injuryConfig.chance_of_application
-		if not chanceOfApplication or chanceOfApplication == 100 or (status and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
+		if not chanceOfApplication
+			or chanceOfApplication == 100
+			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
 			return true
 		end
 
