@@ -28,13 +28,33 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 	end
 
 	local statusConfig = ConfigManager.Injuries.RemoveOnStatus[status]
+	if not statusConfig then
+		---@type StatusData
+		local statusData = Ext.Stats.Get(status)
+		if statusData then
+			if statusData.StatusGroups and next(statusData.StatusGroups) then
+				for _, statusGroup in ipairs(statusData.StatusGroups) do
+					if ConfigManager.Injuries.RemoveOnStatus[statusGroup] then
+						statusConfig = ConfigManager.Injuries.RemoveOnStatus[statusGroup]
+						break
+					end
+				end
+			end
+		end
+	end
 	if statusConfig then
 		---@type {[InjuryName] : InjuryRemoveOnStatus}
 		local injuriesToRemove = {}
 		for injury, injuryConfig in pairs(statusConfig) do
-			if Osi.HasActiveStatus(character, injury) == 1 then
-				injuriesToRemove[injury] = injuryConfig
+			if not injuryConfig["excluded_statuses"] or not TableUtils:ListContains(injuryConfig["excluded_statuses"], status) then
+				if Osi.HasActiveStatus(character, injury) == 1 then
+					injuriesToRemove[injury] = injuryConfig
+				end
 			end
+		end
+
+		if not next(injuriesToRemove) then
+			return
 		end
 
 		local numInjuriesToRemove = ConfigManager.ConfigCopy.injuries.universal.how_many_injuries_can_be_removed_at_once

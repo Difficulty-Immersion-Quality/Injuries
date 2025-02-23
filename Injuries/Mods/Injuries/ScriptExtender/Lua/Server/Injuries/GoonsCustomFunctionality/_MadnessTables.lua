@@ -40,19 +40,18 @@ local function GetRandomStatus(statusTable, object, isShortTerm)
     -- If there are valid statuses, apply one randomly
     if #validStatuses > 0 then
         local selectedStatus = validStatuses[math.random(#validStatuses)]
-        
+
         -- Adjust duration: Use 1-50 rounds for short-term madness, converted to seconds
-        local duration = isShortTerm and math.random(1, 50) * 6 or -1  -- 1-50 rounds for short-term, -1 for permanent
+        local duration = isShortTerm and math.random(1, 50) * 6 or -1 -- 1-50 rounds for short-term, -1 for permanent
 
         Osi.ApplyStatus(object, selectedStatus, duration, 1)
     end
 end
 
 -- StatusApplied Listener
-Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status, causee, storyActionID)
+EventCoordinator:RegisterEventProcessor("StatusApplied", function(object, status, causee, storyActionID)
     if status == "GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS" then
         GetRandomStatus(LongTermMadnessTable, object, false) -- Long-term: Permanent duration
-    
     elseif status == "GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS" then
         GetRandomStatus(ShortTermMadnessTable, object, true) -- Short-term: 1-50 rounds
     end
