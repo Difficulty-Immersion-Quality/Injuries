@@ -5,6 +5,9 @@
 local function BuildRow(damageTable, damageType, damageConfig)
 	local row = damageTable:AddRow()
 
+	if not damageConfig["damage_types"] then
+		damageConfig["damage_types"] = {}
+	end
 	if not damageConfig["damage_types"][damageType] then
 		damageConfig["damage_types"][damageType] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_damage_type_class)
 	end
@@ -19,7 +22,7 @@ local function BuildRow(damageTable, damageType, damageConfig)
 	damageCell:AddImage("GenericIcon_DamageType_" .. damageTypeForImage, { 36, 36 })
 	damageCell:AddText(damageType).SameLine = true
 
-	local damageTypeThreshold = row:AddCell():AddSliderInt("", damageTypeConfig["multiplier"] * 100, 1, 500)
+	local damageTypeThreshold = row:AddCell():AddSliderInt("", math.floor(damageTypeConfig["multiplier"] * 100), 1, 500)
 
 	local thresholdTooltip = damageTypeThreshold:Tooltip()
 	local tooltipText = thresholdTooltip:AddText(string.format("\t\t" .. Translator:translate("10 points of %s damage contributes %s points of Injury Damage"),
@@ -27,8 +30,7 @@ local function BuildRow(damageTable, damageType, damageConfig)
 		10 * damageTypeConfig["multiplier"]))
 
 	damageTypeThreshold.OnChange = function()
-		-- Rounding, according to ChatGPT
-		damageTypeConfig["multiplier"] = math.floor(damageTypeThreshold.Value[1] * 100 + 0.5) / 10000
+		damageTypeConfig["multiplier"] = damageTypeThreshold.Value[1] / 100
 
 		tooltipText.Label = string.format("\t\t" .. Translator:translate("10 points of %s damage contributes %s points of Injury Damage"),
 			damageType,
@@ -92,7 +94,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			end
 		end
 
-		if damageConfig["damage_types"][damageType] then
+		if damageConfig["damage_types"] and damageConfig["damage_types"][damageType] then
 			damageSelect.Selected = true
 			damageSelect:OnActivate()
 		end

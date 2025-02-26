@@ -2,7 +2,8 @@
 ---@param status StatusName
 ---@param statusConfig {[StatusName] : InjuryApplyOnStatusModifierClass }
 ---@param injuryVar InjuryVar
-local function processInjuries(entity, status, statusConfig, injuryVar)
+---@param statusGroup string?
+local function processInjuries(entity, status, statusConfig, injuryVar, statusGroup)
 	local statusVar = injuryVar["applyOnStatus"]
 	local character = entity.Uuid.EntityUuid
 
@@ -11,6 +12,11 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 	for injury, injuryStatusConfig in pairs(statusConfig) do
 		local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
 		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
+			if statusGroup then
+				if injuryStatusConfig["excluded_statuses"] and TableUtils:ListContains(injuryStatusConfig["excluded_statuses"], status) then
+					goto continue
+				end
+			end
 			local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 
 			if not statusVar[status] then
@@ -34,7 +40,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 			local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(entity, injuryConfig)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
-			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar, status) then
+			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar, statusGroup or status) then
 				Osi.ApplyStatus(character, nextStackInjury, -1)
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
 
@@ -44,16 +50,33 @@ local function processInjuries(entity, status, statusConfig, injuryVar)
 				end
 			end
 		end
+	    ::continue::
 	end
 	InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
 end
 
 local function CheckStatusOnTickOrApplication(status, character)
 	local statusConfig = ConfigManager.Injuries.ApplyOnStatus[status]
+	local statusSG
+	if not statusConfig then
+		---@type StatusData
+		local statusData = Ext.Stats.Get(status)
+		if statusData then
+			if statusData.StatusGroups and next(statusData.StatusGroups) then
+				for _, statusGroup in ipairs(statusData.StatusGroups) do
+					if ConfigManager.Injuries.ApplyOnStatus[statusGroup] then
+						statusSG = statusGroup
+						statusConfig = ConfigManager.Injuries.ApplyOnStatus[statusGroup]
+						break
+					end
+				end
+			end
+		end
+	end
 	if statusConfig then
 		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
 		if entity and injuryVar then
-			processInjuries(entity, status, statusConfig, injuryVar)
+			processInjuries(entity, status, statusConfig, injuryVar, statusSG)
 
 			--if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
 				-- 5.7 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count

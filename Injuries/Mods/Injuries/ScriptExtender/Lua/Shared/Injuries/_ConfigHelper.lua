@@ -66,13 +66,15 @@ end
 function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfig)
 	local finalMultiplier = 1
 
-	if injuryConfig.character_multipliers["races"][character.Race.Race] then
+	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["races"] and injuryConfig.character_multipliers["races"][character.Race.Race] then
 		finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["races"][character.Race.Race]
 	end
 
-	for _, tagUUID in pairs(character.Tag.Tags) do
-		if injuryConfig.character_multipliers["tags"][tagUUID] then
-			finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"] then
+		for _, tagUUID in pairs(character.Tag.Tags) do
+			if injuryConfig.character_multipliers["tags"][tagUUID] then
+				finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+			end
 		end
 	end
 
@@ -155,7 +157,9 @@ if Ext.IsServer() then
 	function InjuryConfigHelper:RollForApplication(injuryName, existingInjuryVar, status)
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
 		local chanceOfApplication = injuryConfig.chance_of_application
-		if not chanceOfApplication or chanceOfApplication == 100 or (status and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
+		if not chanceOfApplication
+			or chanceOfApplication == 100
+			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
 			return true
 		end
 
@@ -316,6 +320,20 @@ if Ext.IsServer() then
 				if Osi.IsDead(character) == 0 and injuryUserVar["removedDueTo"][injury] then
 					local statusRemovingInjury = injuryUserVar["removedDueTo"][injury]
 					local removeOnStatusConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusRemovingInjury]
+					if not removeOnStatusConfig then
+						---@type StatusData
+						local statusData = Ext.Stats.Get(statusRemovingInjury)
+						if statusData and next(statusData.StatusGroups) then
+							for _, statusGroup in ipairs(statusData.StatusGroups) do
+								local sgConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusGroup]
+								if sgConfig and (not sgConfig["excluded_statuses"] or not TableUtils:ListContains(sgConfig["excluded_statuses"], statusRemovingInjury)) then
+									removeOnStatusConfig = sgConfig
+									Logger:BasicDebug("%s was removed from %s due to %s belonging to %s", injury, character, statusRemovingInjury, statusGroup)
+								end
+							end
+						end
+					end
+
 					local stacksToRemove = removeOnStatusConfig.stacks_to_remove
 					if stacksToRemove then
 						---@type StatusData
