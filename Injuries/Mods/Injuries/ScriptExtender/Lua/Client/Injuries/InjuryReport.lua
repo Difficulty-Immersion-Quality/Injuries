@@ -22,6 +22,9 @@ local reportWindow
 ---@param injuryConfig Injury
 ---@return number?
 local function AddRaceMultiplierText(parent, entity, injuryConfig)
+	if not entity.Race then
+		return nil
+	end
 	---@type ResourceRace
 	local raceResource = Ext.StaticData.Get(entity.Race.Race, "Race")
 
@@ -41,6 +44,10 @@ end
 ---@param injuryConfig Injury
 ---@return number?
 local function AddTagMultiplierText(parent, entity, injuryConfig)
+	if not entity.Tag then
+		return nil
+	end
+
 	local seeTagButton = parent:AddImageButton("AllTags", "Spell_Divination_SeeInvisibility", { 30, 30 })
 	seeTagButton.SameLine = true
 
@@ -55,6 +62,7 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 
 	local foundTag = false
 	local totalTagMultiplier = 1
+
 	for _, tagUUID in pairs(entity.Tag.Tags) do
 		---@type ResourceTag
 		local tagData = Ext.StaticData.Get(tagUUID, "Tag")
@@ -174,6 +182,12 @@ local function BuildReport()
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
+			if not entity or not entity.Data then
+				entityInjuriesReport[character] = nil
+				Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
+				goto next_injury
+			end
+
 			local charReport
 			for _, child in pairs(reportWindow.Children) do
 				if character == child.UserData then
@@ -184,7 +198,7 @@ local function BuildReport()
 
 			if not charReport then
 				charReport = reportWindow:AddCollapsingHeader(string.format("%s (%s)",
-					entity.CustomName and entity.CustomName.Name or entity.DisplayName.NameKey:Get(),
+					entity.CustomName and entity.CustomName.Name or (entity.DisplayName and entity.DisplayName.NameKey:Get() or entity.Uuid.EntityUuid),
 					entity.Uuid.EntityUuid))
 
 				charReport.DefaultOpen = false
@@ -279,7 +293,8 @@ local function BuildReport()
 						if numRoundsApplied and numRoundsApplied[injury] then
 							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
 							local row = statusReportTable:AddRow()
-							row:AddCell():AddText(status)
+							StatusHelper:BuildStatusTooltip(row:AddCell():AddText(status .. (configuredGroup and string.format(" (%s)", configuredGroup) or "")):Tooltip(),
+								statusData)
 							row:AddCell():AddText(string.format("%d%%", statusConfig["multiplier"] * 100))
 							row:AddCell():AddText(tostring(numRoundsApplied[injury]))
 							row:AddCell():AddText(tostring(numRoundsApplied[injury] * statusConfig["multiplier"]))
@@ -314,6 +329,7 @@ local function BuildReport()
 					injuryReportGroup:AddNewLine()
 				end
 			end
+			::next_injury::
 		end
 	end
 end
@@ -390,3 +406,13 @@ Translator:RegisterTranslation({
 	["All applied injuries are removed"] = "hcc19224ba7234daeacec4ee2a68e044e86d6",
 	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] = "he7a1ecba3c5e48e3bf3b992e949c802f497d",
 })
+
+-- MCM dependency
+if Ext.Mod.IsModLoaded("755a8a72-407f-4f0d-9a33-274ac0f0b53d") and Ext.Mod.GetMod("755a8a72-407f-4f0d-9a33-274ac0f0b53d").Info.ModVersion[2] >= 19 then
+	MCM.SetKeybindingCallback('report_keybind', function()
+		if not reportWindow then
+			InjuryReport:BuildReportWindow()
+		end
+		BuildReport()
+	end)
+end

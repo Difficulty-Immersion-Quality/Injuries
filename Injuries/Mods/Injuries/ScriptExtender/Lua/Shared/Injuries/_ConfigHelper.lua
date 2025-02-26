@@ -29,6 +29,10 @@ InjuryConfigHelper = {}
 ---@param character EntityHandle
 ---@return number, string?
 function InjuryConfigHelper:CalculateNpcMultiplier(character)
+	if not character or not character.Data then
+		return 1
+	end
+
 	local xpReward = Ext.Stats.Get(character.Data.StatsId).XPReward
 	if character.PartyMember or not xpReward then
 		return 1
