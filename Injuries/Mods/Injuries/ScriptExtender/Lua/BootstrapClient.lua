@@ -11,4 +11,5 @@ Ext.Require("Shared/Configurations/_ConfigurationStructure.lua")
 ConfigurationStructure:InitializeConfig()
 
 Ext.Require("Client/_StatusHelper.lua")
+Ext.Require("Client/RandomHelpers.lua")
 Ext.Require("Client/Injuries/InjuryMenu.lua")

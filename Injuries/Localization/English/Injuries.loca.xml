@@ -215,4 +215,7 @@ NOTE: This section does not currently handle ticks, it is only handling initial 
     <content contentuid="he1723b1c477144bd9e4c69594b60f64f6a9b" version="1">Include</content>
     <content contentuid="hcfc9c68627ac4cd9a365d94a32e48c0cc4fd" version="1">Exclude</content>
 	<!-- END Status Helper -->
+    <content contentuid="hbd5660f30114470f96fd309b831455c4632b" version="1">Applying Injuries</content>
+    <content contentuid="h26403ff346f8465dbd6d2f5f70a5ae493fbe" version="1">Removing Injuries</content>
+    <content contentuid="h32b8cf6763354ee0a75709f889935881fd34" version="1">Randomized Application</content>
 </contentList>

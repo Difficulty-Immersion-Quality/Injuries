@@ -39,6 +39,8 @@ ConfigurationStructure.config.injuries.universal.remove_all_on_long_rest = true
 --- @type injury_counter_reset
 ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Attack/Tick"
 
+ConfigurationStructure.config.injuries.universal.apply_injuries_outside_combat = true
+
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage = true
 
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
@@ -61,6 +63,12 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 	["Low"] = 25,
 	["Medium"] = 50,
 	["High"] = 25
+}
+
+ConfigurationStructure.config.injuries.universal.injury_application_chance_by_severity = {
+	["Low"] = 100,
+	["Medium"] = 100,
+	["High"] = 100
 }
 
 --- @type boolean
