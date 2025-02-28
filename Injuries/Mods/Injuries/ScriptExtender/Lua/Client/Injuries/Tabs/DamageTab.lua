@@ -79,7 +79,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local addRowButton = damageTab:AddButton("+")
 	local damageTypePopup = damageTab:AddPopup("")
 
-	for _, damageType in pairs(damageTypes) do
+	for _, damageType in ipairs(damageTypes) do
 		---@type ExtuiSelectable
 		local damageSelect = damageTypePopup:AddSelectable(damageType, "DontClosePopups")
 

@@ -117,7 +117,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type number?
 	["stacks_to_remove"] = nil,
 	---@type string[]?
-	["excluded_statuses"] = nil
+	["excluded_statuses"] = nil,
+	---@type number?
+	["after_x_applications"] = nil
 }
 
 ---@alias StatusName string

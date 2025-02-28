@@ -75,6 +75,14 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 		statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
 	end
 
+	if statusObj.Name == "LONG_REST" then
+		saveCell:AddText("After how many long rests?")
+		statusConfig["after_x_applications"] = statusConfig["after_x_applications"] or 1
+		saveCell:AddSliderInt("", statusConfig["after_x_applications"], 1, 30).OnChange = function (slider)
+			statusConfig["after_x_applications"] = slider.Value[1]
+		end
+	end
+
 	---@type StatusData
 	local injuryStat = Ext.Stats.Get(injury)
 	if injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1 then
@@ -135,7 +143,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			BuildRows(statusTable, status, injury, removeOnConfig, true)
 		end)
 
-	for status, _ in pairs(removeOnConfig) do
+	for status, _ in TableUtils:OrderedPairs(removeOnConfig) do
 		BuildRows(statusTable, status, injury, removeOnConfig)
 	end
 
