@@ -89,8 +89,7 @@ if Ext.IsServer() then
 			return false
 		end
 
-		local reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
-		if (reset ~= "Short Rest" and reset ~= "Long Rest") and Osi.IsInCombat(character) == 0 then
+		if not ConfigManager.ConfigCopy.injuries.universal.apply_injuries_outside_combat and Osi.IsInCombat(character) == 0 then
 			return false
 		end
 
