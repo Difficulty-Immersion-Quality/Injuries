@@ -25,7 +25,6 @@ function ApplyingInjuriesSettings:BuildBasicConfig(parent)
 	parent:AddNewLine()
 
 	local applyOutsideCombatCheckbox = parent:AddCheckbox("Apply Injuries Outside of Combat", universalSettings.apply_injuries_outside_combat)
-	parent:AddText("If disabled, damage and statuses application won't be processed while not in combat"):SetStyle("Alpha", 0.65)
 	applyOutsideCombatCheckbox.OnChange = function()
 		universalSettings.apply_injuries_outside_combat = applyOutsideCombatCheckbox.Checked
 	end
@@ -34,7 +33,9 @@ end
 function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 	local universalSettings = InjuryMenu.ConfigurationSlice.universal
 
-	parent:AddText(Translator:translate("When Does the Damage/Status Tick Counter Reset?"))
+	local tickText = parent:AddSeparatorText(Translator:translate("When Does the Damage/Status Tick Counter Reset?"))
+	tickText:SetStyle("SeparatorTextAlign", 0, .5)
+	tickText.Font = "Large"
 
 	local cumulationCombo = parent:AddCombo("")
 	cumulationCombo.WidthFitPreview = true
@@ -80,8 +81,59 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 		universalSettings.when_does_counter_reset = cumulationCombo.Options[selectedIndex + 1]
 	end
 
+	--#region Application Chance
 	parent:AddNewLine()
-	parent:AddText(Translator:translate("Customize Damage + Status Multipliers For NPCs"))
+	local applicationChanceText = parent:AddSeparatorText("What is the % chance of an Injury being applied when the conditions are met?")
+	applicationChanceText:SetStyle("SeparatorTextAlign", 0, .5)
+	applicationChanceText.Font = "Large"
+
+	parent:AddText("Due to technical limitations, this can't be a save, just a flat roll out of 100"):SetStyle("Alpha", 0.65)
+	
+	local severityTable = parent:AddTable("", 2)
+	severityTable.SizingStretchProp = true
+
+	for key, value in TableUtils:OrderedPairs(universalSettings.application_chance_by_severity, function (key)
+		return key == "Low" and 1 or (key == "Medium" and 2) or 3
+	end) do
+		if type(value) ~= "table" then
+			local severityModifierRow = severityTable:AddRow()
+			local severityModifierCell = severityModifierRow:AddCell()
+			severityModifierCell:AddText(key)
+			local severityModifierSlider = severityModifierRow:AddCell():AddSliderInt("", value, 0, 100)
+			severityModifierSlider.IDContext = key .. "SeverityModifier"
+			severityModifierSlider.OnChange = function()
+				universalSettings.application_chance_by_severity[key] = severityModifierSlider.Value[1]
+			end
+		end
+	end
+
+	parent:AddText("How much should the application chance increase/decrease when the below conditions are met?")
+	local desc = parent:AddText("These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied")
+	desc.TextWrapPos = 0
+	desc:SetStyle("Alpha", 0.65)
+
+	local severityModiferTable = parent:AddTable("", 2)
+	severityModiferTable.SizingStretchProp = true
+	for key, value in TableUtils:OrderedPairs(universalSettings.application_chance_by_severity.modifiers) do
+		if type(value) ~= "table" then
+			local severityModifierRow = severityModiferTable:AddRow()
+			local severityModifierCell = severityModifierRow:AddCell()
+			severityModifierCell:AddText(key)
+			local severityModifierSlider = severityModifierRow:AddCell():AddSliderInt("", value, -100, 100)
+			severityModifierSlider.IDContext = key .. "Modifier"
+			severityModifierSlider.OnChange = function()
+				universalSettings.application_chance_by_severity.modifiers[key] = severityModifierSlider.Value[1]
+			end
+		end
+	end
+
+	--#endregion
+
+	parent:AddNewLine()
+	local npcText = parent:AddSeparatorText(Translator:translate("Customize Damage + Status Multipliers For NPCs"))
+	npcText:SetStyle("SeparatorTextAlign", 0, .5)
+	npcText.Font = "Large"
+
 	local enemyDesc = parent:AddText(
 		Translator:translate(
 			"These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."

@@ -219,6 +219,10 @@ if Ext.IsServer() then
 		if Osi.HasPassive(character, "Goon_Attack_Detect") == 1 then
 			Osi.RemovePassive(character, "Goon_Attack_Detect")
 		end
+
+		if Osi.HasPassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction") == 1 then
+			Osi.RemovePassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction")
+		end
 	end
 
 	local function ResetCounters(character, entityVar)

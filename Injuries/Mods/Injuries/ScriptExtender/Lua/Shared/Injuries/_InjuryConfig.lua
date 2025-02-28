@@ -45,6 +45,18 @@ ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage
 
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
 
+ConfigurationStructure.config.injuries.universal.application_chance_by_severity = {
+	["Low"] = 100,
+	["Medium"] = 100,
+	["High"] = 100,
+	modifiers = {
+		["Max Damage From Attack"] = 0,
+		["Attack Was A Critical"] = 0,
+		["Was Downed This Round"] = -100
+	}
+}
+
+
 --#region NPC Modifiers
 ---@alias NPCCategories "Base"|"Boss"|"MiniBoss"|"Elite"|"Combatant"|"Pack"|"Zero"|"Civilian"
 ---@type { [NPCCategories] : number}
@@ -63,12 +75,6 @@ ConfigurationStructure.config.injuries.universal.random_injury_severity_weights 
 	["Low"] = 25,
 	["Medium"] = 50,
 	["High"] = 25
-}
-
-ConfigurationStructure.config.injuries.universal.injury_application_chance_by_severity = {
-	["Low"] = 100,
-	["Medium"] = 100,
-	["High"] = 100
 }
 
 --- @type boolean

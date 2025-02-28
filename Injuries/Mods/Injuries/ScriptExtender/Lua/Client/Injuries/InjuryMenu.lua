@@ -30,7 +30,6 @@ Ext.Require("Client/Injuries/Sections/ApplyingInjuries.lua")
 Ext.Require("Client/Injuries/Sections/RandomApplications.lua")
 Ext.Require("Client/Injuries/Sections/RemovingInjuries.lua")
 
-Ext.Require("Client/Injuries/Tabs/GeneralRulesTab.lua")
 Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
 Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
