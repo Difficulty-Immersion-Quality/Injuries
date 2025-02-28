@@ -461,7 +461,7 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 "&gt;Prone&lt;/LSTag&gt; at the end of your turn.
 &lt;br&gt;By default, this &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injury&lt;/LSTag&gt; can be cured when &lt;LSTag Type="Spell" Tooltip="Target_LesserRestoration"&gt;Lesser Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 7 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
 
-	<content contentuid="h1af91993ga6a8g4e35g98bfg93ae28ab7869" version="1">Injury: Damaged Hamstringt</content> <!-- Slashing damage -->
+	<content contentuid="h1af91993ga6a8g4e35g98bfg93ae28ab7869" version="1">Injury: Damaged Hamstring</content> <!-- Slashing damage -->
 
 
 
