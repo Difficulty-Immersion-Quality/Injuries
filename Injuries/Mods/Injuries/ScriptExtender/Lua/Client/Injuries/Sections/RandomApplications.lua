@@ -65,5 +65,15 @@ function RandomApplicationSettings:BuildBasicConfig(parent)
 end
 
 Translator:RegisterTranslation({
-	["Randomized Application"] = "h32b8cf6763354ee0a75709f889935881fd34"
+	["Randomized Application"] = "h32b8cf6763354ee0a75709f889935881fd34",
+	["When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"] =
+	"h49d19708c1bb43ddbcbf5a671e2719aa7f46",
+	["Downed"] = "hd0fdb6dcced94e8ab2b0d7a8ca6fe1c46082",
+	["Suffered a Critical Hit"] = "h84d4a31ea8014224beac0fe256eba20ad728",
+	["The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%"] = "hd4d2189ac8cc4d6bbd0b68dd6825ff9fc26e",
+	["Error: Values must add up to 100%!"] = "h4983f15cdb6d439b8d7f3e3770b8244997d3",
+	["Only consider Injuries that are configured to apply on the relevant damage type"] = "h2a6602e74767415f8bf66edc7a3595e82852",
+	["If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
+	.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"] =
+	"h5c3d63b7169d42deaba68a041fde636aab0b"
 })

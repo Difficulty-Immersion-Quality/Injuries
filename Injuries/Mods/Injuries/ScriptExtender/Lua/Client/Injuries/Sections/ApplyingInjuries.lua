@@ -24,7 +24,7 @@ function ApplyingInjuriesSettings:BuildBasicConfig(parent)
 
 	parent:AddNewLine()
 
-	local applyOutsideCombatCheckbox = parent:AddCheckbox("Apply Injuries Outside of Combat", universalSettings.apply_injuries_outside_combat)
+	local applyOutsideCombatCheckbox = parent:AddCheckbox(Translator:translate("Apply Injuries Outside of Combat"), universalSettings.apply_injuries_outside_combat)
 	applyOutsideCombatCheckbox.OnChange = function()
 		universalSettings.apply_injuries_outside_combat = applyOutsideCombatCheckbox.Checked
 	end
@@ -83,11 +83,11 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 
 	--#region Application Chance
 	parent:AddNewLine()
-	local applicationChanceText = parent:AddSeparatorText("What is the % chance of an Injury being applied when the conditions are met?")
+	local applicationChanceText = parent:AddSeparatorText(Translator:translate("What is the % chance of an Injury being applied when the conditions are met?"))
 	applicationChanceText:SetStyle("SeparatorTextAlign", 0, .5)
 	applicationChanceText.Font = "Large"
 
-	parent:AddText("Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"):SetStyle("Alpha", 0.65)
+	parent:AddText(Translator:translate("Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100")):SetStyle("Alpha", 0.65)
 
 	local severityTable = parent:AddTable("", 2)
 	severityTable.SizingStretchProp = true
@@ -196,5 +196,18 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 end
 
 Translator:RegisterTranslation({
-	["Applying Injuries"] = "hbd5660f30114470f96fd309b831455c4632b"
+	["Applying Injuries"] = "hbd5660f30114470f96fd309b831455c4632b",
+	["Who Can Receive Injuries?"] = "h00f45a44ab9345c1b1106d6852ebcc4d9cb3",
+	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",
+	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
+	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
+	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
+	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
+	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
+	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
+	["Apply Injuries Outside of Combat"] = "h19e7eed71ae343bf8571aa5e4ae65ed46c1c",
+	["Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"] = "h51314d99b05b481f849ebd5a3bee1fa61dgf",
+	["What is the % chance of an Injury being applied when the conditions are met?"] = "h0b8d482b2c0841a8bf9ff897fe2023edfafa",
+	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
+	.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
 })

@@ -350,36 +350,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 )
 
 Translator:RegisterTranslation({
-	["Universal Options"] = "h1ec71859ad9f44458110fb611c05f4d701ag",
-	["Who Can Receive Injuries?"] = "h00f45a44ab9345c1b1106d6852ebcc4d9cb3",
-	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",
-	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
-	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
-	["How Many Different Injuries Can Be Removed At Once?"] = "hf09a78e9f67d4f6ebd69b1831b16bc7e00cf",
-	["If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."] =
-	"h917674e930d34cc8a28ecc9051066f4f332f",
-	["One"] = "hfe2ed92d7923481b97a60edf916e5b03d5g7",
-	["All"] = "he8141a6f94e24224a4cdd5f198aca85703b6",
-	["What Severity Should Be Prioritized?"] = "h4e5210014bf44629b4a8125da7b191158c4a",
-	["Remove All Injuries On Death"] = "he00cdfbaa2a6402b8f576e6c556c93d3fffc",
-	["Remove All Injuries On Long Rest"] = "h113c81a1391544e8a7bb3a662ce6488b8g6e",
-	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
-	["If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."] = "h63c5fd1bbdf34462b71996ca4f74b34fcddb",
-	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
-	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
-	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
-	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-	.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
-	["When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"] =
-	"h49d19708c1bb43ddbcbf5a671e2719aa7f46",
-	["Downed"] = "hd0fdb6dcced94e8ab2b0d7a8ca6fe1c46082",
-	["Suffered a Critical Hit"] = "h84d4a31ea8014224beac0fe256eba20ad728",
-	["The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%"] = "hd4d2189ac8cc4d6bbd0b68dd6825ff9fc26e",
-	["Error: Values must add up to 100%!"] = "h4983f15cdb6d439b8d7f3e3770b8244997d3",
-	["Only consider Injuries that are configured to apply on the relevant damage type"] = "h2a6602e74767415f8bf66edc7a3595e82852",
-	["If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
-	.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"] =
-	"h5c3d63b7169d42deaba68a041fde636aab0b",
 	["Injury-Specific Options"] = "hc273eb7f41304b7a9e3a4f783cf28b7470c2",
 	["Open Injury Report"] = "hd04225c38388437caa4670faf1b5cbea2bb7",
 	["Systems"] = "h8c9bbb728c8f407aaa7a886ae05ff4e8cc9b",
