@@ -6,7 +6,7 @@ Ext.Vars.RegisterUserVariable("Injuries_Healing", {
 ---@param entity EntityHandle
 ---@diagnostic disable-next-line: param-type-mismatch
 Ext.Entity.Subscribe("Health", function(entity, _, _)
-	local _, injuryVar = InjuryConfigHelper:GetUserVar(entity.Uuid.EntityUuid)
+	local _, injuryVar = InjuryCommonLogic:GetUserVar(entity.Uuid.EntityUuid)
 	local damageVar = injuryVar["damage"]
 	if damageVar and next(damageVar) and ConfigManager.ConfigCopy.injuries and ConfigManager.ConfigCopy.injuries.universal.healing_subtracts_injury_damage then
 		---@type HealthComponent
@@ -40,7 +40,7 @@ Ext.Entity.Subscribe("Health", function(entity, _, _)
 				end
 			end
 
-			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 		end
 
 		entity.Vars.Injuries_Healing = healthComp.Hp

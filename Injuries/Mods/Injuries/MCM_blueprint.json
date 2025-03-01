@@ -42,25 +42,6 @@
 								"Min": 0,
 								"Max": 5
 							}
-						},
-						{
-							"Id": "report_keybind",
-							"Name": "Open Injury Report",
-							"Type": "keybinding_v2",
-							"Default": {
-								"Keyboard": {
-									"Key": "T",
-									"ModifierKeys": [
-										"LShift",
-										"LAlt"
-									]
-								},
-								"Controller": {
-									"Buttons": [
-										"A"
-									]
-								}
-							}
 						}
 					]
 				}

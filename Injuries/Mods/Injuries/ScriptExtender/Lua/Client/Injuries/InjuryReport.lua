@@ -1,4 +1,4 @@
-Ext.Require("Shared/Injuries/_ConfigHelper.lua")
+Ext.Require("Shared/Injuries/_InjuryCommonLogic.lua")
 
 InjuryReport = {}
 
@@ -215,7 +215,7 @@ local function BuildReport()
 				BuildReport()
 			end
 
-			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateNpcMultiplier(entity)
+			local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity)
 
 			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
 				---@type StatusData?
@@ -243,8 +243,8 @@ local function BuildReport()
 				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
 
 				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
-					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. "%s%% ", injuryConfig.chance_of_application or 100))
-					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. "%s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
+					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
 				end
 
 				--#region Damage Report

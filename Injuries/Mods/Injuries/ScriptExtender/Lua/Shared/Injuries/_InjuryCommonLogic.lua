@@ -18,17 +18,19 @@ local injuryVar = {
 	["injuryAppliedReason"] = {},
 	---@type {[InjuryName] : number}
 	["numberOfApplicationsAttempted"] = {},
+	---@type {[InjuryName] : number}
+	["applicationChance"] = {},
 	---@type {[InjuryName] : string}
 	["removedDueTo"] = {}
 }
 
-InjuryConfigHelper = {}
+InjuryCommonLogic = {}
 
 --- Returns the npcType just for the InjuryReport, so we know if the character even has a multiplier available instead of
 --- defaulting in the absence of one
 ---@param character EntityHandle
 ---@return number, string?
-function InjuryConfigHelper:CalculateNpcMultiplier(character)
+function InjuryCommonLogic:CalculateNpcMultiplier(character)
 	if not character or not character.Data then
 		return 1
 	end
@@ -63,7 +65,7 @@ end
 
 ---@param character EntityHandle
 ---@param injuryConfig Injury
-function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfig)
+function InjuryCommonLogic:CalculateCharacterMultipliers(character, injuryConfig)
 	local finalMultiplier = 1
 
 	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["races"] and injuryConfig.character_multipliers["races"][character.Race.Race] then
@@ -84,7 +86,7 @@ end
 if Ext.IsServer() then
 	---@param character GUIDSTRING
 	---@return boolean
-	function InjuryConfigHelper:IsEligible(character)
+	function InjuryCommonLogic:IsEligible(character)
 		if Osi.IsItem(character) == 1 or Osi.Exists(character) == 0 then
 			return false
 		end
@@ -118,7 +120,7 @@ if Ext.IsServer() then
 
 	---@param character GUIDSTRING
 	---@return EntityHandle?, InjuryVar?
-	function InjuryConfigHelper:GetUserVar(character)
+	function InjuryCommonLogic:GetUserVar(character)
 		local entity = Ext.Entity.Get(character)
 
 		if entity then
@@ -132,7 +134,7 @@ if Ext.IsServer() then
 
 	--- @param character EntityHandle
 	--- @param injuryVar InjuryVar?
-	function InjuryConfigHelper:UpdateUserVar(character, injuryVar)
+	function InjuryCommonLogic:UpdateUserVar(character, injuryVar)
 		local counter_reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 		if counter_reset == "Attack/Tick" then
 			character.Vars.Goon_Injuries = nil
@@ -150,16 +152,54 @@ if Ext.IsServer() then
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 	end
 
+	Ext.Osiris.RegisterListener("DownedChanged", 2, "after", function(character, isDowned)
+		if isDowned == 1 then
+			Osi.ApplyStatus(character, "GOON_DOWNED_TRACKER", 1)
+		end
+	end)
+
 	---@param injuryName InjuryName
 	---@param existingInjuryVar InjuryVar
 	---@param status string?
-	function InjuryConfigHelper:RollForApplication(injuryName, existingInjuryVar, status)
+	---@param character CHARACTER
+	---@param modifiers InjuryApplicationChanceModifiers[]?
+	function InjuryCommonLogic:RollForApplication(injuryName, existingInjuryVar, status, character, modifiers)
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
-		local chanceOfApplication = injuryConfig.chance_of_application
-		if not chanceOfApplication
-			or chanceOfApplication == 100
+		local applicationChanceConfig = ConfigManager.ConfigCopy.injuries.universal.application_chance_by_severity
+
+		---@type number?
+		local chanceOfApplication = applicationChanceConfig[injuryConfig.severity]
+		if not chanceOfApplication then
+			return false
+		end
+
+		if Osi.HasActiveStatus(character, "GOON_DOWNED_TRACKER") == 1 then
+			modifiers = modifiers and TableUtils:DeeplyCopyTable(modifiers) or {}
+			table.insert(modifiers, "Was Downed This Round")
+		end
+
+		if modifiers then
+			for _, modifier in pairs(modifiers) do
+				chanceOfApplication = chanceOfApplication + applicationChanceConfig.modifiers[modifier]
+				Logger:BasicDebug("Adding %s%% application chance due to %s being applicable to %s (for injury %s) - result is %s%%",
+					applicationChanceConfig.modifiers[modifier],
+					modifier,
+					character,
+					injuryName,
+					chanceOfApplication)
+			end
+		end
+
+		if not existingInjuryVar["applicationChance"] then
+			existingInjuryVar["applicationChance"] = {}
+		end
+		existingInjuryVar["applicationChance"][injuryName] = chanceOfApplication
+
+		if chanceOfApplication == 100
 			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
 			return true
+		elseif chanceOfApplication <= 0 then
+			return false
 		end
 
 		if not existingInjuryVar["numberOfApplicationsAttempted"] then
@@ -176,7 +216,7 @@ if Ext.IsServer() then
 	--- highest stackPriority (of the applied injury)
 	---@param character GUIDSTRING
 	---@param injury InjuryName?
-	function InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+	function InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
 		---@type StatusData
 		local injuryEntry = Ext.Stats.Get(injury)
 		if injuryEntry.StackId and injuryEntry.StackPriority then
@@ -290,8 +330,8 @@ if Ext.IsServer() then
 		end
 	end)
 
-	function InjuryConfigHelper:RemoveAllInjuries(character)
-		local entity, _ = InjuryConfigHelper:GetUserVar(character)
+	function InjuryCommonLogic:RemoveAllInjuries(character)
+		local entity, _ = InjuryCommonLogic:GetUserVar(character)
 		if entity then
 			for injury, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
 				Osi.RemoveStatus(character, injury)
@@ -306,13 +346,13 @@ if Ext.IsServer() then
 
 	Ext.Osiris.RegisterListener("Died", 1, "after", function(character)
 		if ConfigManager.ConfigCopy.injuries.universal.remove_on_death then
-			InjuryConfigHelper:RemoveAllInjuries(character)
+			InjuryCommonLogic:RemoveAllInjuries(character)
 		end
 	end)
 
 	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, injury, causee, applyStoryActionID)
 		if Osi.IsItem(character) == 0 then
-			local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
+			local entity, injuryUserVar = InjuryCommonLogic:GetUserVar(character)
 
 			if entity
 				and injuryUserVar

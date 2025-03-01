@@ -4,10 +4,10 @@
 ---@param statusCausingRemoval string
 local function removeInjury(character, injury, injuryConfig, statusCausingRemoval)
 	if injuryConfig["ability"] == "No Save" or injuryConfig["ability"] == "None" then
-		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+		local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 		injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
 		injuryVar["removedDueTo"][injury] = statusCausingRemoval
-		InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+		InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 
 		Osi.RemoveStatus(character, injury)
 	else
@@ -23,7 +23,7 @@ end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
 	if status == "LONG_REST" and ConfigManager.ConfigCopy.injuries.universal.remove_all_on_long_rest then
-		InjuryConfigHelper:RemoveAllInjuries(character)
+		InjuryCommonLogic:RemoveAllInjuries(character)
 		return
 	end
 
@@ -105,10 +105,10 @@ EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller
 		local injuryNameAndStatus = string.sub(eventName, string.len("Goon_Injuries_Remove_Injury_"))
 		local injuryName, statusCausingRemoval = string.match(injuryNameAndStatus, "([^|]+)|([^|]+)")
 		if resultType == 1 then
-			local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+			local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 			injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
 			injuryVar["removedDueTo"][injuryName] = statusCausingRemoval
-			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 
 			Osi.RemoveStatus(roller, injuryName, statusCausingRemoval)
 		end

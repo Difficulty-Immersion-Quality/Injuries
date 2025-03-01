@@ -7,10 +7,10 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 	local statusVar = injuryVar["applyOnStatus"]
 	local character = entity.Uuid.EntityUuid
 
-	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(entity)
+	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity)
 
 	for injury, injuryStatusConfig in pairs(statusConfig) do
-		local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+		local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
 		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
 			if statusGroup then
 				if injuryStatusConfig["excluded_statuses"] and TableUtils:ListContains(injuryStatusConfig["excluded_statuses"], status) then
@@ -37,10 +37,10 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 				end
 			end
 
-			local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(entity, injuryConfig)
+			local characterMultiplier = InjuryCommonLogic:CalculateCharacterMultipliers(entity, injuryConfig)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
-			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar, statusGroup or status) then
+			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, statusGroup or status) then
 				Osi.ApplyStatus(character, nextStackInjury, -1)
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
 
@@ -52,7 +52,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 		end
 	    ::continue::
 	end
-	InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+	InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 end
 
 local function CheckStatusOnTickOrApplication(status, character)
@@ -74,7 +74,7 @@ local function CheckStatusOnTickOrApplication(status, character)
 		end
 	end
 	if statusConfig then
-		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+		local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 		if entity and injuryVar then
 			processInjuries(entity, status, statusConfig, injuryVar, statusSG)
 
@@ -94,7 +94,7 @@ local function CheckStatusOnTickOrApplication(status, character)
 end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
-	if InjuryConfigHelper:IsEligible(character) then
+	if InjuryCommonLogic:IsEligible(character) then
 		CheckStatusOnTickOrApplication(status, character)
 	end
 end)

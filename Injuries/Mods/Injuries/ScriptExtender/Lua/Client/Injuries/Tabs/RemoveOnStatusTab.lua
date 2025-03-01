@@ -76,7 +76,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	end
 
 	if statusObj.Name == "LONG_REST" then
-		saveCell:AddText("After how many long rests?")
+		saveCell:AddText("After how many long rests? (Counted by event or status application, if no event triggers)")
 		statusConfig["after_x_applications"] = statusConfig["after_x_applications"] or 1
 		saveCell:AddSliderInt("", statusConfig["after_x_applications"], 1, 30).OnChange = function (slider)
 			statusConfig["after_x_applications"] = slider.Value[1]
