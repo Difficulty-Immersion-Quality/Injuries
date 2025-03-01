@@ -107,9 +107,9 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 		end
 	end
 
-	parent:AddText("How much should the application chance increase/decrease when the below conditions are met?")
+	parent:AddText(Translator:translate("How much should the application chance increase/decrease when the below conditions are met?"))
 	local desc = parent:AddText(
-	"These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied")
+	Translator:translate("These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"))
 	desc.TextWrapPos = 0
 	desc:SetStyle("Alpha", 0.65)
 
@@ -204,6 +204,8 @@ Translator:RegisterTranslation({
 	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
 	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
 	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
+	["How much should the application chance increase/decrease when the below conditions are met?"] = "h2ed2ba9c679e4311b9d7b991246d84ff16g2",
+	["These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"] = "h3f75c2db58974c47b8f5553e0fe58301831b",
 	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
 	["Apply Injuries Outside of Combat"] = "h19e7eed71ae343bf8571aa5e4ae65ed46c1c",
 	["Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"] = "h51314d99b05b481f849ebd5a3bee1fa61dgf",
