@@ -87,7 +87,7 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 	applicationChanceText:SetStyle("SeparatorTextAlign", 0, .5)
 	applicationChanceText.Font = "Large"
 
-	parent:AddText("Due to technical limitations, this can't be a save, just a flat roll out of 100"):SetStyle("Alpha", 0.65)
+	parent:AddText("Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"):SetStyle("Alpha", 0.65)
 
 	local severityTable = parent:AddTable("", 2)
 	severityTable.SizingStretchProp = true
