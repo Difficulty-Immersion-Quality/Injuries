@@ -218,4 +218,5 @@ NOTE: This section does not currently handle ticks, it is only handling initial 
     <content contentuid="hbd5660f30114470f96fd309b831455c4632b" version="1">Applying Injuries</content>
     <content contentuid="h26403ff346f8465dbd6d2f5f70a5ae493fbe" version="1">Removing Injuries</content>
     <content contentuid="h32b8cf6763354ee0a75709f889935881fd34" version="1">Randomized Application</content>
+    <content contentuid="h33e313fcb75f468dabcb7c43d76ba8f984e0" version="1">'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances</content>
 </contentList>

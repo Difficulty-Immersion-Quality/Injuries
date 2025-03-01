@@ -62,6 +62,9 @@ local function ProcessDamageEvent(event)
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
 					local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
+					if injuryConfig.severity == "Disabled" then
+						goto continue
+					end
 					local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(defender, injury)
 
 					if nextStackInjury
@@ -116,6 +119,7 @@ local function ProcessDamageEvent(event)
 							end
 						end
 					end
+				    ::continue::
 				end
 			end
 		else

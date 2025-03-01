@@ -48,6 +48,7 @@ ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage
 ---@alias InjuryApplicationChanceModifiers "Attack Was A Critical"|"Was Downed This Round"
 
 ConfigurationStructure.config.injuries.universal.application_chance_by_severity = {
+	["Exclude"] = 100,
 	["Low"] = 100,
 	["Medium"] = 100,
 	["High"] = 100,
@@ -87,7 +88,7 @@ ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
----@alias severity "Exclude"|"Low"|"Medium"|"High"
+---@alias severity "Disabled"|"Exclude"|"Low"|"Medium"|"High"
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 

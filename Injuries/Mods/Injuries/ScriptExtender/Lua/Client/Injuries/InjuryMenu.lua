@@ -111,17 +111,20 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					local displayCell = newRow:AddCell()
 					local injuryStat = Ext.Stats.Get(injuryName)
 					displayCell:AddImage(injuryStat.Icon, { 36, 36 })
-					displayCell:AddText(displayName).SameLine = true
+					local injuryNameText = displayCell:AddText(displayName)
+					injuryNameText.SameLine = true
 
 					StatusHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
 
 					local severityCombo = newRow:AddCell():AddCombo("")
 					severityCombo.Options = {
+						"Disabled",
 						"Exclude",
 						"Low",
 						"Medium",
 						"High"
 					}
+					severityCombo:Tooltip():AddText("\t " .. Translator:translate("'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"))
 
 					for index, option in pairs(severityCombo.Options) do
 						if option == injury_config.severity then
@@ -130,8 +133,19 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						end
 					end
 
+					if severityCombo.SelectedIndex == 0 then
+						injuryNameText:SetStyle("Alpha", 0.5)
+					else
+						injuryNameText:SetStyle("Alpha", 1)
+					end
+
 					severityCombo.OnChange = function(_, selectedIndex)
 						injury_config.severity = severityCombo.Options[selectedIndex + 1]
+						if severityCombo.SelectedIndex == 0 then
+							injuryNameText:SetStyle("Alpha", 0.5)
+						else
+							injuryNameText:SetStyle("Alpha", 1)
+						end
 					end
 
 					local buttonCell = newRow:AddCell()
@@ -372,6 +386,7 @@ Translator:RegisterTranslation({
 	["Delete System"] = "h5d5066b88cda46c1bb91129a1d80777c67d5",
 	["Injury"] = "h2b3b5b26e1c44dd495acba638cd593500718",
 	["Severity"] = "h7231e1d605ce400ea608fb8d4079e8f493bg",
+	["'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"] = "h33e313fcb75f468dabcb7c43d76ba8f984e0",
 	["Actions"] = "h6786d51c543e4530a8c2ac7847bce8dd5ce6",
 	["Customize (%s)"] = "h1a8bc7c8138d427ba215ad25773655b69f2d",
 	["Customize"] = "h44056242a4db4cf3a274eb9d84ef8ae6a1f8",

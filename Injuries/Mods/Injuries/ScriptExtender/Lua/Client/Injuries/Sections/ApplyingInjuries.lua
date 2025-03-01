@@ -88,12 +88,12 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 	applicationChanceText.Font = "Large"
 
 	parent:AddText("Due to technical limitations, this can't be a save, just a flat roll out of 100"):SetStyle("Alpha", 0.65)
-	
+
 	local severityTable = parent:AddTable("", 2)
 	severityTable.SizingStretchProp = true
 
-	for key, value in TableUtils:OrderedPairs(universalSettings.application_chance_by_severity, function (key)
-		return key == "Low" and 1 or (key == "Medium" and 2) or 3
+	for key, value in TableUtils:OrderedPairs(universalSettings.application_chance_by_severity, function(key)
+		return key == "Exclude" and 0 or (key == "Low" and 1) or (key == "Medium" and 2) or 3
 	end) do
 		if type(value) ~= "table" then
 			local severityModifierRow = severityTable:AddRow()
@@ -108,7 +108,8 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 	end
 
 	parent:AddText("How much should the application chance increase/decrease when the below conditions are met?")
-	local desc = parent:AddText("These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied")
+	local desc = parent:AddText(
+	"These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied")
 	desc.TextWrapPos = 0
 	desc:SetStyle("Alpha", 0.65)
 
