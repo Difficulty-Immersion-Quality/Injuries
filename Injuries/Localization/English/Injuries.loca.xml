@@ -114,12 +114,12 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h3fcbb7dcbecd4a57a613931a57720e952ca7" version="1">Register a New Injury System</content>
 	<content contentuid="h4ad9acd0b0d2422184871ede9022f0b31c22" version="1">Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system. All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved</content>
 	<content contentuid="hbd5660f30114470f96fd309b831455c4632b" version="1">Applying Injuries</content>
-    <content contentuid="h26403ff346f8465dbd6d2f5f70a5ae493fbe" version="1">Removing Injuries</content>
-    <content contentuid="h32b8cf6763354ee0a75709f889935881fd34" version="1">Randomized Application</content>
-    <content contentuid="h33e313fcb75f468dabcb7c43d76ba8f984e0" version="1">'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances</content>
-    <content contentuid="h19e7eed71ae343bf8571aa5e4ae65ed46c1c" version="1">Apply Injuries Outside of Combat</content>
-    <content contentuid="h0b8d482b2c0841a8bf9ff897fe2023edfafa" version="1">What is the % chance of an Injury being applied when the conditions are met?</content>
-    <content contentuid="h51314d99b05b481f849ebd5a3bee1fa61dgf" version="1">Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100</content>
+	<content contentuid="h26403ff346f8465dbd6d2f5f70a5ae493fbe" version="1">Removing Injuries</content>
+	<content contentuid="h32b8cf6763354ee0a75709f889935881fd34" version="1">Randomized Application</content>
+	<content contentuid="h33e313fcb75f468dabcb7c43d76ba8f984e0" version="1">'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances</content>
+	<content contentuid="h19e7eed71ae343bf8571aa5e4ae65ed46c1c" version="1">Apply Injuries Outside of Combat</content>
+	<content contentuid="h0b8d482b2c0841a8bf9ff897fe2023edfafa" version="1">What is the % chance of an Injury being applied when the conditions are met?</content>
+	<content contentuid="h51314d99b05b481f849ebd5a3bee1fa61dgf" version="1">Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100</content>
 	<!-- END INJURY MAIN MENU -->
 
 	<!-- BEGIN INJURY REPORT -->
