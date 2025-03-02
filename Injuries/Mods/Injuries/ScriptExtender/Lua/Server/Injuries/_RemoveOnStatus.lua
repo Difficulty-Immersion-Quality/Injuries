@@ -22,8 +22,12 @@ local function removeInjury(character, injury, injuryConfig, statusCausingRemova
 end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
-	if status == "LONG_REST" and ConfigManager.ConfigCopy.injuries.universal.remove_all_on_long_rest then
-		InjuryCommonLogic:RemoveAllInjuries(character)
+	-- Handled in LongRestProcessor
+	if status == "LONG_REST" then
+		return
+	end
+
+	if Osi.IsItem(character) == 1 then
 		return
 	end
 

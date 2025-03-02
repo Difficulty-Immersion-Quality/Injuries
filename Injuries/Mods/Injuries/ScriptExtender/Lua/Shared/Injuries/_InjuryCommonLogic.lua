@@ -21,7 +21,9 @@ local injuryVar = {
 	---@type {[InjuryName] : number}
 	["applicationChance"] = {},
 	---@type {[InjuryName] : string}
-	["removedDueTo"] = {}
+	["removedDueTo"] = {},
+	---@type {[InjuryName] : number}
+	["numberOfLongRests"] = {},
 }
 
 InjuryCommonLogic = {}
@@ -84,14 +86,16 @@ function InjuryCommonLogic:CalculateCharacterMultipliers(character, injuryConfig
 end
 
 if Ext.IsServer() then
+	Ext.Require("Server/Injuries/_LongRestProcessor.lua")
+
 	---@param character GUIDSTRING
 	---@return boolean
 	function InjuryCommonLogic:IsEligible(character)
-		if Osi.IsItem(character) == 1 or Osi.Exists(character) == 0 then
-			return false
-		end
-
-		if not ConfigManager.ConfigCopy.injuries.universal.apply_injuries_outside_combat and Osi.IsInCombat(character) == 0 then
+		if Osi.IsItem(character) == 1
+			or Osi.Exists(character) == 0
+			or Osi.IsDead(character) == 1
+			or (not ConfigManager.ConfigCopy.injuries.universal.apply_injuries_outside_combat and Osi.IsInCombat(character) == 0)
+		then
 			return false
 		end
 
@@ -265,9 +269,12 @@ if Ext.IsServer() then
 		end
 	end
 
-	local function ResetCounters(character, entityVar)
+	function InjuryCommonLogic:ResetCounters(character, entityVar)
 		---@type InjuryVar
 		local injuryUserVar = entityVar.Goon_Injuries
+		if not injuryUserVar then
+			return
+		end
 
 		for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
 			for injury, _ in pairs(injuryTable) do
@@ -305,7 +312,7 @@ if Ext.IsServer() then
 			for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
 				local entity = Ext.Entity.Get(combatParticipant[1])
 				if entity.Vars.Goon_Injuries then
-					ResetCounters(combatParticipant[1], entity.Vars)
+					InjuryCommonLogic:ResetCounters(combatParticipant[1], entity.Vars)
 				end
 			end
 		end
@@ -314,7 +321,7 @@ if Ext.IsServer() then
 	EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
 		local entity = Ext.Entity.Get(object)
 		if entity.Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
-			ResetCounters(object, entity.Vars)
+			InjuryCommonLogic:ResetCounters(object, entity.Vars)
 		end
 	end)
 
@@ -324,7 +331,7 @@ if Ext.IsServer() then
 			if (status == "SHORT_REST" and counterReset == "Short Rest") or (status == "LONG_REST" and counterReset == "Long Rest") then
 				local entity = Ext.Entity.Get(character)
 				if entity.Vars.Goon_Injuries then
-					ResetCounters(character, entity.Vars)
+					InjuryCommonLogic:ResetCounters(character, entity.Vars)
 				end
 			end
 		end
@@ -425,6 +432,10 @@ if Ext.IsServer() then
 
 				if injuryUserVar["numberOfApplicationsAttempted"] then
 					injuryUserVar["numberOfApplicationsAttempted"][injury] = nil
+				end
+
+				if injuryUserVar["numberOfLongRests"] then
+					injuryUserVar["numberOfLongRests"][injury] = nil
 				end
 
 				if injuryUserVar["removedDueTo"] then

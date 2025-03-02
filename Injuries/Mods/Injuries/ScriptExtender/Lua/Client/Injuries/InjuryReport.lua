@@ -210,6 +210,7 @@ local function BuildReport()
 			end
 
 			local clearButton = charReport:AddButton("Clear Report")
+			clearButton.IDContext = character
 			clearButton.OnClick = function()
 				entityInjuriesReport[character] = nil
 				BuildReport()
@@ -222,6 +223,8 @@ local function BuildReport()
 				local status = Ext.Stats.Get(key)
 				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
 			end) do
+				---@cast injuryConfig Injury
+				
 				---@type StatusData?
 				local injuryStat = Ext.Stats.Get(injury)
 
@@ -245,6 +248,10 @@ local function BuildReport()
 				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
 					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
 					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+				end
+
+				if injuryReport["numberOfLongRests"] and injuryReport["numberOfLongRests"][injury] then
+					injuryReportGroup:AddText(string.format("# of Long Rests: %s / %s", injuryReport["numberOfLongRests"][injury], injuryConfig.remove_on_status["LONG_REST"]["after_x_applications"]))
 				end
 
 				--#region Damage Report
