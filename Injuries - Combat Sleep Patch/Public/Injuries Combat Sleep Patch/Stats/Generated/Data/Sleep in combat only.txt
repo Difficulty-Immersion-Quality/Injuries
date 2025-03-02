@@ -1,0 +1,35 @@
+// Technical passive for application
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_1"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_1"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_1')"
+
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_2"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_2"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2')"
+
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_3"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_3"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_3')"
+
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_4"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_4"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_4')"
+
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_5"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_5"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_5')"
+
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_6"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_6"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_6')"
+
+new entry "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_7"
+type "PassiveData"
+using "Goon_Boosts_Exhaustion_Homebrew_Technical_Passive_7"
+data "Conditions" "Combat(context.Source) and HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_7')"
