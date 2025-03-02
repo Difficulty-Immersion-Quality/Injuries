@@ -99,6 +99,14 @@ if Ext.IsServer() then
 			return false
 		end
 
+		---@type EntityHandle
+		local entity = Ext.Entity.Get(character)
+		for _, tag in ipairs(entity.Tag.Tags) do
+			if string.find(Ext.StaticData.Get(tag, "Tag").Name, "WPN_") then
+				return false
+			end
+		end
+
 		local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
 		if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1)
 			or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)
