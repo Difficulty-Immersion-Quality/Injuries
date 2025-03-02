@@ -4,10 +4,10 @@
 ---@param statusCausingRemoval string
 local function removeInjury(character, injury, injuryConfig, statusCausingRemoval)
 	if injuryConfig["ability"] == "No Save" or injuryConfig["ability"] == "None" then
-		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+		local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 		injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
 		injuryVar["removedDueTo"][injury] = statusCausingRemoval
-		InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+		InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 
 		Osi.RemoveStatus(character, injury)
 	else
@@ -22,19 +22,43 @@ local function removeInjury(character, injury, injuryConfig, statusCausingRemova
 end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
-	if status == "LONG_REST" and ConfigManager.ConfigCopy.injuries.universal.remove_all_on_long_rest then
-		InjuryConfigHelper:RemoveAllInjuries(character)
+	-- Handled in LongRestProcessor
+	if status == "LONG_REST" then
+		return
+	end
+
+	if Osi.IsItem(character) == 1 then
 		return
 	end
 
 	local statusConfig = ConfigManager.Injuries.RemoveOnStatus[status]
+	if not statusConfig then
+		---@type StatusData
+		local statusData = Ext.Stats.Get(status)
+		if statusData then
+			if statusData.StatusGroups and next(statusData.StatusGroups) then
+				for _, statusGroup in ipairs(statusData.StatusGroups) do
+					if ConfigManager.Injuries.RemoveOnStatus[statusGroup] then
+						statusConfig = ConfigManager.Injuries.RemoveOnStatus[statusGroup]
+						break
+					end
+				end
+			end
+		end
+	end
 	if statusConfig then
 		---@type {[InjuryName] : InjuryRemoveOnStatus}
 		local injuriesToRemove = {}
 		for injury, injuryConfig in pairs(statusConfig) do
-			if Osi.HasActiveStatus(character, injury) == 1 then
-				injuriesToRemove[injury] = injuryConfig
+			if not injuryConfig["excluded_statuses"] or not TableUtils:ListContains(injuryConfig["excluded_statuses"], status) then
+				if Osi.HasActiveStatus(character, injury) == 1 then
+					injuriesToRemove[injury] = injuryConfig
+				end
 			end
+		end
+
+		if not next(injuriesToRemove) then
+			return
 		end
 
 		local numInjuriesToRemove = ConfigManager.ConfigCopy.injuries.universal.how_many_injuries_can_be_removed_at_once
@@ -85,10 +109,10 @@ EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller
 		local injuryNameAndStatus = string.sub(eventName, string.len("Goon_Injuries_Remove_Injury_"))
 		local injuryName, statusCausingRemoval = string.match(injuryNameAndStatus, "([^|]+)|([^|]+)")
 		if resultType == 1 then
-			local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+			local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 			injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
 			injuryVar["removedDueTo"][injuryName] = statusCausingRemoval
-			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 
 			Osi.RemoveStatus(roller, injuryName, statusCausingRemoval)
 		end

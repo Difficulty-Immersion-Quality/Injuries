@@ -68,7 +68,6 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="he00cdfbaa2a6402b8f576e6c556c93d3fffc" version="1">Remove All Injuries On Death</content>
 	<content contentuid="h113c81a1391544e8a7bb3a662ce6488b8g6e" version="1">Remove All Injuries On Long Rest</content>
 	<content contentuid="hc47037eb48214da092ef0e91442a316aff27" version="1">When Does the Damage/Status Tick Counter Reset?</content>
-	<content contentuid="h63c5fd1bbdf34462b71996ca4f74b34fcddb" version="1">If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.</content>
 	<content contentuid="h3cccf831d7dd4ab890ea564320f73af45bc2" version="1">Healing Subtracts From Damage Counter</content>
 	<content contentuid="h516dbf2301714121b4f734955aa01f83f997" version="1">Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage</content>
 	<content contentuid="h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4" version="1">Customize Damage + Status Multipliers For NPCs</content>
@@ -114,6 +113,15 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h876d8a018fd6472ba406fcd48ab7761e686c" version="1">Case-insensitive - only specify the prefix (e.g. Goon_Injury_Homebrew)</content>
 	<content contentuid="h3fcbb7dcbecd4a57a613931a57720e952ca7" version="1">Register a New Injury System</content>
 	<content contentuid="h4ad9acd0b0d2422184871ede9022f0b31c22" version="1">Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system. All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved</content>
+	<content contentuid="hbd5660f30114470f96fd309b831455c4632b" version="1">Applying Injuries</content>
+	<content contentuid="h26403ff346f8465dbd6d2f5f70a5ae493fbe" version="1">Removing Injuries</content>
+	<content contentuid="h32b8cf6763354ee0a75709f889935881fd34" version="1">Randomized Application</content>
+	<content contentuid="h33e313fcb75f468dabcb7c43d76ba8f984e0" version="1">'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances</content>
+	<content contentuid="h19e7eed71ae343bf8571aa5e4ae65ed46c1c" version="1">Apply Injuries Outside of Combat</content>
+	<content contentuid="h0b8d482b2c0841a8bf9ff897fe2023edfafa" version="1">What is the % chance of an Injury being applied when the conditions are met?</content>
+	<content contentuid="h51314d99b05b481f849ebd5a3bee1fa61dgf" version="1">Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100</content>
+	<content contentuid="h2ed2ba9c679e4311b9d7b991246d84ff16g2" version="1">How much should the application chance increase/decrease when the below conditions are met?</content>
+	<content contentuid="h3f75c2db58974c47b8f5553e0fe58301831b" version="1">These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied</content>
 	<!-- END INJURY MAIN MENU -->
 
 	<!-- BEGIN INJURY REPORT -->
@@ -146,6 +154,7 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="hbe9455faa0784cb99616e5098fd5247dgcg2" version="1">Save Conditions</content>
     <content contentuid="h125c3399732d41a4a300eee966450e16e61f" version="1"># of Stacks To Remove (?)</content>
     <content contentuid="he6354d4907a7431b82c7ebde28275f9a7eae" version="1">i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied</content>
+	<content contentuid="h0334268fe1274b1e9eb4c0286c0321042ag7" version="1">After how many long rests? (Counted by event or status application (including Angelic Slumber), if no event triggers)</content>
 	<!-- END RemoveOnStatus Tab -->
 
 	<!-- BEGIN General Rules Tab -->
@@ -194,4 +203,25 @@ NOTE: This section does not currently handle ticks, it is only handling initial 
     <content contentuid="h58b6ebc929ff49bbba04e3f2e1a1dbe7b4e6" version="1">Guarantee Injury Application (?)</content>
     <content contentuid="h79a85e2f12d44e72a2b4c42dc5e716c11e45" version="1">If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)</content>
 	<!-- END Apply On Status Tab -->
+	
+	<!-- BEGIN Status Helper -->
+    <content contentuid="h2e88b0710ceb4251857a20baa5db708518ga" version="1">Case-insensitive - use * to wildcard. Example: *ing*trap* for BURNING_TRAPWALL</content>
+    <content contentuid="hb175759ba6364cbd8541f78ed5e57dfcb88g" version="1">Search by Resource ID (e.g. BURNING_TRAPWALL)</content>
+    <content contentuid="hcccdc9d4c968484face6cafe1c4fc85dg976" version="1">Search by Display Name (e.g. Burning)</content>
+    <content contentuid="h4dc34140f4b04942bda08d46f466084e70cb" version="1">Depends on the resource having a Display Name set in the game resources and localization being implemented for your language</content>
+    <content contentuid="heaca690f1a234dd0b638f94759ee45ebaf1d" version="1">Error: Search returned no results</content>
+    <content contentuid="hb1d97de1b6f84157ab633ddcb6619e734241" version="1">Display Name:</content>
+    <content contentuid="h71758e3e9cda46e89585505ba804f9e70e74" version="1">N/A</content>
+    <content contentuid="hc9c2632641fe40cf8f1bcdefa6c05e4324e2" version="1">Using:</content>
+    <content contentuid="h372bdafe25ef4cb4b8cd5ccf2b43c53c1bgc" version="1">StatusType:</content>
+    <content contentuid="h2c5f4e6578684f76a3ef34eb3ff61cd27471" version="1">Damage:</content>
+    <content contentuid="h365e5e8db0d745dcbc83c4eaee60eb3df64g" version="1">Status Groups:</content>
+    <content contentuid="h7b8807a109ac4d8c91e0845cfb133abee843" version="1">Save:</content>
+    <content contentuid="h69b7b3d364594f018016d204da59e45b3040" version="1">TickType:</content>
+    <content contentuid="hafed135d7dc945e18fa3dbfa8bb3eb946e5e" version="1">(ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)</content>
+    <content contentuid="ha92c7ebfd29545b284d4dc46c5638b4d7245" version="1">By Status Group</content>
+    <content contentuid="h0485ebba5acb4e9aa422bbe9163b13cbgd7b" version="1">Manage Status Groups</content>
+    <content contentuid="he1723b1c477144bd9e4c69594b60f64f6a9b" version="1">Include</content>
+    <content contentuid="hcfc9c68627ac4cd9a365d94a32e48c0cc4fd" version="1">Exclude</content>
+	<!-- END Status Helper -->
 </contentList>
