@@ -45,10 +45,11 @@ local function ProcessDamageEvent(event)
 		for _, damageRoll in pairs(statsRoll) do
 			if damageRoll.Result.Critical == "Success" then
 				table.insert(modifiers, "Attack Was A Critical")
-				break
+				goto exit
 			end
 		end
 	end
+	::exit::
 
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do

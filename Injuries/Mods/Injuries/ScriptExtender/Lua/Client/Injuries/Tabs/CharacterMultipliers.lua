@@ -168,7 +168,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		end)
 
 	if charMultiplierConfig["tags"] then
-		for tagUUID, _ in pairs(charMultiplierConfig["tags"]) do
+		for tagUUID, _ in TableUtils:OrderedPairs(charMultiplierConfig["tags"]) do
 			buildTagRow(tagUUID, false)
 		end
 	end
