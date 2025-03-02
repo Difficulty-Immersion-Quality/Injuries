@@ -154,6 +154,7 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="hbe9455faa0784cb99616e5098fd5247dgcg2" version="1">Save Conditions</content>
     <content contentuid="h125c3399732d41a4a300eee966450e16e61f" version="1"># of Stacks To Remove (?)</content>
     <content contentuid="he6354d4907a7431b82c7ebde28275f9a7eae" version="1">i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied</content>
+	<content contentuid="h0334268fe1274b1e9eb4c0286c0321042ag7" version="1">After how many long rests? (Counted by event or status application (including Angelic Slumber), if no event triggers)</content>
 	<!-- END RemoveOnStatus Tab -->
 
 	<!-- BEGIN General Rules Tab -->
