@@ -39,9 +39,24 @@ ConfigurationStructure.config.injuries.universal.remove_all_on_long_rest = true
 --- @type injury_counter_reset
 ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Attack/Tick"
 
+ConfigurationStructure.config.injuries.universal.apply_injuries_outside_combat = true
+
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage = true
 
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
+
+---@alias InjuryApplicationChanceModifiers "Attack Was A Critical"|"Was Downed This Round"
+
+ConfigurationStructure.config.injuries.universal.application_chance_by_severity = {
+	["Exclude"] = 100,
+	["Low"] = 100,
+	["Medium"] = 100,
+	["High"] = 100,
+	modifiers = {
+		["Attack Was A Critical"] = 0,
+		["Was Downed This Round"] = -100
+	}
+}
 
 --#region NPC Modifiers
 ---@alias NPCCategories "Base"|"Boss"|"MiniBoss"|"Elite"|"Combatant"|"Pack"|"Zero"|"Civilian"
@@ -73,7 +88,7 @@ ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
----@alias severity "Exclude"|"Low"|"Medium"|"High"
+---@alias severity "Disabled"|"Exclude"|"Low"|"Medium"|"High"
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 
@@ -103,7 +118,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type number?
 	["stacks_to_remove"] = nil,
 	---@type string[]?
-	["excluded_statuses"] = nil
+	["excluded_statuses"] = nil,
+	---@type number?
+	["after_x_applications"] = nil
 }
 
 ---@alias StatusName string

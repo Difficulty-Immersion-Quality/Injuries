@@ -14,8 +14,10 @@ local function BuildStatusesForData(input, callback, dataTable, displayNameFunc,
 		isWildcard = true
 	end
 
+	table.sort(dataTable)
+	
 	local recordCount = 0
-	for _, name in pairs(dataTable) do
+	for _, name in ipairs(dataTable) do
 		local id
 		if searchMethod == "ResourceId" then
 			id = name

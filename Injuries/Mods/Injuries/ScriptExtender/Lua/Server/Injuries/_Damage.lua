@@ -2,7 +2,7 @@ local defender
 
 ---@param event EsvLuaBeforeDealDamageEvent
 local function ProcessDamageEvent(event)
-	local defenderEntity, injuryVar = InjuryConfigHelper:GetUserVar(defender)
+	local defenderEntity, injuryVar = InjuryCommonLogic:GetUserVar(defender)
 
 	if not defenderEntity or not injuryVar then
 		return
@@ -37,7 +37,19 @@ local function ProcessDamageEvent(event)
 
 	RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
-	local npcMultiplier = InjuryConfigHelper:CalculateNpcMultiplier(defenderEntity)
+	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(defenderEntity)
+
+	---@type InjuryApplicationChanceModifiers[]
+	local modifiers = {}
+	for _, statsRoll in pairs(event.Hit.Damage.DamageRolls) do
+		for _, damageRoll in pairs(statsRoll) do
+			if damageRoll.Result.Critical == "Success" then
+				table.insert(modifiers, "Attack Was A Critical")
+				goto exit
+			end
+		end
+	end
+	::exit::
 
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
@@ -51,7 +63,10 @@ local function ProcessDamageEvent(event)
 			if finalDamageAmount > 0 then
 				for injury, injuryDamageConfig in pairs(damageConfig) do
 					local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
-					local nextStackInjury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
+					if injuryConfig.severity == "Disabled" then
+						goto continue
+					end
+					local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(defender, injury)
 
 					if nextStackInjury
 						and Osi.HasActiveStatus(defender, nextStackInjury) == 0
@@ -86,12 +101,12 @@ local function ProcessDamageEvent(event)
 							end
 						end
 
-						local characterMultiplier = InjuryConfigHelper:CalculateCharacterMultipliers(defenderEntity, injuryConfig)
+						local characterMultiplier = InjuryCommonLogic:CalculateCharacterMultipliers(defenderEntity, injuryConfig)
 						finalDamageWithInjuryMultiplier = finalDamageWithInjuryMultiplier * characterMultiplier * npcMultiplier
 
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
-						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryConfigHelper:RollForApplication(nextStackInjury, injuryVar) then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, nil, defender, modifiers) then
 							Osi.ApplyStatus(defender, nextStackInjury, -1)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 
@@ -105,6 +120,7 @@ local function ProcessDamageEvent(event)
 							end
 						end
 					end
+				    ::continue::
 				end
 			end
 		else
@@ -112,7 +128,7 @@ local function ProcessDamageEvent(event)
 		end
 	end
 
-	InjuryConfigHelper:UpdateUserVar(defenderEntity, injuryVar)
+	InjuryCommonLogic:UpdateUserVar(defenderEntity, injuryVar)
 end
 
 --- Event sequence is DealDamage -> BeforeDealDamage (presumably "We're going to deal damage" -> "The damage we're dealing before it's applied" ?)
@@ -124,7 +140,7 @@ Ext.Events.DealDamage:Subscribe(function(event)
 	if MCM.Get("enabled") and not event.Target.IsItem then
 		defender = event.Target.Uuid.EntityUuid
 
-		if InjuryConfigHelper:IsEligible(defender) then
+		if InjuryCommonLogic:IsEligible(defender) then
 			Ext.Events.BeforeDealDamage:Subscribe(ProcessDamageEvent, { Once = true })
 		end
 	end

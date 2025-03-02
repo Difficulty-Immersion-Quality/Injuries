@@ -1,4 +1,4 @@
-Ext.Require("Shared/Injuries/_ConfigHelper.lua")
+Ext.Require("Shared/Injuries/_InjuryCommonLogic.lua")
 
 InjuryReport = {}
 
@@ -22,6 +22,9 @@ local reportWindow
 ---@param injuryConfig Injury
 ---@return number?
 local function AddRaceMultiplierText(parent, entity, injuryConfig)
+	if not entity.Race then
+		return nil
+	end
 	---@type ResourceRace
 	local raceResource = Ext.StaticData.Get(entity.Race.Race, "Race")
 
@@ -41,6 +44,10 @@ end
 ---@param injuryConfig Injury
 ---@return number?
 local function AddTagMultiplierText(parent, entity, injuryConfig)
+	if not entity.Tag then
+		return nil
+	end
+
 	local seeTagButton = parent:AddImageButton("AllTags", "Spell_Divination_SeeInvisibility", { 30, 30 })
 	seeTagButton.SameLine = true
 
@@ -55,6 +62,7 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 
 	local foundTag = false
 	local totalTagMultiplier = 1
+
 	for _, tagUUID in pairs(entity.Tag.Tags) do
 		---@type ResourceTag
 		local tagData = Ext.StaticData.Get(tagUUID, "Tag")
@@ -174,6 +182,12 @@ local function BuildReport()
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
+			if not entity or not entity.Data or not entity.IsAlive then
+				entityInjuriesReport[character] = nil
+				Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
+				goto next_injury
+			end
+
 			local charReport
 			for _, child in pairs(reportWindow.Children) do
 				if character == child.UserData then
@@ -184,7 +198,7 @@ local function BuildReport()
 
 			if not charReport then
 				charReport = reportWindow:AddCollapsingHeader(string.format("%s (%s)",
-					entity.CustomName and entity.CustomName.Name or entity.DisplayName.NameKey:Get(),
+					entity.CustomName and entity.CustomName.Name or (entity.DisplayName and entity.DisplayName.NameKey:Get() or entity.Uuid.EntityUuid),
 					entity.Uuid.EntityUuid))
 
 				charReport.DefaultOpen = false
@@ -196,18 +210,21 @@ local function BuildReport()
 			end
 
 			local clearButton = charReport:AddButton("Clear Report")
+			clearButton.IDContext = character
 			clearButton.OnClick = function()
 				entityInjuriesReport[character] = nil
 				BuildReport()
 			end
 
-			local characterMultiplier, npcCategory = InjuryConfigHelper:CalculateNpcMultiplier(entity)
+			local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity)
 
 			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
 				---@type StatusData?
 				local status = Ext.Stats.Get(key)
 				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
 			end) do
+				---@cast injuryConfig Injury
+				
 				---@type StatusData?
 				local injuryStat = Ext.Stats.Get(injury)
 
@@ -229,8 +246,12 @@ local function BuildReport()
 				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
 
 				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
-					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. "%s%% ", injuryConfig.chance_of_application or 100))
-					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. "%s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
+					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+				end
+
+				if injuryReport["numberOfLongRests"] and injuryReport["numberOfLongRests"][injury] then
+					injuryReportGroup:AddText(string.format("# of Long Rests: %s / %s", injuryReport["numberOfLongRests"][injury], injuryConfig.remove_on_status["LONG_REST"]["after_x_applications"]))
 				end
 
 				--#region Damage Report
@@ -342,6 +363,7 @@ local function BuildReport()
 				end
 				::continue::
 			end
+			::next_injury::
 		end
 	end
 end
@@ -419,3 +441,13 @@ Translator:RegisterTranslation({
 	["The provided 'Clear Report' button will remove any given Character from the report until one of their trackers is updated. Really only useful for clearing Allies that survive battles."] =
 	"he7a1ecba3c5e48e3bf3b992e949c802f497d",
 })
+
+-- MCM dependency
+if Ext.Mod.IsModLoaded("755a8a72-407f-4f0d-9a33-274ac0f0b53d") and Ext.Mod.GetMod("755a8a72-407f-4f0d-9a33-274ac0f0b53d").Info.ModVersion[2] >= 19 then
+	MCM.SetKeybindingCallback('report_keybind', function()
+		if not reportWindow then
+			InjuryReport:BuildReportWindow()
+		end
+		BuildReport()
+	end)
+end
