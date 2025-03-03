@@ -218,13 +218,15 @@ local function BuildReport()
 
 			local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity)
 
+			local keepHeader = false
+
 			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
 				---@type StatusData?
 				local status = Ext.Stats.Get(key)
 				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
 			end) do
 				---@cast injuryConfig Injury
-				
+
 				---@type StatusData?
 				local injuryStat = Ext.Stats.Get(injury)
 
@@ -251,7 +253,8 @@ local function BuildReport()
 				end
 
 				if injuryReport["numberOfLongRests"] and injuryReport["numberOfLongRests"][injury] then
-					injuryReportGroup:AddText(string.format("# of Long Rests: %s / %s", injuryReport["numberOfLongRests"][injury], injuryConfig.remove_on_status["LONG_REST"]["after_x_applications"]))
+					injuryReportGroup:AddText(string.format("# of Long Rests: %s / %s", injuryReport["numberOfLongRests"][injury],
+						injuryConfig.remove_on_status["LONG_REST"]["after_x_applications"]))
 				end
 
 				--#region Damage Report
@@ -316,7 +319,9 @@ local function BuildReport()
 						if not statusConfig then
 							if next(statusData.StatusGroups) then
 								for _, statusGroup in pairs(statusData.StatusGroups) do
-									if injuryConfig.apply_on_status["applicable_statuses"][statusGroup] then
+									if injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
+										and (not injuryConfig.apply_on_status["applicable_statuses"][statusGroup]["excluded_statuses"] or not injuryConfig.apply_on_status["applicable_statuses"][statusGroup]["excluded_statuses"][status])
+									then
 										statusConfig = injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
 										configuredGroup = statusGroup
 										break
@@ -328,7 +333,8 @@ local function BuildReport()
 						if statusConfig and numRoundsApplied and numRoundsApplied[injury] then
 							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
 							local row = statusReportTable:AddRow()
-							StatusHelper:BuildStatusTooltip(row:AddCell():AddText(status .. (configuredGroup and string.format(" (%s)", configuredGroup) or "")):Tooltip(), statusData)
+							StatusHelper:BuildStatusTooltip(row:AddCell():AddText(status .. (configuredGroup and string.format(" (%s)", configuredGroup) or "")):Tooltip(),
+								statusData)
 							row:AddCell():AddText(string.format("%d%%", statusConfig["multiplier"] * 100))
 							row:AddCell():AddText(tostring(numRoundsApplied[injury]))
 							row:AddCell():AddText(tostring(numRoundsApplied[injury] * statusConfig["multiplier"]))
@@ -360,8 +366,12 @@ local function BuildReport()
 					injuryReportGroup:Destroy()
 				else
 					injuryReportGroup:AddNewLine()
+					keepHeader = true
 				end
 				::continue::
+			end
+			if not keepHeader then
+				charReport:Destroy()
 			end
 			::next_injury::
 		end

@@ -155,13 +155,8 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="h125c3399732d41a4a300eee966450e16e61f" version="1"># of Stacks To Remove (?)</content>
     <content contentuid="he6354d4907a7431b82c7ebde28275f9a7eae" version="1">i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied</content>
 	<content contentuid="h0334268fe1274b1e9eb4c0286c0321042ag7" version="1">After how many long rests? (Counted by event or status application (including Angelic Slumber), if no event triggers)</content>
+	<content contentuid="h2b714e24c03c4876852a23c7ac111f698cb5" version="1">Triggers</content>
 	<!-- END RemoveOnStatus Tab -->
-
-	<!-- BEGIN General Rules Tab -->
-    <content contentuid="h3eaac07d0b2345208937cfe70cc2602b486g" version="1">General Rules</content>
-    <content contentuid="h311816e774904290af50dc14cd5dec8bf0a5" version="1">What's the % chance of this Injury being applied when conditions are met?</content>
-    <content contentuid="h3baac0fbaf3846399a8f49ebf893fe490891" version="1">Due to technical limitations, this can't be a save - it's just a flat roll out of 100</content>
-	<!-- END General Rules Tab -->
 
 	<!-- BEGIN Damage Tab -->
     <content contentuid="h77732ab1f47b48599d1583e8f57932aad0a2" version="1">10 points of %s damage contributes %s points of Injury Damage</content>

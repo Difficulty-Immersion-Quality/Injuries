@@ -21,7 +21,25 @@ local function removeInjury(character, injury, injuryConfig, statusCausingRemova
 	end
 end
 
-EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
+EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller, rollSubject, resultType, isActiveRoll, criticality)
+	if string.find(eventName, "Goon_Injuries_Remove_Injury_") then
+		local injuryNameAndStatus = string.sub(eventName, string.len("Goon_Injuries_Remove_Injury_"))
+		local injuryName, statusCausingRemoval = string.match(injuryNameAndStatus, "([^|]+)|([^|]+)")
+		if resultType == 1 then
+			local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
+			injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
+			injuryVar["removedDueTo"][injuryName] = statusCausingRemoval
+			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
+
+			Osi.RemoveStatus(roller, injuryName, statusCausingRemoval)
+		end
+	end
+end)
+
+---@param status string
+---@param character GUIDSTRING
+---@param eventType "onApplication"|"onRemoval"
+local function processEvent(status, character, eventType)
 	-- Handled in LongRestProcessor
 	if status == "LONG_REST" then
 		return
@@ -31,29 +49,33 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 		return
 	end
 
-	local statusConfig = ConfigManager.Injuries.RemoveOnStatus[status]
-	if not statusConfig then
-		---@type StatusData
-		local statusData = Ext.Stats.Get(status)
-		if statusData then
-			if statusData.StatusGroups and next(statusData.StatusGroups) then
-				for _, statusGroup in ipairs(statusData.StatusGroups) do
-					if ConfigManager.Injuries.RemoveOnStatus[statusGroup] then
-						statusConfig = ConfigManager.Injuries.RemoveOnStatus[statusGroup]
-						break
+	local statusConfig = TableUtils:DeeplyCopyTable(ConfigManager.Injuries.RemoveOnStatus[status])
+	---@type StatusData
+	local statusData = Ext.Stats.Get(status)
+	if statusData and statusData.StatusGroups and next(statusData.StatusGroups) then
+		for _, statusGroup in ipairs(statusData.StatusGroups) do
+			if ConfigManager.Injuries.RemoveOnStatus[statusGroup] then
+				if statusConfig then
+					for injury, config in pairs(ConfigManager.Injuries.RemoveOnStatus[statusGroup]) do
+						statusConfig[injury] = config
 					end
+				else
+					statusConfig = ConfigManager.Injuries.RemoveOnStatus[statusGroup]
 				end
+				break
 			end
 		end
 	end
+
 	if statusConfig then
 		---@type {[InjuryName] : InjuryRemoveOnStatus}
 		local injuriesToRemove = {}
 		for injury, injuryConfig in pairs(statusConfig) do
-			if not injuryConfig["excluded_statuses"] or not TableUtils:ListContains(injuryConfig["excluded_statuses"], status) then
-				if Osi.HasActiveStatus(character, injury) == 1 then
-					injuriesToRemove[injury] = injuryConfig
-				end
+			if (not injuryConfig["excluded_statuses"] or not TableUtils:ListContains(injuryConfig["excluded_statuses"], status))
+				and injuryConfig[eventType]
+				and Osi.HasActiveStatus(character, injury) == 1
+			then
+				injuriesToRemove[injury] = injuryConfig
 			end
 		end
 
@@ -102,19 +124,12 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 			removeInjury(character, injuryToRemove, injuriesToRemove[injuryToRemove], status)
 		end
 	end
+end
+
+EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
+	processEvent(status, character, "onApplication")
 end)
 
-EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller, rollSubject, resultType, isActiveRoll, criticality)
-	if string.find(eventName, "Goon_Injuries_Remove_Injury_") then
-		local injuryNameAndStatus = string.sub(eventName, string.len("Goon_Injuries_Remove_Injury_"))
-		local injuryName, statusCausingRemoval = string.match(injuryNameAndStatus, "([^|]+)|([^|]+)")
-		if resultType == 1 then
-			local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
-			injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
-			injuryVar["removedDueTo"][injuryName] = statusCausingRemoval
-			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
-
-			Osi.RemoveStatus(roller, injuryName, statusCausingRemoval)
-		end
-	end
+EventCoordinator:RegisterEventProcessor("StatusRemoved", function(character, status, causee, applyStoryActionID)
+	processEvent(status, character, "onRemoval")
 end)

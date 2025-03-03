@@ -40,6 +40,17 @@ local function BuildRows(statusTable, status, applyOnConfig, ignoreExistingStatu
 		statusConfig["guarantee_application"] = guaranteeApplicationCheckbox.Checked
 	end
 
+	local triggers = row:AddCell()
+	statusConfig["onApplication"] = statusConfig["onApplication"] == nil and true or statusConfig["onApplication"]
+	triggers:AddCheckbox("On Application", statusConfig["onApplication"]).OnChange = function(checkbox)
+		statusConfig["onApplication"] = checkbox.Checked
+	end
+	local onRemove = triggers:AddCheckbox("On Removal", statusConfig["onRemoval"])
+	onRemove.SameLine = true
+	onRemove.OnChange = function()
+		statusConfig["onRemoval"] = onRemove.Checked
+	end
+
 	local deleteRowButton = row:AddCell():AddButton(Translator:translate("Delete"))
 	deleteRowButton.OnClick = function()
 		statusConfig.delete = true
@@ -71,14 +82,16 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 
 	statusTab:AddNewLine()
 
-	local statusTable = statusTab:AddTable("ApplyOnStatus", 4)
+	local statusTable = statusTab:AddTable("ApplyOnStatus", 5)
 	statusTable.Resizable = true
+	statusTable.Reorderable = true
 
 	local headerRow = statusTable:AddRow()
 	headerRow.Headers = true
 	headerRow:AddCell():AddText(Translator:translate("Status Name (ResourceID)"))
 	headerRow:AddCell():AddText(Translator:translate("Round # Multiplier"))
 	headerRow:AddCell():AddText(Translator:translate("Guarantee Injury Application (?)")):Tooltip():AddText("\t\t " .. Translator:translate("If the chance for injury application is less than 100% (General Rules tab), then checking this box will ignore that and apply the injury 100% of the time (if this status is the one that triggers the injury)")).TextWrapPos = 600
+	headerRow:AddCell():AddText("Triggers")
 
 	StatusHelper:BuildSearch(statusTab,
 		Ext.Stats.GetStats("StatusData"),
@@ -116,6 +129,16 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 				statusConfig["guarantee_application"] = guaranteeApplicationCheckbox.Checked
 			end
 
+			statusGroupSection:AddText("Triggers")
+			statusGroupSection:AddCheckbox("On Application", statusConfig["onApplication"]).OnChange = function(checkbox)
+				statusConfig["onApplication"] = checkbox.Checked
+			end
+			local onRemove = statusGroupSection:AddCheckbox("On Removal", statusConfig["onRemoval"])
+			onRemove.SameLine = true
+			onRemove.OnChange = function()
+				statusConfig["onRemoval"] = onRemove.Checked
+			end
+
 			statusGroupSection:AddNewLine()
 		end
 	)
@@ -123,6 +146,7 @@ end)
 
 Translator:RegisterTranslation({
 	["Delete"] = "hc1c5dc21b84e4079ad868a8081c86a6301d3",
+	["Triggers"] = "h2b714e24c03c4876852a23c7ac111f698cb5",
 	["Apply On Status"] = "hd32bf68edf8741eab48fa41ad6c76a8929g4",
 	["How many total (non-consecutive, aggregated) rounds should the below statuses be on a character before the Injury is applied?"] = "h088d7c8b3587413f8f9a452ceb4d7e6984d4",
 	["Status Name (ResourceID)"] = "ha54ea9b2153f4a95af1a5bbd99b23e9151cd",
