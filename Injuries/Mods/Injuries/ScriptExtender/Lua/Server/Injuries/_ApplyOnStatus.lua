@@ -30,16 +30,27 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 				goto continue
 			end
 
-			if not statusVar[status] then
-				statusVar[status] = { [injury] = 0 }
-			end
-			statusVar[status][injury] = (statusVar[status][injury] or 0) + 1
+			local roundCount = 0
 
 			if injury ~= nextStackInjury then
-				statusVar[status][nextStackInjury] = (statusVar[status][nextStackInjury] or 0) + 1
+				if not injuryVar["stack_reapply_status"] then
+					injuryVar["stack_reapply_status"] = {}
+				end
+				if not injuryVar["stack_reapply_status"][status] then
+					injuryVar["stack_reapply_status"][status] = {}
+				end
+
+				injuryVar["stack_reapply_status"][status][injury] = (injuryVar["stack_reapply_status"][status][injury] or 0) + 1
+				roundCount = injuryVar["stack_reapply_status"][status][injury]
+			else
+				if not statusVar[status] then
+					statusVar[status] = { [injury] = 0 }
+				end
+				statusVar[status][injury] = (statusVar[status][injury] or 0) + 1
+				roundCount = statusVar[status][injury]
 			end
 
-			local roundsWithMultiplier = (statusVar[status][injury] * injuryStatusConfig["multiplier"])
+			local roundsWithMultiplier = (roundCount * injuryStatusConfig["multiplier"])
 
 			for otherStatus, otherStatusConfig in pairs(injuryConfig.apply_on_status["applicable_statuses"]) do
 				local injuryOtherExistingStatus = statusVar[otherStatus]

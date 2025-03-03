@@ -12,8 +12,12 @@ Ext.Vars.RegisterUserVariable("Goon_Injuries", {
 local injuryVar = {
 	---@type {[DamageType] : {[InjuryName] : number }}
 	["damage"] = {},
+	---@type {[DamageType] : {[InjuryName] : number }}
+	["stack_reapply_damage"] = {},
 	---@type {[StatusName] : {[InjuryName] : number }}
 	["applyOnStatus"] = {},
+	---@type {[StatusName] : {[InjuryName] : number }}
+	["stack_reapply_status"] = {},
 	---@type {[InjuryName] : string}
 	["injuryAppliedReason"] = {},
 	---@type {[InjuryName] : number}
@@ -296,6 +300,18 @@ if Ext.IsServer() then
 			end
 		end
 
+		for damageType, injuryTable in pairs(injuryUserVar["stack_reapply_damage"]) do
+			for injury, _ in pairs(injuryTable) do
+				if not injuryUserVar["injuryAppliedReason"][injury] then
+					injuryTable[injury] = nil
+				end
+			end
+
+			if not next(injuryTable) then
+				injuryUserVar["stack_reapply_damage"][damageType] = nil
+			end
+		end
+
 		for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
 			for injury, _ in pairs(injuryTable) do
 				if not injuryUserVar["injuryAppliedReason"][injury] then
@@ -305,6 +321,18 @@ if Ext.IsServer() then
 
 			if not next(injuryTable) then
 				injuryUserVar["applyOnStatus"][statusName] = nil
+			end
+		end
+
+		for statusName, injuryTable in pairs(injuryUserVar["stack_reapply_status"]) do
+			for injury, _ in pairs(injuryTable) do
+				if not injuryUserVar["injuryAppliedReason"][injury] then
+					injuryTable[injury] = nil
+				end
+			end
+
+			if not next(injuryTable) then
+				injuryUserVar["stack_reapply_status"][statusName] = nil
 			end
 		end
 
@@ -428,6 +456,16 @@ if Ext.IsServer() then
 					end
 				end
 
+				for damageType, injuryTable in pairs(injuryUserVar["stack_reapply_damage"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["stack_reapply_damage"][damageType] = nil
+					end
+				end
+
 				for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
 					if injuryToMoveTo then
 						injuryTable[injuryToMoveTo] = injuryTable[injury]
@@ -435,6 +473,16 @@ if Ext.IsServer() then
 					injuryTable[injury] = nil
 					if not next(injuryTable) then
 						injuryUserVar["applyOnStatus"][statusName] = nil
+					end
+				end
+
+				for statusName, injuryTable in pairs(injuryUserVar["stack_reapply_status"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["stack_reapply_status"][statusName] = nil
 					end
 				end
 
@@ -454,6 +502,7 @@ if Ext.IsServer() then
 
 				if not next(injuryUserVar["injuryAppliedReason"])
 					and not next(injuryUserVar["damage"])
+					and not next(injuryUserVar["stack_reapply_damage"])
 					and not next(injuryUserVar["applyOnStatus"])
 				then
 					injuryUserVar = nil

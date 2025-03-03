@@ -74,20 +74,30 @@ local function ProcessDamageEvent(event)
 					then
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
-						if not injuryVar["damage"][damageType] then
-							injuryVar["damage"][damageType] = { [injury] = 0 }
-						end
-						local preexistingDamage = injuryVar["damage"][damageType]
-
-						if preexistingDamage[injury] then
-							finalDamageWithPreviousDamage = finalDamageAmount + preexistingDamage[injury]
-						end
-
-						preexistingDamage[injury] = finalDamageWithPreviousDamage
 						if injury ~= nextStackInjury then
-							preexistingDamage[nextStackInjury] = preexistingDamage[nextStackInjury]
-								and preexistingDamage[nextStackInjury] + finalDamageWithPreviousDamage
+							if not injuryVar["stack_reapply_damage"] then
+								injuryVar["stack_reapply_damage"] = {}
+							end
+							if not injuryVar["stack_reapply_damage"][damageType] then
+								injuryVar["stack_reapply_damage"][damageType] = {}
+							end
+							local nextStackDamage = injuryVar["stack_reapply_damage"][damageType]
+							nextStackDamage[injury] = nextStackDamage[injury]
+								and nextStackDamage[injury] + finalDamageWithPreviousDamage
 								or finalDamageWithPreviousDamage
+
+							finalDamageWithPreviousDamage = nextStackDamage[injury]
+						else
+							if not injuryVar["damage"][damageType] then
+								injuryVar["damage"][damageType] = { [injury] = 0 }
+							end
+							local preexistingDamage = injuryVar["damage"][damageType]
+
+							if preexistingDamage[injury] then
+								finalDamageWithPreviousDamage = finalDamageAmount + preexistingDamage[injury]
+							end
+
+							preexistingDamage[injury] = finalDamageWithPreviousDamage
 						end
 
 						local finalDamageWithInjuryMultiplier = finalDamageWithPreviousDamage * injuryDamageConfig["multiplier"]
@@ -111,16 +121,20 @@ local function ProcessDamageEvent(event)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 
 							if injury ~= nextStackInjury then
-								for _, entry in pairs(injuryVar["damage"]) do
+								for damageType, entry in pairs(injuryVar["damage"]) do
 									entry[nextStackInjury] = entry[injury]
 									entry[injury] = nil
+
+									if injuryVar["stack_reapply_damage"][damageType] then
+										injuryVar["stack_reapply_damage"][damageType][injury] = nil
+									end
 								end
 								injuryVar["injuryAppliedReason"][nextStackInjury] = string.format("Damage (Stacked on top of %s)",
 									Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 							end
 						end
 					end
-				    ::continue::
+					::continue::
 				end
 			end
 		else
