@@ -52,6 +52,7 @@ ConfigurationStructure.config.injuries.universal.application_chance_by_severity 
 	["Low"] = 100,
 	["Medium"] = 100,
 	["High"] = 100,
+	["Extreme"] = 100,
 	modifiers = {
 		["Attack Was A Critical"] = 0,
 		["Was Downed This Round"] = -100
@@ -74,8 +75,9 @@ ConfigurationStructure.config.injuries.universal.random_injury_conditional = {
 
 ConfigurationStructure.config.injuries.universal.random_injury_severity_weights = {
 	["Low"] = 25,
-	["Medium"] = 50,
-	["High"] = 25
+	["Medium"] = 25,
+	["High"] = 25,
+	["Extreme"] = 25
 }
 
 --- @type boolean
@@ -88,7 +90,7 @@ ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
----@alias severity "Disabled"|"Exclude"|"Low"|"Medium"|"High"
+---@alias severity "Disabled"|"Exclude"|"Low"|"Medium"|"High"|"Extreme"
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 

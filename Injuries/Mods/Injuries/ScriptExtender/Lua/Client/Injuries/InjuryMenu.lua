@@ -122,9 +122,10 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						"Exclude",
 						"Low",
 						"Medium",
-						"High"
+						"High",
+						"Extreme"
 					}
-					severityCombo:Tooltip():AddText("\t " .. Translator:translate("'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"))
+					severityCombo:Tooltip():AddText("\t " .. Translator:translate("'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances")).TextWrapPos = 600
 
 					for index, option in pairs(severityCombo.Options) do
 						if option == injury_config.severity then
