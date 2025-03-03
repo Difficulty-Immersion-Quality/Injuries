@@ -4,6 +4,7 @@ local events = {
 	["AttackedBy"] = {},
 	["RollResult"] = {},
 	["StatusApplied"] = {},
+	["StatusRemoved"] = {},
 	["CombatStarted"] = {},
 	["CombatRoundStarted"] = {},
 	["LeftCombat"] = {},
@@ -66,6 +67,19 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
 			end)
 			if not success then
 				Logger:BasicError("Received error while processing event StatusApplied: \n%s", error)
+			end
+		end
+	end
+end)
+
+Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function (object, status, causee, applyStoryActionID)
+	if MCM.Get("enabled") then
+		for _, func in pairs(events["StatusRemoved"]) do
+			local success, error = pcall(function()
+				func(object, status, causee, applyStoryActionID)
+			end)
+			if not success then
+				Logger:BasicError("Received error while processing event StatusRemoved: \n%s", error)
 			end
 		end
 	end

@@ -120,7 +120,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type string[]?
 	["excluded_statuses"] = nil,
 	---@type number?
-	["after_x_applications"] = nil
+	["after_x_applications"] = nil,
+	["onApplication"] = true,
+	["onRemoval"] = false
 }
 
 ---@alias StatusName string
@@ -133,7 +135,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
 	["multiplier"] = 1,
 	["guarantee_application"] = false,
 	---@type string[]?
-	["excluded_statuses"] = nil
+	["excluded_statuses"] = nil,
+	["onApplication"] = true,
+	["onRemoval"] = false
 }
 ---@class InjuryApplyOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {

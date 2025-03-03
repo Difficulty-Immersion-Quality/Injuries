@@ -3,12 +3,15 @@
 ---@param statusConfig {[StatusName] : InjuryApplyOnStatusModifierClass }
 ---@param injuryVar InjuryVar
 ---@param statusGroup string?
-local function processInjuries(entity, status, statusConfig, injuryVar, statusGroup)
+---@param eventType "onApplication"|"onRemoval"
+local function processInjuries(entity, status, statusConfig, injuryVar, statusGroup, eventType)
 	local statusVar = injuryVar["applyOnStatus"]
 	local character = entity.Uuid.EntityUuid
 
 	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity)
 
+	---@type StatusData
+	local statusData = Ext.Stats.Get(status)
 	for injury, injuryStatusConfig in pairs(statusConfig) do
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury]
 		if injuryConfig.severity == "Disabled" then
@@ -17,12 +20,15 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 
 		local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
 		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
-			if statusGroup then
+			if statusGroup and statusData.StatusGroups and TableUtils:ListContains(statusData.StatusGroups, statusGroup) then
 				if injuryStatusConfig["excluded_statuses"] and TableUtils:ListContains(injuryStatusConfig["excluded_statuses"], status) then
 					goto continue
 				end
 			end
 
+			if not injuryStatusConfig[eventType] then
+				goto continue
+			end
 
 			if not statusVar[status] then
 				statusVar[status] = { [injury] = 0 }
@@ -60,28 +66,33 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 	InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 end
 
-local function CheckStatusOnTickOrApplication(status, character)
-	local statusConfig = ConfigManager.Injuries.ApplyOnStatus[status]
+---@param status string
+---@param character CHARACTER
+---@param eventType "onApplication"|"onRemoval"
+local function CheckStatusOnTickOrApplication(status, character, eventType)
+	local statusConfig = TableUtils:DeeplyCopyTable(ConfigManager.Injuries.ApplyOnStatus[status])
 	local statusSG
-	if not statusConfig then
-		---@type StatusData
-		local statusData = Ext.Stats.Get(status)
-		if statusData then
-			if statusData.StatusGroups and next(statusData.StatusGroups) then
-				for _, statusGroup in ipairs(statusData.StatusGroups) do
-					if ConfigManager.Injuries.ApplyOnStatus[statusGroup] then
-						statusSG = statusGroup
-						statusConfig = ConfigManager.Injuries.ApplyOnStatus[statusGroup]
-						break
+	---@type StatusData
+	local statusData = Ext.Stats.Get(status)
+	if statusData and statusData.StatusGroups and next(statusData.StatusGroups) then
+		for _, statusGroup in ipairs(statusData.StatusGroups) do
+			if ConfigManager.Injuries.ApplyOnStatus[statusGroup] then
+				statusSG = statusGroup
+				if statusConfig then
+					for injury, config in pairs(ConfigManager.Injuries.ApplyOnStatus[statusGroup]) do
+						statusConfig[injury] = config
 					end
+				else
+					statusConfig = ConfigManager.Injuries.ApplyOnStatus[statusGroup]
 				end
+				break
 			end
 		end
 	end
 	if statusConfig then
 		local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 		if entity and injuryVar then
-			processInjuries(entity, status, statusConfig, injuryVar, statusSG)
+			processInjuries(entity, status, statusConfig, injuryVar, statusSG, eventType)
 
 			--if Osi.IsInCombat(character) == 0 and Osi.IsInForceTurnBasedMode(character) == 0 then
 			-- 5.7 seconds since if we do 6 seconds, we trigger after the status is removed and we don't increment the count
@@ -100,7 +111,13 @@ end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
 	if InjuryCommonLogic:IsEligible(character) then
-		CheckStatusOnTickOrApplication(status, character)
+		CheckStatusOnTickOrApplication(status, character, "onApplication")
+	end
+end)
+
+EventCoordinator:RegisterEventProcessor("StatusRemoved", function(character, status, causee, applyStoryActionID)
+	if InjuryCommonLogic:IsEligible(character) then
+		CheckStatusOnTickOrApplication(status, character, "onRemoval")
 	end
 end)
 
