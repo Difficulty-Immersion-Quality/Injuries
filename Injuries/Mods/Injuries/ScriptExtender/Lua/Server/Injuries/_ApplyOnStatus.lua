@@ -67,6 +67,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
 
 				if injury ~= nextStackInjury then
+					injuryVar["stack_reapply_status"][status][injury] = nil
 					injuryVar["injuryAppliedReason"][nextStackInjury] = string.format("Status (Stacked on top of %s)",
 						Ext.Loca.GetTranslatedString(Ext.Stats.Get(injury).DisplayName, injury))
 				end
