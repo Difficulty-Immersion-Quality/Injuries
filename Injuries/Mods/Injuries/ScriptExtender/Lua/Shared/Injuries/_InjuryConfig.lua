@@ -55,7 +55,8 @@ ConfigurationStructure.config.injuries.universal.application_chance_by_severity 
 	["Extreme"] = 100,
 	modifiers = {
 		["Attack Was A Critical"] = 0,
-		["Was Downed This Round"] = -100
+		["Was Downed This Round"] = -100,
+		["Each Existing Injury Of Same Severity"] = 0,
 	}
 }
 

@@ -173,11 +173,11 @@ function ConfigurationStructure:InitializeConfig()
 	local config = FileUtils:LoadTableFile("config.json")
 
 	if not config then
-		config = real_config_table
-		FileUtils:SaveTableToFile("config.json", config)
+		FileUtils:SaveTableToFile("config.json", real_config_table)
 	else
 		CopyConfigsIntoReal(config, ConfigurationStructure.config)
 	end
+	FileUtils:SaveTableToFile("config.json", real_config_table)
 
 	initialized = true
 

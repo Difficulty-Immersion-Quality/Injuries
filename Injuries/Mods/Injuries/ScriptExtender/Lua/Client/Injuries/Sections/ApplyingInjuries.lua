@@ -120,7 +120,12 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 		if type(value) ~= "table" then
 			local severityModifierRow = severityModiferTable:AddRow()
 			local severityModifierCell = severityModifierRow:AddCell()
-			severityModifierCell:AddText(key)
+			local keyText = severityModifierCell:AddText(key)
+			if key == "Each Existing Injury Of Same Severity" then
+				keyText.Label = keyText.Label .. " (?)"
+				keyText:Tooltip():AddText("\t If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%").TextWrapPos = 600
+			end
+
 			local severityModifierSlider = severityModifierRow:AddCell():AddSliderInt("", value, -100, 100)
 			severityModifierSlider.IDContext = key .. "Modifier"
 			severityModifierSlider.OnChange = function()
@@ -128,7 +133,6 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 			end
 		end
 	end
-
 	--#endregion
 
 	parent:AddNewLine()

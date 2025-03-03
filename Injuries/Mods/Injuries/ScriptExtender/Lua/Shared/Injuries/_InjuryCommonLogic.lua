@@ -206,6 +206,14 @@ if Ext.IsServer() then
 			end
 		end
 
+		if applicationChanceConfig.modifiers["Each Existing Injury Of Same Severity"] ~= 0 then
+			for injury in pairs(existingInjuryVar["injuryAppliedReason"]) do
+				if ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity == injuryConfig.severity then
+					chanceOfApplication = chanceOfApplication + applicationChanceConfig.modifiers["Each Existing Injury Of Same Severity"]
+				end
+			end
+		end
+
 		if not existingInjuryVar["applicationChance"] then
 			existingInjuryVar["applicationChance"] = {}
 		end
