@@ -2,24 +2,32 @@
 
 new treasuretable "Exploration_Minor_Tools"
 CanMerge 1
-new subtable "1,1"
+new subtable "0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 
 new treasuretable "ST_Tools"
 CanMerge 1
-new subtable "1,1"
+new subtable "0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 
 new treasuretable "Supply_Tools_Small"
 CanMerge 1
-new subtable "1,1"
+new subtable "0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 
 // Generic bad guy cannon fodder table?
 new treasuretable "BG_Bandit"
 CanMerge 1
-new subtable "0,1"
+new subtable "0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 
 // ==================================== Trader tables ====================================
 
