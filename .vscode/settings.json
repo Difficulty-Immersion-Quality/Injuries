@@ -4,7 +4,7 @@
 			"fileMatch": [
 				"MCM_blueprint*.json"
 			],
-			"url": "https://raw.githubusercontent.com/AtilioA/BG3-MCM/refs/heads/feat/main/.vscode/schema.json"
+			"url": "https://raw.githubusercontent.com/AtilioA/BG3-MCM/refs/main/.vscode/schema.json"
 		}
 	],
 	"Lua.diagnostics.globals": [
