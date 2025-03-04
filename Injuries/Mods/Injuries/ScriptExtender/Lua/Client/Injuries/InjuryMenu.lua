@@ -1,12 +1,12 @@
 ---@type {[string] : StatusData}
 local cachedStats = {}
 
----@param configToCount table
+---@param configToCount table?
 ---@return number
 local function countInjuryConfig(configToCount)
 	local count = 0
 
-	if next(configToCount) then
+	if configToCount and next(configToCount) then
 		for _, _ in pairs(configToCount) do
 			count = count + 1
 		end
@@ -25,7 +25,11 @@ function InjuryMenu:RegisterTab(tabGenerator)
 	table.insert(InjuryMenu.Tabs["Generators"], tabGenerator)
 end
 
-Ext.Require("Client/Injuries/Tabs/GeneralRulesTab.lua")
+Ext.Require("Client/Injuries/Sections/SectionBuilder.lua")
+Ext.Require("Client/Injuries/Sections/ApplyingInjuries.lua")
+Ext.Require("Client/Injuries/Sections/RandomApplications.lua")
+Ext.Require("Client/Injuries/Sections/RemovingInjuries.lua")
+
 Ext.Require("Client/Injuries/Tabs/DamageTab.lua")
 Ext.Require("Client/Injuries/Tabs/ApplyOnStatusTab.lua")
 Ext.Require("Client/Injuries/Tabs/CharacterMultipliers.lua")
@@ -41,263 +45,39 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		initialized = true
 		tabHeader.TextWrapPos = 0
 
-		--#region Universal Options
-		local universalOptions = tabHeader:AddCollapsingHeader(Translator:translate("Universal Options"))
-		local universal = InjuryMenu.ConfigurationSlice.universal
+		local helpTextButton = tabHeader:AddButton(Translator:translate("Toggle Help Text"))
+		local helpTextGroup = tabHeader:AddGroup("helpText")
+		helpTextGroup.TextWrapPos = 0
+		helpTextGroup.Visible = false
+		helpTextGroup:AddText("\t - " .. Translator:translate("All injury and status names in all windows except the injury report have tooltips associated to them - hover over their names to see them. Tooltips in other areas are marked by (?)")).TextWrapPos = 0
+		helpTextGroup:AddText("\t - " .. Translator:translate("Sliders can have values manually entered by ctrl + left clicking on them")).TextWrapPos = 0
+		helpTextGroup:AddText("\t - " .. Translator:translate("Table columns within the Customize windows can be manually resized by left clicking and dragging on the vertical lines between columns")).TextWrapPos = 0
+		local usersHelpText = helpTextGroup:AddSeparatorText(Translator:translate("For Players"))
+		usersHelpText.Font = "Large"
+		usersHelpText:SetStyle("SeparatorTextAlign", 0)
+		helpTextGroup:AddText(Translator:translate("Customizing a provided configuration is largely intended to be an iterative process while playing the game, starting by using the Injury Report (button is further below, default MCM keybind is LSHIFT + LALT + R) to see what injuries are being processed per character and how the modifiers are affecting that processing (as it can vary wildly between characters)")).TextWrapPos = 0
+		helpTextGroup:AddText(Translator:translate("Then:")).TextWrapPos = 0
+		helpTextGroup:AddText("\t - " .. Translator:translate("If you want to adjust general aspects like application chance, how healing affects damage, removing all injuries on long rest, etc, use the settings section below.")).TextWrapPos = 0
+		helpTextGroup:AddText("\t - " .. Translator:translate("If you want to adjust injury-specific settings like which damage types are used, the multipliers for races/tags, granular removal conditions, etc, locate the relevant injury in the section further below and open the window via the customize button")).TextWrapPos = 0
+		helpTextGroup:AddText("\t - " .. Translator:translate("If you want to prevent an injury from being processed at all, change the severity to 'Disabled' within the Injury-specific section")).TextWrapPos = 0
+		helpTextGroup:AddText(Translator:translate("Any changes to configs affecting a given injury will not be reflected in the Injury Report until that injury is re-processed under the relevant scenario (i.e. changing a damage threshold requires taking the right kind of damage for it to be updated)")).TextWrapPos = 0
 
-		--#region Who Can Receive Injuries
-		universalOptions:AddText(Translator:translate("Who Can Receive Injuries?")).Font = "Large"
-		local partyCheckbox = universalOptions:AddCheckbox(Translator:translate("Party Members"), universal.who_can_receive_injuries["Party Members"])
-		partyCheckbox.OnChange = function()
-			universal.who_can_receive_injuries["Party Members"] = partyCheckbox.Checked
+		helpTextGroup:AddNewLine()
+		local moddersHelpText = helpTextGroup:AddSeparatorText(Translator:translate("For Creators"))
+		moddersHelpText.Font = "Large"
+		moddersHelpText:SetStyle("SeparatorTextAlign", 0)
+		helpTextGroup:AddText(Translator:translate("Check the Github (linked on the mod page) to see the underlying implementation for the Grit and Glory / Madness / Exhaustion system - there's a lot of templates that can be used to help in developing your own system, either directly or as reference")).TextWrapPos = 0
+		helpTextGroup:AddText(Translator:translate("While developing, if you need to clear statuses that no longer exist from the config, you can enter client mode in the SE console (using the 'client' command) and run !Injuries_CleanConfig - this will remove configs for injuries that don't exist in the game, along with other non-destructive clean up operations")).TextWrapPos = 0
+
+		helpTextButton.OnClick = function ()
+			helpTextGroup.Visible = not helpTextGroup.Visible
 		end
 
-		local allyCheckbox = universalOptions:AddCheckbox(Translator:translate("Allies"), universal.who_can_receive_injuries["Allies"])
-		allyCheckbox.SameLine = true
-		allyCheckbox.OnChange = function()
-			universal.who_can_receive_injuries["Allies"] = allyCheckbox.Checked
-		end
-
-		local enemyCheckbox = universalOptions:AddCheckbox(Translator:translate("Enemies"), universal.who_can_receive_injuries["Enemies"])
-		enemyCheckbox.SameLine = true
-		enemyCheckbox.OnChange = function()
-			universal.who_can_receive_injuries["Enemies"] = enemyCheckbox.Checked
-		end
-		--#endregion
-
-		--#region Injury Removal
-		universalOptions:AddNewLine()
-
-		universalOptions:AddText(Translator:translate("How Many Different Injuries Can Be Removed At Once?")).Font = "Large"
-		universalOptions:AddText(Translator:translate("If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."))
-			:SetStyle("Alpha", 0.90)
-
-		local oneRadio = universalOptions:AddRadioButton(Translator:translate("One"), universal.how_many_injuries_can_be_removed_at_once == "One")
-		local allRadio = universalOptions:AddRadioButton(Translator:translate("All"), universal.how_many_injuries_can_be_removed_at_once == "All")
-		allRadio.SameLine = true
-
-		local prioritizeSeverityText = universalOptions:AddText(Translator:translate("What Severity Should Be Prioritized?"))
-		prioritizeSeverityText.Visible = oneRadio.Active
-		local prioritizeSeverityCombo = universalOptions:AddCombo("")
-		prioritizeSeverityCombo.Visible = oneRadio.Active
-		prioritizeSeverityCombo.Options = {
-			"Random",
-			"Most Severe"
-		}
-		prioritizeSeverityCombo.WidthFitPreview = true
-		prioritizeSeverityCombo.SelectedIndex = 1
-		prioritizeSeverityCombo.OnChange = function(_, selectedIndex)
-			universal.injury_removal_severity_priority = prioritizeSeverityCombo.Options[selectedIndex + 1]
-		end
-
-		oneRadio.OnActivate = function()
-			allRadio.Active = oneRadio.Active
-			oneRadio.Active = not oneRadio.Active
-
-			if oneRadio.Active then
-				universal.how_many_injuries_can_be_removed_at_once = oneRadio.Label
-			end
-
-			prioritizeSeverityText.Visible = oneRadio.Active
-			prioritizeSeverityCombo.Visible = oneRadio.Active
-		end
-
-		allRadio.OnActivate = function()
-			oneRadio.Active = allRadio.Active
-			allRadio.Active = not allRadio.Active
-
-			if allRadio.Active then
-				universal.how_many_injuries_can_be_removed_at_once = allRadio.Label
-			end
-
-			prioritizeSeverityText.Visible = oneRadio.Active
-			prioritizeSeverityCombo.Visible = oneRadio.Active
-		end
-
-		local removeInjuriesOnDeath = universalOptions:AddCheckbox(Translator:translate("Remove All Injuries On Death"), universal.remove_on_death)
-		removeInjuriesOnDeath.OnChange = function()
-			universal.remove_on_death = removeInjuriesOnDeath.Checked
-		end
-
-		local removeInjuriesOnLongRest = universalOptions:AddCheckbox(Translator:translate("Remove All Injuries On Long Rest"), universal.remove_all_on_long_rest)
-		removeInjuriesOnLongRest.OnChange = function()
-			universal.remove_all_on_long_rest = removeInjuriesOnLongRest.Checked
-		end
-		--#endregion
-
-		--#region Damage Counter
-		universalOptions:AddNewLine()
-		universalOptions:AddText(Translator:translate("When Does the Damage/Status Tick Counter Reset?")).Font = "Large"
-		universalOptions:AddText(Translator:translate("If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat.")):SetStyle("Alpha", 0.90)
-
-		local cumulationCombo = universalOptions:AddCombo("")
-		cumulationCombo.WidthFitPreview = true
-		cumulationCombo.Options = {
-			"Attack/Tick",
-			"Round",
-			"Combat",
-			"Short Rest",
-			"Long Rest"
-		}
-		for index, option in pairs(cumulationCombo.Options) do
-			if option == universal.when_does_counter_reset then
-				cumulationCombo.SelectedIndex = index - 1
-			end
-		end
-
-		local healingCheckbox = universalOptions:AddCheckbox(Translator:translate("Healing Subtracts From Damage Counter"), universal.healing_subtracts_injury_damage)
-		local healingText = universalOptions:AddText(
-			Translator:translate("Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"))
-		local healingMultiplierSlider = universalOptions:AddSliderInt("", universal.healing_subtracts_injury_damage_modifier * 100, 0, 200)
-
-		healingMultiplierSlider.OnChange = function(_)
-			universal.healing_subtracts_injury_damage_modifier = healingMultiplierSlider.Value[1] / 100
-		end
-
-		healingCheckbox.OnChange = function(combo, value)
-			healingText.Visible = value
-			healingMultiplierSlider.Visible = value
-			universal.healing_subtracts_injury_damage = healingCheckbox.Checked
-		end
-
-		if cumulationCombo.SelectedIndex == 0 then
-			healingCheckbox.Visible = false
-			healingText.Visible = false
-			healingMultiplierSlider.Visible = false
-		end
-
-		cumulationCombo.OnChange = function(combo, selectedIndex)
-			healingCheckbox.Visible = selectedIndex ~= 0
-			healingText.Visible = selectedIndex ~= 0
-			healingMultiplierSlider.Visible = selectedIndex ~= 0
-
-			universal.when_does_counter_reset = cumulationCombo.Options[selectedIndex + 1]
-		end
-
-		universalOptions:AddNewLine()
-		universalOptions:AddText(Translator:translate("Customize Damage + Status Multipliers For NPCs")).Font = "Large"
-		local enemyDesc = universalOptions:AddText(
-			Translator:translate("These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"))
-		enemyDesc.TextWrapPos = 0
-		enemyDesc:SetStyle("Alpha", 0.9)
-
-		local enemyMultTable = universalOptions:AddTable("Enemy Multiplier Table", 2)
-		enemyMultTable.SizingStretchProp = true
-
-		local function buildNpcMultiSlider(npcType)
-			local newRow = enemyMultTable:AddRow()
-			newRow:AddCell():AddText(npcType)
-
-			if not universal.npc_multipliers[npcType] then
-				universal.npc_multipliers[npcType] = 1
-			end
-
-			local newSlider = newRow:AddCell():AddSliderInt("", universal.npc_multipliers[npcType] * 100, 0, 500)
-			newSlider.OnChange = function(slider)
-				---@cast slider ExtuiSliderInt
-				universal.npc_multipliers[npcType] = math.floor(slider.Value[1] * 100 + 0.5) / 10000
-			end
-
-			return newRow
-		end
-
-		buildNpcMultiSlider("Base")
-
-		local addRowButton = universalOptions:AddButton("+")
-		local npcPopop = universalOptions:AddPopup("")
-		local npcTypes = { "Boss", "MiniBoss", "Elite", "Combatant", "Pack", "Zero", "Civilian" }
-
-		for i, npcType in pairs(npcTypes) do
-			---@type ExtuiSelectable
-			local enemySelect = npcPopop:AddSelectable(npcType, "DontClosePopups")
-
-			enemySelect.OnActivate = function()
-				if enemySelect.UserData then
-					enemySelect.UserData:Destroy()
-					enemySelect.UserData = nil
-					universal.npc_multipliers[npcType] = nil
-				else
-					enemySelect.UserData = buildNpcMultiSlider(npcType)
-				end
-			end
-
-			if universal.npc_multipliers[npcType] then
-				enemySelect.Selected = true
-				enemySelect:OnActivate()
-			end
-		end
-
-		addRowButton.OnClick = function()
-			npcPopop:Open()
-		end
-
-		--#endregion
-
-		--#region Severity
-		local severityHeader = tabHeader:AddCollapsingHeader(Translator:translate("Severity"))
-		severityHeader:AddText(Translator:translate("When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"))
-		local downedCheckbox = severityHeader:AddCheckbox(Translator:translate("Downed"), universal.random_injury_conditional["Downed"])
-		downedCheckbox.OnChange = function()
-			universal.random_injury_conditional["Downed"] = downedCheckbox.Checked
-		end
-
-		local critCheckbox = severityHeader:AddCheckbox(Translator:translate("Suffered a Critical Hit"), universal.random_injury_conditional["Suffered a Critical Hit"])
-		critCheckbox.SameLine = true
-		critCheckbox.OnChange = function()
-			universal.random_injury_conditional["Suffered a Critical Hit"] = critCheckbox.Checked
-		end
-
-		severityHeader:AddText(Translator:translate("The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%"))
-		local severityTable = severityHeader:AddTable("", 2)
-		severityTable.SizingStretchProp = true
-
-		local lowRow = severityTable:AddRow()
-		local lowCell = lowRow:AddCell()
-		lowCell:AddText("Low")
-		local lowSeverity = lowRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["Low"], 0, 100)
-
-		local medRow = severityTable:AddRow()
-		medRow:AddCell():AddText("Medium")
-		local mediumSeverity = medRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["Medium"], 0, 100)
-
-		local highRow = severityTable:AddRow()
-		highRow:AddCell():AddText("High")
-		local highSeverity = highRow:AddCell():AddSliderInt("", universal.random_injury_severity_weights["High"], 0, 100)
-
-		local severityErrorText = severityHeader:AddText(Translator:translate("Error: Values must add up to 100%!"))
-		severityErrorText:SetColor("Text", { 1, 0.02, 0, 1 })
-		severityErrorText.Visible = false
-		local ensureAdditionFunction = function()
-			severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
-			if not severityErrorText.Visible then
-				-- Bit of a hack due to metatable shenanigans - can't replace the whole table at once
-				local weights = universal.random_injury_severity_weights
-				weights["Low"] = lowSeverity.Value[1]
-				weights["Medium"] = mediumSeverity.Value[1]
-				weights["High"] = highSeverity.Value[1]
-			end
-		end
-		lowSeverity.OnChange = ensureAdditionFunction
-		mediumSeverity.OnChange = ensureAdditionFunction
-		highSeverity.OnChange = ensureAdditionFunction
-
-		local damageFilterCheckbox = severityHeader:AddCheckbox(Translator:translate("Only consider Injuries that are configured to apply on the relevant damage type"),
-			universal.random_injury_filter_by_damage_type)
-		damageFilterCheckbox.TextWrapPos = 0
-		damageFilterCheckbox.OnChange = function(checkbox)
-			universal.random_injury_filter_by_damage_type = checkbox.Checked
-		end
-
-		local damageFilterDesc = severityHeader:AddText(
-			Translator:translate("If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
-			.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"))
-		damageFilterDesc.TextWrapPos = 0
-		damageFilterDesc:SetStyle("Alpha", 0.9)
-
-		--#endregion
-
-		--#endregion
+		SectionBuilder:build(tabHeader, {
+			ApplyingInjuriesSettings,
+			RandomApplicationSettings,
+			RemovingInjuriesSettings
+		})
 
 		--#region Injury-Specific Options
 		tabHeader:AddSeparatorText(Translator:translate("Injury-Specific Options"))
@@ -359,17 +139,21 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 					local displayCell = newRow:AddCell()
 					local injuryStat = Ext.Stats.Get(injuryName)
 					displayCell:AddImage(injuryStat.Icon, { 36, 36 })
-					displayCell:AddText(displayName).SameLine = true
+					local injuryNameText = displayCell:AddText(displayName)
+					injuryNameText.SameLine = true
 
-					DataSearchHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
+					StatusHelper:BuildStatusTooltip(displayCell:Tooltip(), injuryStat)
 
 					local severityCombo = newRow:AddCell():AddCombo("")
 					severityCombo.Options = {
+						"Disabled",
 						"Exclude",
 						"Low",
 						"Medium",
-						"High"
+						"High",
+						"Extreme"
 					}
+					severityCombo:Tooltip():AddText("\t " .. Translator:translate("'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances")).TextWrapPos = 600
 
 					for index, option in pairs(severityCombo.Options) do
 						if option == injury_config.severity then
@@ -378,8 +162,19 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						end
 					end
 
+					if severityCombo.SelectedIndex == 0 then
+						injuryNameText:SetStyle("Alpha", 0.5)
+					else
+						injuryNameText:SetStyle("Alpha", 1)
+					end
+
 					severityCombo.OnChange = function(_, selectedIndex)
 						injury_config.severity = severityCombo.Options[selectedIndex + 1]
+						if severityCombo.SelectedIndex == 0 then
+							injuryNameText:SetStyle("Alpha", 0.5)
+						else
+							injuryNameText:SetStyle("Alpha", 1)
+						end
 					end
 
 					local buttonCell = newRow:AddCell()
@@ -395,8 +190,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 						local applyOnStatusCount = countInjuryConfig(injury_config.apply_on_status["applicable_statuses"])
 						local damageCount = countInjuryConfig(injury_config.damage["damage_types"])
 						local removeOnStatusCount = countInjuryConfig(injury_config.remove_on_status)
-						local racesCount = countInjuryConfig(injury_config.character_multipliers["races"])
-						local tagsCount = countInjuryConfig(injury_config.character_multipliers["tags"])
+						local racesCount = countInjuryConfig(injury_config.character_multipliers and injury_config.character_multipliers["races"])
+						local tagsCount = countInjuryConfig(injury_config.character_multipliers and injury_config.character_multipliers["tags"])
 
 						customizeButton.Label = string.format(Translator:translate("Customize (%s)"), applyOnStatusCount + damageCount + removeOnStatusCount + racesCount + tagsCount)
 
@@ -505,7 +300,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 								if child.Checked then
 									local otherInjuryName = child.UserData
 									for _, configToCopy in pairs(configsToCopy) do
-										InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+										if InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName] and InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] then
+											InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+										end
 										InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] = TableUtils:DeeplyCopyTable(configCopy[configToCopy])
 									end
 								end
@@ -582,39 +379,27 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 )
 
 Translator:RegisterTranslation({
-	["Universal Options"] = "h1ec71859ad9f44458110fb611c05f4d701ag",
-	["Who Can Receive Injuries?"] = "h00f45a44ab9345c1b1106d6852ebcc4d9cb3",
-	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",
-	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
-	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
-	["How Many Different Injuries Can Be Removed At Once?"] = "hf09a78e9f67d4f6ebd69b1831b16bc7e00cf",
-	["If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."] = "h917674e930d34cc8a28ecc9051066f4f332f",
-	["One"] = "hfe2ed92d7923481b97a60edf916e5b03d5g7",
-	["All"] = "he8141a6f94e24224a4cdd5f198aca85703b6",
-	["What Severity Should Be Prioritized?"] = "h4e5210014bf44629b4a8125da7b191158c4a",
-	["Remove All Injuries On Death"] = "he00cdfbaa2a6402b8f576e6c556c93d3fffc",
-	["Remove All Injuries On Long Rest"] = "h113c81a1391544e8a7bb3a662ce6488b8g6e",
-	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
-	["If anything shorter than Short Rest is selected, Injury Counters will not be processed outside of combat."] = "h63c5fd1bbdf34462b71996ca4f74b34fcddb",
-	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
-	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
-	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
-	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
-	["When the below conditions are met, a random Injury that can apply for the receieved damage type will be applied to the affected character"] = "h49d19708c1bb43ddbcbf5a671e2719aa7f46",
-	["Downed"] = "hd0fdb6dcced94e8ab2b0d7a8ca6fe1c46082",
-	["Suffered a Critical Hit"] = "h84d4a31ea8014224beac0fe256eba20ad728",
-	["The below sliders configure the likelihood of an Injury with the associated Severity being chosen. Values must add up to 100%"] = "hd4d2189ac8cc4d6bbd0b68dd6825ff9fc26e",
-	["Error: Values must add up to 100%!"] = "h4983f15cdb6d439b8d7f3e3770b8244997d3",
-	["Only consider Injuries that are configured to apply on the relevant damage type"] = "h2a6602e74767415f8bf66edc7a3595e82852",
-	["If disabled, all Injuries will be placed in the pool to be randomly selected from (if not already applied to the character);"
-			.. " otherwise, only Injuries with the damage type that triggers the condition (i.e. critical hit) in their Damage tab will be considered"] = "h5c3d63b7169d42deaba68a041fde636aab0b",
+	["Toggle Help Text"] = "he1662ef5633243af808c395d3550dfc4833g",
+	["All injury and status names in all windows except the injury report have tooltips associated to them - hover over their names to see them. Tooltips in other areas are marked by (?)"] = "hfb7e22414b544bf5820ac50d99addb9408b5",
+	["Sliders can have values manually entered by ctrl + left clicking on them"] = "h31f607652dd64e52acfa0fd748fdf5ab33g9",
+	["Table columns within the Customize windows can be manually resized by left clicking and dragging on the vertical lines between columns"] = "h65fc2263758341e9b115d235f2ac2a2ddbe3",
+	["For Players"] = "h6ff2f32c256a4d0d825532383de50ee03561",
+	["Customizing a provided configuration is largely intended to be an iterative process while playing the game, starting by using the Injury Report (button is further below, default MCM keybind is LSHIFT + LALT + R) to see what injuries are being processed per character and how the modifiers are affecting that processing (as it can vary wildly between characters)"] = "h296f5564e2d1461699a144b6122ed5beefdb",
+	["Then:"] = "hca642f1f841948a7a30b387bf83a08914f9f",
+	["If you want to adjust general aspects like application chance, how healing affects damage, removing all injuries on long rest, etc, use the settings section below."] = "hf0325eecf78a433c9e07ca5b4bb58879a065",
+	["If you want to adjust injury-specific settings like which damage types are used, the multipliers for races/tags, granular removal conditions, etc, locate the relevant injury in the section further below and open the window via the customize button"] = "ha5d5109cd75c4e86af1206bca2fc2dfb82g8",
+	["If you want to prevent an injury from being processed at all, change the severity to 'Disabled' within the Injury-specific section"] = "h756d78fba731439d88de3a6e8e7d4b4b5f84",
+	["Any changes to configs affecting a given injury will not be reflected in the Injury Report until that injury is re-processed under the relevant scenario (i.e. changing a damage threshold requires taking the right kind of damage for it to be updated)"] = "h7b61fd3af2204b989f1cfbb68bbe3bf41916",
+	["For Creators"] = "hf5e54a92558944d5b7e7bae84114913e99f5",
+	["Check the Github (linked on the mod page) to see the underlying implementation for the Grit and Glory / Madness / Exhaustion system - there's a lot of templates that can be used to help in developing your own system, either directly or as reference"] = "hb291dc8fd9d143fc829762905c5746464g4c",
+	["While developing, if you need to clear statuses that no longer exist from the config, you can enter client mode in the SE console (using the 'client' command) and run !Injuries_CleanConfig - this will remove configs for injuries that don't exist in the game, along with other non-destructive clean up operations"] = "h7f417e48ae86435aaabb6feba172d276a364",
 	["Injury-Specific Options"] = "hc273eb7f41304b7a9e3a4f783cf28b7470c2",
 	["Open Injury Report"] = "hd04225c38388437caa4670faf1b5cbea2bb7",
 	["Systems"] = "h8c9bbb728c8f407aaa7a886ae05ff4e8cc9b",
 	["Delete System"] = "h5d5066b88cda46c1bb91129a1d80777c67d5",
 	["Injury"] = "h2b3b5b26e1c44dd495acba638cd593500718",
 	["Severity"] = "h7231e1d605ce400ea608fb8d4079e8f493bg",
+	["'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"] = "h33e313fcb75f468dabcb7c43d76ba8f984e0",
 	["Actions"] = "h6786d51c543e4530a8c2ac7847bce8dd5ce6",
 	["Customize (%s)"] = "h1a8bc7c8138d427ba215ad25773655b69f2d",
 	["Customize"] = "h44056242a4db4cf3a274eb9d84ef8ae6a1f8",
@@ -643,5 +428,6 @@ Translator:RegisterTranslation({
 	["Case-insensitive - only specify the prefix (e.g. Goon_Injury_Homebrew)"] = "h876d8a018fd6472ba406fcd48ab7761e686c",
 	["Register a New Injury System"] = "h3fcbb7dcbecd4a57a613931a57720e952ca7",
 	["Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..
-			" All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved"] = "h4ad9acd0b0d2422184871ede9022f0b31c22",
+	" All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved"] =
+	"h4ad9acd0b0d2422184871ede9022f0b31c22",
 })

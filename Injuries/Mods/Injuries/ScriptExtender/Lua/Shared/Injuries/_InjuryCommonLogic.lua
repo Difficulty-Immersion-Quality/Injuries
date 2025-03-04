@@ -12,23 +12,35 @@ Ext.Vars.RegisterUserVariable("Goon_Injuries", {
 local injuryVar = {
 	---@type {[DamageType] : {[InjuryName] : number }}
 	["damage"] = {},
+	---@type {[DamageType] : {[InjuryName] : number }}
+	["stack_reapply_damage"] = {},
 	---@type {[StatusName] : {[InjuryName] : number }}
 	["applyOnStatus"] = {},
+	---@type {[StatusName] : {[InjuryName] : number }}
+	["stack_reapply_status"] = {},
 	---@type {[InjuryName] : string}
 	["injuryAppliedReason"] = {},
 	---@type {[InjuryName] : number}
 	["numberOfApplicationsAttempted"] = {},
+	---@type {[InjuryName] : number}
+	["applicationChance"] = {},
 	---@type {[InjuryName] : string}
-	["removedDueTo"] = {}
+	["removedDueTo"] = {},
+	---@type {[InjuryName] : number}
+	["numberOfLongRests"] = {},
 }
 
-InjuryConfigHelper = {}
+InjuryCommonLogic = {}
 
 --- Returns the npcType just for the InjuryReport, so we know if the character even has a multiplier available instead of
 --- defaulting in the absence of one
 ---@param character EntityHandle
 ---@return number, string?
-function InjuryConfigHelper:CalculateNpcMultiplier(character)
+function InjuryCommonLogic:CalculateNpcMultiplier(character)
+	if not character or not character.Data then
+		return 1
+	end
+
 	local xpReward = Ext.Stats.Get(character.Data.StatsId).XPReward
 	if character.PartyMember or not xpReward then
 		return 1
@@ -59,16 +71,18 @@ end
 
 ---@param character EntityHandle
 ---@param injuryConfig Injury
-function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfig)
+function InjuryCommonLogic:CalculateCharacterMultipliers(character, injuryConfig)
 	local finalMultiplier = 1
 
-	if injuryConfig.character_multipliers["races"][character.Race.Race] then
+	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["races"] and injuryConfig.character_multipliers["races"][character.Race.Race] then
 		finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["races"][character.Race.Race]
 	end
 
-	for _, tagUUID in pairs(character.Tag.Tags) do
-		if injuryConfig.character_multipliers["tags"][tagUUID] then
-			finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+	if injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"] then
+		for _, tagUUID in pairs(character.Tag.Tags) do
+			if injuryConfig.character_multipliers["tags"][tagUUID] then
+				finalMultiplier = finalMultiplier * injuryConfig.character_multipliers["tags"][tagUUID]
+			end
 		end
 	end
 
@@ -76,16 +90,25 @@ function InjuryConfigHelper:CalculateCharacterMultipliers(character, injuryConfi
 end
 
 if Ext.IsServer() then
+	Ext.Require("Server/Injuries/_LongRestProcessor.lua")
+
 	---@param character GUIDSTRING
 	---@return boolean
-	function InjuryConfigHelper:IsEligible(character)
-		if Osi.IsItem(character) == 1 or Osi.Exists(character) == 0 then
+	function InjuryCommonLogic:IsEligible(character)
+		if Osi.IsItem(character) == 1
+			or Osi.Exists(character) == 0
+			or Osi.IsDead(character) == 1
+			or (not ConfigManager.ConfigCopy.injuries.universal.apply_injuries_outside_combat and Osi.IsInCombat(character) == 0)
+		then
 			return false
 		end
 
-		local reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
-		if (reset ~= "Short Rest" and reset ~= "Long Rest") and Osi.IsInCombat(character) == 0 then
-			return false
+		---@type EntityHandle
+		local entity = Ext.Entity.Get(character)
+		for _, tag in ipairs(entity.Tag.Tags) do
+			if string.find(Ext.StaticData.Get(tag, "Tag").Name, "WPN_") then
+				return false
+			end
 		end
 
 		local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
@@ -113,7 +136,7 @@ if Ext.IsServer() then
 
 	---@param character GUIDSTRING
 	---@return EntityHandle?, InjuryVar?
-	function InjuryConfigHelper:GetUserVar(character)
+	function InjuryCommonLogic:GetUserVar(character)
 		local entity = Ext.Entity.Get(character)
 
 		if entity then
@@ -127,7 +150,7 @@ if Ext.IsServer() then
 
 	--- @param character EntityHandle
 	--- @param injuryVar InjuryVar?
-	function InjuryConfigHelper:UpdateUserVar(character, injuryVar)
+	function InjuryCommonLogic:UpdateUserVar(character, injuryVar)
 		local counter_reset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 		if counter_reset == "Attack/Tick" then
 			character.Vars.Goon_Injuries = nil
@@ -145,14 +168,64 @@ if Ext.IsServer() then
 		Ext.ServerNet.BroadcastMessage("Injuries_Update_Report", character.Uuid.EntityUuid)
 	end
 
+	Ext.Osiris.RegisterListener("DownedChanged", 2, "after", function(character, isDowned)
+		if isDowned == 1 then
+			Osi.ApplyStatus(character, "GOON_DOWNED_TRACKER", 1)
+		end
+	end)
+
 	---@param injuryName InjuryName
 	---@param existingInjuryVar InjuryVar
 	---@param status string?
-	function InjuryConfigHelper:RollForApplication(injuryName, existingInjuryVar, status)
+	---@param character CHARACTER
+	---@param modifiers InjuryApplicationChanceModifiers[]?
+	function InjuryCommonLogic:RollForApplication(injuryName, existingInjuryVar, status, character, modifiers)
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
-		local chanceOfApplication = injuryConfig.chance_of_application
-		if not chanceOfApplication or chanceOfApplication == 100 or (status and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
+		local applicationChanceConfig = ConfigManager.ConfigCopy.injuries.universal.application_chance_by_severity
+
+		---@type number?
+		local chanceOfApplication = applicationChanceConfig[injuryConfig.severity]
+		if not chanceOfApplication then
+			return false
+		end
+
+		if Osi.HasActiveStatus(character, "GOON_DOWNED_TRACKER") == 1 then
+			modifiers = modifiers and TableUtils:DeeplyCopyTable(modifiers) or {}
+			table.insert(modifiers, "Was Downed This Round")
+		end
+
+		if modifiers then
+			for _, modifier in pairs(modifiers) do
+				chanceOfApplication = chanceOfApplication + applicationChanceConfig.modifiers[modifier]
+				Logger:BasicDebug("Adding %s%% application chance due to %s being applicable to %s (for injury %s) - result is %s%%",
+					applicationChanceConfig.modifiers[modifier],
+					modifier,
+					character,
+					injuryName,
+					chanceOfApplication)
+			end
+		end
+
+		if applicationChanceConfig.modifiers["Each Existing Injury Of Same Severity"] ~= 0 then
+			for injury in pairs(existingInjuryVar["injuryAppliedReason"]) do
+				if ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity == injuryConfig.severity then
+					chanceOfApplication = chanceOfApplication + applicationChanceConfig.modifiers["Each Existing Injury Of Same Severity"]
+				end
+			end
+		end
+
+		Logger:BasicDebug("Final application chance is %s for %s on %s", chanceOfApplication, injuryName, character)
+
+		if not existingInjuryVar["applicationChance"] then
+			existingInjuryVar["applicationChance"] = {}
+		end
+		existingInjuryVar["applicationChance"][injuryName] = chanceOfApplication
+
+		if chanceOfApplication == 100
+			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
 			return true
+		elseif chanceOfApplication <= 0 then
+			return false
 		end
 
 		if not existingInjuryVar["numberOfApplicationsAttempted"] then
@@ -169,16 +242,21 @@ if Ext.IsServer() then
 	--- highest stackPriority (of the applied injury)
 	---@param character GUIDSTRING
 	---@param injury InjuryName?
-	function InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+	function InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
+		local _, injuryVarOnChar = InjuryCommonLogic:GetUserVar(character)
+		if not injuryVarOnChar then
+			return
+		end
+
 		---@type StatusData
 		local injuryEntry = Ext.Stats.Get(injury)
 		if injuryEntry.StackId and injuryEntry.StackPriority then
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
-			for _, existingStatusName in pairs(entity.StatusContainer.Statuses) do
+			for existingInjury, _ in pairs(injuryVarOnChar["injuryAppliedReason"]) do
 				---@type StatusData
-				local existingInjuryEntry = Ext.Stats.Get(existingStatusName)
+				local existingInjuryEntry = Ext.Stats.Get(existingInjury)
 				if existingInjuryEntry
 					and injuryEntry.StackId == existingInjuryEntry.StackId
 					and tonumber(injuryEntry.StackPriority) <= tonumber(existingInjuryEntry.StackPriority)
@@ -195,6 +273,7 @@ if Ext.IsServer() then
 							return configuredInjuryName
 						end
 					end
+					Logger:BasicDebug("%s has reached the highest stack on %s, will be skipped", injury, character)
 					-- If we're at the highest stack, don't bother continuing
 					return nil
 				end
@@ -212,11 +291,18 @@ if Ext.IsServer() then
 		if Osi.HasPassive(character, "Goon_Attack_Detect") == 1 then
 			Osi.RemovePassive(character, "Goon_Attack_Detect")
 		end
+
+		if Osi.HasPassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction") == 1 then
+			Osi.RemovePassive(character, "Goon_Exhaustion_Detect_Critical_Threshold_Reduction")
+		end
 	end
 
-	local function ResetCounters(character, entityVar)
+	function InjuryCommonLogic:ResetCounters(character, entityVar)
 		---@type InjuryVar
 		local injuryUserVar = entityVar.Goon_Injuries
+		if not injuryUserVar then
+			return
+		end
 
 		for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
 			for injury, _ in pairs(injuryTable) do
@@ -227,6 +313,18 @@ if Ext.IsServer() then
 
 			if not next(injuryTable) then
 				injuryUserVar["damage"][damageType] = nil
+			end
+		end
+
+		for damageType, injuryTable in pairs(injuryUserVar["stack_reapply_damage"]) do
+			for injury, _ in pairs(injuryTable) do
+				if not injuryUserVar["injuryAppliedReason"][injury] then
+					injuryTable[injury] = nil
+				end
+			end
+
+			if not next(injuryTable) then
+				injuryUserVar["stack_reapply_damage"][damageType] = nil
 			end
 		end
 
@@ -242,6 +340,18 @@ if Ext.IsServer() then
 			end
 		end
 
+		for statusName, injuryTable in pairs(injuryUserVar["stack_reapply_status"]) do
+			for injury, _ in pairs(injuryTable) do
+				if not injuryUserVar["injuryAppliedReason"][injury] then
+					injuryTable[injury] = nil
+				end
+			end
+
+			if not next(injuryTable) then
+				injuryUserVar["stack_reapply_status"][statusName] = nil
+			end
+		end
+
 		entityVar.Goon_Injuries = injuryUserVar
 
 		RemoveTrackers(character)
@@ -254,7 +364,7 @@ if Ext.IsServer() then
 			for _, combatParticipant in pairs(Osi.DB_Is_InCombat:Get(nil, combatGuid)) do
 				local entity = Ext.Entity.Get(combatParticipant[1])
 				if entity.Vars.Goon_Injuries then
-					ResetCounters(combatParticipant[1], entity.Vars)
+					InjuryCommonLogic:ResetCounters(combatParticipant[1], entity.Vars)
 				end
 			end
 		end
@@ -263,7 +373,7 @@ if Ext.IsServer() then
 	EventCoordinator:RegisterEventProcessor("LeftCombat", function(object, combatGuid)
 		local entity = Ext.Entity.Get(object)
 		if entity.Vars.Goon_Injuries and ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset == "Combat" then
-			ResetCounters(object, entity.Vars)
+			InjuryCommonLogic:ResetCounters(object, entity.Vars)
 		end
 	end)
 
@@ -273,14 +383,14 @@ if Ext.IsServer() then
 			if (status == "SHORT_REST" and counterReset == "Short Rest") or (status == "LONG_REST" and counterReset == "Long Rest") then
 				local entity = Ext.Entity.Get(character)
 				if entity.Vars.Goon_Injuries then
-					ResetCounters(character, entity.Vars)
+					InjuryCommonLogic:ResetCounters(character, entity.Vars)
 				end
 			end
 		end
 	end)
 
-	function InjuryConfigHelper:RemoveAllInjuries(character)
-		local entity, _ = InjuryConfigHelper:GetUserVar(character)
+	function InjuryCommonLogic:RemoveAllInjuries(character)
+		local entity, _ = InjuryCommonLogic:GetUserVar(character)
 		if entity then
 			for injury, _ in pairs(ConfigManager.ConfigCopy.injuries.injury_specific) do
 				Osi.RemoveStatus(character, injury)
@@ -295,13 +405,13 @@ if Ext.IsServer() then
 
 	Ext.Osiris.RegisterListener("Died", 1, "after", function(character)
 		if ConfigManager.ConfigCopy.injuries.universal.remove_on_death then
-			InjuryConfigHelper:RemoveAllInjuries(character)
+			InjuryCommonLogic:RemoveAllInjuries(character)
 		end
 	end)
 
 	Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(character, injury, causee, applyStoryActionID)
 		if Osi.IsItem(character) == 0 then
-			local entity, injuryUserVar = InjuryConfigHelper:GetUserVar(character)
+			local entity, injuryUserVar = InjuryCommonLogic:GetUserVar(character)
 
 			if entity
 				and injuryUserVar
@@ -312,6 +422,20 @@ if Ext.IsServer() then
 				if Osi.IsDead(character) == 0 and injuryUserVar["removedDueTo"][injury] then
 					local statusRemovingInjury = injuryUserVar["removedDueTo"][injury]
 					local removeOnStatusConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusRemovingInjury]
+					if not removeOnStatusConfig then
+						---@type StatusData
+						local statusData = Ext.Stats.Get(statusRemovingInjury)
+						if statusData and next(statusData.StatusGroups) then
+							for _, statusGroup in ipairs(statusData.StatusGroups) do
+								local sgConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusGroup]
+								if sgConfig and (not sgConfig["excluded_statuses"] or not TableUtils:ListContains(sgConfig["excluded_statuses"], statusRemovingInjury)) then
+									removeOnStatusConfig = sgConfig
+									Logger:BasicDebug("%s was removed from %s due to %s belonging to %s", injury, character, statusRemovingInjury, statusGroup)
+								end
+							end
+						end
+					end
+
 					local stacksToRemove = removeOnStatusConfig.stacks_to_remove
 					if stacksToRemove then
 						---@type StatusData
@@ -348,6 +472,16 @@ if Ext.IsServer() then
 					end
 				end
 
+				for damageType, injuryTable in pairs(injuryUserVar["stack_reapply_damage"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["stack_reapply_damage"][damageType] = nil
+					end
+				end
+
 				for statusName, injuryTable in pairs(injuryUserVar["applyOnStatus"]) do
 					if injuryToMoveTo then
 						injuryTable[injuryToMoveTo] = injuryTable[injury]
@@ -358,8 +492,22 @@ if Ext.IsServer() then
 					end
 				end
 
+				for statusName, injuryTable in pairs(injuryUserVar["stack_reapply_status"]) do
+					if injuryToMoveTo then
+						injuryTable[injuryToMoveTo] = injuryTable[injury]
+					end
+					injuryTable[injury] = nil
+					if not next(injuryTable) then
+						injuryUserVar["stack_reapply_status"][statusName] = nil
+					end
+				end
+
 				if injuryUserVar["numberOfApplicationsAttempted"] then
 					injuryUserVar["numberOfApplicationsAttempted"][injury] = nil
+				end
+
+				if injuryUserVar["numberOfLongRests"] then
+					injuryUserVar["numberOfLongRests"][injury] = nil
 				end
 
 				if injuryUserVar["removedDueTo"] then
@@ -370,6 +518,7 @@ if Ext.IsServer() then
 
 				if not next(injuryUserVar["injuryAppliedReason"])
 					and not next(injuryUserVar["damage"])
+					and not next(injuryUserVar["stack_reapply_damage"])
 					and not next(injuryUserVar["applyOnStatus"])
 				then
 					injuryUserVar = nil

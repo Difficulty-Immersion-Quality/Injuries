@@ -6,6 +6,9 @@
 local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExistingStatus)
 	---@type StatusData
 	local statusObj = Ext.Stats.Get(status)
+	if not statusObj then
+		return
+	end
 
 	local statusName = statusObj.Name
 	if not removeOnConfig[statusName] then
@@ -25,7 +28,7 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	local statusNameText = statusNameRow:AddText(statusObj.Name)
 	statusNameText.SameLine = true
 
-	DataSearchHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
+	StatusHelper:BuildStatusTooltip(statusNameText:Tooltip(), statusObj)
 	--#endregion
 
 	--#region Save Options
@@ -49,29 +52,58 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	end
 
 	local saveSlider = saveCell:AddSliderInt("",
-		statusConfig["difficulty_class"],
+		statusConfig["difficulty_class"] or 15,
 		1,
 		30)
 
 	saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+	if not saveSlider.Visible then
+		statusConfig["difficulty_class"] = nil
+	end
+
 	saveSlider.OnChange = function()
 		statusConfig["difficulty_class"] = saveSlider.Value[1]
 	end
 
 	saveCombo.OnChange = function(combo, selectedIndex)
 		saveSlider.Visible = selectedIndex ~= 0
+		if not saveSlider.Visible then
+			statusConfig["difficulty_class"] = nil
+		else
+			statusConfig["difficulty_class"] = statusConfig["difficulty_class"] or 15
+		end
 		statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+	end
+
+	if statusObj.Name == "LONG_REST" then
+		saveCell:AddText(Translator:translate("After how many long rests?") .. " (?)"):Tooltip():AddText("\t " .. Translator:translate("This triggers when a FULL rest is done (partial is ignored) or when a relevant status is applied (i.e. Angelic Slumber). Because of the underlying implementation, this is exclusively a marker status, so don't add any other long-rest related statuses and exclude it from the relevant status groups")).TextWrapPos = 600
+		statusConfig["after_x_applications"] = statusConfig["after_x_applications"] or 1
+		local longRestSlider = saveCell:AddSliderInt("", statusConfig["after_x_applications"], 1, 30)
+		longRestSlider.OnChange = function(slider)
+			statusConfig["after_x_applications"] = slider.Value[1]
+		end
 	end
 
 	---@type StatusData
 	local injuryStat = Ext.Stats.Get(injury)
 	if injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1 then
 		local stackCell = row:AddCell()
-		statusConfig.stacks_to_remove = statusConfig.stacks_to_remove or injuryStat.StackPriority
-		local stackRemovalSlider = stackCell:AddSliderInt("", statusConfig.stacks_to_remove, 1, injuryStat.StackPriority)
+		statusConfig["stacks_to_remove"] = statusConfig["stacks_to_remove"] or injuryStat.StackPriority
+		local stackRemovalSlider = stackCell:AddSliderInt("", statusConfig["stacks_to_remove"], 1, injuryStat.StackPriority)
 		stackRemovalSlider.OnChange = function()
-			statusConfig.stacks_to_remove = stackRemovalSlider.Value[1]
+			statusConfig["stacks_to_remove"] = stackRemovalSlider.Value[1]
 		end
+	end
+
+	local triggers = row:AddCell()
+	statusConfig["onApplication"] = statusConfig["onApplication"] == nil and true or statusConfig["onApplication"]
+	triggers:AddCheckbox("On Application", statusConfig["onApplication"]).OnChange = function(checkbox)
+		statusConfig["onApplication"] = checkbox.Checked
+	end
+	local onRemove = triggers:AddCheckbox("On Removal", statusConfig["onRemoval"])
+	onRemove.SameLine = true
+	onRemove.OnChange = function()
+		statusConfig["onRemoval"] = onRemove.Checked
 	end
 
 	--#endregion
@@ -101,7 +133,7 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	local injuryStat = Ext.Stats.Get(injury)
 	local addStackRemovalAspect = injuryStat.StackId and injuryStat.StackId ~= "" and injuryStat.StackPriority > 1
 
-	local statusTable = statusTab:AddTable("RemoveOnStatus", addStackRemovalAspect and 4 or 3)
+	local statusTable = statusTab:AddTable("RemoveOnStatus", addStackRemovalAspect and 5 or 4)
 	statusTable.BordersInnerH = true
 	statusTable.Resizable = true
 
@@ -110,10 +142,12 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 	headerRow:AddCell():AddText(Translator:translate("Status Name (ResourceID)"))
 	headerRow:AddCell():AddText(Translator:translate("Save Conditions"))
 	if addStackRemovalAspect then
-		headerRow:AddCell():AddText(Translator:translate("# of Stacks To Remove (?)")):Tooltip():AddText(Translator:translate("i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
+		headerRow:AddCell():AddText(Translator:translate("# of Stacks To Remove (?)")):Tooltip():AddText(Translator:translate(
+			"i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
 	end
+	headerRow:AddCell():AddText(Translator:translate("Triggers"))
 
-	DataSearchHelper:BuildSearch(statusTab,
+	StatusHelper:BuildSearch(statusTab,
 		Ext.Stats.GetStats("StatusData"),
 		function(resourceId)
 			return Ext.Loca.GetTranslatedString(Ext.Stats.Get(resourceId).DisplayName, nil)
@@ -122,9 +156,90 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 			BuildRows(statusTable, status, injury, removeOnConfig, true)
 		end)
 
-	for status, _ in pairs(removeOnConfig) do
+	for status, _ in TableUtils:OrderedPairs(removeOnConfig) do
 		BuildRows(statusTable, status, injury, removeOnConfig)
 	end
+
+	StatusHelper:BuildStatusGroupSection(statusTab:AddGroup("removeOnstatusGroups" .. injury),
+		injuryStat,
+		removeOnConfig,
+		ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class,
+		function(statusGroupSection, statusConfig)
+			--#region Save Options
+			local saveOptions = {}
+			for _, ability in ipairs(Ext.Enums.AbilityId) do
+				if ability ~= "Sentinel" then
+					table.insert(saveOptions, tostring(ability))
+				end
+			end
+			table.sort(saveOptions)
+			table.insert(saveOptions, 1, "No Save")
+
+			statusGroupSection:AddText(Translator:translate("Save Conditions"))
+			local saveCombo = statusGroupSection:AddCombo("")
+			saveCombo.WidthFitPreview = true
+			saveCombo.SameLine = true
+			saveCombo.Options = saveOptions
+			for index, option in pairs(saveCombo.Options) do
+				if option == statusConfig["ability"] then
+					saveCombo.SelectedIndex = index - 1
+					break
+				end
+			end
+
+			local saveSlider = statusGroupSection:AddSliderInt("",
+				statusConfig["difficulty_class"] or 15,
+				1,
+				30)
+			saveSlider.SameLine = true
+
+			saveSlider.Visible = saveCombo.SelectedIndex ~= 0
+			if not saveSlider.Visible then
+				statusConfig["difficulty_class"] = nil
+			end
+
+			saveSlider.OnChange = function()
+				statusConfig["difficulty_class"] = saveSlider.Value[1]
+			end
+
+			saveCombo.OnChange = function(combo, selectedIndex)
+				saveSlider.Visible = selectedIndex ~= 0
+				statusConfig["ability"] = saveCombo.Options[selectedIndex + 1]
+
+				if not saveSlider.Visible then
+					statusConfig["difficulty_class"] = nil
+				else
+					statusConfig["difficulty_class"] = saveSlider.Value[1]
+				end
+			end
+
+			if injury.StackId and injury.StackId ~= "" and injury.StackPriority > 1 then
+				statusGroupSection:AddText(Translator:translate("# of Stacks To Remove (?)")):Tooltip():AddText(Translator:translate(
+					"i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"))
+				statusConfig["stacks_to_remove"] = statusConfig["stacks_to_remove"] or injury.StackPriority
+				local stackRemovalSlider = statusGroupSection:AddSliderInt("", statusConfig["stacks_to_remove"], 1, injury.StackPriority)
+				stackRemovalSlider.SameLine = true
+				stackRemovalSlider.OnChange = function()
+					statusConfig["stacks_to_remove"] = stackRemovalSlider.Value[1]
+				end
+			end
+
+			statusGroupSection:AddText("Triggers")
+			statusGroupSection:AddCheckbox("On Application", statusConfig["onApplication"]).OnChange = function(checkbox)
+				statusConfig["onApplication"] = checkbox.Checked
+			end
+			local onRemove = statusGroupSection:AddCheckbox("On Removal", statusConfig["onRemoval"])
+			onRemove.SameLine = true
+			onRemove.OnChange = function()
+				statusConfig["onRemoval"] = onRemove.Checked
+			end
+
+
+			--#endregion
+
+			statusGroupSection:AddNewLine()
+		end)
+	-- local sgTable = statusTab:AddTable("statusGroup" .. injury, 3)
 end)
 
 Translator:RegisterTranslation({
@@ -134,4 +249,7 @@ Translator:RegisterTranslation({
 	["Save Conditions"] = "hbe9455faa0784cb99616e5098fd5247dgcg2",
 	["# of Stacks To Remove (?)"] = "h125c3399732d41a4a300eee966450e16e61f",
 	["i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"] = "he6354d4907a7431b82c7ebde28275f9a7eae",
+	["After how many long rests?"] = "h0334268fe1274b1e9eb4c0286c0321042ag7",
+	["This triggers when a FULL rest is done (partial is ignored) or when a relevant status is applied (i.e. Angelic Slumber). Because of the underlying implementation, this is exclusively a marker status, so don't add any other long-rest related statuses and exclude it from the relevant status groups"] =
+	"h4b796a8fc3164448bb59efa069551d270abg",
 })

@@ -11,8 +11,10 @@ local function ChooseRandomSeverity()
 		severityToChoose = "Low"
 	elseif randomRollResult <= weights["Medium"] + weights["Low"] then
 		severityToChoose = "Medium"
-	else
+	elseif randomRollResult <= weights["Medium"] + weights["Low"] + weights["High"] then
 		severityToChoose = "High"
+	else
+		severityToChoose = "Extreme"
 	end
 
 	return severityToChoose
@@ -45,7 +47,7 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 					end
 
 					for injury, _ in pairs(injuryPool) do
-						local injuryToApply = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(defender, injury)
+						local injuryToApply = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(defender, injury)
 						if injuryToApply
 							and Osi.HasActiveStatus(defender, injuryToApply) == 0
 							and severityToChoose == ConfigManager.ConfigCopy.injuries.injury_specific[injuryToApply].severity
@@ -66,9 +68,9 @@ function RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, te
 
 			local chosenInjury = eligibleInjuries[Osi.Random(#eligibleInjuries) + 1]
 			Osi.ApplyStatus(defender, chosenInjury, -1)
-			local entity, injuryVar = InjuryConfigHelper:GetUserVar(defender)
+			local entity, injuryVar = InjuryCommonLogic:GetUserVar(defender)
 			injuryVar["injuryAppliedReason"][chosenInjury] = "Critical Hit"
-			InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 		end
 	end
 
@@ -100,7 +102,7 @@ end
 
 EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
 	if status == "DOWNED" then
-		local entity, injuryVar = InjuryConfigHelper:GetUserVar(character)
+		local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
 
 		if entity.Vars.Injury_Downed_Tracker then
 			local damageType = entity.Vars.Injury_Downed_Tracker
@@ -122,7 +124,7 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 			end
 
 			for injury, _ in pairs(injuryPool) do
-				injury = InjuryConfigHelper:GetNextInjuryInStackIfApplicable(character, injury)
+				injury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
 
 				if injury
 					and Osi.HasActiveStatus(character, injury) == 0
@@ -142,7 +144,7 @@ EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, sta
 				local chosenInjury = eligibleInjuries[Osi.Random(#eligibleInjuries) + 1]
 				Osi.ApplyStatus(character, chosenInjury, -1)
 				injuryVar["injuryAppliedReason"][chosenInjury] = "Downed"
-				InjuryConfigHelper:UpdateUserVar(entity, injuryVar)
+				InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 			end
 
 			::skip::

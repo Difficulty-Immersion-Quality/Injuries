@@ -26,7 +26,7 @@ local SleepStatuses = {
 }
 
 -- Listener 1: Cooldown
-Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status, causee, storyActionID)
+EventCoordinator:RegisterEventProcessor("StatusApplied", function(object, status, causee, storyActionID)
     if CooldownDurations[status] then
         local cooldownDuration = math.random(CooldownDurations[status][1], CooldownDurations[status][2]) * 6
         Osi.ApplyStatus(object, "GOON_FALL_ASLEEP_COOLDOWN", cooldownDuration, 1)
@@ -34,7 +34,7 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
 end)
 
 -- Listener 2: Sleep
-Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status, causee, storyActionID)
+EventCoordinator:RegisterEventProcessor("StatusApplied", function(object, status, causee, storyActionID)
     if SleepStatuses[status] and SleepDurations[status] then
         local sleepDuration = math.random(SleepDurations[status][1], SleepDurations[status][2]) * 6
         Osi.ApplyStatus(object, SleepStatuses[status], sleepDuration, 1)

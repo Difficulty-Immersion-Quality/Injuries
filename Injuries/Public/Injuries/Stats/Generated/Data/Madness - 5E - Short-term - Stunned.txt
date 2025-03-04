@@ -2,7 +2,7 @@
 
 new entry "GOON_MADNESS_5E_SHORTTERM_STUNNED"
 type "StatusData"
-data "StatusType" "BOOST"
+data "StatusType" "INCAPACITATED"
 // Short-term Madness: Stunned
 data "DisplayName" "h9d0be1d0g860ag43c8g8a5egb301606f505e"
 //

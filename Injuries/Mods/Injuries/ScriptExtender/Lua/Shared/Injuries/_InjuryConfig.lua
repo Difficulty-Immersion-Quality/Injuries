@@ -39,9 +39,26 @@ ConfigurationStructure.config.injuries.universal.remove_all_on_long_rest = true
 --- @type injury_counter_reset
 ConfigurationStructure.config.injuries.universal.when_does_counter_reset = "Attack/Tick"
 
+ConfigurationStructure.config.injuries.universal.apply_injuries_outside_combat = true
+
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage = true
 
 ConfigurationStructure.config.injuries.universal.healing_subtracts_injury_damage_modifier = 1.0
+
+---@alias InjuryApplicationChanceModifiers "Attack Was A Critical"|"Was Downed This Round"
+
+ConfigurationStructure.config.injuries.universal.application_chance_by_severity = {
+	["Exclude"] = 100,
+	["Low"] = 100,
+	["Medium"] = 100,
+	["High"] = 100,
+	["Extreme"] = 100,
+	modifiers = {
+		["Attack Was A Critical"] = 0,
+		["Was Downed This Round"] = -100,
+		["Each Existing Injury Of Same Severity"] = 0,
+	}
+}
 
 --#region NPC Modifiers
 ---@alias NPCCategories "Base"|"Boss"|"MiniBoss"|"Elite"|"Combatant"|"Pack"|"Zero"|"Civilian"
@@ -59,8 +76,9 @@ ConfigurationStructure.config.injuries.universal.random_injury_conditional = {
 
 ConfigurationStructure.config.injuries.universal.random_injury_severity_weights = {
 	["Low"] = 25,
-	["Medium"] = 50,
-	["High"] = 25
+	["Medium"] = 25,
+	["High"] = 25,
+	["Extreme"] = 25
 }
 
 --- @type boolean
@@ -73,7 +91,7 @@ ConfigurationStructure.config.injuries.universal.random_injury_filter_by_damage_
 ---@class Injury
 ConfigurationStructure.DynamicClassDefinitions.injury_class = {}
 
----@alias severity "Exclude"|"Low"|"Medium"|"High"
+---@alias severity "Disabled"|"Exclude"|"Low"|"Medium"|"High"|"Extreme"
 ---@type severity
 ConfigurationStructure.DynamicClassDefinitions.injury_class.severity = "Medium"
 
@@ -98,9 +116,16 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.damage = {
 ConfigurationStructure.DynamicClassDefinitions.injury_remove_on_status_class = {
 	---@type AbilityId|"No Save"
 	["ability"] = "No Save",
-	["difficulty_class"] = 15,
 	---@type number?
-	stacks_to_remove = nil
+	["difficulty_class"] = nil,
+	---@type number?
+	["stacks_to_remove"] = nil,
+	---@type string[]?
+	["excluded_statuses"] = nil,
+	---@type number?
+	["after_x_applications"] = nil,
+	["onApplication"] = true,
+	["onRemoval"] = false
 }
 
 ---@alias StatusName string
@@ -112,20 +137,24 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.remove_on_status = {
 ConfigurationStructure.DynamicClassDefinitions.injury_apply_on_status_class = {
 	["multiplier"] = 1,
 	["guarantee_application"] = false,
+	---@type string[]?
+	["excluded_statuses"] = nil,
+	["onApplication"] = true,
+	["onRemoval"] = false
 }
 ---@class InjuryApplyOnStatusClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.apply_on_status = {
 	["number_of_rounds"] = 3,
 	---@type { [StatusName] : InjuryApplyOnStatusModifierClass }
-	["applicable_statuses"] = {}
+	["applicable_statuses"] = {},
 }
 
 ---@class InjuryCharacterMultiplierClass
 ConfigurationStructure.DynamicClassDefinitions.injury_class.character_multipliers = {
-	---@type {[TAG] : number}
-	["tags"] = {},
-	---@type {[GUIDSTRING] : number}
-	["races"] = {}
+	---@type {[TAG] : number}?
+	["tags"] = nil,
+	---@type {[GUIDSTRING] : number}?
+	["races"] = nil
 }
 
 ---@alias InjuryName string

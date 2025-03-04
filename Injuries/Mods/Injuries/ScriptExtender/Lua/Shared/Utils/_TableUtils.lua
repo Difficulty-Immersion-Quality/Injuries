@@ -33,9 +33,10 @@ local function copy(obj, seen, makeImmutable)
 end
 
 --- If obj is a table, returns a deep clone of that table, otherwise return obj
----@param obj table
----@return table
+---@param obj table?
+---@return table?
 function TableUtils:DeeplyCopyTable(obj)
+	if not obj then return end
 	return copy(obj, nil, false)
 end
 
@@ -96,6 +97,10 @@ end
 ---@param str string
 ---@return boolean, any?
 function TableUtils:ListContains(list, str)
+	if not list then
+		return false
+	end
+
 	for i, value in pairs(list) do
 		if value == str then
 			return true, i

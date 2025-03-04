@@ -4,16 +4,32 @@ local events = {
 	["AttackedBy"] = {},
 	["RollResult"] = {},
 	["StatusApplied"] = {},
+	["StatusRemoved"] = {},
 	["CombatStarted"] = {},
 	["CombatRoundStarted"] = {},
 	["LeftCombat"] = {},
 	["CastSpell"] = {},
+	["UsingSpellOnTarget"] = {},
 }
 
 --- API method to register functions that operate under the same event, for performance reasons
 function EventCoordinator:RegisterEventProcessor(eventName, eventFunc)
 	table.insert(events[eventName], eventFunc)
 end
+
+Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function (caster, target, spell, spellType, spellElement, storyActionID)
+	if MCM.Get("enabled") then
+		for _, func in pairs(events["UsingSpellOnTarget"]) do
+			local success, error = pcall(function()
+				func(caster, target, spell, spellType, spellElement, storyActionID)
+			end)
+
+			if not success then
+				Logger:BasicError("Received error while processing event UsingSpellOnTarget: \n%s", error)
+			end
+		end
+	end
+end)
 
 Ext.Osiris.RegisterListener("AttackedBy", 7, "before", function(defender, attackerOwner, attacker2, damageType, damageAmount, damageCause, storyActionID)
 	if MCM.Get("enabled") then
@@ -51,6 +67,19 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
 			end)
 			if not success then
 				Logger:BasicError("Received error while processing event StatusApplied: \n%s", error)
+			end
+		end
+	end
+end)
+
+Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function (object, status, causee, applyStoryActionID)
+	if MCM.Get("enabled") then
+		for _, func in pairs(events["StatusRemoved"]) do
+			local success, error = pcall(function()
+				func(object, status, causee, applyStoryActionID)
+			end)
+			if not success then
+				Logger:BasicError("Received error while processing event StatusRemoved: \n%s", error)
 			end
 		end
 	end
