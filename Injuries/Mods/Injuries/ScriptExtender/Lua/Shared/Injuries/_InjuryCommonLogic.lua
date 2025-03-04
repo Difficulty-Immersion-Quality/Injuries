@@ -243,15 +243,20 @@ if Ext.IsServer() then
 	---@param character GUIDSTRING
 	---@param injury InjuryName?
 	function InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
+		local _, injuryVarOnChar = InjuryCommonLogic:GetUserVar(character)
+		if not injuryVarOnChar then
+			return
+		end
+
 		---@type StatusData
 		local injuryEntry = Ext.Stats.Get(injury)
 		if injuryEntry.StackId and injuryEntry.StackPriority then
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
-			for _, existingStatusName in pairs(entity.StatusContainer.Statuses) do
+			for existingInjury, _ in pairs(injuryVarOnChar["injuryAppliedReason"]) do
 				---@type StatusData
-				local existingInjuryEntry = Ext.Stats.Get(existingStatusName)
+				local existingInjuryEntry = Ext.Stats.Get(existingInjury)
 				if existingInjuryEntry
 					and injuryEntry.StackId == existingInjuryEntry.StackId
 					and tonumber(injuryEntry.StackPriority) <= tonumber(existingInjuryEntry.StackPriority)
