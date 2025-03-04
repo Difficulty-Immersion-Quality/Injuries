@@ -123,7 +123,7 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 			local keyText = severityModifierCell:AddText(key)
 			if key == "Each Existing Injury Of Same Severity" then
 				keyText.Label = keyText.Label .. " (?)"
-				keyText:Tooltip():AddText("\t If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%").TextWrapPos = 600
+				keyText:Tooltip():AddText("\t " .. "If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%").TextWrapPos = 600
 			end
 
 			local severityModifierSlider = severityModifierRow:AddCell():AddSliderInt("", value, -100, 100)
@@ -212,6 +212,7 @@ Translator:RegisterTranslation({
 	["How much should the application chance increase/decrease when the below conditions are met?"] = "h2ed2ba9c679e4311b9d7b991246d84ff16g2",
 	["These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"] =
 	"h3f75c2db58974c47b8f5553e0fe58301831b",
+	["If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%"] = "hbaa3cadad3c048759ce144bfe8bc76e5b7a9",
 	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
 	["Apply Injuries Outside of Combat"] = "h19e7eed71ae343bf8571aa5e4ae65ed46c1c",
 	["Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"] = "h51314d99b05b481f849ebd5a3bee1fa61dgf",
