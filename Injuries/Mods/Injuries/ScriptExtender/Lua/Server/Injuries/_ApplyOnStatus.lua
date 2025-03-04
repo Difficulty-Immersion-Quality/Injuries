@@ -19,14 +19,17 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 		end
 
 		local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
+		Logger:BasicDebug("Status %s will apply %s (possibly upgraded from %s) to %s", status, nextStackInjury, injury, character)
 		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
 			if statusGroup and statusData.StatusGroups and TableUtils:ListContains(statusData.StatusGroups, statusGroup) then
 				if injuryStatusConfig["excluded_statuses"] and TableUtils:ListContains(injuryStatusConfig["excluded_statuses"], status) then
+					Logger:BasicDebug("%s belongs to status group %s but is excluded, so skipping", nextStackInjury, statusGroup)
 					goto continue
 				end
 			end
 
 			if not injuryStatusConfig[eventType] then
+				Logger:BasicDebug("%s triggered on %s, which is disabled in %s's config", status, eventType, nextStackInjury)
 				goto continue
 			end
 
@@ -58,11 +61,13 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 					roundsWithMultiplier = roundsWithMultiplier + ((injuryOtherExistingStatus[injury] * otherStatusConfig["multiplier"]))
 				end
 			end
+			Logger:BasicDebug("roundsWithMultiplier is %s for %s", roundsWithMultiplier, nextStackInjury)
 
 			local characterMultiplier = InjuryCommonLogic:CalculateCharacterMultipliers(entity, injuryConfig)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
 			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, statusGroup or status, character) then
+				Logger:BasicDebug("%s was successfully applied on %s", nextStackInjury, character)
 				Osi.ApplyStatus(character, nextStackInjury, -1)
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"
 

@@ -214,6 +214,8 @@ if Ext.IsServer() then
 			end
 		end
 
+		Logger:BasicDebug("Final application chance is %s for %s on %s", chanceOfApplication, injuryName, character)
+
 		if not existingInjuryVar["applicationChance"] then
 			existingInjuryVar["applicationChance"] = {}
 		end
@@ -266,6 +268,7 @@ if Ext.IsServer() then
 							return configuredInjuryName
 						end
 					end
+					Logger:BasicDebug("%s has reached the highest stack on %s, will be skipped", injury, character)
 					-- If we're at the highest stack, don't bother continuing
 					return nil
 				end
