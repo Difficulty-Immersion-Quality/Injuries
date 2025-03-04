@@ -48,13 +48,13 @@
 							"Name": "Open Injury Report",
 							"Type": "keybinding_v2",
 							"Default": {
-"Keyboard": {
-	"Key": "T",
-	"ModifierKeys": [
-		"LShift",
-		"LAlt"
-	]
-},
+								"Keyboard": {
+									"Key": "R",
+									"ModifierKeys": [
+										"LShift",
+										"LAlt"
+									]
+								},
 								"Controller": {
 									"Buttons": [
 										"A"

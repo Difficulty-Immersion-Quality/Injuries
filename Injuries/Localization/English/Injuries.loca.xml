@@ -55,6 +55,20 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remove a random injury and completing a &lt;LSTag Tooltip="LongRest"&gt;Long Rest&lt;/LSTag&gt; will remove all injuries.</content>
 	
 	<!-- BEGIN INJURY MAIN MENU -->
+	<content contentuid="he1662ef5633243af808c395d3550dfc4833g" version="1">Toggle Help Text</content>
+    <content contentuid="hfb7e22414b544bf5820ac50d99addb9408b5" version="1">All injury and status names in all windows except the injury report have tooltips associated to them - hover over their names to see them. Tooltips in other areas are marked by (?)</content>
+    <content contentuid="h31f607652dd64e52acfa0fd748fdf5ab33g9" version="1">Sliders can have values manually entered by ctrl + left clicking on them</content>
+    <content contentuid="h65fc2263758341e9b115d235f2ac2a2ddbe3" version="1">Table columns within the Customize windows can be manually resized by left clicking and dragging on the vertical lines between columns</content>
+    <content contentuid="h6ff2f32c256a4d0d825532383de50ee03561" version="1">For Players</content>
+    <content contentuid="h296f5564e2d1461699a144b6122ed5beefdb" version="1">Customizing a provided configuration is largely intended to be an iterative process while playing the game, starting by using the Injury Report (button is further below, default MCM keybind is LSHIFT + LALT + R) to see what injuries are being processed per character and how the modifiers are affecting that processing (as it can vary wildly between characters)</content>
+    <content contentuid="hca642f1f841948a7a30b387bf83a08914f9f" version="1">Then:</content>
+    <content contentuid="hf0325eecf78a433c9e07ca5b4bb58879a065" version="1">If you want to adjust general aspects like application chance, how healing affects damage, removing all injuries on long rest, etc, use the settings section below.</content>
+    <content contentuid="ha5d5109cd75c4e86af1206bca2fc2dfb82g8" version="1">If you want to adjust injury-specific settings like which damage types are used, the multipliers for races/tags, granular removal conditions, etc, locate the relevant injury in the section further below and open the window via the customize button</content>
+    <content contentuid="h756d78fba731439d88de3a6e8e7d4b4b5f84" version="1">If you want to prevent an injury from being processed at all, change the severity to 'Disabled' within the Injury-specific section</content>
+    <content contentuid="h7b61fd3af2204b989f1cfbb68bbe3bf41916" version="1">Any changes to configs affecting a given injury will not be reflected in the Injury Report until that injury is re-processed under the relevant scenario (i.e. changing a damage threshold requires taking the right kind of damage for it to be updated)</content>
+    <content contentuid="hf5e54a92558944d5b7e7bae84114913e99f5" version="1">For Creators</content>
+    <content contentuid="hb291dc8fd9d143fc829762905c5746464g4c" version="1">Check the Github (linked on the mod page) to see the underlying implementation for the Grit and Glory / Madness / Exhaustion system - there's a lot of templates that can be used to help in developing your own system, either directly or as reference</content>
+    <content contentuid="h7f417e48ae86435aaabb6feba172d276a364" version="1">While developing, if you need to clear statuses that no longer exist from the config, you can enter client mode in the SE console (using the 'client' command) and run !Injuries_CleanConfig - this will remove configs for injuries that don't exist in the game, along with other non-destructive clean up operations</content>
 	<content contentuid="h1ec71859ad9f44458110fb611c05f4d701ag" version="1">Universal Options</content>
 	<content contentuid="h00f45a44ab9345c1b1106d6852ebcc4d9cb3" version="1">Who Can Receive Injuries?</content>
 	<content contentuid="h9df2a1fcaea949aeb733c493d4d7045ad3d3" version="1">Party Members</content>
