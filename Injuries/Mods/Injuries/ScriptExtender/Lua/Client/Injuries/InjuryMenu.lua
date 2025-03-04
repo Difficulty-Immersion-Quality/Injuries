@@ -73,7 +73,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			helpTextGroup.Visible = not helpTextGroup.Visible
 		end
 
-
 		SectionBuilder:build(tabHeader, {
 			ApplyingInjuriesSettings,
 			RandomApplicationSettings,

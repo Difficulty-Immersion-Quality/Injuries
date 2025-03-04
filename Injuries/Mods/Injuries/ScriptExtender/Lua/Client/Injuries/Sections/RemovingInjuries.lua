@@ -1,3 +1,15 @@
+Translator:RegisterTranslation({
+	["Removing Injuries"] = "h26403ff346f8465dbd6d2f5f70a5ae493fbe",
+	["How Many Different Injuries Can Be Removed At Once?"] = "hf09a78e9f67d4f6ebd69b1831b16bc7e00cf",
+	["If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."] =
+	"h917674e930d34cc8a28ecc9051066f4f332f",
+	["One"] = "hfe2ed92d7923481b97a60edf916e5b03d5g7",
+	["All"] = "he8141a6f94e24224a4cdd5f198aca85703b6",
+	["What Severity Should Be Prioritized?"] = "h4e5210014bf44629b4a8125da7b191158c4a",
+	["Remove All Injuries On Death"] = "he00cdfbaa2a6402b8f576e6c556c93d3fffc",
+	["Remove All Injuries On Long Rest"] = "h113c81a1391544e8a7bb3a662ce6488b8g6e",
+})
+
 RemovingInjuriesSettings = Section:new(Translator:translate("Removing Injuries"))
 
 function RemovingInjuriesSettings:BuildBasicConfig(universalOptions)
@@ -65,15 +77,3 @@ function RemovingInjuriesSettings:BuildAdvancedConfig(parent)
 
 	return true
 end
-
-Translator:RegisterTranslation({
-	["Removing Injuries"] = "h26403ff346f8465dbd6d2f5f70a5ae493fbe",
-	["How Many Different Injuries Can Be Removed At Once?"] = "hf09a78e9f67d4f6ebd69b1831b16bc7e00cf",
-	["If multiple injuries share the same removal conditions, only the specified number will be removed at once - injuries will be randomly chosen."] =
-	"h917674e930d34cc8a28ecc9051066f4f332f",
-	["One"] = "hfe2ed92d7923481b97a60edf916e5b03d5g7",
-	["All"] = "he8141a6f94e24224a4cdd5f198aca85703b6",
-	["What Severity Should Be Prioritized?"] = "h4e5210014bf44629b4a8125da7b191158c4a",
-	["Remove All Injuries On Death"] = "he00cdfbaa2a6402b8f576e6c556c93d3fffc",
-	["Remove All Injuries On Long Rest"] = "h113c81a1391544e8a7bb3a662ce6488b8g6e",
-})

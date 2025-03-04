@@ -1,3 +1,24 @@
+Translator:RegisterTranslation({
+	["Applying Injuries"] = "hbd5660f30114470f96fd309b831455c4632b",
+	["Who Can Receive Injuries?"] = "h00f45a44ab9345c1b1106d6852ebcc4d9cb3",
+	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",
+	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
+	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
+	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
+	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
+	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
+	["How much should the application chance increase/decrease when the below conditions are met?"] = "h2ed2ba9c679e4311b9d7b991246d84ff16g2",
+	["These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"] =
+	"h3f75c2db58974c47b8f5553e0fe58301831b",
+	["If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%"] = "hbaa3cadad3c048759ce144bfe8bc76e5b7a9",
+	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
+	["Apply Injuries Outside of Combat"] = "h19e7eed71ae343bf8571aa5e4ae65ed46c1c",
+	["Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"] = "h51314d99b05b481f849ebd5a3bee1fa61dgf",
+	["What is the % chance of an Injury being applied when the conditions are met?"] = "h0b8d482b2c0841a8bf9ff897fe2023edfafa",
+	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
+	.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
+})
+
 ApplyingInjuriesSettings = Section:new(Translator:translate("Applying Injuries"))
 
 function ApplyingInjuriesSettings:BuildBasicConfig(parent)
@@ -199,24 +220,3 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 
 	return true
 end
-
-Translator:RegisterTranslation({
-	["Applying Injuries"] = "hbd5660f30114470f96fd309b831455c4632b",
-	["Who Can Receive Injuries?"] = "h00f45a44ab9345c1b1106d6852ebcc4d9cb3",
-	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",
-	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
-	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
-	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
-	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
-	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
-	["How much should the application chance increase/decrease when the below conditions are met?"] = "h2ed2ba9c679e4311b9d7b991246d84ff16g2",
-	["These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"] =
-	"h3f75c2db58974c47b8f5553e0fe58301831b",
-	["If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%"] = "hbaa3cadad3c048759ce144bfe8bc76e5b7a9",
-	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
-	["Apply Injuries Outside of Combat"] = "h19e7eed71ae343bf8571aa5e4ae65ed46c1c",
-	["Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"] = "h51314d99b05b481f849ebd5a3bee1fa61dgf",
-	["What is the % chance of an Injury being applied when the conditions are met?"] = "h0b8d482b2c0841a8bf9ff897fe2023edfafa",
-	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. 'Base' will be overriden by more specific categories if applicable."
-	.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "h9bda3b06d6b4412ab079c3bcdd9b6aed3ec1",
-})

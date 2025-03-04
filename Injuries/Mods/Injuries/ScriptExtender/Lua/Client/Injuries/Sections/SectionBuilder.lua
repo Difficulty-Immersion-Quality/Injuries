@@ -20,7 +20,7 @@ function SectionBuilder:build(parent, sections)
 	self.__index = self
 
 	parent:AddSeparatorText("Settings")
-	instance.parent = parent:AddTable("injurySettingUnder" .. (parent.IDContext or ""), 2)
+	instance.parent = parent:AddTable("injurySettingUnder", 2)
 	instance.parent.BordersInnerV = true
 
 	instance.parent:AddColumn("settingSelect", "WidthFixed")
