@@ -11,8 +11,10 @@ local function ChooseRandomSeverity()
 		severityToChoose = "Low"
 	elseif randomRollResult <= weights["Medium"] + weights["Low"] then
 		severityToChoose = "Medium"
-	else
+	elseif randomRollResult <= weights["Medium"] + weights["Low"] + weights["High"] then
 		severityToChoose = "High"
+	else
+		severityToChoose = "Extreme"
 	end
 
 	return severityToChoose

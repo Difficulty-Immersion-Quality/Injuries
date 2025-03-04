@@ -74,48 +74,48 @@ local function generate_recursive_metatable(proxy_table, real_table)
 	})
 end
 
-function ConfigurationStructure:ClearEmptyTablesInProxyTree(proxyTable)
+function ConfigurationStructure:ClearEmptyTablesInProxyTree(proxyTable, count)
+	count = count or 0
 	if type(proxyTable) == "table" then
 		local parentTable = proxyTable._parent_proxy
 		if not proxyTable() then
 			proxyTable.delete = true
+			count = count + 1
 			if parentTable then
-				ConfigurationStructure:ClearEmptyTablesInProxyTree(parentTable)
+				ConfigurationStructure:ClearEmptyTablesInProxyTree(parentTable, count)
 			end
 		end
 	end
+	return count
 end
 
 local function cleanEmptyTables()
+	local counter = 0
 	local function iterateTable(proxy_table)
 		for key, value in pairs(proxy_table) do
 			local proxy_value = proxy_table[key]
 			if type(value) == "table" then
 				iterateTable(proxy_value)
-				ConfigurationStructure:ClearEmptyTablesInProxyTree(proxy_value)
+				counter = ConfigurationStructure:ClearEmptyTablesInProxyTree(proxy_value)
 			end
 		end
 	end
 
 	iterateTable(ConfigurationStructure.config)
+
+	if counter ~= 0 then
+		Logger:BasicInfo("Cleared %s empty tables from the config", counter)
+	end
 end
 
-Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearTables", function(cmd, ...)
+Ext.RegisterConsoleCommand("Injuries_CleanConfig", function(cmd, ...)
 	cleanEmptyTables()
-end)
 
-Ext.RegisterConsoleCommand("Injuries_CleanConfig_ClearMissingInjuries", function(cmd, ...)
 	for injury, config in pairs(ConfigurationStructure.config.injuries.injury_specific) do
 		if not Ext.Stats.Get(injury) then
 			ConfigurationStructure.config.injuries.injury_specific[injury].delete = true
-			Logger:BasicInfo("Deleted %s!", injury)
-		end
-	end
-end)
-
-Ext.RegisterConsoleCommand("Injuries_CleanConfig_CleanUp", function(cmd, ...)
-	for injury, config in pairs(ConfigurationStructure.config.injuries.injury_specific) do
-		if config.remove_on_status then
+			Logger:BasicInfo("Deleted %s from the config as it does not exist in-game", injury)
+		elseif config.remove_on_status then
 			for status, statusconfig in pairs(config.remove_on_status) do
 				if statusconfig["ability"] == "No Save" then
 					ConfigurationStructure.config.injuries.injury_specific[injury].remove_on_status[status]["difficulty_class"] = nil
@@ -173,11 +173,11 @@ function ConfigurationStructure:InitializeConfig()
 	local config = FileUtils:LoadTableFile("config.json")
 
 	if not config then
-		config = real_config_table
-		FileUtils:SaveTableToFile("config.json", config)
+		FileUtils:SaveTableToFile("config.json", real_config_table)
 	else
 		CopyConfigsIntoReal(config, ConfigurationStructure.config)
 	end
+	FileUtils:SaveTableToFile("config.json", real_config_table)
 
 	initialized = true
 

@@ -247,8 +247,11 @@ local function BuildReport()
 				end
 				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
 
-				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
+				if injuryReport["applicationChance"] and injuryReport["applicationChance"][injury] then
 					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
+				end
+				
+				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
 					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
 				end
 

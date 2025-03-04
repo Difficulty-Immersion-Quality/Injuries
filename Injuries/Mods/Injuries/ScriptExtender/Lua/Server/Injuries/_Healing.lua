@@ -40,6 +40,23 @@ Ext.Entity.Subscribe("Health", function(entity, _, _)
 				end
 			end
 
+			for damageType, injuryDamage in pairs(injuryVar["stack_reapply_damage"]) do
+				for injury, damage in pairs(injuryDamage) do
+					if Osi.HasActiveStatus(entity.Uuid.EntityUuid, injury) == 0 then
+						local flatAfterHealing = damage - healingDone
+
+						if flatAfterHealing <= 0 then
+							injuryDamage[injury] = nil
+						else
+							injuryDamage[injury] = flatAfterHealing
+						end
+					end
+					if not next(injuryDamage) then
+						damageVar[damageType] = nil
+					end
+				end
+			end
+
 			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
 		end
 

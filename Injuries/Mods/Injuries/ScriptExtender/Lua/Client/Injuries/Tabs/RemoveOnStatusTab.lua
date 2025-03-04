@@ -76,9 +76,10 @@ local function BuildRows(statusTable, status, injury, removeOnConfig, ignoreExis
 	end
 
 	if statusObj.Name == "LONG_REST" then
-		saveCell:AddText(Translator:translate("After how many long rests? (Counted by event or status application (including Angelic Slumber), if no event triggers)"))
+		saveCell:AddText(Translator:translate("After how many long rests?") .. " (?)"):Tooltip():AddText("\t " .. Translator:translate("This triggers when a FULL rest is done (partial is ignored) or when a relevant status is applied (i.e. Angelic Slumber). Because of the underlying implementation, this is exclusively a marker status, so don't add any other long-rest related statuses and exclude it from the relevant status groups")).TextWrapPos = 600
 		statusConfig["after_x_applications"] = statusConfig["after_x_applications"] or 1
-		saveCell:AddSliderInt("", statusConfig["after_x_applications"], 1, 30).OnChange = function(slider)
+		local longRestSlider = saveCell:AddSliderInt("", statusConfig["after_x_applications"], 1, 30)
+		longRestSlider.OnChange = function(slider)
 			statusConfig["after_x_applications"] = slider.Value[1]
 		end
 	end
@@ -248,5 +249,7 @@ Translator:RegisterTranslation({
 	["Save Conditions"] = "hbe9455faa0784cb99616e5098fd5247dgcg2",
 	["# of Stacks To Remove (?)"] = "h125c3399732d41a4a300eee966450e16e61f",
 	["i.e. if you set 3rd Degree Burns to remove 2 stacks, you'll have 1st Degree Burns applied"] = "he6354d4907a7431b82c7ebde28275f9a7eae",
-	["After how many long rests? (Counted by event or status application (including Angelic Slumber), if no event triggers)"] = "h0334268fe1274b1e9eb4c0286c0321042ag7",
+	["After how many long rests?"] = "h0334268fe1274b1e9eb4c0286c0321042ag7",
+	["This triggers when a FULL rest is done (partial is ignored) or when a relevant status is applied (i.e. Angelic Slumber). Because of the underlying implementation, this is exclusively a marker status, so don't add any other long-rest related statuses and exclude it from the relevant status groups"] =
+	"h4b796a8fc3164448bb59efa069551d270abg",
 })

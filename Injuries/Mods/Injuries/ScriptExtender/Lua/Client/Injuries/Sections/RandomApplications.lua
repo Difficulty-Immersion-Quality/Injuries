@@ -33,22 +33,31 @@ function RandomApplicationSettings:BuildBasicConfig(parent)
 	highRow:AddCell():AddText("High")
 	local highSeverity = highRow:AddCell():AddSliderInt("", universalSettings.random_injury_severity_weights["High"], 0, 100)
 
+	local extremeRow = severityTable:AddRow()
+	extremeRow:AddCell():AddText("Extreme")
+	if not universalSettings.random_injury_severity_weights["Extreme"] then
+		universalSettings.random_injury_severity_weights["Extreme"] = 25
+	end
+	local extremeSeverity = extremeRow:AddCell():AddSliderInt("", universalSettings.random_injury_severity_weights["Extreme"], 0, 100)
+
 	local severityErrorText = parent:AddText(Translator:translate("Error: Values must add up to 100%!"))
 	severityErrorText:SetColor("Text", { 1, 0.02, 0, 1 })
 	severityErrorText.Visible = false
 	local ensureAdditionFunction = function()
-		severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] ~= 100)
+		severityErrorText.Visible = (lowSeverity.Value[1] + mediumSeverity.Value[1] + highSeverity.Value[1] + extremeSeverity.Value[1] ~= 100)
 		if not severityErrorText.Visible then
 			-- Bit of a hack due to metatable shenanigans - can't replace the whole table at once
 			local weights = universalSettings.random_injury_severity_weights
 			weights["Low"] = lowSeverity.Value[1]
 			weights["Medium"] = mediumSeverity.Value[1]
 			weights["High"] = highSeverity.Value[1]
+			weights["Extreme"] = extremeSeverity.Value[1]
 		end
 	end
 	lowSeverity.OnChange = ensureAdditionFunction
 	mediumSeverity.OnChange = ensureAdditionFunction
 	highSeverity.OnChange = ensureAdditionFunction
+	extremeSeverity.OnChange = ensureAdditionFunction
 
 	local damageFilterCheckbox = parent:AddCheckbox(Translator:translate("Only consider Injuries that are configured to apply on the relevant damage type"),
 		universalSettings.random_injury_filter_by_damage_type)
