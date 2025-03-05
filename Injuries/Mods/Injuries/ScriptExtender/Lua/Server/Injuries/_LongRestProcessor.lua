@@ -9,24 +9,26 @@ local function process(character)
 			InjuryCommonLogic:ResetCounters(character, entity.Vars)
 
 			for injury in pairs(injuryVar["injuryAppliedReason"]) do
-				local removeConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status
-				if removeConfig and removeConfig["LONG_REST"] then
-					local longRestConfig = removeConfig["LONG_REST"]
-					if not longRestConfig["after_x_applications"] or longRestConfig["after_x_applications"] == 1 then
-						-- InjuryCommonLogic handles the rest of the logic on this event
-						Osi.RemoveStatus(character, injury)
-					end
-
-					if not injuryVar["numberOfLongRests"] then
-						injuryVar["numberOfLongRests"] = { injury = 1 }
-					elseif not injuryVar["numberOfLongRests"][injury] then
-						injuryVar["numberOfLongRests"][injury] = 1
-					else
-						injuryVar["numberOfLongRests"][injury] = injuryVar["numberOfLongRests"][injury] + 1
-
-						if injuryVar["numberOfLongRests"][injury] >= longRestConfig["after_x_applications"] then
+				if ConfigManager.ConfigCopy.injuries.injury_specific[injury] then
+					local removeConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status
+					if removeConfig and removeConfig["LONG_REST"] then
+						local longRestConfig = removeConfig["LONG_REST"]
+						if not longRestConfig["after_x_applications"] or longRestConfig["after_x_applications"] == 1 then
 							-- InjuryCommonLogic handles the rest of the logic on this event
 							Osi.RemoveStatus(character, injury)
+						end
+
+						if not injuryVar["numberOfLongRests"] then
+							injuryVar["numberOfLongRests"] = { injury = 1 }
+						elseif not injuryVar["numberOfLongRests"][injury] then
+							injuryVar["numberOfLongRests"][injury] = 1
+						else
+							injuryVar["numberOfLongRests"][injury] = injuryVar["numberOfLongRests"][injury] + 1
+
+							if injuryVar["numberOfLongRests"][injury] >= longRestConfig["after_x_applications"] then
+								-- InjuryCommonLogic handles the rest of the logic on this event
+								Osi.RemoveStatus(character, injury)
+							end
 						end
 					end
 				end
