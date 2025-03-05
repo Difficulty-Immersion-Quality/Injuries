@@ -34,7 +34,7 @@ data "Icon" "PassiveFeature_Generic_Blood"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
-data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_FOOT"
+data "StackId" "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
 data "StackPriority" ""
 data "StackType" "Ignore"
 data "AuraRadius" ""

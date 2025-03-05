@@ -143,6 +143,11 @@ if Ext.IsServer() then
 			if not entity.Vars.Goon_Injuries then
 				return entity, TableUtils:DeeplyCopyTable(injuryVar)
 			else
+				for key in pairs(injuryVar) do
+					if not entity.Vars.Goon_Injuries[key] then
+						entity.Vars.Goon_Injuries[key] = {}
+					end
+				end
 				return entity, entity.Vars.Goon_Injuries
 			end
 		end
@@ -208,7 +213,7 @@ if Ext.IsServer() then
 
 		if applicationChanceConfig.modifiers["Each Existing Injury Of Same Severity"] ~= 0 then
 			for injury in pairs(existingInjuryVar["injuryAppliedReason"]) do
-				if ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity == injuryConfig.severity then
+				if ConfigManager.ConfigCopy.injuries.injury_specific[injury] and ConfigManager.ConfigCopy.injuries.injury_specific[injury].severity == injuryConfig.severity then
 					chanceOfApplication = chanceOfApplication + applicationChanceConfig.modifiers["Each Existing Injury Of Same Severity"]
 				end
 			end
@@ -302,6 +307,14 @@ if Ext.IsServer() then
 		local injuryUserVar = entityVar.Goon_Injuries
 		if not injuryUserVar then
 			return
+		end
+
+		for injury in pairs(injuryUserVar["injuryAppliedReason"]) do
+			if not ConfigManager.ConfigCopy.injuries.injury_specific[injury] and Osi.HasActiveStatus(character, injury) == 1 then
+				Logger:BasicWarning("%s had %s applied through Injuries, but it no longer exists in the config - removing from the character!", character, injury)
+				Osi.RemoveStatus(character, injury)
+				injuryUserVar["injuryAppliedReason"][injury] = nil
+			end
 		end
 
 		for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
