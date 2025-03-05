@@ -143,6 +143,11 @@ if Ext.IsServer() then
 			if not entity.Vars.Goon_Injuries then
 				return entity, TableUtils:DeeplyCopyTable(injuryVar)
 			else
+				for key in pairs(injuryVar) do
+					if not entity.Vars.Goon_Injuries[key] then
+						entity.Vars.Goon_Injuries[key] = {}
+					end
+				end
 				return entity, entity.Vars.Goon_Injuries
 			end
 		end
