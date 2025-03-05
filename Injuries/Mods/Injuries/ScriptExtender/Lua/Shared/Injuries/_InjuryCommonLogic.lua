@@ -22,7 +22,7 @@ local injuryVar = {
 	["injuryAppliedReason"] = {},
 	---@type {[InjuryName] : number}
 	["numberOfApplicationsAttempted"] = {},
-	---@type {[InjuryName] : number}
+	---@type {[InjuryName] : number|"Skipped Because of Total Injury Limit"|"Skipped Because of Severity Injury Limit"}
 	["applicationChance"] = {},
 	---@type {[InjuryName] : string}
 	["removedDueTo"] = {},
@@ -184,8 +184,27 @@ if Ext.IsServer() then
 	---@param status string?
 	---@param character CHARACTER
 	---@param modifiers InjuryApplicationChanceModifiers[]?
-	function InjuryCommonLogic:RollForApplication(injuryName, existingInjuryVar, status, character, modifiers)
+	---@param appliedInjuriesTracker {string : InjuryName[]}
+	function InjuryCommonLogic:RollForApplication(injuryName, existingInjuryVar, status, character, modifiers, appliedInjuriesTracker)
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
+		local limitConfig = ConfigManager.ConfigCopy.injuries.universal.injury_limit_per_event
+
+		if appliedInjuriesTracker[injuryConfig.severity] and #appliedInjuriesTracker[injuryConfig.severity] >= limitConfig[injuryConfig.severity] then
+			Logger:BasicDebug("Will not apply %s on %s due to exceeding %s injury limit of %s", injuryName, character, injuryConfig.severity, limitConfig[injuryConfig.severity])
+			if not existingInjuryVar["applicationChance"] then
+				existingInjuryVar["applicationChance"] = {}
+			end
+			existingInjuryVar["applicationChance"][injuryName] = "Skipped Because of Severity Injury Limit"
+			return
+		elseif appliedInjuriesTracker["Total"] and appliedInjuriesTracker["Total"] >= limitConfig["Base"] then
+			Logger:BasicDebug("Will not apply %s on %s due to exceeding total injury limit of %s", injuryName, character, limitConfig["Base"])
+			if not existingInjuryVar["applicationChance"] then
+				existingInjuryVar["applicationChance"] = {}
+			end
+			existingInjuryVar["applicationChance"][injuryName] = "Skipped Because of Total Injury Limit"
+			return
+		end
+
 		local applicationChanceConfig = ConfigManager.ConfigCopy.injuries.universal.application_chance_by_severity
 
 		---@type number?
@@ -227,7 +246,13 @@ if Ext.IsServer() then
 		existingInjuryVar["applicationChance"][injuryName] = chanceOfApplication
 
 		if chanceOfApplication == 100
-			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
+			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"])
+		then
+			if not appliedInjuriesTracker[injuryConfig.severity] then
+				appliedInjuriesTracker[injuryConfig.severity] = {}
+			end
+			table.insert(appliedInjuriesTracker[injuryConfig.severity], injuryName)
+			appliedInjuriesTracker["Total"] = (appliedInjuriesTracker["Total"] or 0) + 1
 			return true
 		elseif chanceOfApplication <= 0 then
 			return false
@@ -240,7 +265,17 @@ if Ext.IsServer() then
 		existingInjuryVar["numberOfApplicationsAttempted"][injuryName] = (existingInjuryVar["numberOfApplicationsAttempted"][injuryName] or 0) + 1
 
 		local randomNumber = Osi.Random(100) + 1
-		return randomNumber <= chanceOfApplication
+
+		if randomNumber <= chanceOfApplication then
+			if not appliedInjuriesTracker[injuryConfig.severity] then
+				appliedInjuriesTracker[injuryConfig.severity] = {}
+			end
+			table.insert(appliedInjuriesTracker[injuryConfig.severity], injuryName)
+			appliedInjuriesTracker["Total"] = (appliedInjuriesTracker["Total"] or 0) + 1
+			return true
+		else
+			return false
+		end
 	end
 
 	--- If an eligible injury shares a stack with an applied injury, and is not the next injury in the stack, find the injury with the next
