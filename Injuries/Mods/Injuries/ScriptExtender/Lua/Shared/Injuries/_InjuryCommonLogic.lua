@@ -309,6 +309,14 @@ if Ext.IsServer() then
 			return
 		end
 
+		for injury in pairs(injuryUserVar["injuryAppliedReason"]) do
+			if not ConfigManager.ConfigCopy.injuries.injury_specific[injury] and Osi.HasActiveStatus(character, injury) == 1 then
+				Logger:BasicWarning("%s had %s applied through Injuries, but it no longer exists in the config - removing from the character!", character, injury)
+				Osi.RemoveStatus(character, injury)
+				injuryUserVar["injuryAppliedReason"][injury] = nil
+			end
+		end
+
 		for damageType, injuryTable in pairs(injuryUserVar["damage"]) do
 			for injury, _ in pairs(injuryTable) do
 				if not injuryUserVar["injuryAppliedReason"][injury] then
