@@ -10,6 +10,9 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 
 	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity)
 
+	---@type {string: InjuryName[]}
+	local appliedInjuriesTracker = {}
+
 	---@type StatusData
 	local statusData = Ext.Stats.Get(status)
 	for injury, injuryStatusConfig in pairs(statusConfig) do
@@ -66,7 +69,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 			local characterMultiplier = InjuryCommonLogic:CalculateCharacterMultipliers(entity, injuryConfig)
 			roundsWithMultiplier = roundsWithMultiplier * characterMultiplier * npcMultiplier
 
-			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, statusGroup or status, character) then
+			if roundsWithMultiplier >= injuryConfig.apply_on_status["number_of_rounds"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, statusGroup or status, character, nil, appliedInjuriesTracker) then
 				Logger:BasicDebug("%s was successfully applied on %s", nextStackInjury, character)
 				Osi.ApplyStatus(character, nextStackInjury, -1)
 				injuryVar["injuryAppliedReason"][nextStackInjury] = "Status"

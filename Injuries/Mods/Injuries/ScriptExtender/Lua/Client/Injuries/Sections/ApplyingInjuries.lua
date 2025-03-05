@@ -4,13 +4,17 @@ Translator:RegisterTranslation({
 	["Party Members"] = "h9df2a1fcaea949aeb733c493d4d7045ad3d3",
 	["Allies"] = "hb2b2ef0a495543a4a5596f821e25226410a7",
 	["Enemies"] = "h67f450fc249442b795305a91a9119e3e3790",
+	["How Many Injuries Can Be Applied In One Event?"] = "hfec50ba697d0499987092544aaf9805ed6e0",
+	["Event refers to triggers like an attack or status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted"] =
+	"hd9f5ee0de95740d385213d6cdc1e00fa1006",
 	["When Does the Damage/Status Tick Counter Reset?"] = "hc47037eb48214da092ef0e91442a316aff27",
 	["Healing Subtracts From Damage Counter"] = "h3cccf831d7dd4ab890ea564320f73af45bc2",
 	["Ratio of Healing:Injury - 50% means you need 2 points of healing to remove 1 point of Injury damage"] = "h516dbf2301714121b4f734955aa01f83f997",
 	["How much should the application chance increase/decrease when the below conditions are met?"] = "h2ed2ba9c679e4311b9d7b991246d84ff16g2",
 	["These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"] =
 	"h3f75c2db58974c47b8f5553e0fe58301831b",
-	["If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%"] = "hbaa3cadad3c048759ce144bfe8bc76e5b7a9",
+	["If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%"] =
+	"hbaa3cadad3c048759ce144bfe8bc76e5b7a9",
 	["Customize Damage + Status Multipliers For NPCs"] = "h38c9a5d7d98b4e8fadcb61ceefe9940a0dd4",
 	["Apply Injuries Outside of Combat"] = "h19e7eed71ae343bf8571aa5e4ae65ed46c1c",
 	["Configured by Severity - Due to technical limitations, this can't be a save, just a flat roll out of 100"] = "h51314d99b05b481f849ebd5a3bee1fa61dgf",
@@ -50,11 +54,52 @@ function ApplyingInjuriesSettings:BuildBasicConfig(parent)
 		universalSettings.apply_injuries_outside_combat = applyOutsideCombatCheckbox.Checked
 	end
 
-	parent:AddText("How Many Injuries Can Be Applied In One Event?")
-	parent:AddText("Event refers to triggers like a attack and a status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted"):SetStyle("Alpha", 0.7)
+	parent:AddText(Translator:translate("How Many Injuries Can Be Applied In One Event?"))
+	parent:AddText(
+		Translator:translate(
+		"Event refers to triggers like an attack or status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted"))
+		:SetStyle("Alpha", 0.7)
+
+	local totalInjuryCount = TableUtils:CountEntries(InjuryMenu.ConfigurationSlice.injury_specific)
+	universalSettings.injury_limit_per_event["Base"] = (universalSettings.injury_limit_per_event["Base"] == -1 or universalSettings.injury_limit_per_event["Base"] > totalInjuryCount)
+		and totalInjuryCount
+		or universalSettings.injury_limit_per_event["Base"]
 
 	local injuryCapTable = parent:AddTable("InjuryCap", 2)
 	local baseRow = injuryCapTable:AddRow()
+	baseRow.UserData = "keep"
+	baseRow:AddCell():AddText("Total")
+	local baseSlider = baseRow:AddCell():AddSliderInt("", universalSettings.injury_limit_per_event["Base"], 0, totalInjuryCount)
+
+	local function buildSliders()
+		for key in TableUtils:OrderedPairs(universalSettings.injury_limit_per_event, function(key)
+			return key == "Exclude" and 0 or (key == "Low" and 1) or (key == "Medium" and 2) or (key == "High" and 3) or 4
+		end) do
+			if key ~= "Base" then
+				local row = injuryCapTable:AddRow()
+				row:AddCell():AddText(key)
+
+				if universalSettings.injury_limit_per_event[key] == -1 then
+					universalSettings.injury_limit_per_event[key] = totalInjuryCount
+				elseif universalSettings.injury_limit_per_event[key] > baseSlider.Value[1] then
+					universalSettings.injury_limit_per_event[key] = baseSlider.Value[1]
+				end
+
+				local slider = row:AddCell():AddSliderInt("", universalSettings.injury_limit_per_event[key], 0, baseSlider.Value[1])
+				slider.OnChange = function()
+					universalSettings.injury_limit_per_event[key] = slider.Value[1]
+				end
+			end
+		end
+	end
+
+	buildSliders()
+
+	baseSlider.OnChange = function()
+		universalSettings.injury_limit_per_event["Base"] = baseSlider.Value[1]
+		UIHelpers:KillChildren(injuryCapTable)
+		buildSliders()
+	end
 end
 
 function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
@@ -137,7 +182,7 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 	parent:AddText(Translator:translate("How much should the application chance increase/decrease when the below conditions are met?"))
 	local desc = parent:AddText(
 		Translator:translate(
-		"These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"))
+			"These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but maximum weapon damage was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied"))
 	desc.TextWrapPos = 0
 	desc:SetStyle("Alpha", 0.65)
 

@@ -60,6 +60,15 @@ ConfigurationStructure.config.injuries.universal.application_chance_by_severity 
 	}
 }
 
+ConfigurationStructure.config.injuries.universal.injury_limit_per_event = {
+	["Base"] = -1,
+	["Exclude"] = -1,
+	["Low"] = -1,
+	["Medium"] = -1,
+	["High"] = -1,
+	["Extreme"] = -1,
+}
+
 --#region NPC Modifiers
 ---@alias NPCCategories "Base"|"Boss"|"MiniBoss"|"Elite"|"Combatant"|"Pack"|"Zero"|"Civilian"
 ---@type { [NPCCategories] : number}

@@ -148,6 +148,8 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
     <content contentuid="h027c1850829a4110bd48020e5cc3568b07b6" version="1">After</content>
     <content contentuid="hbeb89344fa92437bb90906a174e97422a41g" version="1">|| Applied Due To</content>
     <content contentuid="h6a6c0cf5788a4c53bfa79f34f80c649855ge" version="1">Application Chance:</content>
+	<content contentuid="h236cd6f54564499188952a6b3405a643ef0b" version="1">Skipped Because of Total Injury Limit</content>
+    <content contentuid="hfc82c1a99da44de09e4f3236f7724d154023" version="1">Skipped Because of Severity Injury Limit</content>
     <content contentuid="hbfc67df75c9c415984e82956001094eb36fe" version="1">| Number Of Attempted Applications:</content>
     <content contentuid="h6c7f017278c34386ae1fe4810beaa30fa7d5" version="1">Injury Damage / Threshold</content>
     <content contentuid="ha7b7cc41b59d406f93b7c4e8d6f99c50b7eb" version="1">Total Damage</content>
@@ -235,4 +237,6 @@ NOTE: This section does not currently handle ticks, it is only handling initial 
     <content contentuid="he1723b1c477144bd9e4c69594b60f64f6a9b" version="1">Include</content>
     <content contentuid="hcfc9c68627ac4cd9a365d94a32e48c0cc4fd" version="1">Exclude</content>
 	<!-- END Status Helper -->
+    <content contentuid="hfec50ba697d0499987092544aaf9805ed6e0" version="1">How Many Injuries Can Be Applied In One Event?</content>
+    <content contentuid="hd9f5ee0de95740d385213d6cdc1e00fa1006" version="1">Event refers to triggers like an attack or status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted</content>
 </contentList>

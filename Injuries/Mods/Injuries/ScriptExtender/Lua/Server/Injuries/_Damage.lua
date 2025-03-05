@@ -51,6 +51,9 @@ local function ProcessDamageEvent(event)
 	end
 	::exit::
 
+	---@type {string: InjuryName[]}
+	local appliedInjuriesTracker = {}
+
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
 		local damageConfig = ConfigManager.Injuries.Damage[damageType]
@@ -116,7 +119,7 @@ local function ProcessDamageEvent(event)
 
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
-						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, nil, defender, modifiers) then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, nil, defender, modifiers, appliedInjuriesTracker) then
 							Osi.ApplyStatus(defender, nextStackInjury, -1)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 
