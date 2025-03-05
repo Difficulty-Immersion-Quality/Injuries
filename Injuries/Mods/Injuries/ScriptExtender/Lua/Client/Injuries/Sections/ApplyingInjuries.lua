@@ -49,6 +49,12 @@ function ApplyingInjuriesSettings:BuildBasicConfig(parent)
 	applyOutsideCombatCheckbox.OnChange = function()
 		universalSettings.apply_injuries_outside_combat = applyOutsideCombatCheckbox.Checked
 	end
+
+	parent:AddText("How Many Injuries Can Be Applied In One Event?")
+	parent:AddText("Event refers to triggers like a attack and a status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted"):SetStyle("Alpha", 0.7)
+
+	local injuryCapTable = parent:AddTable("InjuryCap", 2)
+	local baseRow = injuryCapTable:AddRow()
 end
 
 function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
