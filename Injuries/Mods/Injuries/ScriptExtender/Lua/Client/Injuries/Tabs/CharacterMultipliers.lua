@@ -173,6 +173,74 @@ InjuryMenu:RegisterTab(function(tabBar, injury)
 		end
 	end
 	--#endregion
+
+	--#region NPC Multipliers
+	multiplierTab:AddNewLine()
+	local npcHeader = multiplierTab:AddCollapsingHeader(Translator:translate("Damage + Status Multipliers For NPCs"))
+
+	local enemyDesc = npcHeader:AddText(
+		Translator:translate(
+			"These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. These will override the ones set in the universal 'Applying Injuries' settings."
+			.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"))
+	enemyDesc.TextWrapPos = 0
+	enemyDesc:SetStyle("Alpha", 0.65)
+
+	local enemyMultTable = npcHeader:AddTable("Injury Specific Enemy Multiplier Table", 2)
+	enemyMultTable.SizingStretchProp = true
+
+	local function buildNpcMultiSlider(npcType)
+		local newRow = enemyMultTable:AddRow()
+		newRow:AddCell():AddText(npcType)
+
+		if not charMultiplierConfig["npc_multipliers"] then
+			charMultiplierConfig["npc_multipliers"] = {}
+		end
+
+		if not charMultiplierConfig["npc_multipliers"][npcType] then
+			charMultiplierConfig["npc_multipliers"][npcType] = 1
+		end
+
+		local newSlider = newRow:AddCell():AddSliderInt("", math.floor(charMultiplierConfig["npc_multipliers"][npcType] * 100), 0, 500)
+		newSlider.OnChange = function(slider)
+			---@cast slider ExtuiSliderInt
+			charMultiplierConfig["npc_multipliers"][npcType] = slider.Value[1] / 100
+		end
+
+		return newRow
+	end
+
+	local addNPCRowButton = npcHeader:AddButton("+")
+	addNPCRowButton.IDContext = "injury_specific" .. addNPCRowButton.Label
+	local npcPopop = multiplierTab:AddPopup("Injury Specific NPC Multiplier")
+	local npcTypes = { "Boss", "MiniBoss", "Elite", "Combatant", "Pack", "Zero", "Civilian" }
+
+	for i, npcType in pairs(npcTypes) do
+		---@type ExtuiSelectable
+		local enemySelect = npcPopop:AddSelectable(npcType, "DontClosePopups")
+		enemySelect.IDContext = "injury_specific" .. enemySelect.Label
+
+		enemySelect.OnActivate = function()
+			if enemySelect.UserData then
+				enemySelect.UserData:Destroy()
+				enemySelect.UserData = nil
+				charMultiplierConfig["npc_multipliers"][npcType] = nil
+			else
+				enemySelect.UserData = buildNpcMultiSlider(npcType)
+			end
+		end
+
+		if charMultiplierConfig["npc_multipliers"] and charMultiplierConfig["npc_multipliers"][npcType] then
+			enemySelect.Selected = true
+			enemySelect:OnActivate()
+		end
+	end
+
+	addNPCRowButton.OnClick = function()
+		npcPopop:Open()
+	end
+
+	multiplierTab:AddNewLine()
+	--#endregion
 end)
 
 Translator:RegisterTranslation({
@@ -195,8 +263,7 @@ Translator:RegisterTranslation({
 	["Tag UUID:"] = "h72738de2d12d41798d6780e4512bef70a9g1",
 	["Display Description:"] = "h56eb6fe545af4fe3b335bc5483844b98be02",
 	["Delete"] = "h55fb845d61da4b6ba21457c35b05edfc672g",
-	[""] = "",
-	[""] = "",
-	[""] = "",
-	[""] = "",
+	["Damage + Status Multipliers For NPCs"] = "hfb5b81035983400b974aa2f4aec01a1e369b",
+	["These % multipliers will apply after the ones set per-injury (0 = no Injury damage will be taken) - NPC-type determinations are made by their associated Experience Reward Category. These will override the ones set in the universal 'Applying Injuries' settings."
+	.. " Supports Mod-added XPReward categories as long as they use the same names prepended with `_` - e.g. MMM_Combatant"] = "hf711296ce96b4c9e8dd776fda7c9755680b0",
 })

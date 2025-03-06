@@ -120,10 +120,7 @@ local function AddMultiplierRows(reportTable, entity, injuryConfig, totalAmount,
 	if npcCategory then
 		local npcMulti = reportTable:AddRow()
 		local npcDisplay = npcMulti:AddCell()
-		npcDisplay:AddText(Translator:translate("NPC Category"))
-		local seeNpcButton = npcDisplay:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
-		seeNpcButton.SameLine = true
-		seeNpcButton:Tooltip():AddText("\t" .. npcCategory)
+		npcDisplay:AddText(Translator:translate("NPC Category") .. string.format(" - %s", npcCategory))
 
 		npcMulti:AddCell():AddText(string.format("%s%%", characterMultiplier * 100))
 		npcMulti:AddCell():AddText("---")
@@ -149,7 +146,7 @@ local function CreateReport(group)
 
 	local statusReportHeaders = reportTable:AddRow()
 	statusReportHeaders.Headers = true
-	statusReportHeaders:AddCell():AddText("")
+	statusReportHeaders:AddCell():AddText(" ")
 	statusReportHeaders:AddCell():AddText(Translator:translate("Multiplier"))
 	statusReportHeaders:AddCell():AddText(Translator:translate("Before"))
 	statusReportHeaders:AddCell():AddText(Translator:translate("After"))
@@ -182,7 +179,7 @@ local function BuildReport()
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
-			if not entity or not entity.Data or not entity.IsAlive then
+			if not entity or not entity.Data or entity.Death then
 				entityInjuriesReport[character] = nil
 				Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
 				goto next_injury
@@ -216,8 +213,6 @@ local function BuildReport()
 				BuildReport()
 			end
 
-			local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity)
-
 			local keepHeader = false
 
 			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
@@ -225,6 +220,8 @@ local function BuildReport()
 				local status = Ext.Stats.Get(key)
 				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
 			end) do
+				local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity, injury)
+
 				---@cast injuryConfig Injury
 
 				---@type StatusData?
@@ -248,9 +245,13 @@ local function BuildReport()
 				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
 
 				if injuryReport["applicationChance"] and injuryReport["applicationChance"][injury] then
-					injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
+					if string.match(injuryReport["applicationChance"][injury], "Skipped") then
+						injuryReportGroup:AddText(Translator:translate(injuryReport["applicationChance"][injury]))
+					else
+						injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
+					end
 				end
-				
+
 				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
 					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
 				end
@@ -440,6 +441,8 @@ Translator:RegisterTranslation({
 	["After"] = "h027c1850829a4110bd48020e5cc3568b07b6",
 	["|| Applied Due To"] = "hbeb89344fa92437bb90906a174e97422a41g",
 	["Application Chance:"] = "h6a6c0cf5788a4c53bfa79f34f80c649855ge",
+	["Skipped Because of Total Injury Limit"] = "h236cd6f54564499188952a6b3405a643ef0b",
+	["Skipped Because of Severity Injury Limit"] = "hfc82c1a99da44de09e4f3236f7724d154023",
 	["| Number Of Attempted Applications:"] = "hbfc67df75c9c415984e82956001094eb36fe",
 	["Injury Damage / Threshold"] = "h6c7f017278c34386ae1fe4810beaa30fa7d5",
 	["Total Damage"] = "ha7b7cc41b59d406f93b7c4e8d6f99c50b7eb",

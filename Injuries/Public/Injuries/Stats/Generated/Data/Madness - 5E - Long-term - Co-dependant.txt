@@ -22,8 +22,8 @@ data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE')):ApplyStatus(GOON_COD
 data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AttackRoll);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllAbilities);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllSavingThrows)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" ""
-data "RemoveEvents" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" ""
@@ -85,7 +85,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 //
 data "StackId" "GOON_CODEPENDANT_IN_RANGE_TECHNICAL"
 data "SoundVocalStart" "RELAXED"
-data "OnRemoveFunctors" "ApplyStatus(GOON_CODEPENDANT_OUT_RANGE_SFX,100,0)"
+data "OnRemoveFunctors" "IF(HasStatus('GOON_MADNESS_5E_LONGTERM_CODEPENDANT')):ApplyStatus(GOON_CODEPENDANT_OUT_RANGE_SFX,100,0)"
 
 new entry "GOON_CODEPENDANT_OUT_RANGE_SFX"
 type "StatusData"

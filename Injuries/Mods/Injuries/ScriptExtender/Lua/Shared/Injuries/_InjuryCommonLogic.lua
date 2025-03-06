@@ -22,7 +22,7 @@ local injuryVar = {
 	["injuryAppliedReason"] = {},
 	---@type {[InjuryName] : number}
 	["numberOfApplicationsAttempted"] = {},
-	---@type {[InjuryName] : number}
+	---@type {[InjuryName] : number|"Skipped Because of Total Injury Limit"|"Skipped Because of Severity Injury Limit"}
 	["applicationChance"] = {},
 	---@type {[InjuryName] : string}
 	["removedDueTo"] = {},
@@ -35,8 +35,9 @@ InjuryCommonLogic = {}
 --- Returns the npcType just for the InjuryReport, so we know if the character even has a multiplier available instead of
 --- defaulting in the absence of one
 ---@param character EntityHandle
+---@param injuryName InjuryName?
 ---@return number, string?
-function InjuryCommonLogic:CalculateNpcMultiplier(character)
+function InjuryCommonLogic:CalculateNpcMultiplier(character, injuryName)
 	if not character or not character.Data then
 		return 1
 	end
@@ -53,19 +54,35 @@ function InjuryCommonLogic:CalculateNpcMultiplier(character)
 		else
 			config = ConfigurationStructure.config
 		end
-		config = config.injuries.universal
 
-		local lowerCat = string.lower(xpCategory)
-		for npcType, multiplier in pairs(config.npc_multipliers) do
-			npcType = string.lower(npcType)
+		local function determineMultiplier(localconfig)
+			local lowerCat = string.lower(xpCategory)
+			for npcType, multiplier in pairs(localconfig.npc_multipliers) do
+				npcType = string.lower(npcType)
 
-			-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
-			if lowerCat == npcType or string.find(lowerCat, "_" .. npcType .. "$") then
-				return multiplier, xpCategory
+				-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
+				if lowerCat == npcType or string.find(lowerCat, "_" .. npcType .. "$") then
+					return multiplier
+				end
 			end
 		end
 
-		return config.npc_multipliers["Base"], xpCategory .. " (Base Multiplier)"
+		if injuryName
+			and config.injuries.injury_specific[injuryName].character_multipliers
+			and config.injuries.injury_specific[injuryName].character_multipliers["npc_multipliers"]
+		then
+			local multiplier = determineMultiplier(config.injuries.injury_specific[injuryName].character_multipliers)
+			if multiplier then
+				return multiplier, xpCategory .. " (Injury Override)"
+			end
+		end
+
+		local multiplier = determineMultiplier(config.injuries.universal)
+		if multiplier then
+			return multiplier, xpCategory
+		end
+
+		return config.injuries.universal.npc_multipliers["Base"], xpCategory .. " (Base Multiplier)"
 	end
 end
 
@@ -95,6 +112,10 @@ if Ext.IsServer() then
 	---@param character GUIDSTRING
 	---@return boolean
 	function InjuryCommonLogic:IsEligible(character)
+		if not ConfigManager.ConfigCopy.injuries then
+			return false
+		end
+
 		if Osi.IsItem(character) == 1
 			or Osi.Exists(character) == 0
 			or Osi.IsDead(character) == 1
@@ -106,7 +127,8 @@ if Ext.IsServer() then
 		---@type EntityHandle
 		local entity = Ext.Entity.Get(character)
 		for _, tag in ipairs(entity.Tag.Tags) do
-			if string.find(Ext.StaticData.Get(tag, "Tag").Name, "WPN_") then
+			local tagData = Ext.StaticData.Get(tag, "Tag")
+			if tagData and tagData.Name and string.find(tagData.Name, "WPN_") then
 				return false
 			end
 		end
@@ -184,8 +206,27 @@ if Ext.IsServer() then
 	---@param status string?
 	---@param character CHARACTER
 	---@param modifiers InjuryApplicationChanceModifiers[]?
-	function InjuryCommonLogic:RollForApplication(injuryName, existingInjuryVar, status, character, modifiers)
+	---@param appliedInjuriesTracker {string : InjuryName[]}
+	function InjuryCommonLogic:RollForApplication(injuryName, existingInjuryVar, status, character, modifiers, appliedInjuriesTracker)
 		local injuryConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injuryName]
+		local limitConfig = ConfigManager.ConfigCopy.injuries.universal.injury_limit_per_event
+
+		if appliedInjuriesTracker[injuryConfig.severity] and #appliedInjuriesTracker[injuryConfig.severity] >= limitConfig[injuryConfig.severity] then
+			Logger:BasicDebug("Will not apply %s on %s due to exceeding %s injury limit of %s", injuryName, character, injuryConfig.severity, limitConfig[injuryConfig.severity])
+			if not existingInjuryVar["applicationChance"] then
+				existingInjuryVar["applicationChance"] = {}
+			end
+			existingInjuryVar["applicationChance"][injuryName] = "Skipped Because of Severity Injury Limit"
+			return
+		elseif appliedInjuriesTracker["Total"] and appliedInjuriesTracker["Total"] >= limitConfig["Base"] then
+			Logger:BasicDebug("Will not apply %s on %s due to exceeding total injury limit of %s", injuryName, character, limitConfig["Base"])
+			if not existingInjuryVar["applicationChance"] then
+				existingInjuryVar["applicationChance"] = {}
+			end
+			existingInjuryVar["applicationChance"][injuryName] = "Skipped Because of Total Injury Limit"
+			return
+		end
+
 		local applicationChanceConfig = ConfigManager.ConfigCopy.injuries.universal.application_chance_by_severity
 
 		---@type number?
@@ -227,7 +268,13 @@ if Ext.IsServer() then
 		existingInjuryVar["applicationChance"][injuryName] = chanceOfApplication
 
 		if chanceOfApplication == 100
-			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"]) then
+			or ((status and injuryConfig.apply_on_status["applicable_statuses"] and injuryConfig.apply_on_status["applicable_statuses"][status]) and injuryConfig.apply_on_status["applicable_statuses"][status]["guarantee_application"])
+		then
+			if not appliedInjuriesTracker[injuryConfig.severity] then
+				appliedInjuriesTracker[injuryConfig.severity] = {}
+			end
+			table.insert(appliedInjuriesTracker[injuryConfig.severity], injuryName)
+			appliedInjuriesTracker["Total"] = (appliedInjuriesTracker["Total"] or 0) + 1
 			return true
 		elseif chanceOfApplication <= 0 then
 			return false
@@ -240,7 +287,17 @@ if Ext.IsServer() then
 		existingInjuryVar["numberOfApplicationsAttempted"][injuryName] = (existingInjuryVar["numberOfApplicationsAttempted"][injuryName] or 0) + 1
 
 		local randomNumber = Osi.Random(100) + 1
-		return randomNumber <= chanceOfApplication
+
+		if randomNumber <= chanceOfApplication then
+			if not appliedInjuriesTracker[injuryConfig.severity] then
+				appliedInjuriesTracker[injuryConfig.severity] = {}
+			end
+			table.insert(appliedInjuriesTracker[injuryConfig.severity], injuryName)
+			appliedInjuriesTracker["Total"] = (appliedInjuriesTracker["Total"] or 0) + 1
+			return true
+		else
+			return false
+		end
 	end
 
 	--- If an eligible injury shares a stack with an applied injury, and is not the next injury in the stack, find the injury with the next

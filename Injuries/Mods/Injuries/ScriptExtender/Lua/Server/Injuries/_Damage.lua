@@ -37,8 +37,6 @@ local function ProcessDamageEvent(event)
 
 	RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
-	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(defenderEntity)
-
 	---@type InjuryApplicationChanceModifiers[]
 	local modifiers = {}
 	for _, statsRoll in pairs(event.Hit.Damage.DamageRolls) do
@@ -50,6 +48,9 @@ local function ProcessDamageEvent(event)
 		end
 	end
 	::exit::
+
+	---@type {string: InjuryName[]}
+	local appliedInjuriesTracker = {}
 
 	-- Total damage is the sum of damage pre-resistance/invulnerability checks - FinalDamage is post
 	for damageType, finalDamageAmount in pairs(event.Hit.Damage.FinalDamagePerType) do
@@ -72,6 +73,8 @@ local function ProcessDamageEvent(event)
 						and Osi.HasActiveStatus(defender, nextStackInjury) == 0
 						and not injuryVar["injuryAppliedReason"][nextStackInjury]
 					then
+						local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(defenderEntity, nextStackInjury)
+
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
 						if injury ~= nextStackInjury then
@@ -116,7 +119,7 @@ local function ProcessDamageEvent(event)
 
 						local totalHpPercentageRemoved = (finalDamageWithInjuryMultiplier / defenderEntity.Health.MaxHp) * 100
 
-						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, nil, defender, modifiers) then
+						if totalHpPercentageRemoved >= injuryConfig.damage["threshold"] and InjuryCommonLogic:RollForApplication(nextStackInjury, injuryVar, nil, defender, modifiers, appliedInjuriesTracker) then
 							Osi.ApplyStatus(defender, nextStackInjury, -1)
 							injuryVar["injuryAppliedReason"][nextStackInjury] = "Damage"
 
