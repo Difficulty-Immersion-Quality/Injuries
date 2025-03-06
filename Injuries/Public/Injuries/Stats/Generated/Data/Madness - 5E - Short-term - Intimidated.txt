@@ -22,7 +22,7 @@ data "AuraStatuses" "IF(Enemy() and not Tagged('INANIMATE') and not Dead()):Appl
 data "Boosts" ""
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS') or HasStatus('CALM_EMOTIONS') or (HasPassive('MindlessRage') and HasStatus('SG_Rage'))"
+data "RemoveConditions" "(not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS') or HasStatus('CALM_EMOTIONS') or (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"
 data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
