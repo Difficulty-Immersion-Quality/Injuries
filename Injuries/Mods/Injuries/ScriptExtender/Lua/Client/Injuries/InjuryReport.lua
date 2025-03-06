@@ -179,7 +179,7 @@ local function BuildReport()
 			---@type EntityHandle
 			local entity = Ext.Entity.Get(character)
 
-			if not entity or not entity.Data or not entity.IsAlive then
+			if not entity or not entity.Data or entity.Death then
 				entityInjuriesReport[character] = nil
 				Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
 				goto next_injury
