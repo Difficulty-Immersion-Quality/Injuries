@@ -8,8 +8,6 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 	local statusVar = injuryVar["applyOnStatus"]
 	local character = entity.Uuid.EntityUuid
 
-	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity)
-
 	---@type {string: InjuryName[]}
 	local appliedInjuriesTracker = {}
 
@@ -24,6 +22,8 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 		local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
 		Logger:BasicDebug("Status %s will apply %s (possibly upgraded from %s) to %s", status, nextStackInjury, injury, character)
 		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
+			local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity, nextStackInjury)
+
 			if statusGroup and statusData.StatusGroups and TableUtils:ListContains(statusData.StatusGroups, statusGroup) then
 				if injuryStatusConfig["excluded_statuses"] and TableUtils:ListContains(injuryStatusConfig["excluded_statuses"], status) then
 					Logger:BasicDebug("%s belongs to status group %s but is excluded, so skipping", nextStackInjury, statusGroup)

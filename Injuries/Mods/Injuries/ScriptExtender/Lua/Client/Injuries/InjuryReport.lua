@@ -120,10 +120,7 @@ local function AddMultiplierRows(reportTable, entity, injuryConfig, totalAmount,
 	if npcCategory then
 		local npcMulti = reportTable:AddRow()
 		local npcDisplay = npcMulti:AddCell()
-		npcDisplay:AddText(Translator:translate("NPC Category"))
-		local seeNpcButton = npcDisplay:AddImageButton("npcCategory", "Spell_Divination_SeeInvisibility", { 30, 30 })
-		seeNpcButton.SameLine = true
-		seeNpcButton:Tooltip():AddText("\t" .. npcCategory)
+		npcDisplay:AddText(Translator:translate("NPC Category") .. string.format(" - %s", npcCategory))
 
 		npcMulti:AddCell():AddText(string.format("%s%%", characterMultiplier * 100))
 		npcMulti:AddCell():AddText("---")
@@ -143,13 +140,14 @@ local function CreateReport(group)
 	reportButton:Tooltip():AddText("\tClick To Toggle")
 
 	local reportTable = group:AddTable(group.UserData .. "Report", 4)
+	-- reportTable:AddColumn("First", "WidthFixed")
 	reportTable.SizingStretchSame = true
 	reportTable.BordersInnerH = true
 	reportTable.Visible = false
 
 	local statusReportHeaders = reportTable:AddRow()
 	statusReportHeaders.Headers = true
-	statusReportHeaders:AddCell():AddText("")
+	statusReportHeaders:AddCell():AddText(" ")
 	statusReportHeaders:AddCell():AddText(Translator:translate("Multiplier"))
 	statusReportHeaders:AddCell():AddText(Translator:translate("Before"))
 	statusReportHeaders:AddCell():AddText(Translator:translate("After"))
@@ -216,8 +214,6 @@ local function BuildReport()
 				BuildReport()
 			end
 
-			local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity)
-
 			local keepHeader = false
 
 			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
@@ -225,6 +221,8 @@ local function BuildReport()
 				local status = Ext.Stats.Get(key)
 				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
 			end) do
+				local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity, injury)
+
 				---@cast injuryConfig Injury
 
 				---@type StatusData?

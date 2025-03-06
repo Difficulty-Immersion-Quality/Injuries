@@ -1,5 +1,6 @@
 ConfigManager = {}
 
+---@type Configuration
 ConfigManager.ConfigCopy = {}
 
 -- Need to make sure the server's copy of the config is up-to-date since that's where the actual functionality is

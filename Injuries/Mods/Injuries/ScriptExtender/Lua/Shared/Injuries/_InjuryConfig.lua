@@ -163,7 +163,9 @@ ConfigurationStructure.DynamicClassDefinitions.injury_class.character_multiplier
 	---@type {[TAG] : number}?
 	["tags"] = nil,
 	---@type {[GUIDSTRING] : number}?
-	["races"] = nil
+	["races"] = nil,
+	---@type { [NPCCategories] : number}?
+	["npc_multipliers"] = nil
 }
 
 ---@alias InjuryName string
