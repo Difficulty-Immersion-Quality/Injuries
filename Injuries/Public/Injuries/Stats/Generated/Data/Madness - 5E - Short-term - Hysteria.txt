@@ -110,4 +110,4 @@ data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 //
-data "OnApplyFunctors" "IF(SavingThrow(Ability.Wisdom, 20)):RemoveStatus(GOON_HYSTERIA_SHORTTERM_MADNESS_TECHNICAL)"
+data "OnApplyFunctors" "IF(SavingThrow(Ability.Wisdom, 20)):RemoveStatus(GOON_MADNESS_5E_SHORTTERM_HYSTERIA)"
