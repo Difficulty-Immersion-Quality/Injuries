@@ -140,7 +140,6 @@ local function CreateReport(group)
 	reportButton:Tooltip():AddText("\tClick To Toggle")
 
 	local reportTable = group:AddTable(group.UserData .. "Report", 4)
-	-- reportTable:AddColumn("First", "WidthFixed")
 	reportTable.SizingStretchSame = true
 	reportTable.BordersInnerH = true
 	reportTable.Visible = false

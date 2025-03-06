@@ -115,7 +115,7 @@ if Ext.IsServer() then
 		if not ConfigManager.ConfigCopy.injuries then
 			return false
 		end
-		
+
 		if Osi.IsItem(character) == 1
 			or Osi.Exists(character) == 0
 			or Osi.IsDead(character) == 1
