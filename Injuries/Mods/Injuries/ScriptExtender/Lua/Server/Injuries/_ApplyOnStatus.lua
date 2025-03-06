@@ -20,8 +20,8 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 		end
 
 		local nextStackInjury = InjuryCommonLogic:GetNextInjuryInStackIfApplicable(character, injury)
-		Logger:BasicDebug("Status %s will apply %s (possibly upgraded from %s) to %s", status, nextStackInjury, injury, character)
 		if nextStackInjury and Osi.HasActiveStatus(character, nextStackInjury) == 0 then
+			Logger:BasicDebug("Status %s will apply %s (possibly upgraded from %s) to %s", status, nextStackInjury, injury, character)
 			local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity, nextStackInjury)
 
 			if statusGroup and statusData.StatusGroups and TableUtils:ListContains(statusData.StatusGroups, statusGroup) then
