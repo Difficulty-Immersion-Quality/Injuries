@@ -1,6 +1,38 @@
-// ==================================== Madness ====================================
+// ==================================== Proxy ====================================
 
 new entry "GOON_MADNESS_5E_SHORTTERM_PARALYSED"
+type "StatusData"
+data "StatusType" "BOOST"
+// Short-term Madness: Paralysed
+data "DisplayName" "h670d027cge632g4197gb341g6dffe2dcce73"
+//
+data "Description" "h03a027ecgee3fg4c46g9805g835d4222d2ce"
+data "DescriptionParams" "Distance(3)"
+data "TooltipSave" ""
+data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
+//
+data "StackId" "GOON_MADNESS_5E_SHORTTERM_PARALYSED"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "OnApplyFunctors" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):ApplyStatus(GOON_PARALYSED_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive;Goon_Paralysed_Shortterm_Madness_Passive"
+
+// Technical passive for determining if the madness effects should be active
+new entry "Goon_Paralysed_Shortterm_Madness_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):RemoveStatus(GOON_PARALYSED_SHORTTERM_MADNESS_TECHNICAL);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_PARALYSED_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
+data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('CALM_EMOTIONS') or (HasPassive('MindlessRage') and StatusId('SG_Rage'))) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('CALM_EMOTIONS') or StatusId('SG_Rage'))"
+
+// ==================================== Madness ====================================
+
+new entry "GOON_PARALYSED_SHORTTERM_MADNESS_TECHNICAL"
 type "StatusData"
 data "StatusType" "INCAPACITATED"
 // Short-term Madness: Paralysed
@@ -11,23 +43,23 @@ data "DescriptionParams" "Distance(3)"
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
-data "StatusPropertyFlags" "ApplyToDead;IgnoreResting;OverheadOnTurn"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting;OverheadOnTurn"
 //
-data "StackId" "GOON_MADNESS_5E_SHORTTERM_PARALYSED"
+data "StackId" "GOON_PARALYSED_SHORTTERM_MADNESS_TECHNICAL"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "AuraRadius" ""
 data "AuraStatuses" ""
 // A calm emotions spell can suppress the effects of madness
-data "Boosts" "AbilityFailedSavingThrow(Strength);AbilityFailedSavingThrow(Dexterity);CriticalHit(AttackTarget,Success,Always,3);CriticalHit(AttackTarget,Failure,Never,3);Advantage(AttackTarget);ActionResourceBlock(Movement);DetectDisturbancesBlock(true)"
-data "OnApplyFunctors" "BreakConcentration()"
+data "Boosts" "AbilityFailedSavingThrow(Strength);AbilityFailedSavingThrow(Dexterity);CriticalHit(AttackTarget,Success,Always,3);DetectDisturbancesBlock(true);Advantage(AttackTarget);SightRangeOverride(0)"
+data "OnApplyFunctors" "RemoveStatus(SNEAKING);RemoveStatus(SLEEP);RemoveStatus(SLEEPING);RemoveStatus(SG_Sleeping);BreakConcentration();RemoveStatus(SG_Prone)"
 data "OnRemoveFunctors" ""
-data "RemoveConditions" "((HasStatus('CALM_EMOTIONS')) and (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"
-data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
+data "RemoveConditions" "not HasStatus('GOON_MADNESS_5E_SHORTTERM_UNCONSCIOUS')"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
-data "StatusGroups" "SG_Incapacitated;SG_Paralyzed"
-data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive"
+data "StatusGroups" "SG_Paralyzed;SG_Incapacitated"
+data "Passives" ""
 //
 data "AnimationStart" "b554aad5-6f39-4406-b248-e82084d01b1f(STAT_Dazed_Combat_01_Start)"
 data "AnimationLoop" "06cff5ab-1705-403a-b20f-d5c9defbece5(STAT_Dazed_Combat_01_Loop)"

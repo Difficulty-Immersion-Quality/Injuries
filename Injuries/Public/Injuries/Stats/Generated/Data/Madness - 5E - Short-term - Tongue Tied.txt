@@ -1,4 +1,4 @@
-// ==================================== Unlike Injuries, madness effects are just a main status that potentially has some technicals ====================================
+// ==================================== Madness ====================================
 
 new entry "GOON_MADNESS_5E_SHORTTERM_TONGUE_TIED"
 type "StatusData"
@@ -20,8 +20,8 @@ data "StackType" "Overwrite"
 data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (HasSpellFlag(SpellFlags.HasVerbalComponent))):Disadvantage(AttackRoll);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (HasSpellFlag(SpellFlags.HasVerbalComponent))):SpellSaveDC(-5)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" ""
-data "RemoveEvents" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" ""

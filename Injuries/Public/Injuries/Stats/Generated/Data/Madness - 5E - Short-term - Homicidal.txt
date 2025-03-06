@@ -1,4 +1,4 @@
-// ==================================== Unlike Injuries, madness effects are just a main status that potentially has some technicals ====================================
+// ==================================== Proxy ====================================
 
 new entry "GOON_MADNESS_5E_SHORTTERM_HOMICIDAL"
 type "StatusData"
@@ -11,17 +11,51 @@ data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "statIcons_Madness"
 data "FormatColor" "Red"
-data "StatusPropertyFlags" "ApplyToDead;IgnoreResting;LoseControl;OverheadOnTurn;InitiateCombat;BringIntoCombat"
+data "StatusPropertyFlags" "ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_MADNESS_5E_SHORTTERM_HOMICIDAL"
 data "StackPriority" ""
 data "StackType" "Overwrite"
+data "OnApplyFunctors" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):ApplyStatus(GOON_HOMICIDAL_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
+data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive;Goon_Homicidal_Shortterm_Madness_Passive"
+
+// Technical passive for determining if the madness effects should be active
+new entry "Goon_Homicidal_Shortterm_Madness_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):RemoveStatus(GOON_HOMICIDAL_SHORTTERM_MADNESS_TECHNICAL);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_HOMICIDAL_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
+data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
+data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('CALM_EMOTIONS') or (HasPassive('MindlessRage') and StatusId('SG_Rage'))) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('CALM_EMOTIONS') or StatusId('SG_Rage'))"
+
+// ==================================== Madness ====================================
+
+new entry "GOON_HOMICIDAL_SHORTTERM_MADNESS_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+// Short-term Madness: Homicidal
+data "DisplayName" "h1c725ee6g9b92g48a7gb832g2df0007557c9"
+// 
+data "Description" "h3060b0c1g6be8g498aga43ag7ab3b8aeb3f5"
+data "DescriptionParams" ""
+data "TooltipSave" ""
+data "Icon" "statIcons_Madness"
+data "FormatColor" "Red"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting;LoseControl;OverheadOnTurn;InitiateCombat;BringIntoCombat"
+//
+data "StackId" "GOON_HOMICIDAL_SHORTTERM_MADNESS_TECHNICAL"
+data "StackPriority" ""
+data "StackType" "Overwrite"
+data "AuraRadius" ""
+data "AuraStatuses" ""
 // A calm emotions spell can suppress the effects of madness
-data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):AiArchetypeOverride(madness,99)"
+data "Boosts" "AiArchetypeOverride(madness,99)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
-data "RemoveConditions" ""
-data "RemoveEvents" ""
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS')"
+data "RemoveEvents" "OnStatusRemoved"
 data "TickType" ""
 data "TickFunctors" ""
 data "StatusGroups" "SG_Mad"
