@@ -32,7 +32,7 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 			end
 
 			if not injuryStatusConfig[eventType] then
-				Logger:BasicDebug("%s triggered on %s, which is disabled in %s's config", status, eventType, nextStackInjury)
+				Logger:BasicTrace("%s triggered on %s, which is disabled in %s's config", status, eventType, nextStackInjury)
 				goto continue
 			end
 
