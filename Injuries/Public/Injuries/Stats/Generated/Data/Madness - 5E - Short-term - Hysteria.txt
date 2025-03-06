@@ -17,8 +17,8 @@ data "StackId" "GOON_MADNESS_5E_SHORTTERM_HYSTERIA"
 data "StackPriority" ""
 data "StackType" "Overwrite"
 data "OnApplyFunctors" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage'))):ApplyStatus(GOON_HYSTERIA_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
-data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS')"
-data "RemoveEvents" "OnStatusRemoved"
+data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS') or HasStatus('CALM_EMOTIONS') or (HasPassive('MindlessRage') and HasStatus('SG_Rage'))"
+data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
 data "Passives" "Goon_Shortterm_Madness_5E_Removal_Passive;Goon_Hysteria_Shortterm_Madness_Passive"
 
 // Technical passive for determining if the madness effects should be active
@@ -26,7 +26,7 @@ new entry "Goon_Hysteria_Shortterm_Madness_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):RemoveStatus(GOON_HYSTERIA_SHORTTERM_MADNESS_TECHNICAL);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_HYSTERIA_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
+data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnStatusApplied)):RemoveStatus(GOON_MADNESS_5E_SHORTTERM_HYSTERIA);IF(context.HasContextFlag(StatsFunctorContext.OnStatusRemoved)):ApplyStatus(GOON_HYSTERIA_SHORTTERM_MADNESS_TECHNICAL,100,-1)"
 data "StatsFunctorContext" "OnStatusApplied;OnStatusRemoved"
 data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) and StatusId('CALM_EMOTIONS') or (HasPassive('MindlessRage') and StatusId('SG_Rage'))) or (context.HasContextFlag(StatsFunctorContext.OnStatusRemoved) and StatusId('CALM_EMOTIONS') or StatusId('SG_Rage'))"
 
