@@ -37,8 +37,6 @@ local function ProcessDamageEvent(event)
 
 	RandomInjuryOnConditionProcessor:ProcessDamageEvent(event, defender, tempHpReductionTable)
 
-	local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(defenderEntity)
-
 	---@type InjuryApplicationChanceModifiers[]
 	local modifiers = {}
 	for _, statsRoll in pairs(event.Hit.Damage.DamageRolls) do
@@ -75,6 +73,8 @@ local function ProcessDamageEvent(event)
 						and Osi.HasActiveStatus(defender, nextStackInjury) == 0
 						and not injuryVar["injuryAppliedReason"][nextStackInjury]
 					then
+						local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(defenderEntity, nextStackInjury)
+
 						local finalDamageWithPreviousDamage = finalDamageAmount
 
 						if injury ~= nextStackInjury then

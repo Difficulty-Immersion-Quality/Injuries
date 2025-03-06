@@ -35,8 +35,9 @@ InjuryCommonLogic = {}
 --- Returns the npcType just for the InjuryReport, so we know if the character even has a multiplier available instead of
 --- defaulting in the absence of one
 ---@param character EntityHandle
+---@param injuryName InjuryName?
 ---@return number, string?
-function InjuryCommonLogic:CalculateNpcMultiplier(character)
+function InjuryCommonLogic:CalculateNpcMultiplier(character, injuryName)
 	if not character or not character.Data then
 		return 1
 	end
@@ -53,19 +54,35 @@ function InjuryCommonLogic:CalculateNpcMultiplier(character)
 		else
 			config = ConfigurationStructure.config
 		end
-		config = config.injuries.universal
 
-		local lowerCat = string.lower(xpCategory)
-		for npcType, multiplier in pairs(config.npc_multipliers) do
-			npcType = string.lower(npcType)
+		local function determineMultiplier(localconfig)
+			local lowerCat = string.lower(xpCategory)
+			for npcType, multiplier in pairs(localconfig.npc_multipliers) do
+				npcType = string.lower(npcType)
 
-			-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
-			if lowerCat == npcType or string.find(lowerCat, "_" .. npcType .. "$") then
-				return multiplier, xpCategory
+				-- Some mods use custom categories, like MMM using MMM_{type}, so need to try to account for those. Hopefully they all use `_`
+				if lowerCat == npcType or string.find(lowerCat, "_" .. npcType .. "$") then
+					return multiplier
+				end
 			end
 		end
 
-		return config.npc_multipliers["Base"], xpCategory .. " (Base Multiplier)"
+		if injuryName
+			and config.injuries.injury_specific[injuryName].character_multipliers
+			and config.injuries.injury_specific[injuryName].character_multipliers["npc_multipliers"]
+		then
+			local multiplier = determineMultiplier(config.injuries.injury_specific[injuryName].character_multipliers)
+			if multiplier then
+				return multiplier, xpCategory .. " (Injury Override)"
+			end
+		end
+
+		local multiplier = determineMultiplier(config.injuries.universal)
+		if multiplier then
+			return multiplier, xpCategory
+		end
+
+		return config.injuries.universal.npc_multipliers["Base"], xpCategory .. " (Base Multiplier)"
 	end
 end
 
@@ -95,6 +112,10 @@ if Ext.IsServer() then
 	---@param character GUIDSTRING
 	---@return boolean
 	function InjuryCommonLogic:IsEligible(character)
+		if not ConfigManager.ConfigCopy.injuries then
+			return false
+		end
+
 		if Osi.IsItem(character) == 1
 			or Osi.Exists(character) == 0
 			or Osi.IsDead(character) == 1
