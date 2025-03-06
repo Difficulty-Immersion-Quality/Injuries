@@ -128,7 +128,7 @@ if Ext.IsServer() then
 		local entity = Ext.Entity.Get(character)
 		for _, tag in ipairs(entity.Tag.Tags) do
 			local tagData = Ext.StaticData.Get(tag, "Tag")
-			if tagData and string.find(tagData.Name, "WPN_") then
+			if tagData and tagData.Name and string.find(tagData.Name, "WPN_") then
 				return false
 			end
 		end
