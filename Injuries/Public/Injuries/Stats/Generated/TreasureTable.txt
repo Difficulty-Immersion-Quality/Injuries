@@ -1,33 +1,51 @@
+new treasuretable "Goblin_LootGoblin"
+CanMerge 1
+new subtable "0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",3,0,0,0,0,0,0,0
+
 // ==================================== Generic tables ====================================
 
 new treasuretable "Exploration_Minor_Tools"
 CanMerge 1
-new subtable "0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
-new subtable "0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",3,0,0,0,0,0,0,0
 
+// Slightly higher chance in this table
 new treasuretable "ST_Tools"
 CanMerge 1
-new subtable "0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
 new subtable "0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",3,0,0,0,0,0,0,0
 
 new treasuretable "Supply_Tools_Small"
 CanMerge 1
-new subtable "0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
-new subtable "0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",3,0,0,0,0,0,0,0
 
 // Generic bad guy cannon fodder table?
 new treasuretable "BG_Bandit"
 CanMerge 1
-new subtable "0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
-new subtable "0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+new subtable "0,1;0,1;0,1;0,1;0,1;1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+new subtable "0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;0,1;1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",3,0,0,0,0,0,0,0
 
 // ==================================== Trader tables ====================================
 
@@ -35,6 +53,12 @@ object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 new treasuretable "DIQ_OBJ_Important_Container_TT"
 CanMerge 1
 new subtable "5,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+// Volo - Grove/Camp
+new treasuretable "DEN_Volo_Trade"
+CanMerge 1
+new subtable "3,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
 
 // Arron - Druid Grove
@@ -144,30 +168,64 @@ object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
 // ?
 new treasuretable "FOR_DeadAdventurer_Elf"
 CanMerge 1
-new subtable "2,1"
-object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 
 // Gandrel - Ethel Swamp
 new treasuretable "HAG_GurHunter_Backpack"
 CanMerge 1
-new subtable "3,1"
-object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",3,0,0,0,0,0,0,0
 
 // I dunno, something to do with Zhents
 new treasuretable "FOR_ZhentSupplyStash"
 CanMerge 1
-new subtable "2,1"
-object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
 
 // A gobpack
 new treasuretable "GOB_AdventurerScoutBackpack"
 CanMerge 1
-new subtable "2,1"
+new subtable "1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
 
 // Edgy man with rude bird
 new treasuretable "SCL_ServantOfTheRaven_Inventory"
 CanMerge 1
-new subtable "2,1"
+new subtable "1,1"
 object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
 
+new treasuretable "CHA_LooterBackpack"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+new treasuretable "CRA_HarperTreasureBox"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",2,0,0,0,0,0,0,0
+
+new treasuretable "CHA_Exterior_Bandit_Caster"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+new treasuretable "CHA_LooterBackpack"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+new treasuretable "DEN_AdventurerLostBackpack"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+new treasuretable "DEN_Harpy_Nest"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
+
+new treasuretable "DEN_RobbedAdventurer"
+CanMerge 1
+new subtable "1,1"
+object category "I_Goon_OBJ_Injury_Kit_B",1,0,0,0,0,0,0,0
