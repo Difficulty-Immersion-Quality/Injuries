@@ -384,27 +384,33 @@ end
 
 -- Temporary until we can listen to specific UserVars, probably in SE 22
 Ext.RegisterNetListener("Injuries_Update_Report", function(channel, character, user)
-	character = Ext.Entity.Get(character).Uuid.EntityUuid
+	---@type EntityHandle
+	local charEntity = Ext.Entity.Get(character)
+	if charEntity then
+		character = charEntity.Uuid.EntityUuid
 
-	local entityVars = Ext.Entity.Get(character).Vars
+		local entityVars = charEntity.Vars
 
-	entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
+		entityInjuriesReport = Ext.Vars.GetModVariables(ModuleUUID).Injury_Report or {}
 
-	if not entityVars.Goon_Injuries then
-		entityInjuriesReport[character] = nil
-	else
-		if (not entityVars.Goon_Injuries["damage"] or not next(entityVars.Goon_Injuries["damage"]))
-			and (not entityVars.Goon_Injuries["applyOnStatus"] or not next(entityVars.Goon_Injuries["applyOnStatus"]))
-			and (not entityVars.Goon_Injuries["injuryAppliedReason"] or not next(entityVars.Goon_Injuries["injuryAppliedReason"]))
-		then
+		if not entityVars.Goon_Injuries then
 			entityInjuriesReport[character] = nil
 		else
-			entityInjuriesReport[character] = entityVars.Goon_Injuries
+			if (not entityVars.Goon_Injuries["damage"] or not next(entityVars.Goon_Injuries["damage"]))
+				and (not entityVars.Goon_Injuries["applyOnStatus"] or not next(entityVars.Goon_Injuries["applyOnStatus"]))
+				and (not entityVars.Goon_Injuries["injuryAppliedReason"] or not next(entityVars.Goon_Injuries["injuryAppliedReason"]))
+			then
+				entityInjuriesReport[character] = nil
+			else
+				entityInjuriesReport[character] = entityVars.Goon_Injuries
+			end
 		end
-	end
 
-	Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
-	BuildReport()
+		Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
+		BuildReport()
+	else
+		entityInjuriesReport[character] = nil
+	end
 end)
 
 function InjuryReport:BuildReportWindow()
