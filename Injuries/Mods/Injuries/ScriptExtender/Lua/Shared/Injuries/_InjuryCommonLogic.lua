@@ -67,7 +67,7 @@ function InjuryCommonLogic:CalculateNpcMultiplier(character, injuryName)
 			end
 		end
 
-		if injuryName
+		if config.injuries.injury_specific[injuryName]
 			and config.injuries.injury_specific[injuryName].character_multipliers
 			and config.injuries.injury_specific[injuryName].character_multipliers["npc_multipliers"]
 		then
