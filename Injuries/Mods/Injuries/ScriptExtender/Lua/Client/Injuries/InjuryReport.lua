@@ -478,11 +478,11 @@ Translator:RegisterTranslation({
 })
 
 -- MCM dependency
-if Ext.Mod.IsModLoaded("755a8a72-407f-4f0d-9a33-274ac0f0b53d") and Ext.Mod.GetMod("755a8a72-407f-4f0d-9a33-274ac0f0b53d").Info.ModVersion[2] >= 19 then
-	MCM.SetKeybindingCallback('report_keybind', function()
-		if not reportWindow then
-			InjuryReport:BuildReportWindow()
-		end
-		BuildReport()
-	end)
-end
+MCM.SetKeybindingCallback('report_keybind', function()
+	if not reportWindow then
+		InjuryReport:BuildReportWindow()
+	else
+		reportWindow.Visible = not reportWindow.Visible
+	end
+	BuildReport()
+end)
