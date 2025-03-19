@@ -67,27 +67,34 @@ local function AddTagMultiplierText(parent, entity, injuryConfig)
 		---@type ResourceTag
 		local tagData = Ext.StaticData.Get(tagUUID, "Tag")
 
-		local row = tagTable:AddRow()
+		if tagData then
+			local row = tagTable:AddRow()
 
-		local tagMulti = (injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"]) and injuryConfig.character_multipliers["tags"][tagUUID]
-		if tagMulti then
-			totalTagMultiplier = totalTagMultiplier * tagMulti
-			row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
-			foundTag = true
-			-- RGB -> Green with 50% opacity (multiply each value by 255)
-			row:SetColor("TableRowBg", { 0.09, 0.55, 0.04, 0.5 })
-			row:SetColor("TableRowBgAlt", { 0.09, 0.55, 0.04, 0.5 })
+			local tagMulti = (injuryConfig.character_multipliers and injuryConfig.character_multipliers["tags"]) and injuryConfig.character_multipliers["tags"][tagUUID]
+			if tagMulti then
+				totalTagMultiplier = totalTagMultiplier * tagMulti
+				row:AddCell():AddText(string.format("%s%%", tagMulti * 100))
+				foundTag = true
+				-- RGB -> Green with 50% opacity (multiply each value by 255)
+				row:SetColor("TableRowBg", { 0.09, 0.55, 0.04, 0.5 })
+				row:SetColor("TableRowBgAlt", { 0.09, 0.55, 0.04, 0.5 })
+			else
+				row:AddCell():AddText("---")
+				row:SetColor("TableRowBg", { 0.09, 0.55, 0.04, 0 })
+				row:SetColor("TableRowBgAlt", { 0.09, 0.55, 0.04, 0 })
+			end
+
+
+			row:AddCell():AddText(string.format("%s (%s - %s)",
+				tagData.Name,
+				tagData.DisplayName:Get() or Translator:translate("N/A"),
+				string.sub(tagData.ResourceUUID, -5)
+			))
 		else
-			row:AddCell():AddText("---")
-			row:SetColor("TableRowBg", { 0.09, 0.55, 0.04, 0 })
-			row:SetColor("TableRowBgAlt", { 0.09, 0.55, 0.04, 0 })
+			Logger:BasicWarning("Tag %s is attached to %s (%s), but is not registered as a tag?", tagUUID,
+				entity.CustomName and entity.CustomName.Name or (entity.DisplayName and entity.DisplayName.NameKey:Get() or entity.Uuid.EntityUuid),
+				entity.Uuid.EntityUuid)
 		end
-
-		row:AddCell():AddText(string.format("%s (%s - %s)",
-			tagData.Name,
-			tagData.DisplayName:Get() or Translator:translate("N/A"),
-			string.sub(tagData.ResourceUUID, -5)
-		))
 	end
 
 	return foundTag and totalTagMultiplier or nil
@@ -176,208 +183,214 @@ local function BuildReport()
 		end
 
 		for character, injuryReport in pairs(entityInjuriesReport) do
-			---@type EntityHandle
-			local entity = Ext.Entity.Get(character)
+			local success, error = pcall(function()
+				---@type EntityHandle
+				local entity = Ext.Entity.Get(character)
 
-			if not entity or not entity.Data or entity.Death then
-				entityInjuriesReport[character] = nil
-				Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
-				goto next_injury
-			end
-
-			local charReport
-			for _, child in pairs(reportWindow.Children) do
-				if character == child.UserData then
-					charReport = child
-					break
-				end
-			end
-
-			if not charReport then
-				charReport = reportWindow:AddCollapsingHeader(string.format("%s (%s)",
-					entity.CustomName and entity.CustomName.Name or (entity.DisplayName and entity.DisplayName.NameKey:Get() or entity.Uuid.EntityUuid),
-					entity.Uuid.EntityUuid))
-
-				charReport.DefaultOpen = false
-				charReport.UserData = character
-			end
-
-			for _, child in pairs(charReport.Children) do
-				child:Destroy()
-			end
-
-			local clearButton = charReport:AddButton("Clear Report")
-			clearButton.IDContext = character
-			clearButton.OnClick = function()
-				entityInjuriesReport[character] = nil
-				BuildReport()
-			end
-
-			local keepHeader = false
-
-			for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
-				---@type StatusData?
-				local status = Ext.Stats.Get(key)
-				return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
-			end) do
-				local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity, injury)
-
-				---@cast injuryConfig Injury
-
-				---@type StatusData?
-				local injuryStat = Ext.Stats.Get(injury)
-
-				if not injuryStat then
-					Logger:BasicWarning("Injury %s is in the config, but does not exist in the game - should delete from the config.json!", injury)
-					goto continue
+				if not entity or not entity.Data or entity.Death then
+					entityInjuriesReport[character] = nil
+					Ext.Vars.GetModVariables(ModuleUUID).Injury_Report = entityInjuriesReport
+					goto next_injury
 				end
 
-				local injuryReportGroup = charReport:AddGroup(injury)
-
-				local sepText = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury)
-				sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
-
-				local keepGroup = false
-				if injuryReport["injuryAppliedReason"][injury] then
-					keepGroup = true
-					sepText = sepText .. " " .. Translator:translate("|| Applied Due To") .. " " .. injuryReport["injuryAppliedReason"][injury]
-				end
-				injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
-
-				if injuryReport["applicationChance"] and injuryReport["applicationChance"][injury] then
-					if string.match(injuryReport["applicationChance"][injury], "Skipped") then
-						injuryReportGroup:AddText(Translator:translate(injuryReport["applicationChance"][injury]))
-					else
-						injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
+				local charReport
+				for _, child in pairs(reportWindow.Children) do
+					if character == child.UserData then
+						charReport = child
+						break
 					end
 				end
 
-				if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
-					injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
+				if not charReport then
+					charReport = reportWindow:AddCollapsingHeader(string.format("%s (%s)",
+						entity.CustomName and entity.CustomName.Name or (entity.DisplayName and entity.DisplayName.NameKey:Get() or entity.Uuid.EntityUuid),
+						entity.Uuid.EntityUuid))
+
+					charReport.DefaultOpen = false
+					charReport.UserData = character
 				end
 
-				if injuryReport["numberOfLongRests"] and injuryReport["numberOfLongRests"][injury] then
-					injuryReportGroup:AddText(string.format("# of Long Rests: %s / %s", injuryReport["numberOfLongRests"][injury],
-						injuryConfig.remove_on_status["LONG_REST"]["after_x_applications"]))
+				for _, child in pairs(charReport.Children) do
+					child:Destroy()
 				end
 
-				--#region Damage Report
-				if injuryConfig.damage and injuryConfig.damage["damage_types"] and next(injuryConfig.damage["damage_types"]) then
-					local damageGroup = injuryReportGroup:AddGroup("Damage")
-					damageGroup.UserData = injury .. "damage"
+				local clearButton = charReport:AddButton("Clear Report")
+				clearButton.IDContext = character
+				clearButton.OnClick = function()
+					entityInjuriesReport[character] = nil
+					BuildReport()
+				end
 
-					local damageResultText = damageGroup:AddText(Translator:translate("Injury Damage / Threshold"))
-					local damageReportTable = CreateReport(damageGroup)
+				local keepHeader = false
 
-					local totalDamage = 0
-					for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
-						local damageAmount = injuryReport["damage"][damageType]
-						if damageAmount and damageAmount[injury] then
-							local flatWithMultiplier = damageAmount[injury] * damageTypeConfig["multiplier"]
-							totalDamage = totalDamage + flatWithMultiplier
+				for injury, injuryConfig in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.injury_specific, function(key)
+					---@type StatusData?
+					local status = Ext.Stats.Get(key)
+					return status and Ext.Loca.GetTranslatedString(status.DisplayName, key) or key
+				end) do
+					local characterMultiplier, npcCategory = InjuryCommonLogic:CalculateNpcMultiplier(entity, injury)
 
-							local row = damageReportTable:AddRow()
-							row:AddCell():AddText(damageType)
-							row:AddCell():AddText(string.format("%d%%", damageTypeConfig["multiplier"] * 100))
-							row:AddCell():AddText(tostring(damageAmount[injury]))
-							row:AddCell():AddText(tostring(flatWithMultiplier))
+					---@cast injuryConfig Injury
+
+					---@type StatusData?
+					local injuryStat = Ext.Stats.Get(injury)
+
+					if not injuryStat then
+						Logger:BasicWarning("Injury %s is in the config, but does not exist in the game - should delete from the config.json!", injury)
+						goto continue
+					end
+
+					local injuryReportGroup = charReport:AddGroup(injury)
+
+					local sepText = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, injury)
+					sepText = sepText .. " || " .. injuryConfig.severity .. " Severity"
+
+					local keepGroup = false
+					if injuryReport["injuryAppliedReason"][injury] then
+						keepGroup = true
+						sepText = sepText .. " " .. Translator:translate("|| Applied Due To") .. " " .. injuryReport["injuryAppliedReason"][injury]
+					end
+					injuryReportGroup:AddSeparatorText(sepText).Font = "Large"
+
+					if injuryReport["applicationChance"] and injuryReport["applicationChance"][injury] then
+						if string.match(injuryReport["applicationChance"][injury], "Skipped") then
+							injuryReportGroup:AddText(Translator:translate(injuryReport["applicationChance"][injury]))
+						else
+							injuryReportGroup:AddText(string.format(Translator:translate("Application Chance:") .. " %s%% ", injuryReport["applicationChance"][injury]))
 						end
 					end
 
-					if totalDamage == 0 then
-						damageGroup:Destroy()
-					else
-						local row = damageReportTable:AddRow()
-						row:AddCell():AddText(Translator:translate("Total Damage"))
-						row:AddCell():AddText("---")
-						row:AddCell():AddText("---")
-						row:AddCell():AddText(tostring(totalDamage))
-
-						totalDamage = AddMultiplierRows(damageReportTable, entity, injuryConfig, totalDamage, npcCategory, characterMultiplier)
-
-						damageResultText.Label = string.format("%s: %.2f%%/%.2f%%",
-							damageResultText.Label,
-							((totalDamage / entity.Health.MaxHp) * 100),
-							injuryConfig.damage["threshold"])
-
-						keepGroup = true
+					if injuryReport["numberOfApplicationsAttempted"] and injuryReport["numberOfApplicationsAttempted"][injury] then
+						injuryReportGroup:AddText(string.format(Translator:translate("| Number Of Attempted Applications:") .. " %s", injuryReport["numberOfApplicationsAttempted"][injury])).SameLine = true
 					end
-				end
-				--#endregion
 
-				--#region ApplyOnStatus report
-				if injuryConfig.apply_on_status and injuryConfig.apply_on_status["applicable_statuses"] and next(injuryConfig.apply_on_status["applicable_statuses"]) then
-					local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
-					statusGroup.UserData = injury .. "applyOnStatus"
+					if injuryReport["numberOfLongRests"] and injuryReport["numberOfLongRests"][injury] then
+						injuryReportGroup:AddText(string.format("# of Long Rests: %s / %s", injuryReport["numberOfLongRests"][injury],
+							injuryConfig.remove_on_status["LONG_REST"]["after_x_applications"]))
+					end
 
-					local statusText = statusGroup:AddText(Translator:translate("Apply On Status: Cumulative Rounds / Threshold"))
-					local statusReportTable = CreateReport(statusGroup)
+					--#region Damage Report
+					if injuryConfig.damage and injuryConfig.damage["damage_types"] and next(injuryConfig.damage["damage_types"]) then
+						local damageGroup = injuryReportGroup:AddGroup("Damage")
+						damageGroup.UserData = injury .. "damage"
 
-					local totalRounds = 0
-					for status, numRoundsApplied in pairs(injuryReport["applyOnStatus"]) do
-						---@type StatusData
-						local statusData = Ext.Stats.Get(status)
+						local damageResultText = damageGroup:AddText(Translator:translate("Injury Damage / Threshold"))
+						local damageReportTable = CreateReport(damageGroup)
 
-						local statusConfig = injuryConfig.apply_on_status["applicable_statuses"][status]
-						local configuredGroup
-						if not statusConfig then
-							if next(statusData.StatusGroups) then
-								for _, statusGroup in pairs(statusData.StatusGroups) do
-									if injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
-										and (not injuryConfig.apply_on_status["applicable_statuses"][statusGroup]["excluded_statuses"] or not injuryConfig.apply_on_status["applicable_statuses"][statusGroup]["excluded_statuses"][status])
-									then
-										statusConfig = injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
-										configuredGroup = statusGroup
-										break
-									end
-								end
+						local totalDamage = 0
+						for damageType, damageTypeConfig in pairs(injuryConfig.damage["damage_types"]) do
+							local damageAmount = injuryReport["damage"][damageType]
+							if damageAmount and damageAmount[injury] then
+								local flatWithMultiplier = damageAmount[injury] * damageTypeConfig["multiplier"]
+								totalDamage = totalDamage + flatWithMultiplier
+
+								local row = damageReportTable:AddRow()
+								row:AddCell():AddText(damageType)
+								row:AddCell():AddText(string.format("%d%%", damageTypeConfig["multiplier"] * 100))
+								row:AddCell():AddText(tostring(damageAmount[injury]))
+								row:AddCell():AddText(tostring(flatWithMultiplier))
 							end
 						end
 
-						if statusConfig and numRoundsApplied and numRoundsApplied[injury] then
-							totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
-							local row = statusReportTable:AddRow()
-							StatusHelper:BuildStatusTooltip(row:AddCell():AddText(status .. (configuredGroup and string.format(" (%s)", configuredGroup) or "")):Tooltip(),
-								statusData)
-							row:AddCell():AddText(string.format("%d%%", statusConfig["multiplier"] * 100))
-							row:AddCell():AddText(tostring(numRoundsApplied[injury]))
-							row:AddCell():AddText(tostring(numRoundsApplied[injury] * statusConfig["multiplier"]))
+						if totalDamage == 0 then
+							damageGroup:Destroy()
+						else
+							local row = damageReportTable:AddRow()
+							row:AddCell():AddText(Translator:translate("Total Damage"))
+							row:AddCell():AddText("---")
+							row:AddCell():AddText("---")
+							row:AddCell():AddText(tostring(totalDamage))
+
+							totalDamage = AddMultiplierRows(damageReportTable, entity, injuryConfig, totalDamage, npcCategory, characterMultiplier)
+
+							damageResultText.Label = string.format("%s: %.2f%%/%.2f%%",
+								damageResultText.Label,
+								((totalDamage / entity.Health.MaxHp) * 100),
+								injuryConfig.damage["threshold"])
+
+							keepGroup = true
 						end
 					end
+					--#endregion
 
-					if totalRounds == 0 then
-						statusGroup:Destroy()
-					else
-						local row = statusReportTable:AddRow()
-						row:AddCell():AddText(Translator:translate("Total # of Rounds"))
-						row:AddCell():AddText("---")
-						row:AddCell():AddText("---")
-						row:AddCell():AddText(tostring(totalRounds))
+					--#region ApplyOnStatus report
+					if injuryConfig.apply_on_status and injuryConfig.apply_on_status["applicable_statuses"] and next(injuryConfig.apply_on_status["applicable_statuses"]) then
+						local statusGroup = injuryReportGroup:AddGroup("ApplyOnStatus")
+						statusGroup.UserData = injury .. "applyOnStatus"
 
-						totalRounds = AddMultiplierRows(statusReportTable, entity, injuryConfig, totalRounds, npcCategory, characterMultiplier)
+						local statusText = statusGroup:AddText(Translator:translate("Apply On Status: Cumulative Rounds / Threshold"))
+						local statusReportTable = CreateReport(statusGroup)
 
-						statusText.Label = string.format("%s: %.2f/%s",
-							statusText.Label,
-							totalRounds,
-							injuryConfig.apply_on_status["number_of_rounds"])
+						local totalRounds = 0
+						for status, numRoundsApplied in pairs(injuryReport["applyOnStatus"]) do
+							---@type StatusData
+							local statusData = Ext.Stats.Get(status)
 
-						keepGroup = true
+							local statusConfig = injuryConfig.apply_on_status["applicable_statuses"][status]
+							local configuredGroup
+							if not statusConfig then
+								if next(statusData.StatusGroups) then
+									for _, statusGroup in pairs(statusData.StatusGroups) do
+										if injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
+											and (not injuryConfig.apply_on_status["applicable_statuses"][statusGroup]["excluded_statuses"] or not injuryConfig.apply_on_status["applicable_statuses"][statusGroup]["excluded_statuses"][status])
+										then
+											statusConfig = injuryConfig.apply_on_status["applicable_statuses"][statusGroup]
+											configuredGroup = statusGroup
+											break
+										end
+									end
+								end
+							end
+
+							if statusConfig and numRoundsApplied and numRoundsApplied[injury] then
+								totalRounds = totalRounds + (numRoundsApplied[injury] * statusConfig["multiplier"])
+								local row = statusReportTable:AddRow()
+								StatusHelper:BuildStatusTooltip(row:AddCell():AddText(status .. (configuredGroup and string.format(" (%s)", configuredGroup) or "")):Tooltip(),
+									statusData)
+								row:AddCell():AddText(string.format("%d%%", statusConfig["multiplier"] * 100))
+								row:AddCell():AddText(tostring(numRoundsApplied[injury]))
+								row:AddCell():AddText(tostring(numRoundsApplied[injury] * statusConfig["multiplier"]))
+							end
+						end
+
+						if totalRounds == 0 then
+							statusGroup:Destroy()
+						else
+							local row = statusReportTable:AddRow()
+							row:AddCell():AddText(Translator:translate("Total # of Rounds"))
+							row:AddCell():AddText("---")
+							row:AddCell():AddText("---")
+							row:AddCell():AddText(tostring(totalRounds))
+
+							totalRounds = AddMultiplierRows(statusReportTable, entity, injuryConfig, totalRounds, npcCategory, characterMultiplier)
+
+							statusText.Label = string.format("%s: %.2f/%s",
+								statusText.Label,
+								totalRounds,
+								injuryConfig.apply_on_status["number_of_rounds"])
+
+							keepGroup = true
+						end
 					end
-				end
-				--#endregion
+					--#endregion
 
-				if not keepGroup then
-					injuryReportGroup:Destroy()
-				else
-					injuryReportGroup:AddNewLine()
-					keepHeader = true
+					if not keepGroup then
+						injuryReportGroup:Destroy()
+					else
+						injuryReportGroup:AddNewLine()
+						keepHeader = true
+					end
+					::continue::
 				end
-				::continue::
+				if not keepHeader then
+					charReport:Destroy()
+				end
+				::next_injury::
+			end)
+
+			if not success then
+				Logger:BasicError("Generating report for %s resulted in error %s", character, error)
 			end
-			if not keepHeader then
-				charReport:Destroy()
-			end
-			::next_injury::
 		end
 	end
 end
