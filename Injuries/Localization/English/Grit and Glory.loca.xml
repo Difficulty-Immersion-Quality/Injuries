@@ -24,13 +24,13 @@
 	<content contentuid="h9ab1a295gf2cfg4ee8g850bgab1165b73e74" version="1">Exhaustion has 7 levels, with each getting progressively worse than the last.
 Levels of Exhaustion induced by an injury may not be able to be removed through rest, in such cases refer to your specific Injuries on how to heal your Restless Exhaustion. The effects of Unrestable Exhaustion and regular Exhaustion do not stack. By default Unrestable Exhaustion adds to your regular Exhaustion, but removal of Unrestable Exhaustion will not remove regular Exhaustion; regular Exhaustion can be removed with Short and Long Rests, but the Unrestable Exhaustion will stay until its root cause is addressed.
 &lt;br&gt;The levels are as follows:
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_1"&gt;Exhaustion: Level 1&lt;/LSTag&gt;
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_2"&gt;Exhaustion: Level 2&lt;/LSTag&gt;
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_3"&gt;Exhaustion: Level 3&lt;/LSTag&gt;
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_4"&gt;Exhaustion: Level 4&lt;/LSTag&gt;
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_5"&gt;Exhaustion: Level 5&lt;/LSTag&gt;
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_6"&gt;Exhaustion: Level 6&lt;/LSTag&gt;
-- &lt;LSTag Type="Status" Tooltip="GOON_HOMEBREW_EXHAUSTION_7"&gt;Exhaustion: Level 7&lt;/LSTag&gt;</content>
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_1"&gt;Exhaustion: Level 1&lt;/LSTag&gt;
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_2"&gt;Exhaustion: Level 2&lt;/LSTag&gt;
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_3"&gt;Exhaustion: Level 3&lt;/LSTag&gt;
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_4"&gt;Exhaustion: Level 4&lt;/LSTag&gt;
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_5"&gt;Exhaustion: Level 5&lt;/LSTag&gt;
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_6"&gt;Exhaustion: Level 6&lt;/LSTag&gt;
+- &lt;LSTag Type="Status" Tooltip="GOON_EXHAUSTION_HOMEBREW_7"&gt;Exhaustion: Level 7&lt;/LSTag&gt;</content>
 
 	<content contentuid="he1b4523eg30c5g4a25gaf31g6087c9ddda70" version="1">Exhaustion: Level 1</content>
 	<content contentuid="hd0dd08b4g7c00g4f25g86f6g3e2d61d8b3a4" version="1">Unrestable Exhaustion: Level 1</content>
