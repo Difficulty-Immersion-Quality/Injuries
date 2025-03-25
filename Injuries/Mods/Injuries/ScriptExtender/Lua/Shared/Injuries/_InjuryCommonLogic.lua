@@ -67,7 +67,7 @@ function InjuryCommonLogic:CalculateNpcMultiplier(character, injuryName)
 			end
 		end
 
-		if injuryName
+		if config.injuries.injury_specific[injuryName]
 			and config.injuries.injury_specific[injuryName].character_multipliers
 			and config.injuries.injury_specific[injuryName].character_multipliers["npc_multipliers"]
 		then
@@ -134,7 +134,7 @@ if Ext.IsServer() then
 		end
 
 		local eligibleGroups = ConfigManager.ConfigCopy.injuries.universal.who_can_receive_injuries
-		if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1)
+		if (eligibleGroups["Allies"] and Osi.IsAlly(Osi.GetHostCharacter(), character) == 1 and Osi.IsPartyMember(character, 1) == 0)
 			or (eligibleGroups["Party Members"] and Osi.IsPartyMember(character, 1) == 1)
 			or (eligibleGroups["Enemies"] and Osi.IsEnemy(Osi.GetHostCharacter(), character) == 1)
 		then
