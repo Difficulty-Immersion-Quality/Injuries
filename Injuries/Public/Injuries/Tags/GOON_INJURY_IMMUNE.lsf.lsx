@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<save>
+	<version major="4" minor="0" revision="8" build="602" lslib_meta="v1,bswap_guids,lsf_keys_adjacency" />
+	<region id="Tags">
+		<node id="Tags">
+			<attribute id="UUID" type="guid" value="75f09796-f921-4b24-9ac0-404b5ba1b3e8" />
+			<attribute id="Name" type="FixedString" value="GOON_INJURY_IMMUNE" />
+			<!-- Injury Immune -->
+			<attribute id="DisplayName" type="TranslatedString" handle="h23d1403dg1471g4c56g9167g2ea3149c74a5" version="1" />
+			<attribute id="DisplayDescription" type="TranslatedString" handle="ls::TranslatedStringRepository::s_HandleUnknown" version="0" />
+			<attribute id="Icon" type="FixedString" value="" />
+			<attribute id="Description" type="LSString" value="Used as a marker to set injury application chance to 0%." />
+			<children>
+				<node id="Categories">
+					<children>
+						<node id="Category">
+							<attribute id="Name" type="LSString" value="Code" />
+						</node>
+					</children>
+				</node>
+				<node id="Properties" />
+			</children>
+		</node>
+	</region>
+</save>
