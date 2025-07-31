@@ -15,7 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_BLINDNESS"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
-data "OnApplyConditions" "not IsImmuneToStatus('BLINDED') and not IsImmuneToStatus('BLINDNESS') and not IsImmuneToStatus('SG_Blinded') and not Tagged('BLINDSIGHT')"
+data "OnApplyConditions" "Goon_IsCreatureBlindable()"
 data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BLINDNESS')"
 data "RemoveEvents" "OnStatusRemoved"

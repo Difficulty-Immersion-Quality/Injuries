@@ -15,6 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_ANOSMIA"
 data "StackPriority" ""
 data "StackType" "Overwrite"
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck()"
 data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_ANOSMIA,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_ANOSMIA')"
 data "RemoveEvents" "OnStatusRemoved"

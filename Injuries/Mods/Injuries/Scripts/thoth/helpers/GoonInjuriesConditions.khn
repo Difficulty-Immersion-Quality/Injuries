@@ -1,8 +1,13 @@
 -- ==================================== Eligibility checks for injury application ====================================
 
+-- Blindness: Full & Blindness: Partial
+function Goon_IsCreatureBlindable()
+    return Goon_InjuryEligibilityCheck() & ~IsImmuneToStatus('BLINDED') & ~IsImmuneToStatus('BLINDNESS') & ~IsImmuneToStatus('SG_Blinded') & ~Tagged('BLINDSIGHT')
+end
+
 -- Destroyed Foot & Frostbitten Foot - Tagged('INNATE_FLYER')
 function Goon_IsCreatureWithImpedableMovement()
-    return Goon_InjuryEligibilityCheck() & ~Tagged('OOZE') & ~HasAttribute('Floating') | ~IsImmuneToStatus('CRIPPLED') | ~IsImmuneToStatus('RESTRAINED') | ~IsImmuneToStatus('SG_Restrained')
+    return Goon_InjuryEligibilityCheck() & ~Tagged('OOZE') & ~HasAttribute('Floating') & ~IsImmuneToStatus('CRIPPLED') & ~IsImmuneToStatus('RESTRAINED') & ~IsImmuneToStatus('SG_Restrained')
 end
 
 -- Destroyed Forelimb & Frostbitten Forelimb
