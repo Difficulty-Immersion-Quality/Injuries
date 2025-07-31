@@ -1,13 +1,11 @@
 -- ==================================== Eligibility checks for injury application ====================================
 
--- function Goon_IsCreatureWithImpedableMovement()
+-- Destroyed Foot & Frostbitten Foot - Tagged('INNATE_FLYER')
+function Goon_IsCreatureWithImpedableMovement()
+    return Goon_InjuryEligibilityCheck() & ~Tagged('OOZE') & ~HasAttribute('Floating') | ~IsImmuneToStatus('CRIPPLED') | ~IsImmuneToStatus('RESTRAINED') | ~IsImmuneToStatus('SG_Restrained')
+end
 
--- Tagged('INNATE_FLYER')
-
--- HasAttribute('Floating')
-
-
--- Destroyed Hand & Frostbitten Hand
+-- Destroyed Forelimb & Frostbitten Forelimb
 function Goon_IsCreatureWithForelimbs()
     return Goon_InjuryEligibilityCheck() & ~Tagged('OOZE') & ~Tagged('SPECTATOR') & ~Tagged('BEHOLDER')
 end

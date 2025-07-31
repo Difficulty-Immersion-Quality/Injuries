@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_DESTROYED_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
-// Destroyed Hand
+// Destroyed Forelimb
 data "DisplayName" "h8ab15022g3711g4a74gb820g6c4684daa066"
 // 
 data "Description" "h7d04fba0g3ca3g470cg9296gb8debb152f5d"
@@ -15,6 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_DESTROYED_HAND"
 data "StackPriority" ""
 data "StackType" "Overwrite"
+data "OnApplyConditions" "Goon_IsCreatureWithForelimbs()"
 data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING') and not HasStatus('GOON_DAMAGE_DEALT_COLD') and not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') and not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_ARM,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_HAND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_HAND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_WITHERED_HAND,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_ARM') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_HAND') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_HAND') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_WITHERED_HAND')"
 data "RemoveEvents" "OnStatusRemoved"
@@ -24,7 +25,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Injury: Destroyed Hand
+// Injury: Destroyed Forelimb
 data "DisplayName" "hab934a8fg8d74g4227g9907gfbae49662d8a"
 // 
 data "Description" "h71b43149gbf31g4237g81d3gd49581729036"
@@ -82,28 +83,28 @@ new entry "GOON_REAL_INJURY_GRIT_GLORY_BROKEN_ARM"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Injury: Broken Arm
+// Injury: Broken Forelimb
 data "DisplayName" "ha3100bf8g8b25g4169g9682gddb0f2606e60"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Injury: Gangrene of the Hand
+// Injury: Gangrene of the Forelimb
 data "DisplayName" "h34796a02g9f5ag4718gbd3ag0db46988abef"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Injury: Explosive Grounding of the Hand
+// Injury: Explosive Grounding of the Forelimb
 data "DisplayName" "ha4e6d02fg6328g4072gbca4gfd3de57e6035"
 
 new entry "GOON_REAL_INJURY_GRIT_GLORY_WITHERED_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
 using "GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND"
-// Injury: Broken Arm
+// Injury: Withered Forelimb
 data "DisplayName" "h89422f20g4748g4b5egb4edg5f04f6a9449a"
 
 // ==================================== Removal system ====================================
@@ -121,7 +122,7 @@ data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) 
 new entry "GOON_GRIT_GLORY_DESTROYED_HAND_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Injury: Destroyed Hand
+// Injury: Destroyed Forelimb
 data "DisplayName" "hab934a8fg8d74g4227g9907gfbae49662d8a"
 // 
 data "Description" "h71b43149gbf31g4237g81d3gd49581729036"

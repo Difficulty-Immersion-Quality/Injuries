@@ -341,30 +341,30 @@ Levels of Exhaustion induced by an injury may not be able to be removed through 
 &lt;br&gt;By default, this &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injury&lt;/LSTag&gt; can be cured when &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 14 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
 
 
-	<content contentuid="h8ab15022g3711g4a74gb820g6c4684daa066" version="1">Destroyed Hand</content>
-	<content contentuid="hab934a8fg8d74g4227g9907gfbae49662d8a" version="1">Injury: Destroyed Hand</content> <!-- Acid and Slashing damage. -->
+	<content contentuid="h8ab15022g3711g4a74gb820g6c4684daa066" version="1">Destroyed Forelimb</content>
+	<content contentuid="hab934a8fg8d74g4227g9907gfbae49662d8a" version="1">Injury: Destroyed Forelimb</content> <!-- Acid and Slashing damage. -->
 	<!-- You can no longer hold anything with two hands, and you can hold only a single object at a time. Magic such as the regenerate spell can restore the lost appendage. -->
 
-	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Hand is intended for Acid, Bludgeoning, Cold, Lightning, Necrotic and Slashing damage.
+	<content contentuid="h7d04fba0g3ca3g470cg9296gb8debb152f5d" version="1">Destroyed Forelimb is intended for Acid, Bludgeoning, Cold, Lightning, Necrotic and Slashing damage.
 &lt;br&gt;Intended severity: High.
 &lt;br&gt;This injury has the following sub-injuries, reflavoured to match damage types:
 - Broken Arm: Bludgeoning Damage
-- Gangrene of the Hand: Cold damage
-- Explosive Grounding of the Hand: Lightning damage
-- Withered Hand: Necrotic damage.
-&lt;br&gt;You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;, you also suffer a -5 penalty to your &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt;, for spells with a somatic component,  while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
+- Gangrene of the Forelimb: Cold damage
+- Explosive Grounding of the Forelimb: Lightning damage
+- Withered Forelimb: Necrotic damage.
+&lt;br&gt;You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. While you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped, you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;; you also suffer a -5 penalty to your &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt;, for spells with a somatic component.
 &lt;br&gt;By default, this &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injury&lt;/LSTag&gt; can be cured when &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 14 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
 
-	<content contentuid="h71b43149gbf31g4237g81d3gd49581729036" version="1">You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. You have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt; you also suffer a -5 penalty to your &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt;, for spells with a somatic component,  while you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped.
+	<content contentuid="h71b43149gbf31g4237g81d3gd49581729036" version="1">You are &lt;LSTag Type="Status" Tooltip="DISARM"&gt;Disarmed&lt;/LSTag&gt; upon being injured. While you're dual wielding melee or ranged weapons, wielding a two handed weapon or have a shield equipped, you have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; as well as &lt;LSTag Tooltip="Strength"&gt;Strength&lt;/LSTag&gt; and &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;; you also suffer a -5 penalty to your &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt;, for spells with a somatic component.
 &lt;br&gt;By default, this &lt;LSTag Type="Status" Tooltip="GOON_INFORMATION_STATUS_INJURIES"&gt;Injury&lt;/LSTag&gt; can be cured when &lt;LSTag Type="Spell" Tooltip="Target_GreaterRestoration"&gt;Greater Restoration&lt;/LSTag&gt;, &lt;LSTag Type="Spell" Tooltip="Target_Heal"&gt;Heal&lt;/LSTag&gt;, or &lt;LSTag Type="Spell" Tooltip="Target_Regenerate"&gt;Regenerate&lt;/LSTag&gt; are cast on you; when an &lt;LSTag Type="Spell" Tooltip="Goon_Target_Injury_Kit_Use"&gt;Injury Kit&lt;/LSTag&gt; is successfully used to treat you; or from natural recovery after 14 &lt;LSTag Type="Status" Tooltip="LONG_REST"&gt;Long Rests&lt;/LSTag&gt;.</content>
 
-	<content contentuid="ha3100bf8g8b25g4169g9682gddb0f2606e60" version="1">Injury: Broken Arm</content> <!-- Bludgeoning Damage -->
+	<content contentuid="ha3100bf8g8b25g4169g9682gddb0f2606e60" version="1">Injury: Broken Forelimb</content> <!-- Bludgeoning Damage -->
 
-	<content contentuid="ha4e6d02fg6328g4072gbca4gfd3de57e6035" version="1">Injury: Gangrene of the Hand</content> <!-- Cold damage -->
+	<content contentuid="ha4e6d02fg6328g4072gbca4gfd3de57e6035" version="1">Injury: Gangrene of the Forelimb</content> <!-- Cold damage -->
 
-	<content contentuid="h34796a02g9f5ag4718gbd3ag0db46988abef" version="1">Injury: Explosive Grounding of the Hand</content> <!-- Lightning damage -->
+	<content contentuid="h34796a02g9f5ag4718gbd3ag0db46988abef" version="1">Injury: Explosive Grounding of the Forelimb</content> <!-- Lightning damage -->
 
-	<content contentuid="h89422f20g4748g4b5egb4edg5f04f6a9449a" version="1">Injury: Withered Hand</content> <!-- Necrotic damage -->
+	<content contentuid="h89422f20g4748g4b5egb4edg5f04f6a9449a" version="1">Injury: Withered Forelimb</content> <!-- Necrotic damage -->
 
 
 
