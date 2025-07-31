@@ -1,0 +1,7 @@
+// ==================================== Animate Dead ++ ====================================
+// Or was it Valkrana's Spellbook and I just suggested the wrong name
+
+new entry "ADPP_EXHAUSTION_TECHNICAL"
+type "StatusData" 
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"

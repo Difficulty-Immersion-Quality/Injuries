@@ -15,6 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_KIDNEY_FAILURE"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck()"
 data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_PIERCING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PIERCED_STOMACH,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_KIDNEY_FAILURE') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PIERCED_STOMACH')"
 data "RemoveEvents" "OnStatusRemoved"

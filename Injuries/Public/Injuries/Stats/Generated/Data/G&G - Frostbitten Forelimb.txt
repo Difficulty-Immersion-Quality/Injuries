@@ -3,7 +3,7 @@
 new entry "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_HAND"
 type "StatusData" 
 data "StatusType" "BOOST"
-// Frostbitten Hand
+// Frostbitten Forelimb
 data "DisplayName" "h04e993c4g5a4eg4f38g9b8ag9303a0d823b6"
 // 
 data "Description" "h48a9a49aga341g4bc0g98ceg73c12e4bdf1f"
@@ -15,6 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_HAND"
 data "StackPriority" ""
 data "StackType" "Overwrite"
+data "OnApplyConditions" "Goon_IsCreatureWithForelimbs() and not IsImmuneToStatus('FROZEN')"
 data "OnApplyFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND')"
 data "RemoveEvents" "OnStatusRemoved"
@@ -24,7 +25,7 @@ data "RemoveEvents" "OnStatusRemoved"
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Injury: Frostbitten Hand
+// Injury: Frostbitten Forelimb
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
@@ -82,7 +83,7 @@ data "MaterialParameters" ""
 new entry "GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_HAND_TECHNICAL"
 type "StatusData" 
 data "StatusType" "BOOST"
-// Injury: Frostbitten Hand
+// Injury: Frostbitten Forelimb
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"
@@ -120,7 +121,7 @@ data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) 
 new entry "GOON_GRIT_GLORY_FROSTBITTEN_HAND_REMOVAL"
 type "StatusData" 
 data "StatusType" "BOOST" 
-// Injury: Frostbitten Hand
+// Injury: Frostbitten Forelimb
 data "DisplayName" "h83db0a7bg55d4g45e3g8511g5249fee00067"
 // 
 data "Description" "h6ac1a043g71fbg4931gae8fg1253275947cc"

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<save>
+	<version major="4" minor="0" revision="8" build="602" lslib_meta="v1,bswap_guids,lsf_keys_adjacency" />
+	<region id="Tags">
+		<node id="Tags">
+			<attribute id="UUID" type="guid" value="cef4a6c2-a67d-4023-916a-cada75dd8aab" />
+			<attribute id="Name" type="FixedString" value="GOON_EXHAUSTION_IMMUNE" />
+			<!-- Exhaustion Immune -->
+			<attribute id="DisplayName" type="TranslatedString" handle="h6e0f0e92gb914g43e8g813bge3e587388e89" version="1" />
+			<attribute id="DisplayDescription" type="TranslatedString" handle="ls::TranslatedStringRepository::s_HandleUnknown" version="0" />
+			<attribute id="Icon" type="FixedString" value="" />
+			<attribute id="Description" type="LSString" value="Used as a marker to set exhaustion application chance to 0%." />
+			<children>
+				<node id="Categories">
+					<children>
+						<node id="Category">
+							<attribute id="Name" type="LSString" value="Code" />
+						</node>
+					</children>
+				</node>
+				<node id="Properties" />
+			</children>
+		</node>
+	</region>
+</save>
