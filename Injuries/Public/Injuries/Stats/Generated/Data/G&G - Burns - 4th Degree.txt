@@ -15,6 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_BURNS"
 data "StackPriority" "4"
 data "StackType" "Overwrite"
+data "OnApplyConditions" "not IsImmuneToStatus('BURNING') and not IsImmuneToStatus('SG_Burning')"
 data "OnApplyFunctors" "IF(HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS')):ApplyStatus(GOON_GRIT_GLORY_FOURTH_DEGREE_BURNS_DEATH_TECHNICAL_KILL,100,1);ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FOURTH_DEGREE_BURNS')"
 data "RemoveEvents" "OnStatusRemoved"
