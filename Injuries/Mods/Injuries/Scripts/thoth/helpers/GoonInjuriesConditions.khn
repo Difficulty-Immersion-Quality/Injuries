@@ -1,18 +1,60 @@
-local __util = require 'larian.util'
+-- ==================================== Eligibility checks for injury application ====================================
+
+-- function Goon_IsCreatureWithImpedableMovement()
+
+-- Tagged('INNATE_FLYER')
+
+-- HasAttribute('Floating')
+
+
+-- Destroyed Hand & Frostbitten Hand
+function Goon_IsCreatureWithForelimbs()
+    return Goon_InjuryEligibilityCheck() & ~Tagged('OOZE') & ~Tagged('SPECTATOR') & ~Tagged('BEHOLDER')
+end
+
+function Goon_InjuryEligibilityCheck()
+    return ~HasPassive('Ethereal') & ~IsImmuneToStatus('SG_Condition') & ~HasAnyStatus({'DEBRIS_THRESHOLD_LESSER','DEBRIS_THRESHOLD','DEBRIS_THRESHOLD_GREATER','FLOATING_HEAD_VFX'}) & ~Tagged('SCRYING_EYE') & ~Tagged('BANITE_BANEGHOST') & ~HasAnyStatus({'INVULNERABLE','INVULNERABLE_NOT_SHOWN','MOO_KETHERIC_INVULNERABLE','GLO_MIZORA_INVULNERABLE','GLO_MIZORA_INVULNERABLE','GLO_MIZORA_INVULNERABLE','GLO_MIZORA_INVULNERABLE','END_WALLOFFORCE','GLOBE_OF_INVULNERABILITY','LOW_CAZADORSPALACE_PRISONER_INVULNERABILITY','QUEST_Indestructible','QUEST_Indestructible_Camp_Bedroll','LOW_SORRCEROUSSUNDRIES_INVULNERABLE','LOW_RAMAZITHSTOWER_GLOBE_OF_INVULNERABILITY_ITEM','LOW_RAMAZITHSTOWER_NIGHTSONG_GLOBE_FUNCTIONAL_AURA','LOW_RAMAZITHSTOWER_NIGHTSONG_GLOBE_FUNCTIONAL_STATUS','COL_TADPOLINGCENTRE_INPOD','TUT_MINDFLAYERPOD','Cannon_Nautiloid','TWN_TOLLHOUSE_SHADOWVISAGE','HAG_VICTIM2','EPI_AVATAR_GHOST','GLO_KORRILLA_PROJECTEDIMAGE','DIVINE_INTERVENTION_SHIELD','LOW_HOH_DAMNEDSOUL','SCL_SHADOWFELL_AURA','GLO_NIGHTSONGRESURRECTION_DOWNED','BANISHED','LOW_HOH_HOPESPIRIT','ETHEREALNESS_INCUBUS','GRAPPLED','COL_NIGHTSONG_SOULCAGE','LOW_GHOST_DISAPPEAR','RESILIENT_SPHERE','GASEOUSFORM_BLINK'})
+end
+
+function Goon_IsCreatureCategory()
+    return Tagged('ABERRATION')
+         | Tagged('BEAST') 
+         | Tagged('CELESTIAL')
+         | Tagged('CONSTRUCT')
+         | Tagged('DRAGON')
+         | Tagged('ELEMENTAL')
+         | Tagged('FEY')
+         | Tagged('FIEND')
+         | Tagged('GIANT')
+         | Tagged('HUMANOID') 
+         | Tagged('MONSTROSITY')
+         | Tagged('OOZE')
+         | Tagged('PLANT')
+         | Tagged('UNDEAD')
+end
+
+-- ==================================== Is left hand not work ====================================
 
 function Goon_Injury_Offhand_Check(entity)
     entity = entity or context.Source
     return WieldingWeapon('Melee', true, false, entity) | WieldingWeapon('Ranged', true, false, entity) | HasShieldEquipped(entity) | WieldingWeapon('Twohanded', false, false, entity) | WieldingWeapon('Versatile', false, false, entity)
 end
 
-function Goon_Fall_Asleep_Ability_Check()
-    return ConditionResult(context.Source.Charisma >= context.Source.Constitution)
+-- ==================================== Exhaustion ====================================
+-- Worth testing again with better khn
+
+function Goon_Fall_Asleep_Ability_Check(entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Charisma >= entity.Constitution)
 end
 
+-- ==================================== Somatic/Verbal checks ====================================
+-- I don't think I knew what I was doing here kekw
+
 function Goon_Injury_Spell_Check_Somatic()
-    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasSomaticComponent))
+    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) & HasSpellFlag(SpellFlags.HasSomaticComponent))
 end
 
 function Goon_Injury_Spell_Check_Verbal()
-    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) | HasSpellFlag(SpellFlags.HasVerbalComponent))
+    return (HasStringInSpellRoll('SavingThrow') | HasStringInFunctorConditions('SavingThrow')) & (HasSpellFlag(SpellFlags.Spell) & HasSpellFlag(SpellFlags.HasVerbalComponent))
 end
