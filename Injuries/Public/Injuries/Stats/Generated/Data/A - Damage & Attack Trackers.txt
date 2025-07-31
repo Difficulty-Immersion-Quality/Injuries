@@ -13,7 +13,7 @@ data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
 //
 data "StackId" "GOON_EXHAUSTION_DETECT_CRITICAL_THRESHOLD_REDUCTION_BOOSTS"
-data "Boosts" "IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_1',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2',context.Target)):ReduceCriticalAttackThreshold(1);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_3',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_4',context.Target)):ReduceCriticalAttackThreshold(2);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_5',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_6',context.Target)):ReduceCriticalAttackThreshold(3)"
+data "Boosts" "IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_1',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_2',context.Target)):ReduceCriticalAttackThreshold(1);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_3',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_4',context.Target)):ReduceCriticalAttackThreshold(2);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_5',context.Target) or HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_6',context.Target)):ReduceCriticalAttackThreshold(3);IF(HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_7',context.Target)):CriticalHit(AttackTarget,Success,Always)"
 data "RemoveConditions" "not HasPassive('Goon_Exhaustion_Detect_Critical_Threshold_Reduction')"
 data "RemoveEvents" "OnTurn;OnStatusApplied;OnStatusRemoved"
 
