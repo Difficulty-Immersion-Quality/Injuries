@@ -18,6 +18,7 @@ data "StackPriority" ""
 data "StackType" "Overwrite"
 // A calm emotions spell can suppress the effects of madness
 data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (HasSpellFlag(SpellFlags.HasVerbalComponent))):Disadvantage(AttackRoll);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (HasSpellFlag(SpellFlags.HasVerbalComponent))):SpellSaveDC(-5)"
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck(context.Source)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" "(not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS') or HasStatus('CALM_EMOTIONS') or (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"

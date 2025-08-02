@@ -15,7 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_NEURALGIA"
 data "StackPriority" "1"
 data "StackType" "Overwrite"
-data "OnApplyConditions" "Goon_InjuryEligibilityCheck()"
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck(context.Source)"
 data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING') and not HasStatus('GOON_DAMAGE_DEALT_NECROTIC') and not HasStatus('GOON_DAMAGE_DEALT_SLASHING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_ORGAN_NECROSIS,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_SLASHING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_MINOR_INTERNAL_INJURY,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_NEURALGIA') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_RIBS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_ORGAN_NECROSIS') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_MINOR_INTERNAL_INJURY')"
 data "RemoveEvents" "OnStatusRemoved"

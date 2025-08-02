@@ -20,6 +20,7 @@ data "AuraRadius" "3"
 data "AuraStatuses" "IF(Enemy() and not Tagged('INANIMATE') and not Dead()):ApplyStatus(GOON_INTIMIDATED_IN_RANGE)"
 // A calm emotions spell can suppress the effects of madness
 data "Boosts" ""
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck(context.Source)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" "(not HasStatus('GOON_INJURY_GRIT_GLORY_SHORTTERM_MADNESS') or HasStatus('CALM_EMOTIONS') or (HasPassive('MindlessRage') and HasStatus('SG_Rage')))"

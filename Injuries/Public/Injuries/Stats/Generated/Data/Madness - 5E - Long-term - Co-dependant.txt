@@ -20,6 +20,7 @@ data "AuraRadius" "10"
 data "AuraStatuses" "IF(Ally() and not Tagged('INANIMATE')):ApplyStatus(GOON_CODEPENDANT_IN_RANGE)"
 // A calm emotions spell can suppress the effects of madness
 data "Boosts" "IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AttackRoll);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllAbilities);IF((not HasStatus('CALM_EMOTIONS')) and (not HasPassive('MindlessRage') and not HasStatus('SG_Rage')) and (not HasStatus('GOON_CODEPENDANT_IN_RANGE_TECHNICAL'))):Disadvantage(AllSavingThrows)"
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck(context.Source)"
 data "OnApplyFunctors" ""
 data "OnRemoveFunctors" ""
 data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_LONGTERM_MADNESS')"

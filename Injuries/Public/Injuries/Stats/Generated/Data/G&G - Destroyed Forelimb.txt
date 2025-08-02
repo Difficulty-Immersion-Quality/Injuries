@@ -15,7 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_DESTROYED_HAND"
 data "StackPriority" ""
 data "StackType" "Overwrite"
-data "OnApplyConditions" "Goon_IsCreatureWithForelimbs()"
+data "OnApplyConditions" "Goon_IsCreatureWithForelimbs(context.Source)"
 data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING') and not HasStatus('GOON_DAMAGE_DEALT_COLD') and not HasStatus('GOON_DAMAGE_DEALT_LIGHTNING') and not HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_BLUDGEONING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_BROKEN_ARM,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_HAND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_LIGHTNING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_HAND,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_NECROTIC')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_WITHERED_HAND,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DESTROYED_HAND') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_BROKEN_ARM') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_GANGRENE_HAND') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_EXPLOSIVE_GROUNDING_HAND') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_WITHERED_HAND')"
 data "RemoveEvents" "OnStatusRemoved"
