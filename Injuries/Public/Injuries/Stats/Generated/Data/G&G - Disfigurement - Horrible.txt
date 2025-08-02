@@ -15,7 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_DISFIGUREMENT"
 data "StackPriority" "2"
 data "StackType" "Overwrite"
-data "OnApplyConditions" "Goon_InjuryEligibilityCheck()"
+data "OnApplyConditions" "Goon_InjuryEligibilityCheck(context.Source)"
 data "OnApplyFunctors" "IF(not HasStatus('GOON_DAMAGE_DEALT_ACID') and not HasStatus('GOON_DAMAGE_DEALT_PIERCING') and not HasStatus('GOON_DAMAGE_DEALT_SLASHING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_ACID')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID,100,-1);IF(HasStatus('GOON_DAMAGE_DEALT_PIERCING') or HasStatus('GOON_DAMAGE_DEALT_SLASHING')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_SCAR,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_DISFIGUREMENT_ACID') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_HORRIBLE_SCAR')"
 data "RemoveEvents" "OnStatusRemoved"

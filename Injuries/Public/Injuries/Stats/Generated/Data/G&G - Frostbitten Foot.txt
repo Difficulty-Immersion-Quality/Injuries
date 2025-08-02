@@ -15,7 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "StackId" "GOON_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT"
 data "StackPriority" ""
 data "StackType" "Overwrite"
-data "OnApplyConditions" "Goon_IsCreatureWithImpedableMovement() and not IsImmuneToStatus('FROZEN')"
+data "OnApplyConditions" "Goon_IsCreatureWithImpedableMovement(context.Source) and not IsImmuneToStatus('FROZEN',context.Source)"
 data "OnApplyFunctors" "IF(HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT,100,-1);IF(not HasStatus('GOON_DAMAGE_DEALT_COLD')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG,100,-1)"
 data "RemoveConditions" "not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_FROSTBITTEN_FOOT') and not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_DAMAGED_HAMSTIRNG')"
 data "RemoveEvents" "OnStatusRemoved"
