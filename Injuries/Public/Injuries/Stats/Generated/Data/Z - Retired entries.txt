@@ -1,0 +1,20 @@
+// For Passive application
+new entry "GOON_HEALING_INJURY_REMOVAL_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+//
+data "StackType" "Ignore"
+data "StackId" "GOON_HEALING_INJURY_REMOVAL_TECHNICAL"
+// data "RemoveConditions" "not HasPassive('Goon_Healing_Injury_Removal_Technical_Passive', context.Source)"
+data "RemoveEvents" "OnTurn;OnStatusApplied;OnStatusRemoved"
+data "Passives" "Goon_Healing_Injury_Removal_Passive"
+
+// Passive
+new entry "Goon_Healing_Injury_Removal_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+//
+// data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnHealed)):ApplyStatus(GOON_HEALING_INJURY_REMOVAL_SAVINGTHROW,100,0)"
+// data "StatsFunctorContext" "OnHealed"
+// data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnHealed) and HasPassive('Goon_Healing_Injury_Removal_Technical_Passive', context.Source))"
