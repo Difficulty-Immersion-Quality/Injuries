@@ -7,14 +7,13 @@ Ext.Vars.RegisterModVariable(ModuleUUID, "Injury_Report", {
 	SyncToServer = true
 })
 
-Ext.Require("Shared/Utils/_FileUtils.lua")
-Ext.Require("Shared/Utils/_ModUtils.lua")
-Ext.Require("Shared/Utils/_Logger.lua")
-Ext.Require("Shared/Utils/_TableUtils.lua")
+Ext.Require("Utilities/Common/_Index.lua")
+Ext.Require("Utilities/Networking/Channels.lua")
+Ext.Require("Utilities/Advanced/_ECSPrinter.lua")
+
+Ext.Require("Shared/Configurations/_ConfigurationStructure.lua")
 
 Logger:ClearLogFile()
-
--- Ext.Require("Server/ECSPrinter.lua")
 
 Ext.Require("Server/_DifficultyClassMap.lua")
 Ext.Require("Server/_EventCoordinator.lua")

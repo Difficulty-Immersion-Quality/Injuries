@@ -57,10 +57,10 @@ function ApplyingInjuriesSettings:BuildBasicConfig(parent)
 	parent:AddText(Translator:translate("How Many Injuries Can Be Applied In One Event?"))
 	parent:AddText(
 		Translator:translate(
-		"Event refers to triggers like an attack or status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted"))
+			"Event refers to triggers like an attack or status application. Injuries are processed randomly and on a first-come, first-serve basis, and only injuries that are actually applied will be counted"))
 		:SetStyle("Alpha", 0.7)
 
-	local totalInjuryCount = TableUtils:CountEntries(InjuryMenu.ConfigurationSlice.injury_specific)
+	local totalInjuryCount = TableUtils:CountElements(InjuryMenu.ConfigurationSlice.injury_specific)
 	universalSettings.injury_limit_per_event["Base"] = (universalSettings.injury_limit_per_event["Base"] == -1 or universalSettings.injury_limit_per_event["Base"] > totalInjuryCount)
 		and totalInjuryCount
 		or universalSettings.injury_limit_per_event["Base"]
@@ -97,7 +97,7 @@ function ApplyingInjuriesSettings:BuildBasicConfig(parent)
 
 	baseSlider.OnChange = function()
 		universalSettings.injury_limit_per_event["Base"] = baseSlider.Value[1]
-		UIHelpers:KillChildren(injuryCapTable)
+		Helpers:KillChildren(injuryCapTable)
 		buildSliders()
 	end
 end
@@ -226,6 +226,7 @@ function ApplyingInjuriesSettings:BuildAdvancedConfig(parent)
 		local newRow = enemyMultTable:AddRow()
 		newRow:AddCell():AddText(npcType)
 
+		universalSettings.npc_multipliers = universalSettings.npc_multipliers or {}
 		if not universalSettings.npc_multipliers[npcType] then
 			universalSettings.npc_multipliers[npcType] = 1
 		end

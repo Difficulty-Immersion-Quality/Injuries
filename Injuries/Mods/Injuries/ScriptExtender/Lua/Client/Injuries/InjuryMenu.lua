@@ -69,7 +69,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		helpTextGroup:AddText(Translator:translate("Check the Github (linked on the mod page) to see the underlying implementation for the Grit and Glory / Madness / Exhaustion system - there's a lot of templates that can be used to help in developing your own system, either directly or as reference")).TextWrapPos = 0
 		helpTextGroup:AddText(Translator:translate("While developing, if you need to clear statuses that no longer exist from the config, you can enter client mode in the SE console (using the 'client' command) and run !Injuries_CleanConfig - this will remove configs for injuries that don't exist in the game, along with other non-destructive clean up operations")).TextWrapPos = 0
 
-		helpTextButton.OnClick = function ()
+		helpTextButton.OnClick = function()
 			helpTextGroup.Visible = not helpTextGroup.Visible
 		end
 
@@ -96,10 +96,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			local deleteSystemButton = systemHeader:AddButton(Translator:translate("Delete System"))
 			deleteSystemButton.IDContext = system -- otherwise it won't trigger when there are multiple systems
 			deleteSystemButton.OnClick = function()
-				for injury, _ in pairs(InjuryMenu.ConfigurationSlice.injury_specific) do
-					if string.find(string.upper(injury), "^" .. string.upper(system) .. ".*") then
-						InjuryMenu.ConfigurationSlice.injury_specific[injury].delete = true
-						InjuryMenu.ConfigurationSlice.injury_specific[injury] = nil
+				if InjuryMenu.ConfigurationSlice.injury_specific then
+					for injury, _ in pairs(InjuryMenu.ConfigurationSlice.injury_specific) do
+						if string.find(string.upper(injury), "^" .. string.upper(system) .. ".*") then
+							InjuryMenu.ConfigurationSlice.injury_specific[injury].delete = true
+							InjuryMenu.ConfigurationSlice.injury_specific[injury] = nil
+						end
 					end
 				end
 
@@ -337,7 +339,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			end
 
 			for stackId, nameMap in TableUtils:OrderedPairs(stackedInjuriesDisplayMap) do
-				if TableUtils:CountEntries(nameMap) == 1 then
+				if TableUtils:CountElements(nameMap) == 1 then
 					local key = next(nameMap)
 					miscInjuriesDisplayMap[key] = nameMap[key]
 					stackedInjuriesDisplayMap[stackId] = nil
@@ -350,9 +352,11 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			end
 		end
 
-		--#region Systems
-		for _, system in ipairs(InjuryMenu.ConfigurationSlice.systems) do
-			AddSystem(system)
+		if InjuryMenu.ConfigurationSlice and InjuryMenu.ConfigurationSlice.systems then
+			--#region Systems
+			for _, system in ipairs(InjuryMenu.ConfigurationSlice.systems) do
+				AddSystem(system)
+			end
 		end
 
 		tabHeader:AddSeparatorText(Translator:translate("Register a New Injury System"))
@@ -368,6 +372,8 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 		search.OnClick = function()
 			if #systemInput.Text > 0 then
+				InjuryMenu.ConfigurationSlice = InjuryMenu.ConfigurationSlice or {}
+				InjuryMenu.ConfigurationSlice.systems = InjuryMenu.ConfigurationSlice.systems or {}
 				table.insert(InjuryMenu.ConfigurationSlice.systems, systemInput.Text)
 				AddSystem(systemInput.Text)
 			end
@@ -380,26 +386,35 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 Translator:RegisterTranslation({
 	["Toggle Help Text"] = "he1662ef5633243af808c395d3550dfc4833g",
-	["All injury and status names in all windows except the injury report have tooltips associated to them - hover over their names to see them. Tooltips in other areas are marked by (?)"] = "hfb7e22414b544bf5820ac50d99addb9408b5",
+	["All injury and status names in all windows except the injury report have tooltips associated to them - hover over their names to see them. Tooltips in other areas are marked by (?)"] =
+	"hfb7e22414b544bf5820ac50d99addb9408b5",
 	["Sliders can have values manually entered by ctrl + left clicking on them"] = "h31f607652dd64e52acfa0fd748fdf5ab33g9",
-	["Table columns within the Customize windows can be manually resized by left clicking and dragging on the vertical lines between columns"] = "h65fc2263758341e9b115d235f2ac2a2ddbe3",
+	["Table columns within the Customize windows can be manually resized by left clicking and dragging on the vertical lines between columns"] =
+	"h65fc2263758341e9b115d235f2ac2a2ddbe3",
 	["For Players"] = "h6ff2f32c256a4d0d825532383de50ee03561",
-	["Customizing a provided configuration is largely intended to be an iterative process while playing the game, starting by using the Injury Report (button is further below, default MCM keybind is LSHIFT + LALT + R) to see what injuries are being processed per character and how the modifiers are affecting that processing (as it can vary wildly between characters)"] = "h296f5564e2d1461699a144b6122ed5beefdb",
+	["Customizing a provided configuration is largely intended to be an iterative process while playing the game, starting by using the Injury Report (button is further below, default MCM keybind is LSHIFT + LALT + R) to see what injuries are being processed per character and how the modifiers are affecting that processing (as it can vary wildly between characters)"] =
+	"h296f5564e2d1461699a144b6122ed5beefdb",
 	["Then:"] = "hca642f1f841948a7a30b387bf83a08914f9f",
-	["If you want to adjust general aspects like application chance, how healing affects damage, removing all injuries on long rest, etc, use the settings section below."] = "hf0325eecf78a433c9e07ca5b4bb58879a065",
-	["If you want to adjust injury-specific settings like which damage types are used, the multipliers for races/tags, granular removal conditions, etc, locate the relevant injury in the section further below and open the window via the customize button"] = "ha5d5109cd75c4e86af1206bca2fc2dfb82g8",
+	["If you want to adjust general aspects like application chance, how healing affects damage, removing all injuries on long rest, etc, use the settings section below."] =
+	"hf0325eecf78a433c9e07ca5b4bb58879a065",
+	["If you want to adjust injury-specific settings like which damage types are used, the multipliers for races/tags, granular removal conditions, etc, locate the relevant injury in the section further below and open the window via the customize button"] =
+	"ha5d5109cd75c4e86af1206bca2fc2dfb82g8",
 	["If you want to prevent an injury from being processed at all, change the severity to 'Disabled' within the Injury-specific section"] = "h756d78fba731439d88de3a6e8e7d4b4b5f84",
-	["Any changes to configs affecting a given injury will not be reflected in the Injury Report until that injury is re-processed under the relevant scenario (i.e. changing a damage threshold requires taking the right kind of damage for it to be updated)"] = "h7b61fd3af2204b989f1cfbb68bbe3bf41916",
+	["Any changes to configs affecting a given injury will not be reflected in the Injury Report until that injury is re-processed under the relevant scenario (i.e. changing a damage threshold requires taking the right kind of damage for it to be updated)"] =
+	"h7b61fd3af2204b989f1cfbb68bbe3bf41916",
 	["For Creators"] = "hf5e54a92558944d5b7e7bae84114913e99f5",
-	["Check the Github (linked on the mod page) to see the underlying implementation for the Grit and Glory / Madness / Exhaustion system - there's a lot of templates that can be used to help in developing your own system, either directly or as reference"] = "hb291dc8fd9d143fc829762905c5746464g4c",
-	["While developing, if you need to clear statuses that no longer exist from the config, you can enter client mode in the SE console (using the 'client' command) and run !Injuries_CleanConfig - this will remove configs for injuries that don't exist in the game, along with other non-destructive clean up operations"] = "h7f417e48ae86435aaabb6feba172d276a364",
+	["Check the Github (linked on the mod page) to see the underlying implementation for the Grit and Glory / Madness / Exhaustion system - there's a lot of templates that can be used to help in developing your own system, either directly or as reference"] =
+	"hb291dc8fd9d143fc829762905c5746464g4c",
+	["While developing, if you need to clear statuses that no longer exist from the config, you can enter client mode in the SE console (using the 'client' command) and run !Injuries_CleanConfig - this will remove configs for injuries that don't exist in the game, along with other non-destructive clean up operations"] =
+	"h7f417e48ae86435aaabb6feba172d276a364",
 	["Injury-Specific Options"] = "hc273eb7f41304b7a9e3a4f783cf28b7470c2",
 	["Open Injury Report"] = "hd04225c38388437caa4670faf1b5cbea2bb7",
 	["Systems"] = "h8c9bbb728c8f407aaa7a886ae05ff4e8cc9b",
 	["Delete System"] = "h5d5066b88cda46c1bb91129a1d80777c67d5",
 	["Injury"] = "h2b3b5b26e1c44dd495acba638cd593500718",
 	["Severity"] = "h7231e1d605ce400ea608fb8d4079e8f493bg",
-	["'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"] = "h33e313fcb75f468dabcb7c43d76ba8f984e0",
+	["'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"] =
+	"h33e313fcb75f468dabcb7c43d76ba8f984e0",
 	["Actions"] = "h6786d51c543e4530a8c2ac7847bce8dd5ce6",
 	["Customize (%s)"] = "h1a8bc7c8138d427ba215ad25773655b69f2d",
 	["Customize"] = "h44056242a4db4cf3a274eb9d84ef8ae6a1f8",
