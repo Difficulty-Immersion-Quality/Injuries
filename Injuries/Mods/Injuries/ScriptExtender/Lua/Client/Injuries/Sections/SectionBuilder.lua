@@ -39,7 +39,7 @@ function SectionBuilder:buildSections()
 		---@type ExtuiSelectable
 		local selectable = self.settingSelectColumn:AddSelectable(section.title)
 		selectable.OnClick = function()
-			UIHelpers:KillChildren(self.settingManagerColumn)
+			Helpers:KillChildren(self.settingManagerColumn)
 
 			if selectable.Selected then
 				for _, childSelectable in pairs(self.settingSelectColumn.Children) do

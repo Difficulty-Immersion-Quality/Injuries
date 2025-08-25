@@ -1,7 +1,7 @@
-UIHelpers = {}
+Helpers = {}
 
 ---@param ... ExtuiTreeParent
-function UIHelpers:KillChildren(...)
+function Helpers:KillChildren(...)
 	for _, parent in pairs({ ... }) do
 		for _, child in pairs(parent.Children) do
 			if child.UserData ~= "keep" then
