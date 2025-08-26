@@ -101,6 +101,7 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h5d5066b88cda46c1bb91129a1d80777c67d5" version="1">Delete System</content>
 	<content contentuid="h2b3b5b26e1c44dd495acba638cd593500718" version="1">Injury</content>
 	<content contentuid="h7231e1d605ce400ea608fb8d4079e8f493bg" version="1">Severity</content>
+	<content contentuid="he1097f5fbb4c4ff5b616166dc6514d71161b" version="1">Change Severity</content>
 	<content contentuid="h6786d51c543e4530a8c2ac7847bce8dd5ce6" version="1">Actions</content>
 	<content contentuid="h1a8bc7c8138d427ba215ad25773655b69f2d" version="1">Customize (%s)</content>
 	<content contentuid="h2fa3b2dc429e40f9934dfc1da4c9af927ac9" version="1">Apply On Status: %d</content>
@@ -109,7 +110,7 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h2a4ca5118d19495a922958a7e23b4d18e94d" version="1">Races: %d</content>
 	<content contentuid="h8f02176203414eda9441035b56a5bd855100" version="1">Tags: %d</content>
 	<content contentuid="h38ca8120073446a380df1f13774a09496ab7" version="1">Customizing</content>
-	<content contentuid="h44056242a4db4cf3a274eb9d84ef8ae6a1f8" version="1">Customize</content>
+	<content contentuid="h44056242a4db4cf3a274eb9d84ef8ae6a1f8" version="1">Open In New Window</content>
 	<content contentuid="h28fd5e874c854e1c89f87b6a9f526f592ac1" version="1">Reset</content>
 	<content contentuid="h75fc356630954ffb866066e2ba5403a3bd02" version="1">Copy</content>
 	<content contentuid="he6ca7f6689b442d6b0c69c76701a3acaf37a" version="1">Copying Injury Configs</content>

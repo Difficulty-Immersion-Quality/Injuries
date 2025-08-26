@@ -11,6 +11,8 @@ local updateTimer
 -- any additional logic for letting the server know there were changes. Only works for this implementation -
 -- too fragile for general use
 local function generate_recursive_metatable(proxy_table, real_table)
+	proxy_table._real = real_table
+
 	return setmetatable(proxy_table, {
 		-- don't use the proxy table during pairs() so we don't have to exclude any proxy fields
 		__pairs = function(this_table)
@@ -133,6 +135,10 @@ Ext.Require("Shared/Injuries/_InjuryConfig.lua")
 
 local function CopyConfigsIntoReal(table_from_file, proxy_table)
 	for key, value in pairs(table_from_file) do
+		if type(key) == "string" and tonumber(key) then
+			key = tonumber(key)
+		end
+
 		local default_value = proxy_table[key]
 		-- if default_value then
 		if type(value) == "table" then
@@ -173,16 +179,24 @@ function ConfigurationStructure:InitializeConfig()
 	local config = FileUtils:LoadTableFile("config.json")
 
 	if not config then
-		FileUtils:SaveTableToFile("config.json", real_config_table)
+		config = real_config_table
+		if Ext.IsClient() then
+			FileUtils:SaveTableToFile("config.json", config)
+		end
 	else
-		CopyConfigsIntoReal(config, ConfigurationStructure.config)
+		if Ext.IsClient() then
+			CopyConfigsIntoReal(config, ConfigurationStructure.config)
+			FileUtils:SaveTableToFile("config.json", real_config_table)
+		else
+			-- All config management is done on the client side - just want server to always use the full config file (instead of attempting to merge with defaults)
+			real_config_table = {}
+			ConfigurationStructure.config = self:generate_recursive_metatable({}, real_config_table)
+			CopyConfigsIntoReal(config, ConfigurationStructure.config)
+		end
 	end
-	FileUtils:SaveTableToFile("config.json", real_config_table)
 
 	initialized = true
-
-	cleanEmptyTables()
-	Logger:BasicInfo("Successfully loaded the config!")
+	Logger:BasicDebug("Successfully loaded the config!")
 end
 
 function ConfigurationStructure:UpdateConfigForServer()

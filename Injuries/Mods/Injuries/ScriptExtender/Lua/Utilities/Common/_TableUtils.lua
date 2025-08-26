@@ -213,9 +213,6 @@ end
 ---@param tbl table
 ---@return number
 function TableUtils:CountElements(tbl)
-	if not tbl then
-		return 0
-	end
 	local count = 0
 	for _, _ in pairs(tbl) do
 		count = count + 1

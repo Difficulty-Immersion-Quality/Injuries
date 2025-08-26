@@ -1,11 +1,60 @@
 -- Can't assign any of these fields to local fields for convenience - breaks VSCode Lua type hints
 
 --#region Injuries
+---@class InjuriesConfig
 ConfigurationStructure.config.injuries = {}
 
---#region Systems
-ConfigurationStructure.config.injuries.systems = {
+ConfigurationStructure.config.injuries.settings = {
+	severityColours = {
+		Disabled =
+		{
+			0.0,
+			0.0,
+			0.0,
+			0.6187889575958252
+		},
+		Exclude =
+		{
+			0.5,
+			0.5,
+			0.5,
+			1
+		},
+		Extreme =
+		{
+			0.9046972393989563,
+			0.045031633228063583,
+			0.045031633228063583,
+			1.0
+		},
+		High =
+		{
+			0.71969771385192871,
+			0.0035459788050502539,
+			0.2656036913394928,
+			1.0
+		},
+		Low =
+		{
+			0.75894010066986084,
+			0.69096428155899048,
+			0.018630592152476311,
+			1.0
+		},
+		Medium =
+		{
+			0.92151534557342529,
+			0.66818434000015259,
+			0.058783926069736481,
+			1.0
+		}
+	}
 }
+
+--#region Systems
+---@alias SystemName string
+---@type SystemName[]
+ConfigurationStructure.config.injuries.systems = {}
 
 --#endregion
 

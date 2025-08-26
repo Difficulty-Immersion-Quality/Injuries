@@ -136,7 +136,7 @@ local statusGroupIndex = {}
 local function MarkDuplicatedStatuses(group, injuryStatusConfig)
 	for _, header in pairs(group.Children) do
 		for _, statusNameText in pairs(header.Children) do
-			if statusNameText.UserData and not TableUtils:ListContains(injuryStatusConfig[header.UserData]["excluded_statuses"], statusNameText.UserData) then
+			if statusNameText.UserData and not TableUtils:IndexOf(injuryStatusConfig[header.UserData]["excluded_statuses"], statusNameText.UserData) then
 				---@type StatusData
 				local statusData = Ext.Stats.Get(statusNameText.UserData)
 				statusNameText:SetColor("Text", { 219 / 255, 201 / 255, 173 / 255, 0.78 })
@@ -144,7 +144,7 @@ local function MarkDuplicatedStatuses(group, injuryStatusConfig)
 
 				for _, statusSG in ipairs(statusData.StatusGroups) do
 					if statusSG ~= header.UserData then
-						if injuryStatusConfig[statusSG] and injuryStatusConfig[statusSG]["excluded_statuses"] and not TableUtils:ListContains(injuryStatusConfig[statusSG]["excluded_statuses"], statusData.Name) then
+						if injuryStatusConfig[statusSG] and injuryStatusConfig[statusSG]["excluded_statuses"] and not TableUtils:IndexOf(injuryStatusConfig[statusSG]["excluded_statuses"], statusData.Name) then
 							statusNameText:SetColor("Text", { 1, 0.02, 0, 1 })
 							statusNameText.Label = statusNameText.Label .. string.format(" " .. Translator:translate("(ALSO IN %s, SHOULD ONLY BE ACTIVE IN ONE GROUP)"), statusSG)
 							break
@@ -218,14 +218,14 @@ function StatusHelper:BuildStatusGroupSection(group, injury, injuryStatusConfig,
 					local statusData = Ext.Stats.Get(status)
 					StatusHelper:BuildStatusTooltip(statusName:Tooltip(), statusData)
 
-					if statusConfig["excluded_statuses"] and TableUtils:ListContains(statusConfig["excluded_statuses"], status) then
+					if statusConfig["excluded_statuses"] and TableUtils:IndexOf(statusConfig["excluded_statuses"], status) then
 						excludeButton.Label = Translator:translate("Include")
 						statusName:SetStyle("Alpha", 0.65)
 					end
 
 					excludeButton.OnClick = function()
 						if statusConfig["excluded_statuses"] then
-							local isInList, index = TableUtils:ListContains(statusConfig["excluded_statuses"], status)
+							local isInList, index = TableUtils:IndexOf(statusConfig["excluded_statuses"], status)
 							if isInList then
 								table.remove(statusConfig["excluded_statuses"], index)
 								statusName:SetStyle("Alpha", 1.0)
