@@ -390,7 +390,7 @@ function InjuryMenu:buildSystemSection(parent)
 	local sidebarTableRow = Styler:TwoColumnTable(parent, "systems"):AddRow()
 	local sidebarCell = sidebarTableRow:AddCell()
 
-	local customizationCell = sidebarTableRow:AddCell()
+	local customizationCell = sidebarTableRow:AddCell():AddChildWindow("customizer")
 
 	local systemDropdown = sidebarCell:AddCombo("")
 	systemDropdown.UserData = "keep"
@@ -447,9 +447,9 @@ function InjuryMenu:buildSystemSection(parent)
 		self:BuildSystemSelects(systemGroup, miscInjuriesDisplayMap, customizationCell)
 
 		for stackId, nameMap in TableUtils:OrderedPairs(stackedInjuriesDisplayMap) do
-			local sep =  systemGroup:AddSeparatorText(stackId)
+			local sep = systemGroup:AddSeparatorText(stackId)
 			sep.Font = "Small"
-			sep:SetColor("Text", {1, 1, 1, 0.55})
+			sep:SetColor("Text", { 1, 1, 1, 0.55 })
 			self:BuildSystemSelects(systemGroup, nameMap, customizationCell)
 		end
 		-- buildTable(Translator:translate("Miscellaneous"), miscInjuriesDisplayMap)
@@ -467,6 +467,21 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 	for displayName, statName in TableUtils:OrderedPairs(injuryMap) do
 		---@type ExtuiSelectable
 		local select = parent:AddSelectable(displayName)
+
+		select.OnClick = function()
+			Helpers:KillChildren(customizationCell)
+			Styler:CheapTextAlign(displayName, customizationCell, "Large")
+			local newTabBar = customizationCell:AddTabBar("InjuryTabBar")
+			for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
+				local success, error = pcall(function()
+					tabGenerator(newTabBar, statName)
+				end)
+
+				if not success then
+					Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+				end
+			end
+		end
 	end
 end
 
