@@ -507,7 +507,6 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 		local select = parent:AddSelectable(displayName)
 		select:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[injury.severity]))
 		select:SetColor("HeaderHovered", Styler:ConvertRGBAToIMGUI({ 1, 1, 1, 0.1 }))
-		-- select.Selected = true
 		select.OnClick = function()
 			select.Selected = false
 			Helpers:KillChildren(customizationCell)
@@ -529,6 +528,23 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 			Helpers:KillChildren(self.popup)
 			self.popup:Open()
 
+			self.popup:AddSelectable(Translator:translate("Open In New Window")).OnClick = function()
+				local injuryPopup = Ext.IMGUI.NewWindow(Translator:translate("Customizing") .. " " .. displayName)
+				injuryPopup:SetSizeConstraints(Styler:ScaleFactor({200, 200}))
+				injuryPopup.Closeable = true
+
+				local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
+				for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
+					local success, error = xpcall(function()
+						tabGenerator(newTabBar, statName)
+					end, debug.traceback)
+
+					if not success then
+						Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+					end
+				end
+			end
+
 			---@type ExtuiMenu
 			local severityMenu = self.popup:AddMenu(Translator:translate("Change Severity"))
 			local function buildSeverityMenu()
@@ -549,8 +565,16 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 			end
 			buildSeverityMenu()
 
-			self.popup:AddSelectable(Translator:translate("Copy"), "DontClosePopups").OnClick = function()
+			self.popup:AddSelectable(Translator:translate("Copy"), "DontClosePopups").OnClick = function(copySel)
+				copySel.Selected = false
 				self:CopyInjuryConfig(statName)
+			end
+
+			self.popup:AddSelectable(Translator:translate("Reset"), "DontClosePopups").OnClick = function(resetSelect)
+				select.Selected = false
+				InjuryMenu.ConfigurationSlice.injury_specific[statName].delete = true
+				InjuryMenu.ConfigurationSlice.injury_specific[statName] = TableUtils:DeeplyCopyTable(ConfigurationStructure.DynamicClassDefinitions.injury_class)
+				select:OnClick()
 			end
 		end
 	end
@@ -684,11 +708,12 @@ Translator:RegisterTranslation({
 	["Delete System"] = "h5d5066b88cda46c1bb91129a1d80777c67d5",
 	["Injury"] = "h2b3b5b26e1c44dd495acba638cd593500718",
 	["Severity"] = "h7231e1d605ce400ea608fb8d4079e8f493bg",
+	["Change Severity"] = "he1097f5fbb4c4ff5b616166dc6514d71161b",
 	["'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"] =
 	"h33e313fcb75f468dabcb7c43d76ba8f984e0",
 	["Actions"] = "h6786d51c543e4530a8c2ac7847bce8dd5ce6",
 	["Customize (%s)"] = "h1a8bc7c8138d427ba215ad25773655b69f2d",
-	["Customize"] = "h44056242a4db4cf3a274eb9d84ef8ae6a1f8",
+	["Open In New Window"] = "h44056242a4db4cf3a274eb9d84ef8ae6a1f8",
 	["Apply On Status: %d"] = "h2fa3b2dc429e40f9934dfc1da4c9af927ac9",
 	["Damage: %d"] = "h9e5903752a86420d83eb9ebfd034a4ae70ga",
 	["Remove On Status: %d"] = "h417c2180e95c4b58bf778ab09e9c479d4a9d",
