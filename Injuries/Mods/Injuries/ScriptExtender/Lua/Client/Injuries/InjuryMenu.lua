@@ -386,7 +386,12 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 	end
 )
 
+---@param parent ExtuiTreeParent
 function InjuryMenu:buildSystemSection(parent)
+	local settings = ConfigurationStructure.config.injuries.settings
+
+	local coloursGroup = parent:AddGroup("colours")
+
 	local sidebarTableRow = Styler:TwoColumnTable(parent, "systems"):AddRow()
 	local sidebarCell = sidebarTableRow:AddCell()
 
@@ -458,24 +463,53 @@ function InjuryMenu:buildSystemSection(parent)
 		-- end
 	end
 	systemDropdown:OnChange()
+
+	local count = 0
+	for severity, colour in TableUtils:OrderedPairs(settings.severityColours,
+		function(key, value)
+			return key == "Exclude" and 0 or (key == "Low" and 1) or (key == "Medium" and 2) or (key == "High" and 3) or (key == "Extreme" and 4) or 5
+		end)
+	do
+		count = count + 1
+
+		local colourEdit = coloursGroup:AddColorEdit(Translator:translate(severity))
+		colourEdit.AlphaBar = true
+		colourEdit.Color = colour._real
+		colourEdit.NoInputs = true
+		colourEdit.SameLine = count > 1 and ((count - 1) % 3 ~= 0)
+		colourEdit.OnChange = function()
+			settings.severityColours[severity].delete = true
+			settings.severityColours[severity] = colourEdit.Color
+
+			systemDropdown:OnChange()
+		end
+	end
 end
 
 ---@param parent ExtuiTreeParent
 ---@param injuryMap {[string] : string}
----@param customizationCell ExtuiTreeParent
+---@param customizationCell ExtuiChildWindow
 function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
-	for displayName, statName in TableUtils:OrderedPairs(injuryMap) do
+	local settings = ConfigurationStructure.config.injuries.settings._real
+	for displayName, statName in TableUtils:OrderedPairs(injuryMap, function (key, value)
+		local severity = ConfigurationStructure.config.injuries.injury_specific[value].severity
+		return tostring(severity == "Exclude" and 0 or (severity == "Low" and 1) or (severity == "Medium" and 2) or (severity == "High" and 3) or (severity == "Extreme" and 4) or 5) .. key
+	end) do
 		---@type ExtuiSelectable
 		local select = parent:AddSelectable(displayName)
-
+		select:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[ConfigurationStructure.config.injuries.injury_specific[statName].severity]))
+		select:SetColor("HeaderHovered", Styler:ConvertRGBAToIMGUI({1, 1, 1, 0.1}))
+		-- select.Selected = true
 		select.OnClick = function()
+			select.Selected = false
 			Helpers:KillChildren(customizationCell)
+			customizationCell:SetScroll({ 0, 0 })
 			Styler:CheapTextAlign(displayName, customizationCell, "Large")
 			local newTabBar = customizationCell:AddTabBar("InjuryTabBar")
 			for _, tabGenerator in pairs(InjuryMenu.Tabs.Generators) do
-				local success, error = pcall(function()
+				local success, error = xpcall(function()
 					tabGenerator(newTabBar, statName)
-				end)
+				end, debug.traceback)
 
 				if not success then
 					Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
