@@ -1,23 +1,24 @@
----@type {[string] : StatusData}
-local cachedStats = {}
-
----@param configToCount table?
----@return number
-local function countInjuryConfig(configToCount)
-	local count = 0
-
-	if configToCount and next(configToCount) then
-		for _, _ in pairs(configToCount) do
-			count = count + 1
-		end
-	end
-
-	return count
-end
-
-InjuryMenu = {}
+InjuryMenu = {
+	---@type {[string] : {[string]: string}}
+	systemsAndInjuries = {},
+	severities = {
+		"Exclude",
+		"Low",
+		"Medium",
+		"High",
+		"Extreme",
+		"Disabled",
+		["Exclude"] = 1,
+		["Low"] = 2,
+		["Medium"] = 3,
+		["High"] = 4,
+		["Extreme"] = 5,
+		["Disabled"] = 6
+	}
+}
 InjuryMenu.Tabs = { ["Generators"] = {} }
 InjuryMenu.ConfigurationSlice = ConfigurationStructure.config.injuries
+
 
 Ext.Require("Client/Injuries/InjuryReport.lua")
 
@@ -42,8 +43,14 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 		if initialized then
 			return
 		end
+
 		initialized = true
 		tabHeader.TextWrapPos = 0
+
+		InjuryMenu.popup = tabHeader:AddPopup("injuries")
+		InjuryMenu.popup:SetColor("PopupBg", { 0, 0, 0, 1 })
+		InjuryMenu.popup:SetColor("Border", { 1, 0, 0, 0.5 })
+
 
 		local helpTextButton = tabHeader:AddButton(Translator:translate("Toggle Help Text"))
 		local helpTextGroup = tabHeader:AddGroup("helpText")
@@ -403,6 +410,18 @@ function InjuryMenu:buildSystemSection(parent)
 	local opts = {}
 	if ConfigurationStructure.config.injuries.systems then
 		for _, systemName in TableUtils:OrderedPairs(ConfigurationStructure.config.injuries.systems) do
+			if not self.systemsAndInjuries[systemName] then
+				self.systemsAndInjuries[systemName] = {}
+				for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
+					if string.find(string.upper(name), "^" .. string.upper(systemName) .. ".*") then
+						local displayName = string.sub(name, string.len(systemName) + 1)
+						displayName = string.gsub(displayName, "_", " ")
+						---@type StatusData
+						local injuryStat = Ext.Stats.Get(name)
+						self.systemsAndInjuries[systemName][name] = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, displayName)
+					end
+				end
+			end
 			table.insert(opts, systemName)
 		end
 	end
@@ -421,23 +440,14 @@ function InjuryMenu:buildSystemSection(parent)
 		---@type {[string] : {[string]: string}}
 		local stackedInjuriesDisplayMap = {}
 
-		for _, name in pairs(Ext.Stats.GetStats("StatusData")) do
-			if string.find(string.upper(name), "^" .. string.upper(activeSystem) .. ".*") then
-				local displayName = string.sub(name, string.len(activeSystem) + 1)
-				displayName = string.gsub(displayName, "_", " ")
-
-				---@type StatusData
-				local injuryStat = Ext.Stats.Get(name)
-				displayName = Ext.Loca.GetTranslatedString(injuryStat.DisplayName, displayName)
-
-				cachedStats[displayName] = injuryStat
-
-				if injuryStat.StackId == "" then
-					miscInjuriesDisplayMap[displayName] = name
-				else
-					stackedInjuriesDisplayMap[injuryStat.StackId] = stackedInjuriesDisplayMap[injuryStat.StackId] or {}
-					stackedInjuriesDisplayMap[injuryStat.StackId][displayName] = name
-				end
+		for statName, displayName in pairs(self.systemsAndInjuries[activeSystem]) do
+			---@type StatusData
+			local injuryStat = Ext.Stats.Get(statName)
+			if injuryStat.StackId == "" then
+				miscInjuriesDisplayMap[displayName] = statName
+			else
+				stackedInjuriesDisplayMap[injuryStat.StackId] = stackedInjuriesDisplayMap[injuryStat.StackId] or {}
+				stackedInjuriesDisplayMap[injuryStat.StackId][displayName] = statName
 			end
 		end
 
@@ -457,17 +467,13 @@ function InjuryMenu:buildSystemSection(parent)
 			sep:SetColor("Text", { 1, 1, 1, 0.55 })
 			self:BuildSystemSelects(systemGroup, nameMap, customizationCell)
 		end
-		-- buildTable(Translator:translate("Miscellaneous"), miscInjuriesDisplayMap)
-		-- for stackId, nameMap in TableUtils:OrderedPairs(stackedInjuriesDisplayMap) do
-		-- 	buildTable(Translator:translate("Stack:") .. " " .. stackId, nameMap)
-		-- end
 	end
 	systemDropdown:OnChange()
 
 	local count = 0
 	for severity, colour in TableUtils:OrderedPairs(settings.severityColours,
 		function(key, value)
-			return key == "Exclude" and 0 or (key == "Low" and 1) or (key == "Medium" and 2) or (key == "High" and 3) or (key == "Extreme" and 4) or 5
+			return self.severities[key]
 		end)
 	do
 		count = count + 1
@@ -491,14 +497,14 @@ end
 ---@param customizationCell ExtuiChildWindow
 function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 	local settings = ConfigurationStructure.config.injuries.settings._real
-	for displayName, statName in TableUtils:OrderedPairs(injuryMap, function (key, value)
+	for displayName, statName in TableUtils:OrderedPairs(injuryMap, function(key, value)
 		local severity = ConfigurationStructure.config.injuries.injury_specific[value].severity
-		return tostring(severity == "Exclude" and 0 or (severity == "Low" and 1) or (severity == "Medium" and 2) or (severity == "High" and 3) or (severity == "Extreme" and 4) or 5) .. key
+		return tostring(self.severities[severity]) .. value
 	end) do
 		---@type ExtuiSelectable
 		local select = parent:AddSelectable(displayName)
 		select:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[ConfigurationStructure.config.injuries.injury_specific[statName].severity]))
-		select:SetColor("HeaderHovered", Styler:ConvertRGBAToIMGUI({1, 1, 1, 0.1}))
+		select:SetColor("HeaderHovered", Styler:ConvertRGBAToIMGUI({ 1, 1, 1, 0.1 }))
 		-- select.Selected = true
 		select.OnClick = function()
 			select.Selected = false
@@ -513,6 +519,114 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 
 				if not success then
 					Logger:BasicError("Error while generating a new tab for the Injury Table\n\t%s", error)
+				end
+			end
+		end
+
+		select.OnRightClick = function()
+			Helpers:KillChildren(self.popup)
+			self.popup:Open()
+
+			self.popup:AddSelectable(Translator:translate("Copy"), "DontClosePopups").OnClick = function()
+				self:CopyInjuryConfig(statName)
+			end
+		end
+	end
+end
+
+function InjuryMenu:CopyInjuryConfig(injuiryToCopyFrom)
+	Helpers:KillChildren(self.popup)
+
+	local systemForInjury = TableUtils:IndexOf(self.systemsAndInjuries, function(value)
+		return value[injuiryToCopyFrom] ~= nil
+	end)
+
+	Styler:CheapTextAlign(Translator:translate("Copying from:") .. " " .. self.systemsAndInjuries[systemForInjury][injuiryToCopyFrom], self.popup, "Large")
+
+	Styler:CheapTextAlign(Translator:translate("Close any Customizing windows you have open - they'll show stale data after this runs"), self.popup)
+	self.popup:AddNewLine()
+
+	self.popup:AddSeparatorText(Translator:translate("Which Configs Should Be Copied?"))
+	local copyWhatGroup
+	Styler:MiddleAlignedColumnLayout(self.popup, function(ele)
+		copyWhatGroup = ele:AddGroup("CopyWhat")
+		copyWhatGroup:AddCheckbox(Translator:translate("ApplyOnStatus"), true).UserData = "apply_on_status"
+
+		local dmg = copyWhatGroup:AddCheckbox(Translator:translate("Damage"), true)
+		dmg.SameLine = true
+		dmg.UserData = "damage"
+
+		local charMultipliers = copyWhatGroup:AddCheckbox(Translator:translate("Character Multipliers"), true)
+		charMultipliers.SameLine = true
+		charMultipliers.UserData = "character_multipliers"
+
+		local removeStatus = copyWhatGroup:AddCheckbox(Translator:translate("RemoveOnStatus"), true)
+		removeStatus.SameLine = true
+		removeStatus.UserData = "remove_on_status"
+	end)
+
+	self.popup:AddNewLine()
+	self.popup:AddSeparatorText(Translator:translate("What Injuries should these configs be copied to?"))
+
+	local trackerMap = {}
+
+	Styler:MiddleAlignedColumnLayout(self.popup, function(ele)
+		ele:AddButton(Translator:translate("Copy Configs")).OnClick = function()
+			local configsToCopy = {}
+			for _, child in pairs(copyWhatGroup.Children) do
+				---@cast child ExtuiCheckbox
+				if child.Checked then
+					table.insert(configsToCopy, child.UserData)
+				end
+			end
+
+			-- Since we use Metatable proxies in ConfigStructure and TableUtils doesn't use pairs, we have to operate on the real table
+			local configCopy = ConfigurationStructure:GetRealConfigCopy().injuries.injury_specific[injuiryToCopyFrom]
+			for otherInjuryName in pairs(trackerMap) do
+				for _, configToCopy in pairs(configsToCopy) do
+					if InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName] and InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] then
+						InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy].delete = true
+					end
+					InjuryMenu.ConfigurationSlice.injury_specific[otherInjuryName][configToCopy] = TableUtils:DeeplyCopyTable(configCopy[configToCopy])
+				end
+			end
+		end
+	end)
+
+	local sameLine = false
+	for system, injuryMap in TableUtils:OrderedPairs(self.systemsAndInjuries) do
+		local win = self.popup:AddChildWindow(system)
+		win.NoSavedSettings = true
+		win.Size = Styler:ScaleFactor { 500, 600 }
+		win.SameLine = sameLine
+		sameLine = true
+
+		win:AddSeparatorText(system)
+		local selectAllButton = win:AddButton(Translator:translate("Select All") .. "##" .. system)
+
+		local secondWin = win:AddChildWindow("second")
+		secondWin.NoSavedSettings = true
+		secondWin:SetScroll({ 0, 0 })
+
+		selectAllButton.OnClick = function()
+			for _, child in pairs(secondWin.Children) do
+				if child.UserData then
+					child.Checked = true
+					trackerMap[child.UserData] = true
+				end
+			end
+		end
+
+		for statName, displayName in TableUtils:OrderedPairs(injuryMap, function(key, value)
+			return tostring(self.severities[ConfigurationStructure.config.injuries.injury_specific[key].severity]) .. value
+		end) do
+			if statName ~= injuiryToCopyFrom then
+				local severity = ConfigurationStructure.config.injuries.injury_specific[statName].severity
+				local box = secondWin:AddCheckbox(displayName)
+				box.UserData = statName
+				box:SetColor("Text", Styler:ConvertRGBAToIMGUI(ConfigurationStructure.config.injuries.settings.severityColours[severity]._real))
+				box.OnChange = function()
+					trackerMap[statName] = trackerMap[statName] and nil or true
 				end
 			end
 		end
