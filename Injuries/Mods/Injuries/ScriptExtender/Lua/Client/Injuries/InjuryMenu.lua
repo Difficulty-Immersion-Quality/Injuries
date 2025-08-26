@@ -501,9 +501,11 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 		local severity = ConfigurationStructure.config.injuries.injury_specific[value].severity
 		return tostring(self.severities[severity]) .. value
 	end) do
+		local injury = ConfigurationStructure.config.injuries.injury_specific[statName]
+
 		---@type ExtuiSelectable
 		local select = parent:AddSelectable(displayName)
-		select:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[ConfigurationStructure.config.injuries.injury_specific[statName].severity]))
+		select:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[injury.severity]))
 		select:SetColor("HeaderHovered", Styler:ConvertRGBAToIMGUI({ 1, 1, 1, 0.1 }))
 		-- select.Selected = true
 		select.OnClick = function()
@@ -526,6 +528,26 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 		select.OnRightClick = function()
 			Helpers:KillChildren(self.popup)
 			self.popup:Open()
+
+			---@type ExtuiMenu
+			local severityMenu = self.popup:AddMenu(Translator:translate("Change Severity"))
+			local function buildSeverityMenu()
+				Helpers:KillChildren(severityMenu)
+				for _, severityOpt in ipairs(self.severities) do
+					if severityOpt ~= injury.severity then
+						local item = severityMenu:AddItem(Translator:translate(severityOpt))
+						item.AutoClosePopups = false
+						item:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[severityOpt]))
+
+						item.OnClick = function()
+							injury.severity = severityOpt
+							select:SetColor("Text", Styler:ConvertRGBAToIMGUI(settings.severityColours[severityOpt]))
+							buildSeverityMenu()
+						end
+					end
+				end
+			end
+			buildSeverityMenu()
 
 			self.popup:AddSelectable(Translator:translate("Copy"), "DontClosePopups").OnClick = function()
 				self:CopyInjuryConfig(statName)
