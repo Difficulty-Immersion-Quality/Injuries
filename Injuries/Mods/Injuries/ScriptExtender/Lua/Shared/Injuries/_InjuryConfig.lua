@@ -1,11 +1,13 @@
 -- Can't assign any of these fields to local fields for convenience - breaks VSCode Lua type hints
 
 --#region Injuries
+---@class InjuriesConfig
 ConfigurationStructure.config.injuries = {}
 
 --#region Systems
-ConfigurationStructure.config.injuries.systems = {
-}
+---@alias SystemName string
+---@type SystemName[]
+ConfigurationStructure.config.injuries.systems = {}
 
 --#endregion
 
