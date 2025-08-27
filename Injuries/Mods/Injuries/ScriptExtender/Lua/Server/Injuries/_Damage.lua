@@ -31,7 +31,7 @@ local function ProcessDamageEvent(event)
 		Logger:BasicTrace("Reduced the following damagePairs as %s has %d tempHp:\n%s",
 			defender,
 			defenderEntity.Health.TemporaryHp,
-			Ext.Json.Stringify(tempHpReductionTable)
+			tempHpReductionTable
 		)
 	end
 
