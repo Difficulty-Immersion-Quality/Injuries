@@ -86,7 +86,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			RemovingInjuriesSettings
 		})
 
-		--#region Injury-Specific Options
 		tabHeader:AddSeparatorText(Translator:translate("Injury-Specific Options"))
 
 		local reportButton = tabHeader:AddButton(Translator:translate("Open Injury Report"))
@@ -94,7 +93,9 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			InjuryReport:BuildReportWindow()
 		end
 
-		InjuryMenu:buildSystemSection(tabHeader)
+		StatIntegration:buildUI(tabHeader:AddGroup("integration"))
+
+		InjuryMenu:buildSystemSection(tabHeader:AddGroup("systems"))
 
 		tabHeader:AddSeparatorText(Translator:translate("Register a New Injury System"))
 		tabHeader:AddText(Translator:translate("Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..
@@ -115,9 +116,6 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 				AddSystem(systemInput.Text)
 			end
 		end
-		--#endregion
-
-		--#endregion
 	end
 )
 
@@ -155,12 +153,15 @@ function InjuryMenu:buildSystemSection(parent)
 	end
 	systemDropdown.Options = opts
 	systemDropdown.SelectedIndex = 0
+	
+	local systemGroup = sidebarCell:AddChildWindow("sidebar")
+	systemGroup.Font = "Small"
+	systemGroup.Size = Styler:ScaleFactor({0, 500})
 
 	systemDropdown.OnChange = function()
 		local activeSystem = systemDropdown.Options[systemDropdown.SelectedIndex + 1]
 
-		Helpers:KillChildren(sidebarCell)
-		local systemGroup = sidebarCell:AddChildWindow("sidebar")
+		Helpers:KillChildren(systemGroup)
 
 		---@type {[string]: string}
 		local miscInjuriesDisplayMap = {}
@@ -258,7 +259,7 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 
 			self.popup:AddSelectable(Translator:translate("Open In New Window")).OnClick = function()
 				local injuryPopup = Ext.IMGUI.NewWindow(Translator:translate("Customizing") .. " " .. displayName)
-				injuryPopup:SetSizeConstraints(Styler:ScaleFactor({200, 200}))
+				injuryPopup:SetSizeConstraints(Styler:ScaleFactor({ 200, 200 }))
 				injuryPopup.Closeable = true
 
 				local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
@@ -371,7 +372,7 @@ function InjuryMenu:CopyInjuryConfig(injuiryToCopyFrom)
 	for system, injuryMap in TableUtils:OrderedPairs(self.systemsAndInjuries) do
 		local win = self.popup:AddChildWindow(system)
 		win.NoSavedSettings = true
-		win.Size = Styler:ScaleFactor { 500, 600 }
+		win.Size = Styler:ScaleFactor({ 500, 600 })
 		win.SameLine = sameLine
 		sameLine = true
 

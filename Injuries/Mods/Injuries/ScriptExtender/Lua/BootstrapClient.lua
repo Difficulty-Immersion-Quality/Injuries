@@ -7,4 +7,6 @@ Ext.Require("Shared/Configurations/_ConfigurationStructure.lua")
 ConfigurationStructure:InitializeConfig()
 
 Ext.Require("Client/_StatusHelper.lua")
+Ext.Require("Client/StatBrowser.lua")
+Ext.Require("Client/Injuries/StatIntegration.lua")
 Ext.Require("Client/Injuries/InjuryMenu.lua")

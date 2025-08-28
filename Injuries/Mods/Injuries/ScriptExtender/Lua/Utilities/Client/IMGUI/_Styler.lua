@@ -68,7 +68,7 @@ end
 ---@param parent ExtuiTreeParent
 ---@return ExtuiTable
 function Styler:TwoColumnTable(parent, id)
-	local displayTable = parent:AddTable("twoCol" .. parent.IDContext .. (id or ""), 2)
+	local displayTable = parent:AddTable(id or ("twoCol" .. parent.IDContext), 2)
 	displayTable.NoSavedSettings = true
 	displayTable.Borders = true
 	displayTable.Resizable = true

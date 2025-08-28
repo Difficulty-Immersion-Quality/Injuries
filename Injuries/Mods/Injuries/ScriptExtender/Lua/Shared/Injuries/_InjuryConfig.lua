@@ -5,6 +5,15 @@
 ConfigurationStructure.config.injuries = {}
 
 ConfigurationStructure.config.injuries.settings = {
+	---@class StatBrowserSettings
+	statBrowser = {
+		onlyIcons = false,
+		sort = {
+			---@type "displayName"|"spellName"
+			name = "displayName",
+			direction = "Descending"
+		}
+	},
 	severityColours = {
 		Disabled =
 		{

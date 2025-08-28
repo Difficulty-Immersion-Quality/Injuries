@@ -1,4 +1,10 @@
-ConfigManager = {}
+ConfigManager = {
+	Injuries = {
+		Damage = {},
+		RemoveOnStatus = {},
+		ApplyOnStatus = {}
+	}
+}
 
 ---@type Configuration
 ConfigManager.ConfigCopy = {}
