@@ -18,7 +18,6 @@ Logger:ClearLogFile()
 Ext.Require("Server/_DifficultyClassMap.lua")
 Ext.Require("Server/_EventCoordinator.lua")
 
-Ext.Require("Shared/Configurations/_ConfigurationStructure.lua")
 Ext.Require("Server/_ConfigManager.lua")
 
 Ext.Require("Shared/Injuries/_InjuryCommonLogic.lua")

@@ -498,7 +498,7 @@ if Ext.IsServer() then
 						if statusData and next(statusData.StatusGroups) then
 							for _, statusGroup in ipairs(statusData.StatusGroups) do
 								local sgConfig = ConfigManager.ConfigCopy.injuries.injury_specific[injury].remove_on_status[statusGroup]
-								if sgConfig and (not sgConfig["excluded_statuses"] or not TableUtils:ListContains(sgConfig["excluded_statuses"], statusRemovingInjury)) then
+								if sgConfig and (not sgConfig["excluded_statuses"] or not TableUtils:IndexOf(sgConfig["excluded_statuses"], statusRemovingInjury)) then
 									removeOnStatusConfig = sgConfig
 									Logger:BasicDebug("%s was removed from %s due to %s belonging to %s", injury, character, statusRemovingInjury, statusGroup)
 								end

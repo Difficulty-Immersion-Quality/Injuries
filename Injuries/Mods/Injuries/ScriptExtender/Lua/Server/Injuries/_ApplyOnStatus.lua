@@ -24,8 +24,8 @@ local function processInjuries(entity, status, statusConfig, injuryVar, statusGr
 			Logger:BasicDebug("Status %s will apply %s (possibly upgraded from %s) to %s", status, nextStackInjury, injury, character)
 			local npcMultiplier = InjuryCommonLogic:CalculateNpcMultiplier(entity, nextStackInjury)
 
-			if statusGroup and statusData.StatusGroups and TableUtils:ListContains(statusData.StatusGroups, statusGroup) then
-				if injuryStatusConfig["excluded_statuses"] and TableUtils:ListContains(injuryStatusConfig["excluded_statuses"], status) then
+			if statusGroup and statusData.StatusGroups and TableUtils:IndexOf(statusData.StatusGroups, statusGroup) then
+				if injuryStatusConfig["excluded_statuses"] and TableUtils:IndexOf(injuryStatusConfig["excluded_statuses"], status) then
 					Logger:BasicDebug("%s belongs to status group %s but is excluded, so skipping", nextStackInjury, statusGroup)
 					goto continue
 				end

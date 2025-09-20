@@ -71,7 +71,7 @@ local function processEvent(status, character, eventType)
 		---@type {[InjuryName] : InjuryRemoveOnStatus}
 		local injuriesToRemove = {}
 		for injury, injuryConfig in pairs(statusConfig) do
-			if (not injuryConfig["excluded_statuses"] or not TableUtils:ListContains(injuryConfig["excluded_statuses"], status))
+			if (not injuryConfig["excluded_statuses"] or not TableUtils:IndexOf(injuryConfig["excluded_statuses"], status))
 				and injuryConfig[eventType]
 				and Osi.HasActiveStatus(character, injury) == 1
 			then
