@@ -448,7 +448,7 @@ if Ext.IsServer() then
 	end)
 
 	EventCoordinator:RegisterEventProcessor("StatusApplied", function(character, status, causee, storyActionID)
-		if Osi.IsItem(character) == 0 then
+		if Osi.IsItem(character) == 0 and ConfigManager.ConfigCopy.injuries and ConfigManager.ConfigCopy.injuries.universal then
 			local counterReset = ConfigManager.ConfigCopy.injuries.universal.when_does_counter_reset
 			if (status == "SHORT_REST" and counterReset == "Short Rest") or (status == "LONG_REST" and counterReset == "Long Rest") then
 				local entity = Ext.Entity.Get(character)
