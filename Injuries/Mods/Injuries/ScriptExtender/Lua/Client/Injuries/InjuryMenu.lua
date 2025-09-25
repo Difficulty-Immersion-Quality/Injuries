@@ -206,7 +206,7 @@ function InjuryMenu:buildSystemSection(parent)
 	do
 		count = count + 1
 
-		local colourEdit = coloursGroup:AddColorEdit(Translator:translate(severity))
+		local colourEdit = coloursGroup:AddColorEdit(Translator:translate(severity) .. "##" .. severity)
 		colourEdit.AlphaBar = true
 		colourEdit.Color = colour._real
 		colourEdit.NoInputs = true
