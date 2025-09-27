@@ -436,6 +436,12 @@ Translator:RegisterTranslation({
 	["Delete System"] = "h5d5066b88cda46c1bb91129a1d80777c67d5",
 	["Injury"] = "h2b3b5b26e1c44dd495acba638cd593500718",
 	["Severity"] = "h7231e1d605ce400ea608fb8d4079e8f493bg",
+	["Disabled"] = "had7bcfab68ea411e85c8f43c23f6273bg94c",
+	["Exclude"] = "he1629ee5374c45d7a8f66158cec22f157e96",
+	["High"] = "hf21556a86c9d4197b114c6af93f6a51e7aa2",
+	["Low"] = "h89026530dce04007b8d6018a5aa4714db8b7",
+	["Medium"] = "h88881087004a4849bc41bd4944df02707229",
+	["Extreme"] = "h3d1c13144ae34bd8a46f572bbe84e6562815",
 	["Change Severity"] = "he1097f5fbb4c4ff5b616166dc6514d71161b",
 	["'Exclude' will exclude this injury from being included in the randomized table - 'Disabled' will prevent this injury from being applied under any circumstances"] =
 	"h33e313fcb75f468dabcb7c43d76ba8f984e0",

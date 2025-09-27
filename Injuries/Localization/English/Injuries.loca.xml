@@ -101,6 +101,12 @@ Completing a &lt;LSTag Tooltip="ShortRest"&gt;Short Rest&lt;/LSTag&gt; will remo
 	<content contentuid="h5d5066b88cda46c1bb91129a1d80777c67d5" version="1">Delete System</content>
 	<content contentuid="h2b3b5b26e1c44dd495acba638cd593500718" version="1">Injury</content>
 	<content contentuid="h7231e1d605ce400ea608fb8d4079e8f493bg" version="1">Severity</content>
+	<content contentuid="h3d1c13144ae34bd8a46f572bbe84e6562815" version="1">Extreme</content>
+    <content contentuid="had7bcfab68ea411e85c8f43c23f6273bg94c" version="1">Disabled</content>
+    <content contentuid="he1629ee5374c45d7a8f66158cec22f157e96" version="1">Exclude</content>
+    <content contentuid="hf21556a86c9d4197b114c6af93f6a51e7aa2" version="1">High</content>
+    <content contentuid="h89026530dce04007b8d6018a5aa4714db8b7" version="1">Low</content>
+    <content contentuid="h88881087004a4849bc41bd4944df02707229" version="1">Medium</content>
 	<content contentuid="he1097f5fbb4c4ff5b616166dc6514d71161b" version="1">Change Severity</content>
 	<content contentuid="h6786d51c543e4530a8c2ac7847bce8dd5ce6" version="1">Actions</content>
 	<content contentuid="h1a8bc7c8138d427ba215ad25773655b69f2d" version="1">Customize (%s)</content>
@@ -242,4 +248,5 @@ NOTE: This section does not currently handle ticks, it is only handling initial 
     <content contentuid="he1723b1c477144bd9e4c69594b60f64f6a9b" version="1">Include</content>
     <content contentuid="hcfc9c68627ac4cd9a365d94a32e48c0cc4fd" version="1">Exclude</content>
 	<!-- END Status Helper -->
+
 </contentList>
