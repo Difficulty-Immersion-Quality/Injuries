@@ -29,3 +29,5 @@ function NetChannel:RequestToClient(data, user, replyCallback) end
 
 ---@type {[string]: ExtenderNetChannel}
 Channels = {}
+
+Channels.LogToPlayerOverhead = Ext.Net.CreateChannel(ModuleUUID, "LogToPlayerOverhead")

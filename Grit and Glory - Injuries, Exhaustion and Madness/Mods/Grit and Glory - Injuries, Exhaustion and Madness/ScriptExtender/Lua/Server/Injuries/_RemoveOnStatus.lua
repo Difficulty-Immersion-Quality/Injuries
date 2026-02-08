@@ -22,11 +22,11 @@ local function removeInjury(character, injury, injuryConfig, statusCausingRemova
 end
 
 EventCoordinator:RegisterEventProcessor("RollResult", function(eventName, roller, rollSubject, resultType, isActiveRoll, criticality)
-	if string.find(eventName, "Goon_Injuries_Remove_Injury_") then
+	if string.find(eventName, RandomHelpers:SanitizeStringForFind("Goon_Injuries_Remove_Injury_")) then
 		local injuryNameAndStatus = string.sub(eventName, string.len("Goon_Injuries_Remove_Injury_"))
 		local injuryName, statusCausingRemoval = string.match(injuryNameAndStatus, "([^|]+)|([^|]+)")
 		if resultType == 1 then
-			local entity, injuryVar = InjuryCommonLogic:GetUserVar(character)
+			local entity, injuryVar = InjuryCommonLogic:GetUserVar(roller)
 			injuryVar["removedDueTo"] = injuryVar["removedDueTo"] or {}
 			injuryVar["removedDueTo"][injuryName] = statusCausingRemoval
 			InjuryCommonLogic:UpdateUserVar(entity, injuryVar)
@@ -40,12 +40,8 @@ end)
 ---@param character GUIDSTRING
 ---@param eventType "onApplication"|"onRemoval"
 local function processEvent(status, character, eventType)
-	-- Handled in LongRestProcessor
-	if status == "LONG_REST" then
-		return
-	end
-
-	if Osi.IsItem(character) == 1 then
+	-- Long Rest Handled in LongRestProcessor
+	if status == "LONG_REST" or not ConfigManager.Injuries or Osi.IsItem(character) == 1 then
 		return
 	end
 

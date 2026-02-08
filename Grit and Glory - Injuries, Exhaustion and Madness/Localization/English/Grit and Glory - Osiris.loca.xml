@@ -92,6 +92,8 @@
 	<content contentuid="h2ed2ba9c679e4311b9d7b991246d84ff16g2" version="1">How much should the application chance increase/decrease when the below conditions are met?</content>
 	<content contentuid="h3f75c2db58974c47b8f5553e0fe58301831b" version="1">These modifiers are additive, not multiplicative, meaning if a low severity injury has a 50% chance of being applied, but a critical hit was dealt and that has a modifier of 10%, then the injury will have a 60% chance of being applied</content>
 	<content contentuid="hbaa3cadad3c048759ce144bfe8bc76e5b7a9" version="1">If the character has 2 Medium-severity injuries already applied and this modifier is set to -5%, then the application chance for all Medium-severity injuries will be -10%</content>
+    <content contentuid="hc793fec0cbad45f494059570ae4fdc15g7dd" version="1">Deletes the system - adds a confirmation popup first</content>
+    <content contentuid="h6db19807e0e14d3d9d58abbfd930cc433289" version="1">Click here to delete System %s - this can't be undone.</content>
 	<!-- END INJURY MAIN MENU -->
 
 	<!-- BEGIN INJURY REPORT -->
@@ -194,5 +196,4 @@ NOTE: This section does not currently handle ticks, it is only handling initial 
     <content contentuid="he1723b1c477144bd9e4c69594b60f64f6a9b" version="1">Include</content>
     <content contentuid="hcfc9c68627ac4cd9a365d94a32e48c0cc4fd" version="1">Exclude</content>
 	<!-- END Status Helper -->
-
 </contentList>
