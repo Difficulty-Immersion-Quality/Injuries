@@ -8,6 +8,15 @@ local function ProcessDamageEvent(event)
 		return
 	end
 
+	for _, boost in pairs(defenderEntity.BoostsContainer.Boosts) do
+		if boost.Type == "Invulnerable" then
+			Logger:BasicDebug("%s (%s) is invulnerable with boost %s - skipping damage check", defenderEntity.DisplayName.Name:Get(), defenderEntity.Uuid.EntityUuid, boost)
+			return
+		end
+	end
+
+	Logger:BasicTrace("Event Contents are: %s", event.Hit)
+
 	-- Damage numbers don't account for TempHp - need to recreate that reduction
 	--- @type { [DamageType] : integer }
 	local tempHpReductionTable = {}

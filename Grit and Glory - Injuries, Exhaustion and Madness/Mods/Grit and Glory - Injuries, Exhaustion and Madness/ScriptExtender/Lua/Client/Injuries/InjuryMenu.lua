@@ -94,7 +94,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 			InjuryReport:BuildReportWindow()
 		end
 
-		InjuryMenu:buildSystemSection(tabHeader)
+		InjuryMenu:buildSystemSection(tabHeader:AddGroup("Systems"))
 
 		tabHeader:AddSeparatorText(Translator:translate("Register a New Injury System"))
 		tabHeader:AddText(Translator:translate("Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..
@@ -123,6 +123,7 @@ Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Injuries",
 
 ---@param parent ExtuiTreeParent
 function InjuryMenu:buildSystemSection(parent)
+	Helpers:KillChildren(parent)
 	local settings = ConfigurationStructure.config.injuries.settings
 
 	local coloursGroup = parent:AddGroup("colours")
@@ -133,6 +134,10 @@ function InjuryMenu:buildSystemSection(parent)
 	local customizationCell = sidebarTableRow:AddCell():AddChildWindow("customizer")
 
 	local systemDropdown = sidebarCell:AddCombo("")
+	local deleteButtonContainer = sidebarCell:AddGroup("deleteButtonContainer")
+	deleteButtonContainer.SameLine = true
+	deleteButtonContainer.UserData = "keep"
+
 	systemDropdown.UserData = "keep"
 	systemDropdown.WidthFitPreview = true
 	local opts = {}
@@ -156,8 +161,29 @@ function InjuryMenu:buildSystemSection(parent)
 	systemDropdown.Options = opts
 	systemDropdown.SelectedIndex = 0
 
+	if #opts == 0 then
+		return
+	end
+
 	systemDropdown.OnChange = function()
 		local activeSystem = systemDropdown.Options[systemDropdown.SelectedIndex + 1]
+
+		Helpers:KillChildren(deleteButtonContainer)
+
+		local deleteSystemButton = Styler:ImageButton(deleteButtonContainer:AddImageButton("delete" .. activeSystem, "ico_red_x", { 24, 24 }))
+
+		deleteSystemButton:Tooltip():AddText("\t " .. Translator:translate("Deletes the system - adds a confirmation popup first"))
+
+		deleteSystemButton.OnClick = function()
+			Helpers:KillChildren(self.popup)
+			self.popup:Open()
+
+			Styler:Color(self.popup:AddSelectable((Translator:translate("Click here to delete System %s - this can't be undone.")):format(activeSystem)), "ErrorText").OnClick = function()
+				self.ConfigurationSlice.systems[TableUtils:IndexOf(self.ConfigurationSlice.systems, activeSystem)] = nil
+
+				self:buildSystemSection(parent)
+			end
+		end
 
 		Helpers:KillChildren(sidebarCell)
 		local systemGroup = sidebarCell:AddChildWindow("sidebar")
@@ -258,7 +284,7 @@ function InjuryMenu:BuildSystemSelects(parent, injuryMap, customizationCell)
 
 			self.popup:AddSelectable(Translator:translate("Open In New Window")).OnClick = function()
 				local injuryPopup = Ext.IMGUI.NewWindow(Translator:translate("Customizing") .. " " .. displayName)
-				injuryPopup:SetSizeConstraints(Styler:ScaleFactor({200, 200}))
+				injuryPopup:SetSizeConstraints(Styler:ScaleFactor({ 200, 200 }))
 				injuryPopup.Closeable = true
 
 				local newTabBar = injuryPopup:AddTabBar("InjuryTabBar")
@@ -475,4 +501,6 @@ Translator:RegisterTranslation({
 	["Enter the prefix used in all Stats belonging to a single system (e.g. Goon_Injury_Homebrew or Goon_Injury_Grit_And_Glory) to create a new section dedicated to the system." ..
 	" All Stats belonging to the registered system(s) will automatically be known and used by this mod - if you want to exclude a system from processing, you must delete it - configurations will not be saved"] =
 	"h4ad9acd0b0d2422184871ede9022f0b31c22",
+	["Deletes the system - adds a confirmation popup first"] = "hc793fec0cbad45f494059570ae4fdc15g7dd",
+	["Click here to delete System %s - this can't be undone."] = "h6db19807e0e14d3d9d58abbfd930cc433289"
 })

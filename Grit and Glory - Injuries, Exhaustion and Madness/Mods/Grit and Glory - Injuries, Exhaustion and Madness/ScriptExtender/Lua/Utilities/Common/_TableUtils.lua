@@ -4,7 +4,7 @@ TableUtils = {}
 
 ---@generic K
 ---@param tarTable table<K, number>? will be created if it doesn't exist
----@param key K 
+---@param key K
 ---@param amount number
 ---@return table<K, number> table optionally created if one was not provided, with the amount specified added to the key (or just assigned to the key, if missing)
 function TableUtils:AddItemToTable_AddingToExistingAmount(tarTable, key, amount)
@@ -22,7 +22,7 @@ end
 
 -- stolen from https://stackoverflow.com/questions/640642/how-do-you-copy-a-lua-table-by-value
 local function copy(obj, seen, makeImmutable)
-	if type(obj) ~= 'table' then return obj end
+	if type(obj) ~= 'table' then return obj else obj = obj._real or obj end
 	if seen and seen[obj] then return seen[obj] end
 	local s = seen or {}
 	local res = setmetatable({}, getmetatable(obj))
@@ -44,7 +44,10 @@ end
 ---@param obj T
 ---@return T
 function TableUtils:DeeplyCopyTable(obj)
-	return copy(obj, nil, false)
+	if not obj then
+		return nil
+	end
+	return copy(obj._real or obj, nil, false)
 end
 
 ---Compare two lists
@@ -109,18 +112,26 @@ end
 ---@generic V
 ---@param t table<K,V>
 ---@param keyTransformFunc (fun(key: K, value: V):any)?
+---@param filter (fun(key: K, value: V):boolean?)?
 ---@return fun(table: table<K, V>, index?: K):K,V
-function TableUtils:OrderedPairs(t, keyTransformFunc)
+function TableUtils:OrderedPairs(t, keyTransformFunc, filter)
 	local keys = {}
 	for k in pairs(t) do
-		table.insert(keys, k)
+		if not filter or filter(k, t[k]) then
+			table.insert(keys, k)
+		end
 	end
 	table.sort(keys, function(a, b)
 		local keyA = keyTransformFunc and keyTransformFunc(a, t[a]) or a
 		local keyB = keyTransformFunc and keyTransformFunc(b, t[b]) or b
 		if type(keyA) ~= type(keyB) then
-			keyA = tostring(keyA)
-			keyB = tostring(keyB)
+			if tonumber(keyA) and tonumber(keyB) then
+				keyA = tonumber(keyA)
+				keyB = tonumber(keyB)
+			else
+				keyA = tostring(keyA)
+				keyB = tostring(keyB)
+			end
 		end
 		return keyA < keyB
 	end)
@@ -161,8 +172,13 @@ end
 ---@return T
 function TableUtils:ReindexNumericTable(tbl)
 	local values = {}
-	for k, value in pairs(tbl) do
-		table.insert(values, value)
+	for k, value in TableUtils:OrderedPairs(tbl) do
+		if type(value) == "table" then
+			table.insert(values, TableUtils:DeeplyCopyTable(value))
+			value.delete = true
+		else
+			table.insert(values, value)
+		end
 		tbl[k] = nil
 	end
 	-- Reinsert values with sequential numeric keys
@@ -194,7 +210,6 @@ function TableUtils:CombinedPairs(...)
 
 	local i = 0
 	local currentTableIndex = 1
-
 	return function()
 		while currentTableIndex <= #tables do
 			i = i + 1
@@ -213,8 +228,11 @@ end
 ---@param tbl table
 ---@return number
 function TableUtils:CountElements(tbl)
+	if not tbl then
+		return 0
+	end
 	local count = 0
-	for _, _ in pairs(tbl) do
+	for _, _ in pairs(tbl._real or tbl) do
 		count = count + 1
 	end
 	return count
@@ -234,4 +252,20 @@ function TableUtils:ConvertStringifiedNumberIndexes(tbl)
 			self:ConvertStringifiedNumberIndexes(value)
 		end
 	end
+end
+
+---@generic K
+---@generic V
+---@param tbl table<K, V>
+---@param predicate fun(key: K, value: V): boolean
+---@return table<K, V>
+function TableUtils:FilterTable(tbl, predicate)
+	local newTable = {}
+	for key, value in pairs(tbl._real or tbl) do
+		if predicate(key, value) then
+			newTable[key] = value
+		end
+	end
+
+	return newTable
 end
