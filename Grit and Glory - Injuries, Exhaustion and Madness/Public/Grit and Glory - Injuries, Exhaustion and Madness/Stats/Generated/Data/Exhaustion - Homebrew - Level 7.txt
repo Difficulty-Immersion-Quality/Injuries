@@ -80,7 +80,7 @@ data "TooltipSave" "Constitution"
 data "Properties" "IsHidden"
 //
 data "StatsFunctors" "IF(not HasStatus('GOON_FALL_ASLEEP_COOLDOWN')):ApplyStatus(GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_7,100,1)"
-data "StatsFunctorContext" "OnTurn;OnMovedDistance;OnAttack;OnDamaged;OnStatusApplied;OnStatusRemoved"
+data "StatsFunctorContext" "OnTurn;OnStatusApplied"
 data "Conditions" "HasStatus('GOON_BOOSTS_EXHAUSTION_HOMEBREW_TECHNICAL_7')"
 
 // ==================================== Technicals for sleep mechanic ====================================
