@@ -46,7 +46,7 @@ data "OnRemoveFunctors" ""
 data "RemoveConditions" "not HasStatus('GOON_INJURY_GRIT_GLORY_PHANTOM_PAIN')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "StartRound"
-data "TickFunctors" "ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN_TECHNICAL,100,0)"
+data "TickFunctors" "IF(not HasStatus('GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN_TECHNICAL')):ApplyStatus(GOON_REAL_INJURY_GRIT_GLORY_PHANTOM_PAIN_TECHNICAL,100,10)"
 data "StatusGroups" ""
 data "Passives" "Goon_Healing_Injury_Removal_Technical_Passive;Goon_Grit_Glory_Phantom_Pain_Removal_Passive"
 //

@@ -1,3 +1,7 @@
+-- TODO: Block sleep rolls while in dialogue
+-- TODO: Make it so sleep rolls only happen under very predictable circumstances, instead of any status being applied and start turn.
+-- TODO: Make it more than just falling asleep, but that's more for a fumble table?
+
 -- Mapping of constitution statuses to their cooldown durations
 local CooldownDurations = {
     GOON_FALL_ASLEEP_CONSTITUTION_TECHNICAL_1 = {10, 20},
