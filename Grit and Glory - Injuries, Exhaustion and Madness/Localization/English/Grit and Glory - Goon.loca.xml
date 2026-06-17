@@ -871,8 +871,8 @@ The effects of madness are suppressed while under the effects of &lt;LSTag Type=
 
 	<content contentuid="h94378b16gc1ccg4345gab0eg145e80aae405" version="1">Within [1] of your allies you do not suffer from the negative effects of being &lt;LSTag Type="Status" Tooltip="GOON_MADNESS_5E_CODEPENDANT"&gt;Codependant&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== Long-term Madness: Comatosed -->
-	<content contentuid="hdf7b028egd002g4ba6gb109g5b3960b9ae9c" version="1">Long-term Madness: Comatosed</content>
+	<!-- ==================================== Long-term Madness: Comatose -->
+	<content contentuid="hdf7b028egd002g4ba6gb109g5b3960b9ae9c" version="1">Long-term Madness: Comatose</content>
 	<!-- The character falls unconscious. No amount of jostling or damage can wake the character. -->
 
 	<content contentuid="hf873f830gcee2g4980g9fa3g5423ca785f41" version="1">The character is unconscious, no amount of jostling or damage can wake them. You cannot move or take &lt;LSTag Type="ActionResource" Tooltip="ActionPoint"&gt;Actions&lt;/LSTag&gt;, &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Actions&lt;/LSTag&gt; or &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;Reactions&lt;/LSTag&gt;.&lt;Br&gt;Attacks against you are always &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt; if the attacker is within [1].

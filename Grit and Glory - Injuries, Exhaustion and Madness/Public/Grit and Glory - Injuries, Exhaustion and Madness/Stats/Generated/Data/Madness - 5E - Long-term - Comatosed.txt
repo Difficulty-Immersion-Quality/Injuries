@@ -1,9 +1,10 @@
 // ==================================== Proxy ====================================
+// Comatose is proper, but entries can stay wrong whatever.
 
 new entry "GOON_MADNESS_5E_LONGTERM_COMATOSED"
 type "StatusData"
 data "StatusType" "BOOST"
-// Long-term Madness: Comatosed
+// Long-term Madness: Comatose
 data "DisplayName" "hdf7b028egd002g4ba6gb109g5b3960b9ae9c"
 //
 data "Description" "hf873f830gcee2g4980g9fa3g5423ca785f41"
@@ -36,7 +37,7 @@ data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnStatusApplied) 
 new entry "GOON_COMATOSED_LONGTERM_MADNESS_TECHNICAL"
 type "StatusData"
 data "StatusType" "INCAPACITATED"
-// Long-term Madness: Comatosed
+// Long-term Madness: Comatose
 data "DisplayName" "hdf7b028egd002g4ba6gb109g5b3960b9ae9c"
 //
 data "Description" "hf873f830gcee2g4980g9fa3g5423ca785f41"
