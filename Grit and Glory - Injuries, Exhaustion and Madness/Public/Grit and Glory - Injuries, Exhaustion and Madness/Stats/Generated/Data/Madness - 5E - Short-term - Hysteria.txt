@@ -53,12 +53,12 @@ data "AuraRadius" ""
 data "AuraStatuses" ""
 // A calm emotions spell can suppress the effects of madness
 data "Boosts" "AbilityFailedSavingThrow(Strength);AbilityFailedSavingThrow(Dexterity);CriticalHit(AttackTarget,Success,Always,3);DetectDisturbancesBlock(true);Advantage(AttackTarget);SightRangeOverride(0)"
-data "OnApplyFunctors" "RemoveStatus(SNEAKING);RemoveStatus(SLEEP);RemoveStatus(SLEEPING);RemoveStatus(SG_Sleeping);BreakConcentration();RemoveStatus(SG_Prone);ApplyStatus(GOON_HYSTERIA_SFX,100,-1)"
+data "OnApplyFunctors" "RemoveStatus(SNEAKING);RemoveStatus(SLEEP);RemoveStatus(SLEEPING);RemoveStatus(SG_Sleeping);BreakConcentration();RemoveStatus(SG_Prone);ApplyStatus(GOON_HYSTERIA_MADNESS_FX,100,-1)"
 data "OnRemoveFunctors" ""
 data "RemoveConditions" "not HasStatus('GOON_MADNESS_5E_SHORTTERM_HYSTERIA')"
 data "RemoveEvents" "OnStatusRemoved"
 data "TickType" "StartTurn"
-data "TickFunctors" "IF(not HasStatus('GOON_HYSTERIA_SFX')):ApplyStatus(GOON_HYSTERIA_SFX,100,-1)"
+data "TickFunctors" "IF(not HasStatus('GOON_HYSTERIA_MADNESS_FX')):ApplyStatus(GOON_HYSTERIA_MADNESS_FX,100,-1)"
 data "StatusGroups" "SG_Incapacitated"
 data "Passives" "Goon_Hysteria_Shortterm_Madness_Technical_Passive"
 //
@@ -89,7 +89,7 @@ data "MaterialApplyNormalMap" ""
 data "MaterialFadeAmount" ""
 data "MaterialParameters" ""
 
-new entry "GOON_HYSTERIA_SFX"
+new entry "GOON_HYSTERIA_MADNESS_FX"
 type "StatusData"
 data "StatusType" "BOOST"
 // 
@@ -100,19 +100,17 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "RemoveConditions" "not HasStatus('GOON_HYSTERIA_SHORTTERM_MADNESS_TECHNICAL')"
 data "RemoveEvents" "OnStatusRemoved"
 //
-data "StackId" "GOON_HYSTERIA_SFX"
-data "SoundVocalStart" "NONE"
+data "StackId" "GOON_HYSTERIA_MADNESS_FX"
 data "SoundVocalLoop" "LAUGHTERMANIACAL"
-data "SoundVocalEnd" ""
 
 // Technical passive for saving throws
 new entry "Goon_Hysteria_Shortterm_Madness_Technical_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 //
-data "StatsFunctors" "ApplyStatus(GOON_HYSTERIA_REMOVAL_TECHNICAL,100,0)"
 data "StatsFunctorContext" "OnDamaged;OnTurn"
 data "Conditions" ""
+data "StatsFunctors" "ApplyStatus(GOON_HYSTERIA_REMOVAL_TECHNICAL,100,0)"
 
 new entry "GOON_HYSTERIA_REMOVAL_TECHNICAL"
 type "StatusData"
