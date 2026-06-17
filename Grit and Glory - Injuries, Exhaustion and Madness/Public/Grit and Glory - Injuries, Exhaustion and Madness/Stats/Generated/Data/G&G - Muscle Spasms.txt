@@ -28,7 +28,7 @@ data "StatusType" "BOOST"
 // Injury: Muscle Spasms
 data "DisplayName" "h3796a49ag0b20g4d62ga072gc87475ae39c7"
 //
-data "Description" "h16a7a5c8gd4d4g4860g9ad2gd74a997d3d32"
+data "Description" "h98e6f58fg1689g4010g9742g89b4f7505849"
 data "DescriptionParams" ""
 data "TooltipSave" ""
 data "Icon" "PassiveFeature_Generic_Blood"
